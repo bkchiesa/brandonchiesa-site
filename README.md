@@ -53,7 +53,7 @@ The workflow lives at `.github/workflows/deploy.yml`.
 | --- | --- |
 | **Intro** | `public/video/intro.mp4` plays **once**, full-bleed. Headline fades in at ~halfway. Escape or an invisible tap skips; reduce-motion / `?skip=1` / a prior session skip go to the house. Tap-to-start if autoplay is blocked. |
 | **Loop** | Dual-video overlap crossfade into `public/video/loop.mp4` — loop starts at t=0 under the last intro valley. Cover, center-crop, no tile. Reduced motion uses the loop poster. |
-| **Menu** | Mist labels (PT Serif HTML/CSS) mid-frame over the loop. Hover is a soft cream underline. Spec: `public/art/v3/menu/MIST_MENU_SPECS.md`. Blot UI is **off** the live shell. |
+| **Menu** | Mist labels (PT Serif HTML/CSS) mid-frame over the loop. Hover/selected use `mist_underline_brass.png` (~6px @1280). Spec: `public/art/v3/menu/MIST_MENU_SPECS.md`. Blot UI is **off** the live shell. |
 | **Rooms** | Leather **texture panel** from `public/art/v3/leather_panel.png` with a short reveal over a dark veil. No frosted glass. `leather_pad*` is rejected and unwired. |
 | **Motion** | Session skip: after one play (or Skip), refresh stays on the menu. **Replay intro** flies again. |
 

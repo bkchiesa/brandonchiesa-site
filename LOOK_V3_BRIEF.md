@@ -23,7 +23,7 @@ Do **not** carry Look v2 blues/tans cartography tokens as the primary house look
 
 1. **Intro once** — `public/video/intro.mp4`, full-bleed. Dual-video overlap crossfade into the loop so the last intro valley matches loop t=0 (no hard cut).
 2. **Banner** — name sits high; fades in at ~halfway through the intro; stays on the house. Reduce-motion skips the fade.
-3. **Menu** — Pixel PASS mist labels (HTML/CSS). PT Serif 400, `#F3EEE4` @ 0.95, mid-frame at 50.3%. Hover is a soft cream underline only. Blot UI is off the live shell.
+3. **Menu** — Pixel PASS mist labels (HTML/CSS). PT Serif 400, `#F3EEE4` @ 0.95, mid-frame at 50.3%. Hover/selected use `mist_underline_brass.png` (~6px @1280, mid `#B59A62`). Idle labels stay cream. Blot UI is off the live shell.
 4. **On select** — `leather_panel.png` (1600×900 cognac/espresso, Pixel PASS) with a short reveal over the continuing loop. Soft veil OK. **No glassmorphism.** Never wire `leather_pad*` or `leather_panel_mock`. A half-step lighter lift can overwrite the same filename if Brandon asks.
 
 Skip / `prefers-reduced-motion` / `?skip=1` land on the house over the loop (or the loop poster).
@@ -32,7 +32,7 @@ Skip / `prefers-reduced-motion` / `?skip=1` land on the house over the loop (or 
 
 - **Pixel PASS:** HTML/CSS mist labels. Spec: `public/art/v3/menu/MIST_MENU_SPECS.md`.
 - PT Serif 400, ~32px @1280, `#F3EEE4` @ 0.95, gap `4.375vw`, vertical mid 50.3%.
-- Hover/selected: ~6px faded textured-gold underline (~5px below baseline). Labels stay cream. No blots, chips, or cairns.
+- Hover/selected: Pixel PASS `mist_underline_brass.png` (~6px @1280, ~5px below baseline, mid `#B59A62`). Labels stay cream. No cream hairline. No blots, chips, or cairns.
 - Blot assets may stay in `public/art/v3/`; they are not wired.
 - Room routes stay: `/work/` `/make/` `/go/` `/roots/` `/now/`.
 
