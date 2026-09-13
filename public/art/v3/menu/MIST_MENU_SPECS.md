@@ -1,6 +1,6 @@
 # Mist Menu — DojoDev wire specs (Look v3)
 
-**Status:** Brandon LOCKED 2026-09-13 — concept **#1 Mist labels** + **#5 hover** (soft underline).  
+**Status:** Brandon LOCKED 2026-09-13 — concept **#1 Mist labels** + **#5 hover**. Soft polish: hover underline → **3× thicker faded worn-brass grain** (was ~2px cream).  
 **Plate:** exact loop still `refs/stills/loop_07s.png` (1280×720). Do **not** regenerate landscape.
 
 ## Scrap for menu chrome
@@ -12,7 +12,7 @@
 | State | Treatment |
 |-------|-----------|
 | **Idle** | Five cream serif labels float mid-frame: `Work` `Make` `Go` `Roots` `Now` — **spaced words, no interpuncts** (mist #1, not brass/horizon dots). |
-| **Hover / selected** | Same bar: worn textured gold, ~6px visual weight @1280 (3× the original 2px cream spec), ~5px below baseline. **Not** cream `#F3EEE4` and not a flat hex fill. |
+| **Hover** | Soft **faded worn-brass** underline under the hovered word only (~**6px** visual weight @1280 = 3× prior cream). Soft edges + grain texture. **Not** color invert / fill swap; labels stay cream. |
 | **Selected** | Keep existing **`leather_panel`** reveal for room content. Loop continues behind. Panel path unchanged. |
 
 ## Typography tokens (at 1280 CSS px width)
@@ -41,14 +41,61 @@ text-shadow:
   0 0 1px rgba(20, 24, 18, 0.18);
 ```
 
-## Hover / selected underline (Brandon fine-tune)
+## Hover underline (soft polish — brass grain)
+**Thickness:** ~**6px** visual weight @1280 CSS px (3× the prior ~2px cream bar). Scale with viewport (`0.47vw` ≈ 6/1280, or `height: 0.469vw` capped). Soft alpha edges; optical core ≈6px inside a ~10px strip.
 
-Same bar on hover, focus, and selected. Labels stay cream `#F3EEE4` @ 0.95.
+**Color tokens (faded worn brass — not neon / not chrome):**
+| Token | Hex | Notes |
+|-------|-----|-------|
+| `--mist-brass-mid` | `#B59A62` | Primary fill / mean grain |
+| `--mist-brass-hi` | `#C9B07A` | Soft highlight flecks |
+| `--mist-brass-lo` | `#8F7548` | Shadow grain |
+| `--mist-brass-deep` | `#6E5A38` | Wear pits |
+| Fallback solid | `rgba(181, 154, 98, 0.78)` | If texture fails to load |
 
-- Height ~**6px** @1280 (`clamp(5px, 0.47vw, 8px)`) — 3× the original 2px spec
-- Faded textured gold (worn brass grain), not flat cream and not a single hex fill
-- CSS layers a gold gradient + repeating grain; optional overlay `public/art/v3/menu/underline_gold.png` when Pixel drops it
-- Still ~5px below the baseline box via `top: calc(100% + 5px)`
+**Texture assets:**
+| File | Size | Role |
+|------|------|------|
+| `finals/v3/menu/mist_underline_brass.png` | 192×10 RGBA | Soft-edged horizontal strip; scale to label width |
+| `finals/v3/menu/mist_underline_brass_tile.png` | 64×10 RGBA | Optional 1D-seamless tile for `background-repeat: repeat-x` |
+
+```css
+/* preferred: ::after + brass texture strip */
+.nav-label {
+  position: relative;
+  text-decoration: none;
+}
+.nav-label::after {
+  content: "";
+  position: absolute;
+  left: 1px;
+  right: 1px;
+  top: calc(100% + 5px); /* ~5px gap below baseline box */
+  height: 6px; /* visual weight @1280; strip asset is 10px with soft alpha */
+  background-color: rgba(181, 154, 98, 0.78); /* fallback */
+  background-image: url("/art/menu/mist_underline_brass.png");
+  background-size: 100% 100%; /* or: contain / 100% auto */
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 1px;
+  opacity: 0;
+  filter: blur(0.35px); /* keep grain readable; avoid washing to chrome */
+  transition: opacity 160ms ease;
+}
+.nav-label:hover::after,
+.nav-label:focus-visible::after {
+  opacity: 0.92; /* slight fade — worn, not neon bar */
+}
+
+/* optional seamless tile variant */
+.nav-label.tile-underline::after {
+  background-image: url("/art/menu/mist_underline_brass_tile.png");
+  background-repeat: repeat-x;
+  background-size: auto 100%;
+}
+```
+- Labels stay mist cream (`#F3EEE4`); only the underline shifts to brass.
+- Soft edges live in the PNG alpha — prefer texture over a hard CSS `border-bottom`.
 
 ## Layout sketch
 ```html
@@ -77,9 +124,11 @@ Video / loop sits full-bleed underneath (`object-fit: cover`). No menu sprite la
 ## Comp asset paths
 | File | Role |
 |------|------|
-| `public/art/v3/menu/mist_idle_on_loop.png` | Idle on exact `loop_07s` |
-| `public/art/v3/menu/mist_hover_make_on_loop.png` | Same + soft underline under **Make** |
-| `public/art/v3/menu/mist_contact.png` | Stacked idle \| hover contact with captions |
+| `/workspace/brandon-site-art/finals/v3/menu/mist_idle_on_loop.png` | Idle on exact `loop_07s` |
+| `/workspace/brandon-site-art/finals/v3/menu/mist_hover_make_on_loop.png` | Same + **~6px faded brass** underline under **Make** only |
+| `/workspace/brandon-site-art/finals/v3/menu/mist_contact.png` | Stacked idle \| hover contact with captions |
+| `/workspace/brandon-site-art/finals/v3/menu/mist_underline_brass.png` | RGBA brass grain strip for CSS `::after` |
+| `/workspace/brandon-site-art/finals/v3/menu/mist_underline_brass_tile.png` | Optional seamless 1D tile |
 | Concepts (ref only, do not overwrite) | `finals/v3/menu/concepts/01_mist_labels.png`, `05_horizon_type.png` |
 
 ## Out of scope / do not touch
@@ -88,6 +137,7 @@ Video / loop sits full-bleed underneath (`object-fit: cover`). No menu sprite la
 - Do not regenerate blot art for this menu path.
 
 ## Soft concerns
-- DejaVu is the **comp** face; swap to a licensed web serif with similar width before ship. **Production uses PT Serif** (not DejaVu).
+- DejaVu is the **comp** face; swap to a licensed web serif with similar width before ship.
 - Cream on bright mist patches needs the multi-pass shadow; if still thin on some loop frames, nudge shadow opacity slightly rather than adding chrome.
 - Word-gap may need ±8px tuning once live over motion video vs the still.
+- Brass underline: keep opacity ≤0.92 and avoid heavy glow — reads as worn metal, not a shiny accent bar.
