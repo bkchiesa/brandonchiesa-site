@@ -21,6 +21,7 @@ Navy / parchment / clay / tiffany. No greens.
 | `icon_work.png` `icon_make.png` `icon_go.png` `icon_roots.png` `icon_now.png` | Room header icons |
 | `menu_doors_desktop.png` | Locked desktop look reference / fallback |
 | `menu_doors_mobile.png` | Vertical plate on narrow viewports |
+| `menu_icon_plates.png` | Five-up icon strip reference |
 
 ## Room heroes
 

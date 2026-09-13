@@ -52,7 +52,7 @@ The workflow lives at `.github/workflows/deploy.yml`.
 | Door | What shipped |
 | --- | --- |
 | **Intro** | ~10s **crossfade** of `public/art/intro_01_coast.png` → `intro_02_piedmont.png` → `intro_03_blueridge.png` (Newport News Peninsula → James River piedmont → Blue Ridge). Honors `prefers-reduced-motion`. Visible **Skip intro**. |
-| **Menu** | `[BRANDON CHIESA]`, tagline, **horizontal** row of clickable `door_*.png` plates (desktop primary). Narrow phones also show `menu_doors_mobile.png` and can swipe the door row. `menu_doors_desktop.png` is the locked look reference / fallback. Icons are wired in room headers. |
+| **Menu** | `[BRANDON CHIESA]`, tagline, **horizontal** row of clickable `door_*.png` plates (desktop primary). Narrow phones also show `menu_doors_mobile.png` and can swipe the door row. `menu_doors_desktop.png` and `menu_icon_plates.png` are locked look references / fallbacks. Icons are wired in room headers. |
 | **Work** | Education, career path, community — public facts only. Bank disclaimer in the footer. |
 | **Make** | Hero card for [Sensei Moose’s Dojo](https://bkchiesa.github.io/Sensei-mooses-dojo/). Other cards are placeholders. |
 | **Go** | Film-strip placeholders. Privacy-enhanced YouTube embed ready (`youtube-nocookie.com`); channel links for `@brandonchiesa3886` and `@chiesab`. Video IDs TBD. |

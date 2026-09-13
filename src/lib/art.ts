@@ -17,6 +17,8 @@ export const ART = {
   menuDesktop: "art/menu_doors_desktop.png",
   /** Vertical door plate for narrow viewports. */
   menuMobile: "art/menu_doors_mobile.png",
+  /** Five-up icon strip reference. Not used for click targets. */
+  menuIconPlates: "art/menu_icon_plates.png",
   doors: {
     work: "art/door_work.png",
     make: "art/door_make.png",
