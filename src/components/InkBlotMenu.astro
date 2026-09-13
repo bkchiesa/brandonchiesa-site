@@ -1,5 +1,12 @@
 ---
-import { ART, artUrl } from "../lib/art";
+import {
+  ART,
+  artUrl,
+  blotActiveFrames,
+  blotIntroFrames,
+  blotPassiveFrames,
+  blotSelectedStill,
+} from "../lib/art";
 import { rooms, SITE_NAME, SITE_TAGLINE, withBase } from "../lib/site";
 ---
 
@@ -14,29 +21,41 @@ import { rooms, SITE_NAME, SITE_TAGLINE, withBase } from "../lib/site";
 
     <nav class="blot-nav" aria-label="Rooms">
       <p class="sr-only">
-        Five rooms as ink-blot plates in a horizontal row. Labels are on the plates and may be
-        redrawn; each control still names the room in text.
+        Five rooms as wet ink-blot plates. Each blot blooms in, then breathes until hover or select.
       </p>
       <ul class="blots" role="list">
         {
-          rooms.map((room) => (
-            <li>
-              <a class="blot" href={withBase(room.path)} data-room={room.id}>
-                <span class="blot-glow" aria-hidden="true" />
-                <img
-                  class="blot-plate"
-                  src={artUrl(ART.v3.blots[room.id])}
-                  alt=""
-                  width="512"
-                  height="512"
-                />
-                <span class="blot-copy">
-                  <span class="blot-name">{room.name}</span>
-                  <span class="blot-blurb">{room.blurb}</span>
-                </span>
-              </a>
-            </li>
-          ))
+          rooms.map((room) => {
+            const settle = artUrl(ART.v3.blots[room.id]);
+            const intro = blotIntroFrames(room.id).map((rel) => artUrl(rel));
+            const passive = blotPassiveFrames(room.id).map((rel) => artUrl(rel));
+            const active = blotActiveFrames(room.id).map((rel) => artUrl(rel));
+            const selected = artUrl(blotSelectedStill(room.id));
+            return (
+              <li>
+                <a
+                  class="blot"
+                  href={withBase(room.path)}
+                  data-room={room.id}
+                  data-state="passive"
+                  data-settle={settle}
+                  data-intro={intro.join(" ")}
+                  data-passive={passive.join(" ")}
+                  data-active={active.join(" ")}
+                  data-selected={selected}
+                >
+                  <span class="blot-glow" aria-hidden="true" />
+                  <span class="blot-art">
+                    <img class="blot-plate" src={settle} alt="" width="512" height="512" />
+                  </span>
+                  <span class="blot-copy">
+                    <span class="blot-name">{room.name}</span>
+                    <span class="blot-blurb">{room.blurb}</span>
+                  </span>
+                </a>
+              </li>
+            );
+          })
         }
       </ul>
     </nav>
@@ -53,3 +72,135 @@ import { rooms, SITE_NAME, SITE_TAGLINE, withBase } from "../lib/site";
     </div>
   </section>
 </div>
+
+<script>
+  const INTRO_MS = 120;
+  const PASSIVE_MS = 150;
+  const ACTIVE_MS = 110;
+  const STAGGER_MS = 70;
+
+  type Mode = "intro" | "passive" | "active" | "selected";
+
+  const shouldReduce = () =>
+    document.documentElement.dataset.reduceMotion === "true" ||
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  function split(value: string | undefined) {
+    return (value || "").split(/\s+/).filter(Boolean);
+  }
+
+  function preload(urls: string[]) {
+    urls.forEach((src) => {
+      const img = new Image();
+      img.src = src;
+    });
+  }
+
+  function attach(blot: HTMLElement) {
+    const plate = blot.querySelector<HTMLImageElement>(".blot-plate");
+    if (!plate) return;
+
+    const settle = blot.dataset.settle || plate.src;
+    const packs: Record<Exclude<Mode, "selected">, string[]> = {
+      intro: split(blot.dataset.intro),
+      passive: split(blot.dataset.passive),
+      active: split(blot.dataset.active),
+    };
+    const selected = blot.dataset.selected || settle;
+    preload([...packs.intro, ...packs.passive, ...packs.active, selected, settle]);
+
+    let mode: Mode = "passive";
+    let index = 0;
+    let timer = 0;
+
+    const show = (src: string) => {
+      if (src) plate.src = src;
+    };
+
+    const stop = () => {
+      window.clearInterval(timer);
+      timer = 0;
+    };
+
+    const loop = (next: "passive" | "active") => {
+      const frames = packs[next];
+      mode = next;
+      blot.dataset.state = next;
+      stop();
+      if (!frames.length) {
+        show(settle);
+        return;
+      }
+      index = 0;
+      show(frames[0]);
+      timer = window.setInterval(() => {
+        index = (index + 1) % frames.length;
+        show(frames[index]);
+      }, next === "passive" ? PASSIVE_MS : ACTIVE_MS);
+    };
+
+    const playIntro = (delay = 0) => {
+      if (shouldReduce() || packs.intro.length === 0) {
+        loop("passive");
+        return;
+      }
+      mode = "intro";
+      blot.dataset.state = "intro";
+      stop();
+      index = 0;
+      window.setTimeout(() => {
+        if (mode !== "intro") return;
+        show(packs.intro[0]);
+        timer = window.setInterval(() => {
+          if (mode !== "intro") return;
+          index += 1;
+          if (index >= packs.intro.length) {
+            loop("passive");
+            return;
+          }
+          show(packs.intro[index]);
+        }, INTRO_MS);
+      }, delay);
+    };
+
+    const holdSelected = () => {
+      mode = "selected";
+      blot.dataset.state = "selected";
+      stop();
+      show(selected);
+    };
+
+    blot.addEventListener("pointerenter", () => loop("active"));
+    blot.addEventListener("pointerleave", () => loop("passive"));
+    blot.addEventListener("focus", () => loop("active"));
+    blot.addEventListener("blur", () => loop("passive"));
+    blot.addEventListener("pointerdown", holdSelected);
+    blot.addEventListener("pointerup", () => {
+      if (blot.matches(":hover, :focus-visible")) loop("active");
+      else loop("passive");
+    });
+
+    return { playIntro, settle: () => { stop(); show(settle); blot.dataset.state = "passive"; } };
+  }
+
+  const players = Array.from(document.querySelectorAll<HTMLElement>(".blot")).map(attach);
+
+  function playAllIntros() {
+    if (shouldReduce()) {
+      players.forEach((player) => player?.settle());
+      return;
+    }
+    players.forEach((player, i) => player?.playIntro(i * STAGGER_MS));
+  }
+
+  document.addEventListener("bc:house-ready", playAllIntros);
+  if (document.documentElement.dataset.shell === "ready") playAllIntros();
+
+  document.querySelectorAll("[data-reduce-motion]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      if (document.documentElement.dataset.reduceMotion === "true") {
+        players.forEach((player) => player?.settle());
+      }
+    });
+  });
+</script>

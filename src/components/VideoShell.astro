@@ -162,6 +162,7 @@ const { intro = false } = Astro.props;
       if (btn.hasAttribute("data-video-hit")) return;
       btn.textContent = "Replay intro";
     });
+    document.dispatchEvent(new CustomEvent("bc:house-ready"));
   }
 
   function becomeIntro() {

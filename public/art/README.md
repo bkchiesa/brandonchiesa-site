@@ -27,15 +27,17 @@ Navy / parchment / clay / tiffany. No greens.
 
 ## Look v3 (video shell)
 
-Blot contact is **held** until Pixel PASSes r3 (rounder / wetter) from `finals/v3/menu/`. Copy onto the blot paths below — do not chase interim PNG refreshes.
-
-Leather **pad props are rejected** (`leather_pad.png`, `leather_pad_flat.png`). Room cards are a flat **texture panel**. Drop r3 at `v3/leather_panel.png` (one-line hook in `src/lib/art.ts` → `ART.v3.leatherPanel`). Until that file exists, the panel uses a CSS leather fill.
+r3 locked. State-folder anim packs are canonical. Ignore `v3/anim/{door}/` mirrors.
 
 | File | Use |
 | --- | --- |
-| `v3/blot_work.png` `v3/blot_make.png` `v3/blot_go.png` `v3/blot_roots.png` `v3/blot_now.png` | House menu ink-blots (held / not final) |
-| `v3/leather_panel.png` | **Preferred** flat leather texture fill (not shipped yet) |
-| `v3/leather_pad.png` `v3/leather_pad_flat.png` | Rejected desk-pad props — do not wire |
+| `v3/blot_*.png` | Settled wet blot stills |
+| `v3/anim/intro/blot_{id}_intro_00..05.png` | Bloom-in once |
+| `v3/anim/passive/blot_{id}_passive_00..07.png` | Idle liquid loop (8f) |
+| `v3/anim/active/blot_{id}_active_00..05.png` | Hover/focus loop |
+| `v3/anim/active/blot_{id}_selected.png` | Pressed/selected still |
+| `v3/leather_panel.png` | Room card texture fill |
+| `v3/leather_pad.png` `v3/leather_pad_flat.png` | Rejected — do not wire |
 
 ## Room heroes
 

@@ -40,11 +40,10 @@ export const ART = {
     roots: "art/room_hero_roots.png",
   } satisfies Partial<Record<RoomId, string>>,
   /**
-   * Look v3 video-shell chrome.
-   * Blots: hold current contact until Pixel PASSes r3 (rounder / wetter) into
-   * `finals/v3/menu/` → copy onto these exact public/ paths.
-   * Leather: prefer `leatherPanel` (`leather_panel.png`) when present.
-   * Do not use `leather_pad.png` or `leather_pad_flat.png` — rejected pad props.
+   * Look v3 video-shell chrome (r3 locked).
+   * Leather: `leatherPanel` only — never `leather_pad*`.
+   * Blot anim: state folders under `art/v3/anim/{intro,passive,active}/`.
+   * Ignore legacy `art/v3/anim/{door}/` mirrors.
    */
   v3: {
     blots: {
@@ -54,10 +53,34 @@ export const ART = {
       roots: "art/v3/blot_roots.png",
       now: "art/v3/blot_now.png",
     } satisfies Record<RoomId, string>,
-    /** One-line swap: Pixel r3 flat leather texture fill. */
+    /** Flat leather texture fill. One-line swap if the filename changes. */
     leatherPanel: "art/v3/leather_panel.png",
   },
 } as const;
+
+const INTRO_IX = [0, 1, 2, 3, 4, 5] as const;
+const PASSIVE_IX = [0, 1, 2, 3, 4, 5, 6, 7] as const;
+const ACTIVE_IX = [0, 1, 2, 3, 4, 5] as const;
+
+/** Canonical: `anim/intro/blot_{id}_intro_00..05.png` */
+export function blotIntroFrames(id: RoomId): string[] {
+  return INTRO_IX.map((i) => `art/v3/anim/intro/blot_${id}_intro_0${i}.png`);
+}
+
+/** Canonical: `anim/passive/blot_{id}_passive_00..07.png` */
+export function blotPassiveFrames(id: RoomId): string[] {
+  return PASSIVE_IX.map((i) => `art/v3/anim/passive/blot_${id}_passive_0${i}.png`);
+}
+
+/** Canonical: `anim/active/blot_{id}_active_00..05.png` */
+export function blotActiveFrames(id: RoomId): string[] {
+  return ACTIVE_IX.map((i) => `art/v3/anim/active/blot_${id}_active_0${i}.png`);
+}
+
+/** Canonical: `anim/active/blot_{id}_selected.png` */
+export function blotSelectedStill(id: RoomId): string {
+  return `art/v3/anim/active/blot_${id}_selected.png`;
+}
 
 export const VIDEO = {
   intro: "video/intro.mp4",
