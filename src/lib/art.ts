@@ -40,10 +40,12 @@ export const ART = {
     roots: "art/room_hero_roots.png",
   } satisfies Partial<Record<RoomId, string>>,
   /**
-   * Look v3 video-shell chrome (r3 locked).
+   * Look v3 video-shell chrome.
    * Leather: `leatherPanel` only — never `leather_pad*`.
    * Blot anim: state folders under `art/v3/anim/{intro,passive,active}/`.
    * Ignore legacy `art/v3/anim/{door}/` mirrors.
+   * Current blot colors are interim — Pixel/Ink pastel recolor will overwrite
+   * these same filenames (do not rename).
    */
   v3: {
     blots: {

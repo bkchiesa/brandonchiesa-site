@@ -27,7 +27,9 @@ Navy / parchment / clay / tiffany. No greens.
 
 ## Look v3 (video shell)
 
-r3 locked. State-folder anim packs are canonical. Ignore `v3/anim/{door}/` mirrors.
+State-folder anim packs are canonical. Ignore `v3/anim/{door}/` mirrors.
+
+**Hold:** current blot colors are interim. Pixel/Ink will pastel-recolor to the loop palette — overwrite the same filenames under `anim/{intro,passive,active}/` and `blot_*.png`. Do not rename.
 
 | File | Use |
 | --- | --- |
