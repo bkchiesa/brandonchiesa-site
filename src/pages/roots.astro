@@ -1,15 +1,20 @@
 ---
+import LeatherPad from "../components/LeatherPad.astro";
 import RoomHero from "../components/RoomHero.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import SiteHeader from "../components/SiteHeader.astro";
+import VideoShell from "../components/VideoShell.astro";
 import Base from "../layouts/Base.astro";
 ---
 
 <Base
   title="Roots"
   room="roots"
+  videoShell
   description="Copy stubs for a Chiesa family migration story: Valmozzola to Chicago to Virginia."
 >
+  <VideoShell />
+  <LeatherPad title="Roots">
   <SiteHeader current="roots" />
   <main id="main" class="page-main">
     <RoomHero
@@ -75,4 +80,5 @@ import Base from "../layouts/Base.astro";
     </div>
   </main>
   <SiteFooter />
+  </LeatherPad>
 </Base>

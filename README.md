@@ -2,7 +2,7 @@
 
 Personal house-with-rooms site. Tech × Renaissance.
 
-**Look v2 is LOCKED:** blues + tans (navy / parchment / sparse clay / tiffany HUD — no greens) and a place-accurate westbound intro (Newport News Peninsula → James River piedmont → Blue Ridge). Production plates live in `public/art/` using the filenames in `src/lib/art.ts`.
+**Look v3 (this branch):** video-driven house. Intro flyover once, then a looping valley behind ink-blot rooms and leather-pad cards. Pixel interim chrome is in `public/art/v3/`. Look v2 door plates are **not** the primary menu.
 
 **This is a personal website. It is not affiliated with, and does not represent, First Citizens Bank.**
 
@@ -39,35 +39,29 @@ This repo is configured for **GitHub Actions** → Pages (Astro static `dist/`).
 Pages is **not enabled on the repo yet** (the Pages API still 404s). After a maintainer sets **Settings → Pages → Source: GitHub Actions**:
 
 1. Open **Actions → Deploy to GitHub Pages**.
-2. **Run workflow** and choose this PR branch `cursor/personal-site-scaffold-c518` (or `main` after merge).
+2. **Run workflow** and choose this PR branch `cursor/video-shell-v3` (or `main` after merge).
 3. The first deploy creates the `github-pages` environment. The site is then at  
    `https://bkchiesa.github.io/brandonchiesa-site/`.
 
-Push to `main` or to `cursor/personal-site-scaffold-c518` also triggers the workflow. This PR is not merged.
+Push to `main` or to `cursor/video-shell-v3` also triggers the workflow. This PR is not merged.
 
 The workflow lives at `.github/workflows/deploy.yml`.
 
-## v1 rooms
+## Look v3 house
 
-| Door | What shipped |
+| Beat | What shipped |
 | --- | --- |
-| **Intro** | ~10s **crossfade** of `public/art/intro_01_coast.png` → `intro_02_piedmont.png` → `intro_03_blueridge.png` (Newport News Peninsula → James River piedmont → Blue Ridge). Honors `prefers-reduced-motion`. Visible **Skip intro**. |
-| **Menu** | `[BRANDON CHIESA]`, tagline, **horizontal** row of clickable `door_*.png` plates (desktop primary). Narrow phones also show `menu_doors_mobile.png` and can swipe the door row. `menu_doors_desktop.png` and `menu_icon_plates.png` are locked look references / fallbacks. Icons are wired in room headers. |
-| **Work** | Education, career path, community — public facts only. Bank disclaimer in the footer. |
-| **Make** | Hero card for [Sensei Moose’s Dojo](https://bkchiesa.github.io/Sensei-mooses-dojo/). Other cards are placeholders. |
-| **Go** | Film-strip placeholders. Privacy-enhanced YouTube embed ready (`youtube-nocookie.com`); channel links for `@brandonchiesa3886` and `@chiesab`. Video IDs TBD. |
-| **Roots** | Locked `room_hero_roots.png` (Valmozzola → Virginia). Map + tree wireframes. Copy stubs: Valmozzola → Chicago → Virginia. |
-| **Now** | Empty field notes stub. |
+| **Intro** | `public/video/intro.mp4` plays **once**, full-bleed, on first house load. **No menu, blots, or leather chrome over the intro.** Escape or an invisible tap skips; `prefers-reduced-motion`, footer Reduce motion, `?skip=1`, or a prior session skip go straight to the house. If autoplay is blocked, a tap-to-start prompt appears. |
+| **Loop** | Seamless handoff to `public/video/loop.mp4` — full-bleed, `object-fit: cover`, center-crop (does not tile). Reduced motion uses the loop poster. |
+| **Menu** | Horizontal ink-blot row: Work · Make · Go · Roots · Now. Structure is wired to `public/art/v3/blot_*.png`. Current contact is **held** (not final) until Pixel PASSes r3 — rounder / wetter — from `finals/v3/menu/`. Soft light underlays keep dark blots readable; the row sits in the sky / open-ground band. |
+| **Rooms** | Selecting a blot opens that room route as an **opaque leather texture panel** (CSS fill until Pixel drops `public/art/v3/leather_panel.png`) over a dark veil. No frosted glass, no desk-pad prop. Existing Work content and Make / Go / Roots / Now stubs sit in the inset. `leather_pad.png` / `leather_pad_flat.png` are rejected and unwired. |
+| **Motion** | Session skip: after one play (or Skip), refresh stays on the menu. **Replay intro** flies again. |
 
-Art swap: overwrite the files in `public/art/` (same names). Menu mobile plate and Roots hero are live.
+Art swap: overwrite the files in `public/art/v3/` and `public/video/` (same names). Hooks live in `src/lib/art.ts`.
 
-## Palette (locked)
+## Palette
 
-Navy `--navy`, parchment `--parchment`, sparse clay `--clay`, tiffany HUD `--tiffany`. No green foliage or green HUD.
-
-## Art
-
-Locked Look v2 plates live in `public/art/`. Door/icon plates drive the interactive menu; room pages use `room_hero_*`.
+Navy `--navy`, parchment `--parchment`, sparse clay `--clay`, tiffany HUD `--tiffany` for type and cards. The video plates are the earthy field; leather and ink sit on top.
 
 ## SEO / agents
 
@@ -77,9 +71,12 @@ Locked Look v2 plates live in `public/art/`. Door/icon plates drive the interact
 - Open Graph image: `og.png` (plus `og.svg`).
 - Landmarks: skip link, header, nav, main, footer.
 
-## Motion
+## Rooms
 
-- OS **Reduce motion** skips the intro.
-- Footer **Reduce motion** persists in `localStorage`.
-- Session skip: after one play (or Skip), refresh stays on the menu. Use **Replay intro** to fly again.
-- `?skip=1` on the house URL also lands on the menu.
+| Door | What shipped |
+| --- | --- |
+| **Work** | Education, career path, community — public facts only. Bank disclaimer in the footer. |
+| **Make** | Hero card for [Sensei Moose’s Dojo](https://bkchiesa.github.io/Sensei-mooses-dojo/). Other cards are placeholders. |
+| **Go** | Film-strip placeholders. Privacy-enhanced YouTube embed ready (`youtube-nocookie.com`); channel links for `@brandonchiesa3886` and `@chiesab`. Video IDs TBD. |
+| **Roots** | Locked `room_hero_roots.png` (Valmozzola → Virginia). Map + tree wireframes. Copy stubs: Valmozzola → Chicago → Virginia. |
+| **Now** | Empty field notes stub. |

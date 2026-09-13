@@ -1,7 +1,9 @@
 ---
+import LeatherPad from "../components/LeatherPad.astro";
 import RoomHero from "../components/RoomHero.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import SiteHeader from "../components/SiteHeader.astro";
+import VideoShell from "../components/VideoShell.astro";
 import Base from "../layouts/Base.astro";
 import { DOJO_URL } from "../lib/site";
 
@@ -15,8 +17,11 @@ const placeholders = [
 <Base
   title="Make"
   room="make"
+  videoShell
   description="Things Brandon Chiesa makes, led by Sensei Moose’s Dojo, plus upcoming app cards."
 >
+  <VideoShell />
+  <LeatherPad title="Make">
   <SiteHeader current="make" />
   <main id="main" class="page-main">
     <RoomHero room="make" alt="Ink studies of a builder in motion — build, train, create" />
@@ -60,4 +65,5 @@ const placeholders = [
     </ul>
   </main>
   <SiteFooter />
+  </LeatherPad>
 </Base>

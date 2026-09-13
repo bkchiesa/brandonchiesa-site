@@ -1,7 +1,9 @@
 ---
+import LeatherPad from "../components/LeatherPad.astro";
 import RoomHero from "../components/RoomHero.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import SiteHeader from "../components/SiteHeader.astro";
+import VideoShell from "../components/VideoShell.astro";
 import Base from "../layouts/Base.astro";
 import { YOUTUBE_CHANNELS } from "../lib/site";
 
@@ -17,8 +19,11 @@ const frames = [
 <Base
   title="Go"
   room="go"
+  videoShell
   description="Travel films and privacy-enhanced YouTube placeholders for Brandon Chiesa’s channels."
 >
+  <VideoShell />
+  <LeatherPad title="Go">
   <SiteHeader current="go" />
   <main id="main" class="page-main">
     <RoomHero room="go" alt="Travel filmstrip: river, ridge, and city — films, journeys, ground truth" />
@@ -75,6 +80,7 @@ const frames = [
     </section>
   </main>
   <SiteFooter />
+  </LeatherPad>
 </Base>
 
 <script>

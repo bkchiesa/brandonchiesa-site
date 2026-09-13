@@ -8,7 +8,7 @@ Site: https://bkchiesa.github.io/brandonchiesa-site/
 
 ## Rooms
 
-- [House / menu](https://bkchiesa.github.io/brandonchiesa-site/): Intro crossfade (Newport News Peninsula → James River piedmont → Blue Ridge) then a horizontal row of five room doors.
+- [House / menu](https://bkchiesa.github.io/brandonchiesa-site/): Intro video (play once) then a looping valley behind a horizontal ink-blot menu (Work, Make, Go, Roots, Now). Rooms open as leather texture panels.
 - [Work](https://bkchiesa.github.io/brandonchiesa-site/work/): Public bio only — education, career path, community.
 - [Make](https://bkchiesa.github.io/brandonchiesa-site/make/): Apps and builds, including Sensei Moose's Dojo.
 - [Go](https://bkchiesa.github.io/brandonchiesa-site/go/): Travel film-strip (placeholders) and YouTube channels.

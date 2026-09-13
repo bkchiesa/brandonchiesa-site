@@ -1,0 +1,55 @@
+---
+import { ART, artUrl } from "../lib/art";
+import { rooms, SITE_NAME, SITE_TAGLINE, withBase } from "../lib/site";
+---
+
+<div class="house-ui" id="menu">
+  <section class="menu menu--blots" aria-labelledby="identity-name">
+    <p class="menu-status hud-kicker" data-menu-status>House</p>
+    <header class="identity identity--sky">
+      <p class="hud-kicker">Living archive</p>
+      <h1 id="identity-name">[{SITE_NAME.toUpperCase()}]</h1>
+      <p class="tagline">{SITE_TAGLINE}</p>
+    </header>
+
+    <nav class="blot-nav" aria-label="Rooms">
+      <p class="sr-only">
+        Five rooms as ink-blot plates in a horizontal row. Labels are on the plates and may be
+        redrawn; each control still names the room in text.
+      </p>
+      <ul class="blots" role="list">
+        {
+          rooms.map((room) => (
+            <li>
+              <a class="blot" href={withBase(room.path)} data-room={room.id}>
+                <span class="blot-glow" aria-hidden="true" />
+                <img
+                  class="blot-plate"
+                  src={artUrl(ART.v3.blots[room.id])}
+                  alt=""
+                  width="512"
+                  height="512"
+                />
+                <span class="blot-copy">
+                  <span class="blot-name">{room.name}</span>
+                  <span class="blot-blurb">{room.blurb}</span>
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="menu-foot menu-foot--sky">
+      <button type="button" class="text-btn mono" data-skip-intro>Skip intro</button>
+      <button type="button" class="text-btn mono" data-reduce-motion aria-pressed="false">
+        Reduce motion
+      </button>
+      <p class="menu-disclaimer">
+        This is a personal website. It is not affiliated with, and does not represent, First Citizens
+        Bank.
+      </p>
+    </div>
+  </section>
+</div>

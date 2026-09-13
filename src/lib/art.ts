@@ -39,6 +39,31 @@ export const ART = {
     go: "art/room_hero_go.png",
     roots: "art/room_hero_roots.png",
   } satisfies Partial<Record<RoomId, string>>,
+  /**
+   * Look v3 video-shell chrome.
+   * Blots: hold current contact until Pixel PASSes r3 (rounder / wetter) into
+   * `finals/v3/menu/` → copy onto these exact public/ paths.
+   * Leather: prefer `leatherPanel` (`leather_panel.png`) when present.
+   * Do not use `leather_pad.png` or `leather_pad_flat.png` — rejected pad props.
+   */
+  v3: {
+    blots: {
+      work: "art/v3/blot_work.png",
+      make: "art/v3/blot_make.png",
+      go: "art/v3/blot_go.png",
+      roots: "art/v3/blot_roots.png",
+      now: "art/v3/blot_now.png",
+    } satisfies Record<RoomId, string>,
+    /** One-line swap: Pixel r3 flat leather texture fill. */
+    leatherPanel: "art/v3/leather_panel.png",
+  },
+} as const;
+
+export const VIDEO = {
+  intro: "video/intro.mp4",
+  loop: "video/loop.mp4",
+  introPoster: "video/intro.jpg",
+  loopPoster: "video/loop.jpg",
 } as const;
 
 export function artUrl(rel: string): string {

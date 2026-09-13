@@ -1,7 +1,9 @@
 ---
+import LeatherPad from "../components/LeatherPad.astro";
 import RoomHero from "../components/RoomHero.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import SiteHeader from "../components/SiteHeader.astro";
+import VideoShell from "../components/VideoShell.astro";
 import Base from "../layouts/Base.astro";
 import { BANK_DISCLAIMER } from "../lib/site";
 
@@ -27,8 +29,11 @@ const blocks = [
 <Base
   title="Work"
   room="work"
+  videoShell
   description="Public bio of Brandon Chiesa: Hampden-Sydney education, banking career path, and Fluvanna Imagination Library community work."
 >
+  <VideoShell />
+  <LeatherPad title="Work">
   <SiteHeader current="work" />
   <main id="main" class="page-main">
     <RoomHero room="work" alt="The path is the work — a five-stage timeline from foundation to legacy" />
@@ -69,4 +74,5 @@ const blocks = [
     <p class="disclaimer">{BANK_DISCLAIMER}</p>
   </main>
   <SiteFooter showDisclaimer />
+  </LeatherPad>
 </Base>

@@ -1,13 +1,18 @@
 ---
+import LeatherPad from "../components/LeatherPad.astro";
+import VideoShell from "../components/VideoShell.astro";
 import Base from "../layouts/Base.astro";
 import { withBase } from "../lib/site";
 ---
 
-<Base title="Lost in the woods" description="This room is not on the house plan.">
-  <main id="main" class="page-main" style="text-align:center; padding-top:15vh;">
-    <p class="hud-kicker">404</p>
-    <h1 class="room-title">Off the map</h1>
-    <p class="lede" style="margin-inline:auto;">That corridor is not drawn yet. Return to the house menu.</p>
-    <p><a class="house-link mono" href={withBase()}>← House</a></p>
-  </main>
+<Base title="Lost in the woods" videoShell description="This room is not on the house plan.">
+  <VideoShell />
+  <LeatherPad title="Off the map">
+    <main id="main" class="page-main" style="text-align:center;">
+      <p class="hud-kicker">404</p>
+      <h1 class="room-title">Off the map</h1>
+      <p class="lede" style="margin-inline:auto;">That corridor is not drawn yet. Return to the house menu.</p>
+      <p><a class="house-link mono" href={withBase()}>← House</a></p>
+    </main>
+  </LeatherPad>
 </Base>

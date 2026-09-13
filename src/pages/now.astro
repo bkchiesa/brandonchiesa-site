@@ -1,10 +1,14 @@
 ---
+import LeatherPad from "../components/LeatherPad.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import SiteHeader from "../components/SiteHeader.astro";
+import VideoShell from "../components/VideoShell.astro";
 import Base from "../layouts/Base.astro";
 ---
 
-<Base title="Now" room="now" description="Empty field notes — a light stub for what Brandon Chiesa is noticing now.">
+<Base title="Now" room="now" videoShell description="Empty field notes — a light stub for what Brandon Chiesa is noticing now.">
+  <VideoShell />
+  <LeatherPad title="Now">
   <SiteHeader current="now" />
   <main id="main" class="page-main">
     <p class="hud-kicker">Room E</p>
@@ -34,4 +38,5 @@ import Base from "../layouts/Base.astro";
     </div>
   </main>
   <SiteFooter />
+  </LeatherPad>
 </Base>

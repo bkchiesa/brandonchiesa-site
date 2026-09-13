@@ -1,14 +1,17 @@
 ---
 import "../styles/global.css";
+import "../styles/shell.css";
 import { BANK_DISCLAIMER, SITE_CANONICAL, SITE_DESCRIPTION, SITE_NAME, SITE_TAGLINE, withBase } from "../lib/site";
 
 interface Props {
   title?: string;
   description?: string;
   room?: string;
+  house?: boolean;
+  videoShell?: boolean;
 }
 
-const { title, description = SITE_DESCRIPTION, room } = Astro.props;
+const { title, description = SITE_DESCRIPTION, room, house = false, videoShell = false } = Astro.props;
 const pageTitle = title ? `${title} — ${SITE_NAME}` : `${SITE_NAME} — ${SITE_TAGLINE}`;
 const canonical = new URL(Astro.url.pathname, SITE_CANONICAL).href;
 const ogImage = new URL(withBase("og.png"), SITE_CANONICAL).href;
@@ -67,7 +70,11 @@ const personJsonLd = {
     />
     <script type="application/ld+json" set:html={JSON.stringify(personJsonLd)} />
   </head>
-  <body data-room={room}>
+  <body
+    class:list={[videoShell && "has-video-shell"]}
+    data-room={room}
+    data-house={house ? "true" : undefined}
+  >
     <a class="skip-link" href="#main">Skip to content</a>
     <slot />
     <script is:inline>
@@ -77,6 +84,21 @@ const personJsonLd = {
         var osReduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
         if (stored === "1" || (stored !== "0" && osReduce)) {
           document.documentElement.dataset.reduceMotion = "true";
+        }
+        var skip = false;
+        try {
+          skip = new URLSearchParams(location.search).has("skip");
+        } catch (e) {}
+        var done = false;
+        try {
+          done = sessionStorage.getItem("bc-intro-done") === "1";
+        } catch (e) {}
+        var reduce = document.documentElement.dataset.reduceMotion === "true";
+        var house = document.body.getAttribute("data-house") === "true";
+        if (!house || reduce || skip || done) {
+          document.documentElement.dataset.shell = "ready";
+        } else {
+          document.documentElement.dataset.shell = "intro";
         }
       })();
     </script>

@@ -2,7 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [main, cursor/personal-site-scaffold-c518]
+    branches: [main, cursor/personal-site-scaffold-c518, cursor/video-shell-v3]
   workflow_dispatch:
 
 permissions:

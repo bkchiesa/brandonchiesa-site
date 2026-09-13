@@ -1,0 +1,30 @@
+---
+import { existsSync } from "node:fs";
+import { join } from "node:path";
+import { ART, artUrl } from "../lib/art";
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+
+/** Prefer Pixel r3 `leather_panel.png`. Pad props are rejected — never fall back to them. */
+const leatherTextureRel = ART.v3.leatherPanel;
+const hasLeatherTexture = existsSync(join(process.cwd(), "public", leatherTextureRel));
+const textureUrl = hasLeatherTexture ? artUrl(leatherTextureRel) : "";
+---
+
+<div class="room-stage">
+  <div class="room-veil" aria-hidden="true"></div>
+  <article
+    class="leather-panel"
+    aria-label={title}
+    data-has-texture={hasLeatherTexture ? "true" : "false"}
+    style={hasLeatherTexture ? `--leather-texture: url("${textureUrl}")` : undefined}
+  >
+    <div class="leather-inset">
+      <slot />
+    </div>
+  </article>
+</div>
