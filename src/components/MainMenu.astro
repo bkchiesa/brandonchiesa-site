@@ -1,0 +1,54 @@
+---
+import { rooms, SITE_NAME, SITE_TAGLINE, withBase } from "../lib/site";
+import DoorIcon from "./DoorIcon.astro";
+---
+
+<div class="house" id="menu">
+  <div class="ridgeline" aria-hidden="true">
+    <svg viewBox="0 0 1200 240" preserveAspectRatio="none">
+      <path
+        d="M0 180 C80 160 140 120 220 130 C300 140 340 80 420 90 C500 100 560 40 640 70 C720 100 780 50 860 80 C940 110 1000 60 1080 90 C1140 110 1180 100 1200 90 V240 H0 Z"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.1"></path>
+      <path
+        d="M0 200 C160 170 260 150 360 165 C480 185 560 120 680 140 C800 160 900 110 1200 150"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="0.8"
+        opacity="0.7"></path>
+    </svg>
+  </div>
+
+  <section class="menu" aria-labelledby="identity-name">
+    <p class="menu-status hud-kicker" data-menu-status>House</p>
+    <header class="identity">
+      <p class="hud-kicker">Living archive</p>
+      <h1 id="identity-name">[{SITE_NAME.toUpperCase()}]</h1>
+      <p class="tagline">{SITE_TAGLINE}</p>
+    </header>
+
+    <nav aria-label="Rooms">
+      <ul class="doors">
+        {
+          rooms.map((room) => (
+            <li>
+              <a class="door frame" href={withBase(room.path)}>
+                <DoorIcon id={room.id} />
+                <h2>{room.name}</h2>
+                <p>{room.blurb}</p>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="menu-foot">
+      <button type="button" class="text-btn mono" data-skip-intro>Skip intro</button>
+      <button type="button" class="text-btn mono" data-reduce-motion aria-pressed="false">
+        Reduce motion
+      </button>
+    </div>
+  </section>
+</div>

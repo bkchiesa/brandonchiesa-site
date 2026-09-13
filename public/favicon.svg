@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Brandon Chiesa">
+  <rect width="64" height="64" fill="#fafafa"/>
+  <g fill="none" stroke="#111" stroke-width="1.5" stroke-linejoin="round">
+    <path d="M8 44 L32 16 L56 44"/>
+    <path d="M18 44 L32 28 L46 44"/>
+    <circle cx="32" cy="14" r="3"/>
+    <path d="M32 11 V6"/>
+  </g>
+  <circle cx="8" cy="8" r="1.2" fill="#111"/>
+  <circle cx="56" cy="8" r="1.2" fill="#111"/>
+  <circle cx="8" cy="56" r="1.2" fill="#111"/>
+  <circle cx="56" cy="56" r="1.2" fill="#111"/>
+</svg>

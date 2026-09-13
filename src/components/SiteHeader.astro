@@ -1,0 +1,21 @@
+---
+import { rooms, withBase, type RoomId } from "../lib/site";
+
+interface Props {
+  current?: RoomId;
+}
+
+const { current } = Astro.props;
+const room = rooms.find((item) => item.id === current);
+---
+
+<header class="site-header">
+  <a class="house-link mono" href={withBase()}>← House</a>
+  {
+    room && (
+      <p class="room-letter">
+        {room.letter} · {room.name}
+      </p>
+    )
+  }
+</header>
