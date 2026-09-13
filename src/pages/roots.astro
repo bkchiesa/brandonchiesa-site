@@ -20,19 +20,19 @@ import Base from "../layouts/Base.astro";
         <h2 id="map-title" class="hud-kicker">Migration map</h2>
         <svg viewBox="0 0 360 220" role="img" aria-label="Dotted path from Valmozzola through Chicago to Virginia">
           <title>Valmozzola to Chicago to Virginia</title>
-          <ellipse cx="180" cy="110" rx="150" ry="88" fill="none" stroke="#111" stroke-width="1.1"></ellipse>
+          <ellipse cx="180" cy="110" rx="150" ry="88" fill="none" stroke="currentColor" stroke-width="1.1"></ellipse>
           <path
             d="M70 150 C120 130 150 90 200 80 C240 72 280 100 300 130"
             fill="none"
-            stroke="#111"
+            stroke="currentColor"
             stroke-dasharray="4 4"
             stroke-width="1.2"></path>
-          <g fill="#111">
+          <g fill="currentColor">
             <circle cx="70" cy="150" r="4" />
             <circle cx="200" cy="80" r="4" />
             <circle cx="300" cy="130" r="4" />
           </g>
-          <g font-family="IBM Plex Mono, monospace" font-size="9" fill="#111">
+          <g font-family="IBM Plex Mono, monospace" font-size="9" fill="currentColor">
             <text x="78" y="168">Valmozzola</text>
             <text x="208" y="74">Chicago</text>
             <text x="250" y="148">Virginia</text>
@@ -41,7 +41,7 @@ import Base from "../layouts/Base.astro";
         <ol>
           <li><strong>Valmozzola</strong> — Apennine origin (Emilia-Romagna). Copy stub.</li>
           <li><strong>Chicago</strong> — first American chapter. Copy stub.</li>
-          <li><strong>Virginia</strong> — Piedmont / Blue Ridge home now. Copy stub.</li>
+          <li><strong>Virginia</strong> — James River piedmont / Blue Ridge home now. Copy stub.</li>
         </ol>
       </section>
 
@@ -49,14 +49,14 @@ import Base from "../layouts/Base.astro";
         <h2 id="tree-title" class="hud-kicker">Family tree</h2>
         <svg class="tree-chart" viewBox="0 0 320 200" role="img" aria-label="Placeholder family tree: grandparents, parents, me">
           <title>Family connections</title>
-          <g fill="none" stroke="#111" stroke-width="1.1">
+          <g fill="none" stroke="currentColor" stroke-width="1.1">
             <rect x="110" y="12" width="100" height="32" rx="4" />
             <rect x="24" y="92" width="100" height="32" rx="4" />
             <rect x="196" y="92" width="100" height="32" rx="4" />
             <rect x="110" y="160" width="100" height="32" rx="4" />
             <path d="M160 44 V68 H74 V92 M160 68 H246 V92 M160 124 V160" />
           </g>
-          <g font-family="IBM Plex Mono, monospace" font-size="9" text-anchor="middle" fill="#111">
+          <g font-family="IBM Plex Mono, monospace" font-size="9" text-anchor="middle" fill="currentColor">
             <text x="160" y="32">Grandparents</text>
             <text x="74" y="112">Parent 1</text>
             <text x="246" y="112">Parent 2</text>

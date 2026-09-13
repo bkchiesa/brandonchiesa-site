@@ -8,7 +8,7 @@ Site: https://bkchiesa.github.io/brandonchiesa-site/
 
 ## Rooms
 
-- [House / menu](https://bkchiesa.github.io/brandonchiesa-site/): Intro flyover (Coast → Piedmont/River → Blue Ridge) then five room doors.
+- [House / menu](https://bkchiesa.github.io/brandonchiesa-site/): Intro flyover (Newport News Peninsula → James River piedmont → Blue Ridge) then five room doors.
 - [Work](https://bkchiesa.github.io/brandonchiesa-site/work/): Public bio only — education, career path, community.
 - [Make](https://bkchiesa.github.io/brandonchiesa-site/make/): Apps and builds, including Sensei Moose's Dojo.
 - [Go](https://bkchiesa.github.io/brandonchiesa-site/go/): Travel film-strip (placeholders) and YouTube channels.

@@ -1,6 +1,6 @@
 # Brandon Chiesa — living archive
 
-Personal house-with-rooms site. Tech × Renaissance: HUD grids and circuit cues mixed with map plates (compass, hatching, a westbound flyover). Monochrome menu. Public portfolio only.
+Personal house-with-rooms site. Tech × Renaissance: HUD grids and circuit cues mixed with map plates (compass, hatching, a westbound flyover). Palette is cool blue/slate + warm tan/parchment — not greens. Public portfolio only.
 
 **This is a personal website. It is not affiliated with, and does not represent, First Citizens Bank.**
 
@@ -47,7 +47,7 @@ The workflow lives at `.github/workflows/deploy.yml`. It does **not** deploy fro
 
 | Door | What shipped |
 | --- | --- |
-| **Intro** | ~10s Coast → Piedmont/River → Blue Ridge SVG flyover (camera west), then fade to menu. Honors `prefers-reduced-motion`. Visible **Skip intro**. |
+| **Intro** | ~10s Newport News Peninsula → James River piedmont → Blue Ridge SVG flyover (camera west), then fade to menu. Honors `prefers-reduced-motion`. Visible **Skip intro**. Placeholder plates until Pixel comps lock. |
 | **Menu** | `[BRANDON CHIESA]`, tagline, five doors, **Skip intro / Replay intro** and **Reduce motion**. |
 | **Work** | Education, career path, community — public facts only. Bank disclaimer in the footer. |
 | **Make** | Hero card for [Sensei Moose’s Dojo](https://bkchiesa.github.io/Sensei-mooses-dojo/). Other cards are placeholders. |
@@ -55,7 +55,11 @@ The workflow lives at `.github/workflows/deploy.yml`. It does **not** deploy fro
 | **Roots** | Map + tree wireframes. Copy stubs: Valmozzola → Chicago → Virginia. |
 | **Now** | Empty field notes stub. |
 
-Art plates from Pixel/Ink can replace the SVG placeholders without changing the room structure.
+Art plates from Pixel/Ink can replace the SVG placeholders without changing the room structure. Tokens stay slate + parchment so later comps are not fighting a green HUD.
+
+## Palette
+
+Cool **blue / slate** (`--slate`, `--water`) on warm **tan / parchment** (`--paper`, `--tan`). No green foliage or green HUD. Intro plates are labeled placeholders until Pixel’s revised comps lock.
 
 ## SEO / agents
 

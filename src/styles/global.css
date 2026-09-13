@@ -1,13 +1,19 @@
 :root {
-  --ink: #111111;
-  --ink-soft: #3a3a3a;
-  --muted: #6a6a6a;
-  --paper: #fafafa;
-  --paper-warm: #f6f3ee;
-  --line: rgba(17, 17, 17, 0.18);
-  --line-strong: rgba(17, 17, 17, 0.55);
-  --grid: rgba(17, 17, 17, 0.055);
-  --shadow: 0 10px 30px rgba(17, 17, 17, 0.06);
+  /* Cool blue / slate + warm tan / parchment. No green foliage or green HUD. */
+  --ink: #1b2430;
+  --ink-soft: #3d4c5c;
+  --muted: #6b7582;
+  --paper: #f3eadc;
+  --paper-warm: #eadcc8;
+  --slate: #4d6a82;
+  --slate-deep: #2a3d50;
+  --water: #8aa0b3;
+  --tan: #c4a57a;
+  --tan-soft: #dcc9aa;
+  --line: rgba(42, 61, 80, 0.22);
+  --line-strong: rgba(42, 61, 80, 0.55);
+  --grid: rgba(77, 106, 130, 0.14);
+  --shadow: 0 10px 30px rgba(27, 36, 48, 0.08);
   --radius: 12px;
   --font-serif: "Cormorant Garamond", "Palatino Linotype", Palatino, "Times New Roman", serif;
   --font-sans: "IBM Plex Sans", "Segoe UI", sans-serif;
@@ -105,7 +111,7 @@ button {
 .frame {
   position: relative;
   border: 1px solid var(--line-strong);
-  background: rgba(250, 250, 250, 0.92);
+  background: color-mix(in srgb, var(--paper) 92%, white);
 }
 
 .frame::before,
@@ -227,7 +233,8 @@ button {
   inset: 12% 0 auto;
   height: 36%;
   pointer-events: none;
-  opacity: 0.28;
+  opacity: 0.4;
+  color: var(--slate);
 }
 
 .ridgeline svg {
@@ -255,7 +262,7 @@ button {
   padding: 0.35rem 0.8rem;
   border: 1px solid var(--line);
   border-radius: 999px;
-  background: rgba(250, 250, 250, 0.9);
+  background: color-mix(in srgb, var(--paper) 90%, white);
 }
 
 .identity h1 {
@@ -419,16 +426,38 @@ html[data-reduce-motion="true"] .intro {
 
 .scene-art {
   border: 1px solid var(--line-strong);
+  color: var(--slate-deep);
   background:
     repeating-linear-gradient(0deg, var(--grid) 0 1px, transparent 1px 24px),
     repeating-linear-gradient(90deg, var(--grid) 0 1px, transparent 1px 24px),
-    #fff;
+    var(--paper);
   overflow: hidden;
 }
 
 .scene-art svg {
   width: 100%;
   height: 100%;
+}
+
+.scene-art .land {
+  fill: var(--tan-soft);
+  stroke: var(--slate-deep);
+}
+
+.scene-art .water {
+  fill: var(--water);
+  stroke: var(--slate);
+  fill-opacity: 0.28;
+}
+
+.scene-art .hud {
+  fill: none;
+  stroke: var(--slate);
+}
+
+.scene-art .ridge {
+  fill: none;
+  stroke: var(--slate-deep);
 }
 
 .progress {
@@ -443,7 +472,7 @@ html[data-reduce-motion="true"] .intro {
   position: absolute;
   inset: 0 auto 0 0;
   width: 0;
-  background: var(--ink);
+  background: var(--slate);
 }
 
 .intro.is-playing .progress > span {
@@ -522,7 +551,7 @@ html[data-reduce-motion="true"] .intro {
   background:
     repeating-linear-gradient(0deg, var(--grid) 0 1px, transparent 1px 20px),
     repeating-linear-gradient(90deg, var(--grid) 0 1px, transparent 1px 20px),
-    #fff;
+    var(--paper);
 }
 
 .play-mark {
@@ -593,7 +622,7 @@ html[data-reduce-motion="true"] .intro {
   place-items: center;
   text-align: center;
   padding: 1rem;
-  background: #fff;
+  background: var(--paper);
 }
 
 .channel-list {
@@ -614,6 +643,7 @@ html[data-reduce-motion="true"] .intro {
   min-height: 16rem;
   padding: 1rem;
   border-radius: var(--radius);
+  color: var(--slate-deep);
 }
 
 .tree-chart {
@@ -650,7 +680,7 @@ html[data-reduce-motion="true"] .intro {
   flex: 1;
   min-height: var(--touch);
   border: 1px solid var(--line-strong);
-  background: #fff;
+  background: var(--paper);
   padding: 0 0.75rem;
 }
 

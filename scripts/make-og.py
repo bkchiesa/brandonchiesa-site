@@ -8,10 +8,10 @@ import zlib
 from pathlib import Path
 
 W, H = 1200, 630
-PAPER = (250, 250, 250)
-INK = (17, 17, 17)
-GRID = (228, 228, 228)
-SOFT = (68, 68, 68)
+PAPER = (243, 234, 220)
+INK = (42, 61, 80)
+GRID = (214, 204, 186)
+SOFT = (77, 106, 130)
 
 
 def chunk(tag: bytes, data: bytes) -> bytes:
