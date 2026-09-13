@@ -8,7 +8,7 @@ Site: https://bkchiesa.github.io/brandonchiesa-site/
 
 ## Rooms
 
-- [House / menu](https://bkchiesa.github.io/brandonchiesa-site/): Intro video (play once) then a looping valley behind identity chrome. Room menu is in progress. Rooms open as leather texture panels.
+- [House / menu](https://bkchiesa.github.io/brandonchiesa-site/): Intro video (play once) then a looping valley behind cream mist labels (Work, Make, Go, Roots, Now). Rooms open as leather texture panels.
 - [Work](https://bkchiesa.github.io/brandonchiesa-site/work/): Public bio only — education, career path, community.
 - [Make](https://bkchiesa.github.io/brandonchiesa-site/make/): Apps and builds, including Sensei Moose's Dojo.
 - [Go](https://bkchiesa.github.io/brandonchiesa-site/go/): Travel film-strip (placeholders) and YouTube channels.

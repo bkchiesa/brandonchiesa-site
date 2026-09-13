@@ -29,7 +29,7 @@ Navy / parchment / clay / tiffany. No greens.
 
 State-folder anim packs are canonical. Ignore `v3/anim/{door}/` mirrors.
 
-**Hold:** blot Option B packs stay on these filenames. Cards use `leather_panel.png` only (1600×900 cognac/espresso PASS). Brandon rejected the `leather_pad*` family. Do not rename. See `LOOK_V3_BRIEF.md`.
+**Hold:** blot packs stay on disk but are **not** the live menu. Live house uses HTML mist labels. Cards use `leather_panel.png` only (1600×900 cognac/espresso PASS). Do not rename. See `LOOK_V3_BRIEF.md`.
 
 | File | Use |
 | --- | --- |

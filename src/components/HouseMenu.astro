@@ -9,16 +9,19 @@ import { rooms, SITE_NAME, SITE_TAGLINE, withBase } from "../lib/site";
       <p class="tagline">{SITE_TAGLINE}</p>
     </header>
 
-    <p class="house-hold house-after">Rooms arriving — a quieter menu is in the works.</p>
-
-    <nav class="sr-only" aria-label="Rooms">
-      {
-        rooms.map((room) => (
-          <a href={withBase(room.path)}>
-            {room.name} — {room.blurb}
-          </a>
-        ))
-      }
+    <nav class="mist-nav house-after" aria-label="Rooms">
+      <ul class="mist-list" role="list">
+        {
+          rooms.map((room) => (
+            <li>
+              <a class="mist-label" href={withBase(room.path)} data-room={room.id}>
+                <span class="mist-name">{room.name}</span>
+                <span class="sr-only"> — {room.blurb}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
     </nav>
 
     <div class="menu-foot menu-foot--sky house-after">

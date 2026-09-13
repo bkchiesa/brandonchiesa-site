@@ -46,7 +46,7 @@ export const ART = {
    * A half-step lighter lift can overwrite the same filename if Brandon asks.
    * Blot anim: state folders under `art/v3/anim/{intro,passive,active}/`.
    * Ignore legacy `art/v3/anim/{door}/` mirrors.
-   * Blot stills/anims stay on disk; live house chrome is identity-only.
+   * Blot stills/anims stay on disk, unwired. Live menu is HTML mist labels.
    */
   v3: {
     blots: {

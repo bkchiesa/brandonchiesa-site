@@ -53,7 +53,7 @@ The workflow lives at `.github/workflows/deploy.yml`.
 | --- | --- |
 | **Intro** | `public/video/intro.mp4` plays **once**, full-bleed. Headline fades in at ~halfway. Escape or an invisible tap skips; reduce-motion / `?skip=1` / a prior session skip go to the house. Tap-to-start if autoplay is blocked. |
 | **Loop** | Dual-video overlap crossfade into `public/video/loop.mp4` — loop starts at t=0 under the last intro valley. Cover, center-crop, no tile. Reduced motion uses the loop poster. |
-| **Menu** | Identity-only chrome. Blot UI is **held** (assets stay in `public/art/v3/`). Guido pitching quieter replacements. |
+| **Menu** | Mist labels + horizon underline. Cream serif HTML text over the loop sky. Hover is a soft hairline. Blot UI is **off** the live shell (assets stay unwired). |
 | **Rooms** | Leather **texture panel** from `public/art/v3/leather_panel.png` with a short reveal over a dark veil. No frosted glass. `leather_pad*` is rejected and unwired. |
 | **Motion** | Session skip: after one play (or Skip), refresh stays on the menu. **Replay intro** flies again. |
 

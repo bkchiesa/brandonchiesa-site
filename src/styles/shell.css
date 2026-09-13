@@ -134,7 +134,7 @@ html[data-shell="intro"] .skip-link {
   color: var(--v3-charcoal);
 }
 
-/* ——— House identity (blot menu held — Guido pitching replacements) ——— */
+/* ——— House identity + mist labels (blot menu scrapped from live shell) ——— */
 
 .menu--house {
   min-height: 100dvh;
@@ -162,17 +162,6 @@ html[data-reduce-motion="true"] .house-banner {
   transition: none;
 }
 
-.house-hold {
-  margin: 1.4rem 0 0;
-  max-width: 22rem;
-  color: var(--v3-cream);
-  text-shadow: 0 1px 8px rgba(12, 8, 5, 0.7);
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
 .house-after {
   transition: opacity 420ms ease;
 }
@@ -180,11 +169,11 @@ html[data-reduce-motion="true"] .house-banner {
 .identity--sky {
   position: relative;
   z-index: 1;
-  padding: 0.7rem 1.4rem 0.9rem;
+  padding: 0.55rem 1.2rem 0.7rem;
   background: radial-gradient(
-    ellipse 70% 80% at 50% 45%,
-    rgba(245, 236, 214, 0.72) 0%,
-    rgba(245, 236, 214, 0.28) 52%,
+    ellipse 68% 78% at 50% 40%,
+    rgba(245, 236, 214, 0.42) 0%,
+    rgba(245, 236, 214, 0.12) 52%,
     transparent 76%
   );
 }
@@ -199,185 +188,78 @@ html[data-reduce-motion="true"] .house-banner {
   color: var(--v3-olive);
 }
 
-.menu--blots .menu-status {
-  background: rgba(239, 230, 212, 0.88);
-  color: var(--v3-charcoal);
-  border-color: rgba(92, 97, 72, 0.28);
-}
-
-.blot-nav {
+/* Cream serif over the loop sky; hover is a horizon hairline only. */
+.mist-nav {
   position: relative;
-  width: min(100%, 72rem);
-  margin-top: clamp(0.4rem, 2.5vh, 1.4rem);
+  z-index: 1;
+  width: min(46rem, 94vw);
+  margin-top: clamp(3.2rem, 14vh, 8.5rem);
 }
 
-.blot-nav::before {
-  content: "";
-  position: absolute;
-  /* Even wash around the plates — no reserved caption gutter. */
-  inset: 4% -4% 4%;
-  background: radial-gradient(
-    ellipse 88% 70% at 50% 45%,
-    rgba(250, 240, 214, 0.42),
-    rgba(250, 240, 214, 0.12) 55%,
-    transparent 74%
-  );
-  pointer-events: none;
-  z-index: 0;
-}
-
-.blot-nav:has(.blot[data-label-mode="under"])::before {
-  inset: 8% -4% 18%;
-}
-
-.blots {
+.mist-list {
   list-style: none;
-  position: relative;
-  z-index: 1;
   display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  align-items: center;
+  flex-wrap: wrap;
+  align-items: baseline;
   justify-content: center;
-  gap: clamp(0.2rem, 1.4vw, 0.85rem);
-  width: 100%;
+  gap: clamp(1.1rem, 4.2vw, 2.7rem);
   margin: 0;
-  padding: 0.2rem 0 0.4rem;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: thin;
-}
-
-.blots:has(.blot[data-label-mode="under"]) {
-  align-items: flex-end;
-}
-
-.blots li {
-  flex: 1 0 7.2rem;
-  min-width: 7.2rem;
-  max-width: 12.5rem;
-  scroll-snap-align: center;
-}
-
-.blot {
-  /* Inset knobs if Pixel moves in-plate type (CSS overlay mode only). */
-  --blot-label-inset-x: 10%;
-  --blot-label-inset-y: 30%;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-decoration: none;
-  color: var(--v3-charcoal);
-  min-height: var(--touch);
-}
-
-.blot-glow {
-  position: absolute;
-  inset: 4% -6% 4%;
-  background: radial-gradient(
-    ellipse at 50% 48%,
-    rgba(255, 246, 220, 0.55) 0%,
-    rgba(255, 246, 220, 0.16) 48%,
-    transparent 72%
-  );
-  pointer-events: none;
-}
-
-.blot[data-label-mode="under"] .blot-glow {
-  inset: 6% -6% 22%;
-}
-
-.blot-art {
-  position: relative;
-  z-index: 1;
-  width: 100%;
-  aspect-ratio: 1;
-}
-
-.blot-plate {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  filter: drop-shadow(0 8px 14px rgba(20, 12, 8, 0.22));
-}
-
-.blot:focus-visible {
-  outline: 2px solid var(--v3-ridge);
-  outline-offset: 4px;
-  border-radius: 40%;
-}
-
-.blot-copy {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.15rem;
-  min-height: 0;
-}
-
-/*
- * Label modes — flip data-label-mode only; do not lock caption geometry.
- *   in-blot  — type is in the PNG (r2 stills). HTML copy is a11y-only.
- *   on-plate — HTML type overlaid inside the plate (bloom / no painted type).
- *   under    — HTML captions below the plate.
- */
-.blot[data-label-mode="in-blot"] .blot-copy {
-  position: absolute;
-  width: 1px;
-  height: 1px;
   padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  border: 0;
 }
 
-.blot[data-label-mode="on-plate"] .blot-copy {
-  position: absolute;
-  left: var(--blot-label-inset-x);
-  right: var(--blot-label-inset-x);
-  top: var(--blot-label-inset-y);
-  bottom: var(--blot-label-inset-y);
-  z-index: 2;
+.mist-label {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: var(--touch);
   justify-content: center;
-  pointer-events: none;
-  text-align: center;
+  padding: 0.15rem 0.05rem 0.2rem;
+  color: #f3ead6;
+  text-decoration: none;
+  opacity: 0.72;
+  text-shadow: 0 0 18px rgba(243, 234, 214, 0.28);
 }
 
-.blot[data-label-mode="on-plate"] .blot-name,
-.blot[data-label-mode="under"] .blot-name {
-  font-family: var(--font-mono);
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  font-size: 0.78rem;
+.mist-name {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: clamp(1.45rem, 3.4vw, 2rem);
+  letter-spacing: 0.04em;
+  line-height: 1.1;
 }
 
-.blot[data-label-mode="on-plate"] .blot-name {
-  color: var(--v3-cream);
-  text-shadow: 0 1px 8px rgba(12, 8, 5, 0.55);
+.mist-label::after {
+  content: "";
+  display: block;
+  width: 0;
+  height: 1px;
+  margin-top: 0.38rem;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(243, 234, 214, 0.28) 18%,
+    rgba(243, 234, 214, 0.7) 50%,
+    rgba(243, 234, 214, 0.28) 82%,
+    transparent
+  );
+  opacity: 0;
+  transition: width 320ms ease, opacity 320ms ease;
 }
 
-.blot[data-label-mode="under"] .blot-name {
-  margin: 0.15rem 0 0;
+.mist-label:hover,
+.mist-label:focus-visible {
+  opacity: 0.96;
+  outline: none;
 }
 
-.blot[data-label-mode="on-plate"] .blot-blurb,
-.blot[data-label-mode="under"] .blot-blurb {
-  font-size: 0.72rem;
+.mist-label:hover::after,
+.mist-label:focus-visible::after {
+  width: 118%;
+  opacity: 1;
 }
 
-.blot[data-label-mode="on-plate"] .blot-blurb {
-  color: var(--v3-cream);
-  text-shadow: 0 1px 8px rgba(12, 8, 5, 0.55);
-}
-
-.blot[data-label-mode="under"] .blot-blurb {
-  color: var(--v3-charcoal);
-  text-shadow: 0 1px 0 rgba(239, 230, 212, 0.75);
+html[data-reduce-motion="true"] .mist-label::after {
+  transition: none;
 }
 
 .menu-foot--sky {
@@ -543,36 +425,17 @@ html[data-reduce-motion="true"] .room-veil {
 }
 
 @media (max-width: 699px) {
-  .blots {
-    flex-wrap: wrap;
-    overflow: visible;
-    scroll-snap-type: none;
-    justify-content: center;
-    gap: 0.35rem 0.55rem;
+  .mist-nav {
+    margin-top: clamp(2.2rem, 10vh, 5rem);
   }
 
-  .blots li {
-    flex: 0 1 calc(33.33% - 0.5rem);
-    min-width: 6.2rem;
-    max-width: 9.5rem;
-  }
-}
-
-@media (min-width: 700px) {
-  .blots {
-    overflow: visible;
-    scroll-snap-type: none;
-  }
-
-  .blots li {
-    flex: 1 1 0;
-    min-width: 0;
+  .mist-list {
+    gap: 0.85rem 1.35rem;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html:not([data-reduce-motion="false"]) .video-layer,
-  html:not([data-reduce-motion="false"]) .blot-plate {
+  html:not([data-reduce-motion="false"]) .video-layer {
     transition: none;
   }
 }
