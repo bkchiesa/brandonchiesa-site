@@ -1,19 +1,24 @@
 :root {
-  /* Cool blue / slate + warm tan / parchment. No green foliage or green HUD. */
-  --ink: #1b2430;
-  --ink-soft: #3d4c5c;
-  --muted: #6b7582;
-  --paper: #f3eadc;
-  --paper-warm: #eadcc8;
-  --slate: #4d6a82;
-  --slate-deep: #2a3d50;
-  --water: #8aa0b3;
-  --tan: #c4a57a;
-  --tan-soft: #dcc9aa;
-  --line: rgba(42, 61, 80, 0.22);
-  --line-strong: rgba(42, 61, 80, 0.55);
-  --grid: rgba(77, 106, 130, 0.14);
-  --shadow: 0 10px 30px rgba(27, 36, 48, 0.08);
+  /* Locked: navy / parchment / sparse clay / tiffany HUD. No greens. */
+  --navy: #0b1a2b;
+  --navy-soft: #16324a;
+  --parchment: #ead9b8;
+  --clay: #c49a6c;
+  --tiffany: #4ecde0;
+  --ink: #0b1a2b;
+  --ink-soft: #2a4156;
+  --muted: #6b5c48;
+  --paper: #ead9b8;
+  --paper-warm: #e2d0ae;
+  --slate: #16324a;
+  --slate-deep: #0b1a2b;
+  --water: #4a7a8c;
+  --tan: #c49a6c;
+  --tan-soft: #d8c49a;
+  --line: rgba(11, 26, 43, 0.22);
+  --line-strong: rgba(11, 26, 43, 0.5);
+  --grid: rgba(78, 205, 224, 0.1);
+  --shadow: 0 10px 30px rgba(11, 26, 43, 0.12);
   --radius: 12px;
   --font-serif: "Cormorant Garamond", "Palatino Linotype", Palatino, "Times New Roman", serif;
   --font-sans: "IBM Plex Sans", "Segoe UI", sans-serif;
@@ -194,6 +199,9 @@ button {
 }
 
 .room-letter {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
   font-family: var(--font-mono);
   letter-spacing: 0.16em;
 }
@@ -309,14 +317,30 @@ button {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 0.55rem;
+  justify-content: flex-start;
+  gap: 0.4rem;
   height: 100%;
-  min-height: 7.2rem;
-  padding: 1rem 0.6rem 1.1rem;
+  min-height: 0;
+  padding: 0 0 0.55rem;
   text-decoration: none;
+  border: 0;
+  background: transparent;
   border-radius: var(--radius);
   transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+.door-plate {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  border: 1px solid color-mix(in srgb, var(--clay) 55%, var(--navy));
+}
+
+.room-icon {
+  width: 28px;
+  height: 28px;
+  object-fit: cover;
+  border-radius: 4px;
 }
 
 .door:hover,
@@ -361,8 +385,8 @@ button {
   z-index: 40;
   display: grid;
   grid-template-rows: auto 1fr auto;
-  background: var(--paper-warm);
-  color: var(--ink);
+  background: var(--navy);
+  color: var(--parchment);
 }
 
 .intro[hidden],
@@ -401,8 +425,9 @@ html[data-reduce-motion="true"] .intro {
 
 .intro-skip {
   border-radius: 999px;
-  border: 1px solid var(--ink);
-  background: var(--paper);
+  border: 1px solid var(--tiffany);
+  background: var(--navy);
+  color: var(--parchment);
   min-height: var(--touch);
   padding: 0 1rem;
 }
@@ -410,68 +435,49 @@ html[data-reduce-motion="true"] .intro {
 .intro-stage {
   position: relative;
   overflow: hidden;
+  background: var(--navy);
 }
 
-.intro-camera {
-  display: flex;
-  width: 300%;
+.intro-plates {
+  position: relative;
   height: 100%;
-  will-change: transform;
 }
 
-.intro.is-playing .intro-camera {
-  animation: flyWest var(--intro-ms) cubic-bezier(0.42, 0, 0.2, 1) forwards;
+.intro-plate {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  opacity: 0;
 }
 
-.scene {
-  flex: 0 0 33.333%;
-  height: 100%;
-  padding: 0.75rem;
-  display: grid;
-  grid-template-rows: auto 1fr;
+.intro-plate--1 {
+  opacity: 1;
 }
 
-.scene-label {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  padding: 0.15rem 0.35rem 0.55rem;
-}
-
-.scene-art {
-  border: 1px solid var(--line-strong);
-  color: var(--slate-deep);
-  background:
-    repeating-linear-gradient(0deg, var(--grid) 0 1px, transparent 1px 24px),
-    repeating-linear-gradient(90deg, var(--grid) 0 1px, transparent 1px 24px),
-    var(--paper);
-  overflow: hidden;
-}
-
-.scene-art svg {
+.intro-plate img {
   width: 100%;
   height: 100%;
+  object-fit: cover;
 }
 
-.scene-art .land {
-  fill: var(--tan-soft);
-  stroke: var(--slate-deep);
+.intro-plate figcaption {
+  position: absolute;
+  left: var(--pad);
+  bottom: 0.7rem;
+  color: var(--parchment);
+  text-shadow: 0 1px 10px var(--navy);
 }
 
-.scene-art .water {
-  fill: var(--water);
-  stroke: var(--slate);
-  fill-opacity: 0.28;
+.intro.is-playing .intro-plate--1 {
+  animation: fadePlate1 var(--intro-ms) linear forwards;
 }
 
-.scene-art .hud {
-  fill: none;
-  stroke: var(--slate);
+.intro.is-playing .intro-plate--2 {
+  animation: fadePlate2 var(--intro-ms) linear forwards;
 }
 
-.scene-art .ridge {
-  fill: none;
-  stroke: var(--slate-deep);
+.intro.is-playing .intro-plate--3 {
+  animation: fadePlate3 var(--intro-ms) linear forwards;
 }
 
 .progress {
@@ -486,7 +492,7 @@ html[data-reduce-motion="true"] .intro {
   position: absolute;
   inset: 0 auto 0 0;
   width: 0;
-  background: var(--slate);
+  background: var(--tiffany);
 }
 
 .intro.is-playing .progress > span {
@@ -496,6 +502,33 @@ html[data-reduce-motion="true"] .intro {
 .card-grid {
   display: grid;
   gap: 1rem;
+}
+
+.room-hero {
+  margin: 0 0 1.5rem;
+}
+
+.room-hero img {
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--line-strong);
+}
+
+.room-hero--stub {
+  padding: 0;
+}
+
+.room-hero-stub {
+  min-height: clamp(8rem, 28vw, 14rem);
+  border: 1px dashed color-mix(in srgb, var(--navy) 45%, var(--clay));
+  background:
+    repeating-linear-gradient(0deg, var(--grid) 0 1px, transparent 1px 22px),
+    repeating-linear-gradient(90deg, var(--grid) 0 1px, transparent 1px 22px),
+    var(--parchment);
+}
+
+.room-hero figcaption {
+  margin-top: 0.45rem;
 }
 
 .card {
@@ -709,12 +742,40 @@ html[data-reduce-motion="true"] .intro {
   border: 0;
 }
 
-@keyframes flyWest {
-  from {
-    transform: translateX(0);
+@keyframes fadePlate1 {
+  0%,
+  26% {
+    opacity: 1;
   }
-  to {
-    transform: translateX(-66.666%);
+  34%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes fadePlate2 {
+  0%,
+  26% {
+    opacity: 0;
+  }
+  34%,
+  58% {
+    opacity: 1;
+  }
+  66%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes fadePlate3 {
+  0%,
+  58% {
+    opacity: 0;
+  }
+  66%,
+  100% {
+    opacity: 1;
   }
 }
 

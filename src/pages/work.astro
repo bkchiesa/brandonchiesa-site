@@ -1,4 +1,5 @@
 ---
+import RoomHero from "../components/RoomHero.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import SiteHeader from "../components/SiteHeader.astro";
 import Base from "../layouts/Base.astro";
@@ -30,6 +31,7 @@ const blocks = [
 >
   <SiteHeader current="work" />
   <main id="main" class="page-main">
+    <RoomHero room="work" alt="The path is the work — a five-stage timeline from foundation to legacy" />
     <p class="hud-kicker">Room A</p>
     <h1 class="room-title">Work</h1>
     <p class="lede">

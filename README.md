@@ -1,6 +1,6 @@
 # Brandon Chiesa — living archive
 
-Personal house-with-rooms site. Tech × Renaissance: HUD grids and circuit cues mixed with map plates (compass, hatching, a westbound flyover). Palette is cool blue/slate + warm tan/parchment — not greens. Public portfolio only.
+Personal house-with-rooms site. Tech × Renaissance. Locked Look v2: **navy / parchment / sparse clay / tiffany HUD** — no greens. Public portfolio only.
 
 **This is a personal website. It is not affiliated with, and does not represent, First Citizens Bank.**
 
@@ -47,8 +47,8 @@ The workflow lives at `.github/workflows/deploy.yml`. It does **not** deploy fro
 
 | Door | What shipped |
 | --- | --- |
-| **Intro** | ~10s Newport News Peninsula → James River piedmont → Blue Ridge SVG flyover (camera west), then fade to menu. Honors `prefers-reduced-motion`. Visible **Skip intro**. Placeholder plates until Pixel comps lock. |
-| **Menu** | `[BRANDON CHIESA]`, tagline, **horizontal** row of five doors (Work · Make · Go · Roots · Now). Narrow phones scroll the row; tablet/desktop keep all five in one line. **Skip intro / Replay intro** and **Reduce motion**. |
+| **Intro** | ~10s **crossfade** of `public/art/intro_01_coast.png` → `intro_02_piedmont.png` → `intro_03_blueridge.png` (Newport News Peninsula → James River piedmont → Blue Ridge). Honors `prefers-reduced-motion`. Visible **Skip intro**. |
+| **Menu** | `[BRANDON CHIESA]`, tagline, **horizontal** row of clickable `door_*.png` plates (icons wired in room headers). Narrow phones scroll the row — the held `menu_doors_mobile.png` strip is **not** used. |
 | **Work** | Education, career path, community — public facts only. Bank disclaimer in the footer. |
 | **Make** | Hero card for [Sensei Moose’s Dojo](https://bkchiesa.github.io/Sensei-mooses-dojo/). Other cards are placeholders. |
 | **Go** | Film-strip placeholders. Privacy-enhanced YouTube embed ready (`youtube-nocookie.com`); channel links for `@brandonchiesa3886` and `@chiesab`. Video IDs TBD. |
@@ -57,9 +57,13 @@ The workflow lives at `.github/workflows/deploy.yml`. It does **not** deploy fro
 
 Art plates from Pixel/Ink can replace the SVG placeholders without changing the room structure. Tokens stay slate + parchment so later comps are not fighting a green HUD.
 
-## Palette
+## Palette (locked)
 
-Cool **blue / slate** (`--slate`, `--water`) on warm **tan / parchment** (`--paper`, `--tan`). No green foliage or green HUD. Intro plates are labeled placeholders until Pixel’s revised comps lock.
+Navy `--navy`, parchment `--parchment`, sparse clay `--clay`, tiffany HUD `--tiffany`. No green foliage or green HUD.
+
+## Art hold
+
+Do not display `menu_doors_mobile.png` or `room_hero_roots.png` (Pixel QA). Roots hero is a parchment stub.
 
 ## SEO / agents
 
