@@ -2,11 +2,11 @@
 
 Personal house-with-rooms site. Tech × Renaissance.
 
-**Look v2 is LOCKED:** blues + tans (navy / parchment / sparse clay / tiffany HUD — no greens) and a place-accurate westbound intro (Newport News Peninsula → James River piedmont → Blue Ridge). Pixel→Ink finals drop onto `public/art/` using the filenames in `src/lib/art.ts`. This scaffold does not wait on art.
+**Look v2 is LOCKED:** blues + tans (navy / parchment / sparse clay / tiffany HUD — no greens) and a place-accurate westbound intro (Newport News Peninsula → James River piedmont → Blue Ridge). Production plates live in `public/art/` using the filenames in `src/lib/art.ts`.
 
 **This is a personal website. It is not affiliated with, and does not represent, First Citizens Bank.**
 
-Expected GitHub Pages URL (after the Actions workflow has run on `main`):
+Expected GitHub Pages URL (after Pages is enabled and the deploy workflow has run):
 
 **https://bkchiesa.github.io/brandonchiesa-site/**
 
@@ -34,38 +34,40 @@ npm run preview
 
 ## GitHub Pages
 
-This repo is configured for **GitHub Actions** → Pages (Astro static `dist/`).
+This repo is configured for **GitHub Actions** → Pages (Astro static `dist/`). `astro.config.mjs` sets `site` to `https://bkchiesa.github.io` and `base` to `/brandonchiesa-site`.
 
-1. In the repo: **Settings → Pages → Source: GitHub Actions**.
-2. Merge this scaffold to `main` (or run the **Deploy to GitHub Pages** workflow from `main` via `workflow_dispatch`).
+Pages is **not enabled on the repo yet** (the Pages API still 404s). After a maintainer sets **Settings → Pages → Source: GitHub Actions**:
+
+1. Open **Actions → Deploy to GitHub Pages**.
+2. **Run workflow** and choose this PR branch `cursor/personal-site-scaffold-c518` (or `main` after merge).
 3. The first deploy creates the `github-pages` environment. The site is then at  
    `https://bkchiesa.github.io/brandonchiesa-site/`.
 
-The workflow lives at `.github/workflows/deploy.yml`. It does **not** deploy from this PR branch until it is on `main`.
+Push to `main` or to `cursor/personal-site-scaffold-c518` also triggers the workflow. This PR is not merged.
 
-`astro.config.mjs` sets `site` to `https://bkchiesa.github.io` and `base` to `/brandonchiesa-site`.
+The workflow lives at `.github/workflows/deploy.yml`.
 
 ## v1 rooms
 
 | Door | What shipped |
 | --- | --- |
 | **Intro** | ~10s **crossfade** of `public/art/intro_01_coast.png` → `intro_02_piedmont.png` → `intro_03_blueridge.png` (Newport News Peninsula → James River piedmont → Blue Ridge). Honors `prefers-reduced-motion`. Visible **Skip intro**. |
-| **Menu** | `[BRANDON CHIESA]`, tagline, **horizontal** row of clickable `door_*.png` plates (icons wired in room headers). Narrow phones scroll the row — the held `menu_doors_mobile.png` strip is **not** used. |
+| **Menu** | `[BRANDON CHIESA]`, tagline, **horizontal** row of clickable `door_*.png` plates (desktop primary). Narrow phones also show `menu_doors_mobile.png` and can swipe the door row. `menu_doors_desktop.png` is the locked look reference / fallback. Icons are wired in room headers. |
 | **Work** | Education, career path, community — public facts only. Bank disclaimer in the footer. |
 | **Make** | Hero card for [Sensei Moose’s Dojo](https://bkchiesa.github.io/Sensei-mooses-dojo/). Other cards are placeholders. |
 | **Go** | Film-strip placeholders. Privacy-enhanced YouTube embed ready (`youtube-nocookie.com`); channel links for `@brandonchiesa3886` and `@chiesab`. Video IDs TBD. |
-| **Roots** | Map + tree wireframes. Copy stubs: Valmozzola → Chicago → Virginia. |
+| **Roots** | Locked `room_hero_roots.png` (Valmozzola → Virginia). Map + tree wireframes. Copy stubs: Valmozzola → Chicago → Virginia. |
 | **Now** | Empty field notes stub. |
 
-Art swap: overwrite the files in `public/art/` (same names). No component changes needed. Held names (`menu_doors_mobile.png`, `room_hero_roots.png`) stay unwired until Pixel QA clears them.
+Art swap: overwrite the files in `public/art/` (same names). Menu mobile plate and Roots hero are live.
 
 ## Palette (locked)
 
 Navy `--navy`, parchment `--parchment`, sparse clay `--clay`, tiffany HUD `--tiffany`. No green foliage or green HUD.
 
-## Art hold
+## Art
 
-Do not display `menu_doors_mobile.png` or `room_hero_roots.png` (Pixel QA). Roots hero is a parchment stub.
+Locked Look v2 plates live in `public/art/`. Door/icon plates drive the interactive menu; room pages use `room_hero_*`.
 
 ## SEO / agents
 

@@ -2,16 +2,21 @@ import type { RoomId } from "./site";
 import { withBase } from "./site";
 
 /**
- * Look v2 asset hooks. Swap Pixel→Ink finals onto these exact public/ paths.
+ * Look v2 asset hooks. Swap finals onto these exact public/ paths.
  * Do not rename — components read only these filenames.
  */
 export const ART = {
   intro: {
     coast: "art/intro_01_coast.png",
+    /** Same pixels as coast — kept for older filename references. */
+    newportNews: "art/intro_01_newport_news.png",
     piedmont: "art/intro_02_piedmont.png",
     blueridge: "art/intro_03_blueridge.png",
   },
+  /** Locked desktop look reference / fallback. Interactive doors use `doors`. */
   menuDesktop: "art/menu_doors_desktop.png",
+  /** Vertical door plate for narrow viewports. */
+  menuMobile: "art/menu_doors_mobile.png",
   doors: {
     work: "art/door_work.png",
     make: "art/door_make.png",
@@ -30,11 +35,9 @@ export const ART = {
     work: "art/room_hero_work.png",
     make: "art/room_hero_make.png",
     go: "art/room_hero_go.png",
+    roots: "art/room_hero_roots.png",
   } satisfies Partial<Record<RoomId, string>>,
 } as const;
-
-/** Pixel QA HOLD — names only. Do not import these into components. */
-export const ART_HOLD_NAMES = ["menu_doors_mobile.png", "room_hero_roots.png"] as const;
 
 export function artUrl(rel: string): string {
   return withBase(rel);

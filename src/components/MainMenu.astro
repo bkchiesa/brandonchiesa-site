@@ -12,8 +12,17 @@ import { rooms, SITE_NAME, SITE_TAGLINE, withBase } from "../lib/site";
       <p class="tagline">{SITE_TAGLINE}</p>
     </header>
 
+    <figure class="menu-composite menu-composite--mobile">
+      <img
+        src={artUrl(ART.menuMobile)}
+        alt="Vertical door plate: Work, Make, Go, Roots, Now"
+        width="1080"
+        height="1920"
+      />
+    </figure>
+
     <nav aria-label="Rooms">
-      <p class="sr-only">Five rooms in a horizontal row. On a narrow phone, swipe sideways.</p>
+      <p class="sr-only">Five rooms in a horizontal row on desktop. On a narrow phone, the vertical plate is the look and the door row stays swipeable.</p>
       <ul class="doors" role="list">
         {
           rooms.map((room) => (

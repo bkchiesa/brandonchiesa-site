@@ -290,7 +290,29 @@ button {
   color: var(--ink-soft);
 }
 
-/* Primary layout is a horizontal door row (wireframe). Phones scroll; 700px+ shows all five. */
+.menu-composite {
+  display: none;
+  width: min(100%, 22rem);
+  margin: 1.5rem 0 0;
+}
+
+.menu-composite img {
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--line-strong);
+}
+
+.menu-composite--mobile {
+  display: block;
+}
+
+@media (min-width: 700px) {
+  .menu-composite--mobile {
+    display: none;
+  }
+}
+
+/* Primary layout is a horizontal door row. Phones scroll; 700px+ shows all five. */
 .doors {
   list-style: none;
   width: min(100%, 64rem);
