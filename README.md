@@ -48,7 +48,7 @@ The workflow lives at `.github/workflows/deploy.yml`. It does **not** deploy fro
 | Door | What shipped |
 | --- | --- |
 | **Intro** | ~10s Newport News Peninsula → James River piedmont → Blue Ridge SVG flyover (camera west), then fade to menu. Honors `prefers-reduced-motion`. Visible **Skip intro**. Placeholder plates until Pixel comps lock. |
-| **Menu** | `[BRANDON CHIESA]`, tagline, five doors, **Skip intro / Replay intro** and **Reduce motion**. |
+| **Menu** | `[BRANDON CHIESA]`, tagline, **horizontal** row of five doors (Work · Make · Go · Roots · Now). Narrow phones scroll the row; tablet/desktop keep all five in one line. **Skip intro / Replay intro** and **Reduce motion**. |
 | **Work** | Education, career path, community — public facts only. Bank disclaimer in the footer. |
 | **Make** | Hero card for [Sensei Moose’s Dojo](https://bkchiesa.github.io/Sensei-mooses-dojo/). Other cards are placeholders. |
 | **Go** | Film-strip placeholders. Privacy-enhanced YouTube embed ready (`youtube-nocookie.com`); channel links for `@brandonchiesa3886` and `@chiesab`. Video IDs TBD. |

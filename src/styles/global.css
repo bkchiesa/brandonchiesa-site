@@ -282,14 +282,27 @@ button {
   color: var(--ink-soft);
 }
 
+/* Primary layout is a horizontal door row (wireframe). Phones scroll; 700px+ shows all five. */
 .doors {
   list-style: none;
   width: min(100%, 64rem);
   margin: 2.25rem 0 0;
-  padding: 0;
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 0.75rem;
+  padding: 0.2rem 0 0.65rem;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  gap: 0.65rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+}
+
+.doors li {
+  flex: 1 0 8.4rem;
+  min-width: 8.4rem;
+  scroll-snap-align: start;
 }
 
 .door {
@@ -298,8 +311,9 @@ button {
   align-items: center;
   justify-content: center;
   gap: 0.55rem;
+  height: 100%;
   min-height: 7.2rem;
-  padding: 1rem 0.75rem 1.1rem;
+  padding: 1rem 0.6rem 1.1rem;
   text-decoration: none;
   border-radius: var(--radius);
   transition: transform 160ms ease, box-shadow 160ms ease;
@@ -721,28 +735,25 @@ html[data-reduce-motion="true"] .intro {
 }
 
 @media (min-width: 640px) {
-  .doors {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .doors li:last-child {
-    grid-column: 1 / -1;
-  }
-
   .app-cards {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
-@media (min-width: 860px) {
+@media (min-width: 700px) {
   .doors {
-    grid-template-columns: repeat(5, 1fr);
+    overflow: visible;
+    scroll-snap-type: none;
+    padding-bottom: 0;
   }
 
-  .doors li:last-child {
-    grid-column: auto;
+  .doors li {
+    flex: 1 1 0;
+    min-width: 0;
   }
+}
 
+@media (min-width: 860px) {
   .hero-dojo {
     grid-template-columns: 1.1fr 1fr;
     align-items: center;
