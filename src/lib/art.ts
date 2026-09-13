@@ -20,24 +20,19 @@ export const ART = {
   /** Five-up icon strip reference. Not used for click targets. */
   menuIconPlates: "art/menu_icon_plates.png",
   doors: {
-    work: "art/door_work.png",
-    make: "art/door_make.png",
-    go: "art/door_go.png",
-    roots: "art/door_roots.png",
-    now: "art/door_now.png",
+    career: "art/door_work.png",
+    coding: "art/door_make.png",
+    videography: "art/door_go.png",
   } satisfies Record<RoomId, string>,
   icons: {
-    work: "art/icon_work.png",
-    make: "art/icon_make.png",
-    go: "art/icon_go.png",
-    roots: "art/icon_roots.png",
-    now: "art/icon_now.png",
+    career: "art/icon_work.png",
+    coding: "art/icon_make.png",
+    videography: "art/icon_go.png",
   } satisfies Record<RoomId, string>,
   heroes: {
-    work: "art/room_hero_work.png",
-    make: "art/room_hero_make.png",
-    go: "art/room_hero_go.png",
-    roots: "art/room_hero_roots.png",
+    career: "art/room_hero_work.png",
+    coding: "art/room_hero_make.png",
+    videography: "art/room_hero_go.png",
   } satisfies Partial<Record<RoomId, string>>,
   /**
    * Look v3 video-shell chrome.
@@ -56,7 +51,7 @@ export const ART = {
       go: "art/v3/blot_go.png",
       roots: "art/v3/blot_roots.png",
       now: "art/v3/blot_now.png",
-    } satisfies Record<RoomId, string>,
+    },
     /** Room-card fill — Pixel PASS 1600×900 cognac/espresso. Same path for later lifts. */
     leatherPanel: "art/v3/leather_panel.png",
     /** Pixel PASS worn-brass underline strip (192×10). */
@@ -75,27 +70,30 @@ export const ART = {
   },
 } as const;
 
+/** Filename ids for unwired blot packs (not live room slugs). */
+export type BlotId = "work" | "make" | "go" | "roots" | "now";
+
 const INTRO_IX = [0, 1, 2, 3, 4, 5] as const;
 const PASSIVE_IX = [0, 1, 2, 3, 4, 5, 6, 7] as const;
 const ACTIVE_IX = [0, 1, 2, 3, 4, 5] as const;
 
 /** Canonical: `anim/intro/blot_{id}_intro_00..05.png` */
-export function blotIntroFrames(id: RoomId): string[] {
+export function blotIntroFrames(id: BlotId): string[] {
   return INTRO_IX.map((i) => `art/v3/anim/intro/blot_${id}_intro_0${i}.png`);
 }
 
 /** Canonical: `anim/passive/blot_{id}_passive_00..07.png` */
-export function blotPassiveFrames(id: RoomId): string[] {
+export function blotPassiveFrames(id: BlotId): string[] {
   return PASSIVE_IX.map((i) => `art/v3/anim/passive/blot_${id}_passive_0${i}.png`);
 }
 
 /** Canonical: `anim/active/blot_{id}_active_00..05.png` */
-export function blotActiveFrames(id: RoomId): string[] {
+export function blotActiveFrames(id: BlotId): string[] {
   return ACTIVE_IX.map((i) => `art/v3/anim/active/blot_${id}_active_0${i}.png`);
 }
 
 /** Canonical: `anim/active/blot_{id}_selected.png` */
-export function blotSelectedStill(id: RoomId): string {
+export function blotSelectedStill(id: BlotId): string {
   return `art/v3/anim/active/blot_${id}_selected.png`;
 }
 

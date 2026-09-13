@@ -34,7 +34,7 @@ Skip / `prefers-reduced-motion` / `?skip=1` land on the house over the loop (or 
 - PT Serif 400, ~32px @1280, `#F3EEE4` @ 0.95, gap `4.375vw`, vertical mid 50.3%.
 - Hover/selected: Pixel PASS `mist_underline_brass.png` (~6px @1280, ~5px below baseline, mid `#B59A62`). Labels stay cream. No cream hairline. No blots, chips, or cairns.
 - Blot assets may stay in `public/art/v3/`; they are not wired.
-- Room routes stay: `/work/` `/make/` `/go/` `/roots/` `/now/`.
+- Live rooms: Career, Coding, Videography — `/career/` `/coding/` `/videography/`. Roots and Now are unpublished (redirect home). Old `/work/` `/make/` `/go/` redirect to the new slugs.
 
 ## Art hooks (Pixel / Ink)
 
@@ -47,4 +47,4 @@ Runtime contract is `src/lib/art.ts` (`ART.v3`, frame helpers). Do not rename pu
 
 ## Rooms
 
-Keep routes: `/work/` `/make/` `/go/` `/roots/` `/now/`. Existing Work facts and stubs stay in the leather inset. SEO, Person JSON-LD, bank disclaimer stay.
+Live routes: `/career/` `/coding/` `/videography/`. Existing Career/Coding/Videography facts and stubs stay in the leather inset. SEO, Person JSON-LD, bank disclaimer stay. `/work/` `/make/` `/go/` redirect; Roots and Now can return later.

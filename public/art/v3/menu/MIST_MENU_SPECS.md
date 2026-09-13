@@ -11,7 +11,7 @@
 ## Locked behavior
 | State | Treatment |
 |-------|-----------|
-| **Idle** | Five cream serif labels float mid-frame: `Work` `Make` `Go` `Roots` `Now` — **spaced words, no interpuncts** (mist #1, not brass/horizon dots). |
+| **Idle** | Three cream serif labels float mid-frame: `Career` `Coding` `Videography` — **spaced words, no interpuncts** (mist #1, not brass/horizon dots). Roots and Now are unpublished. |
 | **Hover / selected** | Same bar: Pixel PASS `mist_underline_brass.png` (~**6px** visual weight @1280 = 3× prior cream). Soft edges + grain. **Not** cream `#F3EEE4`; labels stay cream. |
 | **Selected** | Keep existing **`leather_panel`** reveal for room content. Loop continues behind. Panel path unchanged. |
 
@@ -67,11 +67,9 @@ text-shadow:
 ## Layout sketch
 ```html
 <nav class="mist-menu" aria-label="Rooms">
-  <a class="nav-label" href="#work">Work</a>
-  <a class="nav-label" href="#make">Make</a>
-  <a class="nav-label" href="#go">Go</a>
-  <a class="nav-label" href="#roots">Roots</a>
-  <a class="nav-label" href="#now">Now</a>
+  <a class="nav-label" href="#career">Career</a>
+  <a class="nav-label" href="#coding">Coding</a>
+  <a class="nav-label" href="#videography">Videography</a>
 </nav>
 ```
 ```css

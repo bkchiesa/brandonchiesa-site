@@ -8,14 +8,14 @@ Site: https://bkchiesa.github.io/brandonchiesa-site/
 
 ## Rooms
 
-- [House / menu](https://bkchiesa.github.io/brandonchiesa-site/): Intro video (play once) then a looping valley behind cream mist labels (Work, Make, Go, Roots, Now). Rooms open as leather texture panels.
-- [Work](https://bkchiesa.github.io/brandonchiesa-site/work/): Public bio only — education, career path, community.
-- [Make](https://bkchiesa.github.io/brandonchiesa-site/make/): Apps and builds, including Sensei Moose's Dojo.
-- [Go](https://bkchiesa.github.io/brandonchiesa-site/go/): Travel film-strip (placeholders) and YouTube channels.
-- [Roots](https://bkchiesa.github.io/brandonchiesa-site/roots/): Migration story stubs — Valmozzola → Chicago → Virginia.
-- [Now](https://bkchiesa.github.io/brandonchiesa-site/now/): Field notes (empty stub).
+- [House / menu](https://bkchiesa.github.io/brandonchiesa-site/): Intro video (play once) then a looping valley behind cream mist labels (Career, Coding, Videography). Rooms open as leather texture panels.
+- [Career](https://bkchiesa.github.io/brandonchiesa-site/career/): Public bio only — education, career path, community.
+- [Coding](https://bkchiesa.github.io/brandonchiesa-site/coding/): Apps and builds, including Sensei Moose's Dojo.
+- [Videography](https://bkchiesa.github.io/brandonchiesa-site/videography/): Travel film-strip (placeholders) and YouTube channels.
 
-## Public facts (Work)
+Roots and Now are unpublished. Old `/work/` `/make/` `/go/` URLs redirect to the rooms above.
+
+## Public facts (Career)
 
 - Education: Hampden-Sydney College — Classical History & Political Science.
 - Career: Truist → First Citizens Bank; VP / Business Banker; Charlottesville / Fluvanna area.

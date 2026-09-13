@@ -1,0 +1,69 @@
+---
+import LeatherPad from "../components/LeatherPad.astro";
+import RoomHero from "../components/RoomHero.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import VideoShell from "../components/VideoShell.astro";
+import Base from "../layouts/Base.astro";
+import { DOJO_URL } from "../lib/site";
+
+const placeholders = [
+  { title: "Field kit", note: "App card placeholder — Pixel/Ink art pending." },
+  { title: "Archive tool", note: "App card placeholder — build notes later." },
+  { title: "House utility", note: "App card placeholder — coming soon." },
+];
+---
+
+<Base
+  title="Coding"
+  room="coding"
+  videoShell
+  description="Things Brandon Chiesa builds, led by Sensei Moose’s Dojo, plus upcoming app cards."
+>
+  <VideoShell />
+  <LeatherPad title="Coding">
+  <SiteHeader current="coding" />
+  <main id="main" class="page-main">
+    <RoomHero room="coding" alt="Ink studies of a builder in motion — build, train, create" />
+    <p class="hud-kicker">Room B</p>
+    <h1 class="room-title">Coding</h1>
+    <p class="lede">Apps and builds. One door is open; the rest are marked for later plates.</p>
+
+    <article class="hero-dojo frame">
+      <div class="poster" aria-hidden="true">
+        <div class="play-mark">
+          <svg width="18" height="18" viewBox="0 0 18 18">
+            <path d="M5 3 L15 9 L5 15 Z" fill="none" stroke="currentColor" stroke-width="1.4"></path>
+          </svg>
+        </div>
+      </div>
+      <div>
+        <p class="hud-kicker">Featured build</p>
+        <h2>Sensei Moose’s Dojo</h2>
+        <p>
+          Landscape-first dojo on the iPad. A playable room in the house — open it in a new tab.
+        </p>
+        <p style="margin-top:1rem;">
+          <a class="house-link mono" href={DOJO_URL} target="_blank" rel="noopener noreferrer">Get started →</a>
+        </p>
+      </div>
+    </article>
+
+    <h2 class="hud-kicker" style="margin: 0 0 0.75rem;">Other benches</h2>
+    <ul class="app-cards">
+      {
+        placeholders.map((card) => (
+          <li class="frame">
+            <p class="hud-kicker">Card title</p>
+            <h3 style="margin:0.2rem 0 0.4rem; font-family: var(--font-serif); font-weight:500;">
+              {card.title}
+            </h3>
+            <p>{card.note}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </main>
+  <SiteFooter />
+  </LeatherPad>
+</Base>

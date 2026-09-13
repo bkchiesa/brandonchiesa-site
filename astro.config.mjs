@@ -11,6 +11,10 @@ export default defineConfig({
       changefreq: "monthly",
       priority: 0.7,
       lastmod: new Date(),
+      filter: (page) =>
+        !["/work/", "/make/", "/go/", "/roots/", "/now/"].some((slug) =>
+          page.includes(`/brandonchiesa-site${slug}`),
+        ),
     }),
   ],
 });

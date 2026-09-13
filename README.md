@@ -75,8 +75,8 @@ Look v3 house chrome uses loop tokens (`--v3-pine`, `--v3-ochre`, `--v3-ridge`, 
 
 | Door | What shipped |
 | --- | --- |
-| **Work** | Education, career path, community — public facts only. Bank disclaimer in the footer. |
-| **Make** | Hero card for [Sensei Moose’s Dojo](https://bkchiesa.github.io/Sensei-mooses-dojo/). Other cards are placeholders. |
-| **Go** | Film-strip placeholders. Privacy-enhanced YouTube embed ready (`youtube-nocookie.com`); channel links for `@brandonchiesa3886` and `@chiesab`. Video IDs TBD. |
-| **Roots** | Locked `room_hero_roots.png` (Valmozzola → Virginia). Map + tree wireframes. Copy stubs: Valmozzola → Chicago → Virginia. |
-| **Now** | Empty field notes stub. |
+| **Career** (`/career/`) | Education, career path, community — public facts only. Bank disclaimer in the footer. Was `/work/`. |
+| **Coding** (`/coding/`) | Hero card for [Sensei Moose’s Dojo](https://bkchiesa.github.io/Sensei-mooses-dojo/). Other cards are placeholders. Was `/make/`. |
+| **Videography** (`/videography/`) | Film-strip placeholders. Privacy-enhanced YouTube embed ready (`youtube-nocookie.com`); channel links for `@brandonchiesa3886` and `@chiesab`. Video IDs TBD. Was `/go/`. |
+
+Roots and Now are unpublished for now (old URLs redirect to the house). They can return later.

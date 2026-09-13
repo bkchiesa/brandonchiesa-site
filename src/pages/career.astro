@@ -1,0 +1,78 @@
+---
+import LeatherPad from "../components/LeatherPad.astro";
+import RoomHero from "../components/RoomHero.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import VideoShell from "../components/VideoShell.astro";
+import Base from "../layouts/Base.astro";
+import { BANK_DISCLAIMER } from "../lib/site";
+
+const blocks = [
+  {
+    id: "education",
+    title: "Education",
+    body: "Hampden-Sydney College — Classical History & Political Science.",
+  },
+  {
+    id: "career",
+    title: "Career",
+    body: "Truist → First Citizens Bank. VP / Business Banker, Charlottesville / Fluvanna area.",
+  },
+  {
+    id: "community",
+    title: "Community",
+    body: "Fluvanna Imagination Library (Dolly Parton’s Imagination Library / DPIL) — local nonprofit literacy work.",
+  },
+];
+---
+
+<Base
+  title="Career"
+  room="career"
+  videoShell
+  description="Public bio of Brandon Chiesa: Hampden-Sydney education, banking career path, and Fluvanna Imagination Library community work."
+>
+  <VideoShell />
+  <LeatherPad title="Career">
+  <SiteHeader current="career" />
+  <main id="main" class="page-main">
+    <RoomHero room="career" alt="The path is the work — a five-stage timeline from foundation to legacy" />
+    <p class="hud-kicker">Room A</p>
+    <h1 class="room-title">Career</h1>
+    <p class="lede">
+      Three public chapters only. No banking advice, rates, products, clients, or confidential bank content.
+    </p>
+
+    <nav class="timeline" aria-label="Career chapters">
+      <p class="hud-kicker">Path</p>
+      <ol>
+        {
+          blocks.map((block, index) => (
+            <li>
+              <a href={`#${block.id}`}>
+                <span class="mono">0{index + 1}</span>
+                <span>{block.title}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ol>
+    </nav>
+
+    <section class="card-grid three" aria-label="Public bio">
+      {
+        blocks.map((block) => (
+          <article class="card frame" id={block.id}>
+            <p class="hud-kicker">{block.title}</p>
+            <h2>{block.title}</h2>
+            <p>{block.body}</p>
+          </article>
+        ))
+      }
+    </section>
+
+    <p class="disclaimer">{BANK_DISCLAIMER}</p>
+  </main>
+  <SiteFooter showDisclaimer />
+  </LeatherPad>
+</Base>

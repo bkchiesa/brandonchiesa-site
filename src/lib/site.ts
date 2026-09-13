@@ -1,7 +1,7 @@
 export const SITE_NAME = "Brandon Chiesa";
 export const SITE_TAGLINE = "Builder. Explorer. Rooted in curiosity.";
 export const SITE_DESCRIPTION =
-  "Personal living-archive of Brandon Chiesa — rooms for work, making, travel films, family roots, and field notes. A personal site, not affiliated with First Citizens Bank.";
+  "Personal living-archive of Brandon Chiesa — rooms for career, coding, and videography. A personal site, not affiliated with First Citizens Bank.";
 export const SITE_CANONICAL = "https://bkchiesa.github.io/brandonchiesa-site/";
 
 export const DOJO_URL = "https://bkchiesa.github.io/Sensei-mooses-dojo/";
@@ -17,11 +17,11 @@ export const YOUTUBE_CHANNELS = [
   },
 ] as const;
 
-export type RoomId = "work" | "make" | "go" | "roots" | "now";
+export type RoomId = "career" | "coding" | "videography";
 
 export interface Room {
   id: RoomId;
-  letter: "A" | "B" | "C" | "D" | "E";
+  letter: "A" | "B" | "C";
   name: string;
   blurb: string;
   path: string;
@@ -29,39 +29,25 @@ export interface Room {
 
 export const rooms: Room[] = [
   {
-    id: "work",
+    id: "career",
     letter: "A",
-    name: "Work",
+    name: "Career",
     blurb: "Trust & community",
-    path: "work/",
+    path: "career/",
   },
   {
-    id: "make",
+    id: "coding",
     letter: "B",
-    name: "Make",
+    name: "Coding",
     blurb: "Apps & builds",
-    path: "make/",
+    path: "coding/",
   },
   {
-    id: "go",
+    id: "videography",
     letter: "C",
-    name: "Go",
+    name: "Videography",
     blurb: "Travel films",
-    path: "go/",
-  },
-  {
-    id: "roots",
-    letter: "D",
-    name: "Roots",
-    blurb: "Family tree",
-    path: "roots/",
-  },
-  {
-    id: "now",
-    letter: "E",
-    name: "Now",
-    blurb: "Field notes",
-    path: "now/",
+    path: "videography/",
   },
 ];
 
