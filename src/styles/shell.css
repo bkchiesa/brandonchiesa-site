@@ -247,39 +247,17 @@ html[data-reduce-motion="true"] .house-banner {
   border-radius: 1px;
   opacity: 0;
   pointer-events: none;
+  background-color: rgba(181, 154, 98, 0.78);
+  background-image: var(--mist-brass-strip);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: center;
   filter: blur(0.35px);
-  box-shadow:
-    0 1px 1px rgba(40, 28, 10, 0.28),
-    0 0 3px rgba(168, 124, 48, 0.22);
-  background-color: #8a6a2c;
-  background-image:
-    var(--mist-gold-texture, none),
-    repeating-linear-gradient(
-      108deg,
-      rgba(62, 42, 14, 0.28) 0 1px,
-      transparent 1px 3px
-    ),
-    repeating-linear-gradient(
-      0deg,
-      rgba(236, 208, 140, 0.2) 0 1px,
-      transparent 1px 2px
-    ),
-    linear-gradient(
-      90deg,
-      rgba(120, 86, 32, 0.2),
-      rgba(196, 163, 106, 0.78) 18%,
-      rgba(214, 176, 96, 0.62) 46%,
-      rgba(154, 112, 42, 0.72) 74%,
-      rgba(120, 86, 32, 0.2)
-    );
-  background-size: 100% 100%, 6px 4px, 3px 3px, 100% 100%;
-  background-repeat: repeat, repeat, repeat, no-repeat;
   transition: opacity 160ms ease;
 }
 
-.mist-nav[data-gold-texture="true"] .mist-label::after {
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
+.mist-nav[data-brass="true"] .mist-label::after {
+  background-color: transparent;
 }
 
 .mist-label:hover,
@@ -296,7 +274,7 @@ html[data-reduce-motion="true"] .house-banner {
 .mist-label:active::after,
 .mist-label.is-selected::after,
 .mist-label[aria-current="page"]::after {
-  opacity: 1;
+  opacity: 0.92;
 }
 
 html[data-reduce-motion="true"] .mist-label::after {

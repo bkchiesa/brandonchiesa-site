@@ -59,8 +59,10 @@ export const ART = {
     } satisfies Record<RoomId, string>,
     /** Room-card fill — Pixel PASS 1600×900 cognac/espresso. Same path for later lifts. */
     leatherPanel: "art/v3/leather_panel.png",
-    /** Optional worn-gold underline grain. CSS layers until Pixel drops this file. */
-    mistUnderlineGold: "art/v3/menu/underline_gold.png",
+    /** Pixel PASS worn-brass underline strip (192×10). */
+    mistUnderlineBrass: "art/v3/menu/mist_underline_brass.png",
+    /** Optional repeat-x grain if the strip needs tiling. */
+    mistUnderlineBrassTile: "art/v3/menu/mist_underline_brass_tile.png",
     /**
      * Pixel/Ink drop folders (not served). Copy onto the public paths above.
      * menu → blot_*.png + anim/{intro,passive,active}/

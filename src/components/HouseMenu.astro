@@ -4,9 +4,12 @@ import { join } from "node:path";
 import { ART, artUrl } from "../lib/art";
 import { rooms, SITE_NAME, SITE_TAGLINE, withBase } from "../lib/site";
 
-const goldRel = ART.v3.mistUnderlineGold;
-const hasGoldTexture = existsSync(join(process.cwd(), "public", goldRel));
-const goldUrl = hasGoldTexture ? artUrl(goldRel) : "";
+const publicDir = join(process.cwd(), "public");
+const brassRel = ART.v3.mistUnderlineBrass;
+const tileRel = ART.v3.mistUnderlineBrassTile;
+const hasBrass = existsSync(join(publicDir, brassRel));
+const hasTile = existsSync(join(publicDir, tileRel));
+const brassUrl = hasBrass ? artUrl(brassRel) : hasTile ? artUrl(tileRel) : "";
 ---
 
 <div class="house-ui" id="menu">
@@ -19,8 +22,8 @@ const goldUrl = hasGoldTexture ? artUrl(goldRel) : "";
     <nav
       class="mist-nav house-after"
       aria-label="Rooms"
-      data-gold-texture={hasGoldTexture ? "true" : "false"}
-      style={hasGoldTexture ? `--mist-gold-texture: url("${goldUrl}")` : undefined}
+      data-brass={hasBrass || hasTile ? "true" : "false"}
+      style={brassUrl ? `--mist-brass-strip: url("${brassUrl}")` : undefined}
     >
       <ul class="mist-list" role="list">
         {
