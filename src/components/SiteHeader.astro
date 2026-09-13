@@ -1,0 +1,24 @@
+---
+import { ART, artUrl } from "../lib/art";
+import { rooms, withBase, type RoomId } from "../lib/site";
+
+interface Props {
+  current?: RoomId;
+}
+
+const { current } = Astro.props;
+const room = rooms.find((item) => item.id === current);
+const icon = current ? ART.icons[current] : undefined;
+---
+
+<header class="site-header">
+  <a class="house-link mono" href={withBase()}>← House</a>
+  {
+    room && (
+      <p class="room-letter">
+        {icon && <img class="room-icon" src={artUrl(icon)} alt="" width="48" height="48" />}
+        {room.letter} · {room.name}
+      </p>
+    )
+  }
+</header>

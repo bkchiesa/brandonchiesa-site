@@ -1,0 +1,169 @@
+---
+import { ART, artUrl } from "../lib/art";
+
+const durationMs = 10000;
+const plates = [
+  {
+    src: ART.intro.coast,
+    label: "1. Newport News Peninsula",
+    alt: "Map plate of the Newport News / Virginia Peninsula, York River and James River",
+  },
+  {
+    src: ART.intro.piedmont,
+    label: "2. James River · piedmont",
+    alt: "Etched aerial of the James River winding through the Virginia piedmont",
+  },
+  {
+    src: ART.intro.blueridge,
+    label: "3. Blue Ridge",
+    alt: "Blue Ridge ridgelines with a map pin on the peak",
+  },
+];
+---
+
+<noscript>
+  <style>
+    #intro {
+      display: none !important;
+    }
+  </style>
+</noscript>
+<div
+  class="intro"
+  id="intro"
+  data-duration={durationMs}
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="intro-title"
+>
+  <div class="intro-top">
+    <p class="hud-kicker" id="intro-title">Intro — Newport News → James River → Blue Ridge</p>
+    <button type="button" class="intro-skip mono" data-skip-intro>Skip intro</button>
+  </div>
+
+  <div class="intro-stage">
+    <div class="intro-plates">
+      {
+        plates.map((plate, index) => (
+          <figure class={`intro-plate intro-plate--${index + 1}`}>
+            <img src={artUrl(plate.src)} alt={plate.alt} width="1920" height="1080" />
+            <figcaption class="hud-kicker">{plate.label}</figcaption>
+          </figure>
+        ))
+      }
+    </div>
+  </div>
+
+  <div class="intro-bottom">
+    <p class="hud-kicker">Camera flies west</p>
+    <div class="progress" aria-hidden="true"><span></span></div>
+    <p class="hud-kicker">~10s · crossfade · then menu</p>
+  </div>
+</div>
+
+<script>
+  const INTRO_KEY = "bc-intro-done";
+  const MOTION_KEY = "bc-reduce-motion";
+  const intro = document.getElementById("intro");
+  const status = document.querySelector("[data-menu-status]");
+  const reduceButtons = document.querySelectorAll("[data-reduce-motion]");
+  const skipButtons = document.querySelectorAll("[data-skip-intro]");
+
+  const osReduce = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const userReduce = () => localStorage.getItem(MOTION_KEY) === "1";
+  const shouldReduce = () =>
+    document.documentElement.dataset.reduceMotion === "true" ||
+    userReduce() ||
+    (localStorage.getItem(MOTION_KEY) !== "0" && osReduce());
+
+  function setReduce(on: boolean) {
+    document.documentElement.dataset.reduceMotion = on ? "true" : "false";
+    localStorage.setItem(MOTION_KEY, on ? "1" : "0");
+    reduceButtons.forEach((btn) => {
+      btn.setAttribute("aria-pressed", on ? "true" : "false");
+    });
+    if (on) finishIntro(true);
+  }
+
+  function syncReduceButtons() {
+    const on = shouldReduce();
+    reduceButtons.forEach((btn) => {
+      btn.setAttribute("aria-pressed", on ? "true" : "false");
+    });
+  }
+
+  let fadeTimer = 0;
+  let doneTimer = 0;
+
+  function finishIntro(immediate = false) {
+    if (!intro) return;
+    window.clearTimeout(fadeTimer);
+    window.clearTimeout(doneTimer);
+    sessionStorage.setItem(INTRO_KEY, "1");
+    if (status) status.textContent = "Animation complete";
+    skipButtons.forEach((btn) => {
+      if (!(btn instanceof HTMLElement)) return;
+      if (btn.classList.contains("intro-skip")) return;
+      btn.textContent = "Replay intro";
+    });
+    if (immediate) {
+      intro.hidden = true;
+      intro.classList.remove("is-playing", "is-leaving");
+      intro.setAttribute("aria-hidden", "true");
+      return;
+    }
+    intro.classList.add("is-leaving");
+    doneTimer = window.setTimeout(() => {
+      intro.hidden = true;
+      intro.classList.remove("is-playing", "is-leaving");
+      intro.setAttribute("aria-hidden", "true");
+    }, 1200);
+  }
+
+  function playIntro() {
+    if (!intro) return;
+    sessionStorage.removeItem(INTRO_KEY);
+    intro.hidden = false;
+    intro.classList.remove("is-leaving");
+    intro.setAttribute("aria-hidden", "false");
+    intro.classList.remove("is-playing");
+    void intro.offsetWidth;
+    intro.classList.add("is-playing");
+    if (status) status.textContent = "Flyover";
+    skipButtons.forEach((btn) => {
+      if (!(btn instanceof HTMLElement)) return;
+      if (btn.classList.contains("intro-skip")) return;
+      btn.textContent = "Skip intro";
+    });
+    const duration = Number(intro.dataset.duration || 10000);
+    fadeTimer = window.setTimeout(() => finishIntro(false), duration);
+  }
+
+  function boot() {
+    syncReduceButtons();
+    const skipQuery = new URLSearchParams(window.location.search).has("skip");
+    if (shouldReduce() || skipQuery || sessionStorage.getItem(INTRO_KEY) === "1") {
+      finishIntro(true);
+      return;
+    }
+    playIntro();
+  }
+
+  skipButtons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      if (intro && !intro.hidden) {
+        finishIntro(true);
+      } else if (!shouldReduce()) {
+        playIntro();
+      }
+    });
+  });
+
+  reduceButtons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      setReduce(document.documentElement.dataset.reduceMotion !== "true");
+    });
+  });
+
+  boot();
+</script>

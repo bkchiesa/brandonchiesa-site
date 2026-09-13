@@ -1,0 +1,89 @@
+---
+import RoomHero from "../components/RoomHero.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import Base from "../layouts/Base.astro";
+import { YOUTUBE_CHANNELS } from "../lib/site";
+
+const frames = [
+  { label: "Start", caption: "Newport News Peninsula" },
+  { label: "Stop 1", caption: "James River" },
+  { label: "Stop 2", caption: "Piedmont" },
+  { label: "Stop 3", caption: "Gap" },
+  { label: "Arrive", caption: "Blue Ridge" },
+];
+---
+
+<Base
+  title="Go"
+  room="go"
+  description="Travel films and privacy-enhanced YouTube placeholders for Brandon Chiesa’s channels."
+>
+  <SiteHeader current="go" />
+  <main id="main" class="page-main">
+    <RoomHero room="go" alt="Travel filmstrip: river, ridge, and city — films, journeys, ground truth" />
+    <p class="hud-kicker">Room C</p>
+    <h1 class="room-title">Go</h1>
+    <p class="lede">
+      Journey stops, places, moments. Film-strip art and specific video IDs arrive later; channel doors are live.
+    </p>
+
+    <section aria-labelledby="strip-title">
+      <h2 id="strip-title" class="hud-kicker">Trip filmstrip</h2>
+      <div class="filmstrip-wrap">
+        <button class="nudge" type="button" data-strip="prev" aria-label="Previous frames">‹</button>
+        <div class="filmstrip" data-filmstrip>
+          {
+            frames.map((frame) => (
+              <article class="film-cell frame">
+                <div class="placeholder" aria-hidden="true" />
+                <p>
+                  <strong class="mono">{frame.label}</strong>
+                  <span> · {frame.caption}</span>
+                </p>
+              </article>
+            ))
+          }
+        </div>
+        <button class="nudge" type="button" data-strip="next" aria-label="Next frames">›</button>
+      </div>
+    </section>
+
+    <section aria-labelledby="yt-title" style="margin-top:2rem;">
+      <h2 id="yt-title" class="room-title" style="font-size:1.8rem;">YouTube (privacy-enhanced)</h2>
+      <p>
+        Embeds will use <code>https://www.youtube-nocookie.com/embed/…</code> so cookies stay off until play. No public
+        video IDs are wired yet — frames stay as placeholders.
+      </p>
+      <div class="embed-frame" role="img" aria-label="Placeholder for a privacy-enhanced YouTube embed">
+        <p>
+          <span class="mono">youtube-nocookie.com</span><br />
+          Video ID pending · channels below
+        </p>
+      </div>
+      <ul class="channel-list">
+        {
+          YOUTUBE_CHANNELS.map((channel) => (
+            <li>
+              <a class="house-link" href={channel.href} target="_blank" rel="noopener noreferrer">
+                {channel.handle}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+  </main>
+  <SiteFooter />
+</Base>
+
+<script>
+  const strip = document.querySelector("[data-filmstrip]");
+  document.querySelectorAll("[data-strip]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      if (!(strip instanceof HTMLElement)) return;
+      const dir = btn.getAttribute("data-strip") === "next" ? 1 : -1;
+      strip.scrollBy({ left: dir * Math.min(strip.clientWidth * 0.8, 280), behavior: "smooth" });
+    });
+  });
+</script>

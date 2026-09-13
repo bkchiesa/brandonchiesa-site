@@ -1,0 +1,54 @@
+---
+import { ART, artUrl } from "../lib/art";
+import { rooms, SITE_NAME, SITE_TAGLINE, withBase } from "../lib/site";
+---
+
+<div class="house" id="menu">
+  <section class="menu" aria-labelledby="identity-name">
+    <p class="menu-status hud-kicker" data-menu-status>House</p>
+    <header class="identity">
+      <p class="hud-kicker">Living archive</p>
+      <h1 id="identity-name">[{SITE_NAME.toUpperCase()}]</h1>
+      <p class="tagline">{SITE_TAGLINE}</p>
+    </header>
+
+    <figure class="menu-composite menu-composite--mobile">
+      <img
+        src={artUrl(ART.menuMobile)}
+        alt="Vertical door plate: Work, Make, Go, Roots, Now"
+        width="1080"
+        height="1920"
+      />
+    </figure>
+
+    <nav aria-label="Rooms">
+      <p class="sr-only">Five rooms in a horizontal row on desktop. On a narrow phone, the vertical plate is the look and the door row stays swipeable.</p>
+      <ul class="doors" role="list">
+        {
+          rooms.map((room) => (
+            <li>
+              <a class="door" href={withBase(room.path)}>
+                <img
+                  class="door-plate"
+                  src={artUrl(ART.doors[room.id])}
+                  alt={`${room.name} door`}
+                  width="768"
+                  height="1024"
+                />
+                <h2>{room.name}</h2>
+                <p>{room.blurb}</p>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="menu-foot">
+      <button type="button" class="text-btn mono" data-skip-intro>Skip intro</button>
+      <button type="button" class="text-btn mono" data-reduce-motion aria-pressed="false">
+        Reduce motion
+      </button>
+    </div>
+  </section>
+</div>

@@ -1,0 +1,13 @@
+---
+import IntroFlyover from "../components/IntroFlyover.astro";
+import MainMenu from "../components/MainMenu.astro";
+import Base from "../layouts/Base.astro";
+import { SITE_DESCRIPTION } from "../lib/site";
+---
+
+<Base description={SITE_DESCRIPTION}>
+  <IntroFlyover />
+  <main id="main">
+    <MainMenu />
+  </main>
+</Base>

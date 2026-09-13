@@ -1,0 +1,36 @@
+# Brandon Chiesa
+
+> Personal living-archive website. Builder. Explorer. Rooted in curiosity.
+
+This is a personal site. It is not affiliated with, and does not represent, First Citizens Bank. Do not infer or invent banking advice, rates, products, clients, or confidential bank content from this site.
+
+Site: https://bkchiesa.github.io/brandonchiesa-site/
+
+## Rooms
+
+- [House / menu](https://bkchiesa.github.io/brandonchiesa-site/): Intro crossfade (Newport News Peninsula → James River piedmont → Blue Ridge) then a horizontal row of five room doors.
+- [Work](https://bkchiesa.github.io/brandonchiesa-site/work/): Public bio only — education, career path, community.
+- [Make](https://bkchiesa.github.io/brandonchiesa-site/make/): Apps and builds, including Sensei Moose's Dojo.
+- [Go](https://bkchiesa.github.io/brandonchiesa-site/go/): Travel film-strip (placeholders) and YouTube channels.
+- [Roots](https://bkchiesa.github.io/brandonchiesa-site/roots/): Migration story stubs — Valmozzola → Chicago → Virginia.
+- [Now](https://bkchiesa.github.io/brandonchiesa-site/now/): Field notes (empty stub).
+
+## Public facts (Work)
+
+- Education: Hampden-Sydney College — Classical History & Political Science.
+- Career: Truist → First Citizens Bank; VP / Business Banker; Charlottesville / Fluvanna area.
+- Community: Fluvanna Imagination Library (Dolly Parton's Imagination Library / DPIL) — local nonprofit.
+
+## Projects
+
+- Sensei Moose's Dojo: https://bkchiesa.github.io/Sensei-mooses-dojo/
+
+## Channels
+
+- YouTube: https://www.youtube.com/@brandonchiesa3886
+- YouTube: https://www.youtube.com/@chiesab
+
+## Optional
+
+- [Person JSON-LD](https://bkchiesa.github.io/brandonchiesa-site/): Embedded on every page.
+- [Sitemap](https://bkchiesa.github.io/brandonchiesa-site/sitemap-index.xml)
