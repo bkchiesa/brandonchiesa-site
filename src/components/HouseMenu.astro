@@ -2,7 +2,14 @@
 import { existsSync } from "node:fs";
 import { join } from "node:path";
 import { ART, artUrl } from "../lib/art";
-import { rooms, SITE_NAME, SITE_TAGLINE, withBase } from "../lib/site";
+import {
+  rooms,
+  SITE_DISCLAIMER,
+  SITE_NAME,
+  SITE_TAGLINE_LEAD,
+  SITE_TAGLINE_ROOTED,
+  withBase,
+} from "../lib/site";
 
 const publicDir = join(process.cwd(), "public");
 const brassRel = ART.v3.mistUnderlineBrass;
@@ -15,8 +22,11 @@ const brassUrl = hasBrass ? artUrl(brassRel) : hasTile ? artUrl(tileRel) : "";
 <div class="house-ui" id="menu">
   <section class="menu menu--house" aria-labelledby="identity-name">
     <header class="house-banner identity identity--sky" data-house-banner>
-      <h1 id="identity-name">[{SITE_NAME.toUpperCase()}]</h1>
-      <p class="tagline">{SITE_TAGLINE}</p>
+      <h1 id="identity-name">{SITE_NAME}</h1>
+      <p class="tagline">
+        {SITE_TAGLINE_LEAD}{" "}
+        <span class="tagline-rooted">{SITE_TAGLINE_ROOTED}</span>
+      </p>
     </header>
 
     <nav
@@ -44,10 +54,7 @@ const brassUrl = hasBrass ? artUrl(brassRel) : hasTile ? artUrl(tileRel) : "";
       <button type="button" class="text-btn mono" data-reduce-motion aria-pressed="false">
         Reduce motion
       </button>
-      <p class="menu-disclaimer">
-        This is a personal website. It is not affiliated with, and does not represent, First Citizens
-        Bank.
-      </p>
+      <p class="menu-disclaimer">{SITE_DISCLAIMER}</p>
     </div>
   </section>
 </div>

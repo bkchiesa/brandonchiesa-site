@@ -2,7 +2,7 @@
 
 Pixel / Brandon / Guido. Living-archive house. **Not Look v2 cartography.**
 
-This is a personal website. It is not affiliated with, and does not represent, First Citizens Bank.
+This is a personal site and is not affiliated with any employer.
 
 Look v2 and PR #1 stay **held**. This brief is the video-shell direction only. Merge of the v3 shell stays **held**. Cards are `leather_panel.png` only.
 
@@ -47,4 +47,4 @@ Runtime contract is `src/lib/art.ts` (`ART.v3`, frame helpers). Do not rename pu
 
 ## Rooms
 
-Live routes: `/career/` `/coding/` `/videography/`. Existing Career/Coding/Videography facts and stubs stay in the leather inset. SEO, Person JSON-LD, bank disclaimer stay. `/work/` `/make/` `/go/` redirect; Roots and Now can return later.
+Live routes: `/career/` `/coding/` `/videography/`. Existing Career/Coding/Videography facts and stubs stay in the leather inset. SEO, Person JSON-LD, generic employer disclaimer stay. `/work/` `/make/` `/go/` redirect; Roots and Now can return later.

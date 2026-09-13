@@ -5,14 +5,14 @@ import Base from "../layouts/Base.astro";
 import { withBase } from "../lib/site";
 ---
 
-<Base title="Lost in the woods" videoShell description="This room is not on the house plan.">
+<Base title="Lost in the woods" videoShell description="This room is not on the home plan.">
   <VideoShell />
   <LeatherPad title="Off the map">
     <main id="main" class="page-main" style="text-align:center;">
       <p class="hud-kicker">404</p>
       <h1 class="room-title">Off the map</h1>
-      <p class="lede" style="margin-inline:auto;">That corridor is not drawn yet. Return to the house menu.</p>
-      <p><a class="house-link mono" href={withBase()}>← House</a></p>
+      <p class="lede" style="margin-inline:auto;">That corridor is not drawn yet. Return home.</p>
+      <p><a class="house-link mono" href={withBase()} data-home-link>← Home</a></p>
     </main>
   </LeatherPad>
 </Base>

@@ -1,7 +1,7 @@
 ---
 import "../styles/global.css";
 import "../styles/shell.css";
-import { BANK_DISCLAIMER, SITE_CANONICAL, SITE_DESCRIPTION, SITE_NAME, SITE_TAGLINE, withBase } from "../lib/site";
+import { SITE_CANONICAL, SITE_DESCRIPTION, SITE_DISCLAIMER, SITE_NAME, SITE_TAGLINE, withBase } from "../lib/site";
 
 interface Props {
   title?: string;
@@ -104,6 +104,6 @@ const personJsonLd = {
         }
       })();
     </script>
-    <p class="sr-only">{BANK_DISCLAIMER}</p>
+    <p class="sr-only">{SITE_DISCLAIMER}</p>
   </body>
 </html>

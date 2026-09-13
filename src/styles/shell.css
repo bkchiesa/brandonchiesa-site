@@ -189,6 +189,16 @@ html[data-reduce-motion="true"] .house-banner {
   color: var(--v3-olive);
 }
 
+.identity--sky .tagline {
+  text-transform: none;
+  letter-spacing: 0.04em;
+  font-size: clamp(0.72rem, 2.1vw, 0.92rem);
+}
+
+.tagline-rooted {
+  white-space: nowrap;
+}
+
 /* Pixel PASS mist menu — public/art/v3/menu/MIST_MENU_SPECS.md */
 .mist-nav {
   position: absolute;
@@ -364,6 +374,18 @@ html[data-reduce-motion="true"] .mist-label::after {
   animation: leatherReveal 920ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
+.room-stage.is-dismissing {
+  pointer-events: none;
+}
+
+.room-stage.is-dismissing .leather-panel {
+  animation: leatherDismiss 920ms cubic-bezier(0.64, 0, 0.78, 0) both;
+}
+
+.room-stage.is-dismissing .room-veil {
+  animation: leatherVeilOut 640ms ease both;
+}
+
 html[data-reduce-motion="true"] .room-stage .leather-panel,
 html[data-reduce-motion="true"] .room-veil {
   animation: none;
@@ -380,12 +402,32 @@ html[data-reduce-motion="true"] .room-veil {
   }
 }
 
+@keyframes leatherDismiss {
+  from {
+    opacity: 1;
+    transform: none;
+  }
+  to {
+    opacity: 0;
+    transform: translateY(14px) scale(0.988);
+  }
+}
+
 @keyframes leatherVeil {
   from {
     opacity: 0;
   }
   to {
     opacity: 1;
+  }
+}
+
+@keyframes leatherVeilOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
   }
 }
 

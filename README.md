@@ -4,7 +4,7 @@ Personal house-with-rooms site. Tech × Renaissance.
 
 **Look v3 (this branch):** video-driven house locked in [`LOOK_V3_BRIEF.md`](LOOK_V3_BRIEF.md). Palette follows the **loop video** (olive/pine, ochre/tan, steely ridges, cream/charcoal) — not Look v2 navy/tiffany cartography. Merge **held**. Look v2 / PR #1 stay held.
 
-**This is a personal website. It is not affiliated with, and does not represent, First Citizens Bank.**
+**This is a personal site and is not affiliated with any employer.**
 
 Expected GitHub Pages URL (after Pages is enabled and the deploy workflow has run):
 

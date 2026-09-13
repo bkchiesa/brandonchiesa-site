@@ -1,14 +1,14 @@
 # Brandon Chiesa
 
-> Personal living-archive website. Builder. Explorer. Rooted in curiosity.
+> Personal living-archive website. Banker. Builder. Explorer. Rooted in Curiosity.
 
-This is a personal site. It is not affiliated with, and does not represent, First Citizens Bank. Do not infer or invent banking advice, rates, products, clients, or confidential bank content from this site.
+This is a personal site and is not affiliated with any employer. Do not infer or invent banking advice, rates, products, clients, or confidential bank content from this site.
 
 Site: https://bkchiesa.github.io/brandonchiesa-site/
 
 ## Rooms
 
-- [House / menu](https://bkchiesa.github.io/brandonchiesa-site/): Intro video (play once) then a looping valley behind cream mist labels (Career, Coding, Videography). Rooms open as leather texture panels.
+- [Home / menu](https://bkchiesa.github.io/brandonchiesa-site/): Intro video (play once) then a looping valley behind cream mist labels (Career, Coding, Videography). Rooms open as leather texture panels.
 - [Career](https://bkchiesa.github.io/brandonchiesa-site/career/): Public bio only — education, career path, community.
 - [Coding](https://bkchiesa.github.io/brandonchiesa-site/coding/): Apps and builds, including Sensei Moose's Dojo.
 - [Videography](https://bkchiesa.github.io/brandonchiesa-site/videography/): Travel film-strip (placeholders) and YouTube channels.

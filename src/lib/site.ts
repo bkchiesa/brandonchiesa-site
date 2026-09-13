@@ -1,7 +1,9 @@
 export const SITE_NAME = "Brandon Chiesa";
-export const SITE_TAGLINE = "Builder. Explorer. Rooted in curiosity.";
+export const SITE_TAGLINE = "Banker. Builder. Explorer. Rooted in Curiosity.";
+export const SITE_TAGLINE_LEAD = "Banker. Builder. Explorer.";
+export const SITE_TAGLINE_ROOTED = "Rooted in Curiosity.";
 export const SITE_DESCRIPTION =
-  "Personal living-archive of Brandon Chiesa — rooms for career, coding, and videography. A personal site, not affiliated with First Citizens Bank.";
+  "Personal living-archive of Brandon Chiesa — rooms for career, coding, and videography. A personal site, not affiliated with any employer.";
 export const SITE_CANONICAL = "https://bkchiesa.github.io/brandonchiesa-site/";
 
 export const DOJO_URL = "https://bkchiesa.github.io/Sensei-mooses-dojo/";
@@ -61,5 +63,5 @@ export function withBase(path = ""): string {
   return `${base}${normalized}${normalized.endsWith("/") ? "" : "/"}`;
 }
 
-export const BANK_DISCLAIMER =
-  "This is a personal website. It is not affiliated with, and does not represent, First Citizens Bank.";
+export const SITE_DISCLAIMER =
+  "This is a personal site and is not affiliated with any employer.";

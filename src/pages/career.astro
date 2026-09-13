@@ -5,7 +5,7 @@ import SiteFooter from "../components/SiteFooter.astro";
 import SiteHeader from "../components/SiteHeader.astro";
 import VideoShell from "../components/VideoShell.astro";
 import Base from "../layouts/Base.astro";
-import { BANK_DISCLAIMER } from "../lib/site";
+import { SITE_DISCLAIMER } from "../lib/site";
 
 const blocks = [
   {
@@ -71,7 +71,7 @@ const blocks = [
       }
     </section>
 
-    <p class="disclaimer">{BANK_DISCLAIMER}</p>
+    <p class="disclaimer">{SITE_DISCLAIMER}</p>
   </main>
   <SiteFooter showDisclaimer />
   </LeatherPad>
