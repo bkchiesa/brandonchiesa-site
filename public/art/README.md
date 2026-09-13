@@ -39,6 +39,9 @@ State-folder anim packs are canonical. Ignore `v3/anim/{door}/` mirrors.
 | `v3/anim/active/blot_{id}_active_00..05.png` | Hover/focus loop |
 | `v3/anim/active/blot_{id}_selected.png` | Pressed/selected still |
 | `v3/menu/MIST_MENU_SPECS.md` | Live mist-menu type contract (HTML/CSS, not blot art) |
+| `v3/menu/mist_idle_on_loop.png` | 3-label idle ref (Career Coding Videography) |
+| `v3/menu/mist_hover_coding_on_loop.png` | Canonical hover ref — brass under Coding |
+| `v3/menu/mist_hover_make_on_loop.png` | Alias of the Coding hover (path continuity) |
 | `v3/menu/mist_underline_brass.png` | Hover/selected underline strip (192×10 RGBA, mid `#B59A62`) |
 | `v3/menu/mist_underline_brass_tile.png` | Optional 1D-seamless brass tile |
 | `v3/leather_panel.png` | Room card fill — 1600×900 cognac/espresso (Pixel PASS) |

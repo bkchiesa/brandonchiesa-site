@@ -31,7 +31,7 @@ Skip / `prefers-reduced-motion` / `?skip=1` land on the house over the loop (or 
 ## Menu
 
 - **Pixel PASS:** HTML/CSS mist labels. Spec: `public/art/v3/menu/MIST_MENU_SPECS.md`.
-- PT Serif 400, ~32px @1280, `#F3EEE4` @ 0.95, gap `4.375vw`, vertical mid 50.3%.
+- PT Serif 400, ~32px @1280, `#F3EEE4` @ 0.95, gap `6.875vw` (~88px @1280), vertical mid 50.3%. Three labels only: Career, Coding, Videography.
 - Hover/selected: Pixel PASS `mist_underline_brass.png` (~6px @1280, ~5px below baseline, mid `#B59A62`). Labels stay cream. No cream hairline. No blots, chips, or cairns.
 - Blot assets may stay in `public/art/v3/`; they are not wired.
 - Live rooms: Career, Coding, Videography — `/career/` `/coding/` `/videography/`. Roots and Now are unpublished (redirect home). Old `/work/` `/make/` `/go/` redirect to the new slugs.

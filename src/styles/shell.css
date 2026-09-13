@@ -207,13 +207,13 @@ html[data-reduce-motion="true"] .house-banner {
   flex-wrap: wrap;
   align-items: baseline;
   justify-content: center;
-  gap: 4.375vw;
+  gap: 6.875vw;
   margin: 0;
   padding: 0;
 }
 
 .mist-list li {
-  padding: 0.7rem 0.15rem;
+  padding: 0.7rem 0;
 }
 
 .mist-label {
