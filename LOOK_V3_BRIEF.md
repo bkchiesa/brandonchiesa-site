@@ -24,7 +24,7 @@ Do **not** carry Look v2 blues/tans cartography tokens as the primary house look
 1. **Intro once** — `public/video/intro.mp4`, full-bleed. Dual-video overlap crossfade into the loop so the last intro valley matches loop t=0 (no hard cut).
 2. **Banner** — name sits high; fades in at ~halfway through the intro; stays on the house. Reduce-motion skips the fade.
 3. **Menu held** — blot UI is off the live shell (assets stay in `public/art/v3/`). Identity-only chrome until Guido’s quieter replacements land.
-4. **On select** — `leather_panel.png` card with a short reveal over the continuing loop. Soft veil OK. **No glassmorphism.** Never wire `leather_pad*`. Pixel may hot-swap a richer panel on the same path.
+4. **On select** — `leather_panel.png` (1600×900 cognac/espresso, Pixel PASS) with a short reveal over the continuing loop. Soft veil OK. **No glassmorphism.** Never wire `leather_pad*` or `leather_panel_mock`. A half-step lighter lift can overwrite the same filename if Brandon asks.
 
 Skip / `prefers-reduced-motion` / `?skip=1` land on the house over the loop (or the loop poster).
 

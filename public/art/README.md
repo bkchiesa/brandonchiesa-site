@@ -29,7 +29,7 @@ Navy / parchment / clay / tiffany. No greens.
 
 State-folder anim packs are canonical. Ignore `v3/anim/{door}/` mirrors.
 
-**Hold:** blot Option B packs stay on these filenames. Cards use `leather_panel.png` only — Brandon rejected the `leather_pad*` family. Do not rename. See `LOOK_V3_BRIEF.md`.
+**Hold:** blot Option B packs stay on these filenames. Cards use `leather_panel.png` only (1600×900 cognac/espresso PASS). Brandon rejected the `leather_pad*` family. Do not rename. See `LOOK_V3_BRIEF.md`.
 
 | File | Use |
 | --- | --- |
@@ -38,7 +38,8 @@ State-folder anim packs are canonical. Ignore `v3/anim/{door}/` mirrors.
 | `v3/anim/passive/blot_{id}_passive_00..07.png` | Idle liquid loop (8f) |
 | `v3/anim/active/blot_{id}_active_00..05.png` | Hover/focus loop |
 | `v3/anim/active/blot_{id}_selected.png` | Pressed/selected still |
-| `v3/leather_panel.png` | Room card texture fill |
+| `v3/leather_panel.png` | Room card fill — 1600×900 cognac/espresso (Pixel PASS) |
+| `v3/leather_panel_mock.png` | Contrast mock only — do not wire |
 | `v3/leather_pad.png` `v3/leather_pad_flat.png` `v3/leather_pad_veil.png` | Rejected — do not wire |
 
 ## Room heroes

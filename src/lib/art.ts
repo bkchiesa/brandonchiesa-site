@@ -41,8 +41,9 @@ export const ART = {
   } satisfies Partial<Record<RoomId, string>>,
   /**
    * Look v3 video-shell chrome.
-   * Leather: `leatherPanel` only. Brandon rejected the `leather_pad*` family
-   * (flat / 3D / veil) — do not prefer or fall back to those files.
+   * Leather: `leatherPanel` only (`leather_panel.png`, 1600×900 cognac/espresso).
+   * Brandon rejected the `leather_pad*` family. Do not wire `leather_panel_mock`.
+   * A half-step lighter lift can overwrite the same filename if Brandon asks.
    * Blot anim: state folders under `art/v3/anim/{intro,passive,active}/`.
    * Ignore legacy `art/v3/anim/{door}/` mirrors.
    * Blot stills/anims stay on disk; live house chrome is identity-only.
@@ -55,7 +56,7 @@ export const ART = {
       roots: "art/v3/blot_roots.png",
       now: "art/v3/blot_now.png",
     } satisfies Record<RoomId, string>,
-    /** Room-card fill. Pixel source: `finals/v3/cards/`. */
+    /** Room-card fill — Pixel PASS 1600×900 cognac/espresso. Same path for later lifts. */
     leatherPanel: "art/v3/leather_panel.png",
     /**
      * Pixel/Ink drop folders (not served). Copy onto the public paths above.
