@@ -29,7 +29,7 @@ Navy / parchment / clay / tiffany. No greens.
 
 State-folder anim packs are canonical. Ignore `v3/anim/{door}/` mirrors.
 
-**Hold:** r2 blot stills have in-plate names; colors stay interim. Pastel recolor and bloom frames drop from `finals/v3/menu/` onto these same filenames. Card texture from `finals/v3/cards/` → `leather_panel.png`. Do not rename. See `LOOK_V3_BRIEF.md`.
+**Hold:** blot contact/sprites are still in revise (r3 liquid/rounded incoming). Keep these filenames. Leather chrome PASS: cards use `leather_pad_flat.png` + `leather_pad_veil.png`. Do not rename. See `LOOK_V3_BRIEF.md`.
 
 | File | Use |
 | --- | --- |
@@ -38,9 +38,10 @@ State-folder anim packs are canonical. Ignore `v3/anim/{door}/` mirrors.
 | `v3/anim/passive/blot_{id}_passive_00..07.png` | Idle liquid loop (8f) |
 | `v3/anim/active/blot_{id}_active_00..05.png` | Hover/focus loop |
 | `v3/anim/active/blot_{id}_selected.png` | Pressed/selected still |
-| `v3/leather_panel.png` | Room card texture fill |
-| `v3/leather_pad.png` | True-alpha (~996KB) desk-pad prop — on disk, **do not wire** |
-| `v3/leather_pad_flat.png` | Flat pad illustration — on disk, **do not wire** |
+| `v3/leather_pad_flat.png` | Preferred room-card fill (flat texture panel) |
+| `v3/leather_pad_veil.png` | Contrast plate behind the card |
+| `v3/leather_pad.png` | 3D desk-pad prop — available, not the default card |
+| `v3/leather_panel.png` | Texture-only fallback |
 
 ## Room heroes
 

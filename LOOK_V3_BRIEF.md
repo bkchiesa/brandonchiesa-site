@@ -4,7 +4,7 @@ Pixel / Brandon / Guido. Living-archive house. **Not Look v2 cartography.**
 
 This is a personal website. It is not affiliated with, and does not represent, First Citizens Bank.
 
-Look v2 and PR #1 stay **held**. This brief is the video-shell direction only. Merge of the v3 shell stays **held** until blot pastel recolor and chrome land.
+Look v2 and PR #1 stay **held**. This brief is the video-shell direction only. Merge of the v3 shell stays **held**. Leather chrome is PASS; blot contact/sprites are still in revise (r3 liquid/rounded incoming).
 
 ## Palette (from the loop)
 
@@ -24,7 +24,7 @@ Do **not** carry Look v2 blues/tans cartography tokens as the primary house look
 1. **Intro once** — `public/video/intro.mp4`, full-bleed, **no UI chrome**.
 2. **Crossfade** to `public/video/loop.mp4` as `object-fit: cover` (center-crop, no tile).
 3. **Ink-blot reveals** — Work · Make · Go · Roots · Now bloom to labels, then idle.
-4. **On select** — opaque leather-panel card over the continuing loop. Soft veil behind the card is OK. **No glassmorphism.**
+4. **On select** — opaque **flat leather texture panel** (`leather_pad_flat.png`) over the continuing loop. `leather_pad_veil.png` for contrast behind the card. **No glassmorphism.** Do not use the 3D `leather_pad.png` prop as the default card.
 
 Skip / `prefers-reduced-motion` / `?skip=1` land on the house over the loop (or the loop poster).
 
@@ -32,17 +32,17 @@ Skip / `prefers-reduced-motion` / `?skip=1` land on the house over the loop (or 
 
 - Horizontal blot row on desktop.
 - Stack (or wrap) is OK on mobile.
-- Current blot colors are **interim**. Pixel/Ink pastel recolor will overwrite the same filenames.
-- r2 stills already paint names **in the blot**. Default `data-label-mode="in-blot"` (HTML copy is a11y-only). `on-plate` overlays HTML inside the plate; `under` sits captions below. Bloom frames incoming — flip the attribute only; do not lock caption geometry.
+- Blot contact/sprites are **still in revise**. Do not treat current stills as final. Expect r3 liquid/rounded swaps on the same filenames.
+- Keep blot hooks. Default `data-label-mode="in-blot"` (HTML copy is a11y-only). `on-plate` overlays HTML inside the plate; `under` sits captions below. Bloom frames incoming — flip the attribute only; do not lock caption geometry.
 
 ## Art hooks (Pixel / Ink)
 
 Source drops:
 
 - `finals/v3/menu/` → `public/art/v3/blot_*.png` and `public/art/v3/anim/{intro,passive,active}/`
-- `finals/v3/cards/` → `public/art/v3/leather_panel.png`
+- `finals/v3/cards/` → `public/art/v3/leather_pad_flat.png` (+ `leather_pad_veil.png`)
 
-Runtime contract is `src/lib/art.ts` (`ART.v3`, frame helpers). Do not rename public files. `leather_pad.png` is re-keyed true-alpha (~996KB) but **not wired** — cards use `leather_panel.png` only.
+Runtime contract is `src/lib/art.ts` (`ART.v3`, frame helpers). Do not rename public files. Cards prefer `leather_pad_flat.png`. `leather_pad.png` (3D) stays available but unwired.
 
 ## Rooms
 

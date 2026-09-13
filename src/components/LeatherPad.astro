@@ -8,23 +8,44 @@ interface Props {
 }
 
 const { title } = Astro.props;
+const publicDir = join(process.cwd(), "public");
 
-/** Prefer Pixel r3 `leather_panel.png`. Pad props are rejected — never fall back to them. */
-const leatherTextureRel = ART.v3.leatherPanel;
-const hasLeatherTexture = existsSync(join(process.cwd(), "public", leatherTextureRel));
-const textureUrl = hasLeatherTexture ? artUrl(leatherTextureRel) : "";
+const flatRel = ART.v3.leatherPadFlat;
+const panelRel = ART.v3.leatherPanel;
+const veilRel = ART.v3.leatherPadVeil;
+
+const hasFlat = existsSync(join(publicDir, flatRel));
+const hasPanel = existsSync(join(publicDir, panelRel));
+const hasVeil = existsSync(join(publicDir, veilRel));
+
+/** Prefer Pixel flat texture panel. 3D leather_pad.png stays unwired. */
+const textureRel = hasFlat ? flatRel : hasPanel ? panelRel : "";
+const fill = hasFlat ? "flat" : hasPanel ? "panel" : "none";
+const textureUrl = textureRel ? artUrl(textureRel) : "";
+const veilUrl = hasVeil ? artUrl(veilRel) : "";
 ---
 
 <div class="room-stage">
-  <div class="room-veil" aria-hidden="true"></div>
-  <article
-    class="leather-panel"
-    aria-label={title}
-    data-has-texture={hasLeatherTexture ? "true" : "false"}
-    style={hasLeatherTexture ? `--leather-texture: url("${textureUrl}")` : undefined}
-  >
-    <div class="leather-inset">
-      <slot />
-    </div>
-  </article>
+  <div class="room-dim" aria-hidden="true"></div>
+  <div class="room-card">
+    {
+      hasVeil && (
+        <div
+          class="room-veil"
+          aria-hidden="true"
+          style={`--leather-veil: url("${veilUrl}")`}
+        />
+      )
+    }
+    <article
+      class="leather-panel"
+      aria-label={title}
+      data-fill={fill}
+      style={textureUrl ? `--leather-texture: url("${textureUrl}")` : undefined}
+    >
+      <div class="leather-inset">
+        <slot />
+      </div>
+    </article>
+  </div>
 </div>
