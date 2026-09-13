@@ -33,6 +33,7 @@ Skip / `prefers-reduced-motion` / `?skip=1` land on the house over the loop (or 
 - Horizontal blot row on desktop.
 - Stack (or wrap) is OK on mobile.
 - Current blot colors are **interim**. Pixel/Ink pastel recolor will overwrite the same filenames.
+- Labels may sit **in the blot art** (default `data-label-mode="in-blot"`) or under the plate (`under`). Bloom frames incoming — keep this toggle; do not hard-code caption geometry.
 
 ## Art hooks (Pixel / Ink)
 

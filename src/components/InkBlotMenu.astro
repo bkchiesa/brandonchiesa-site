@@ -38,11 +38,13 @@ import { rooms, SITE_NAME, SITE_TAGLINE, withBase } from "../lib/site";
                   href={withBase(room.path)}
                   data-room={room.id}
                   data-state="passive"
+                  data-label-mode="in-blot"
                   data-settle={settle}
                   data-intro={intro.join(" ")}
                   data-passive={passive.join(" ")}
                   data-active={active.join(" ")}
                   data-selected={selected}
+                  aria-label={`${room.name} — ${room.blurb}`}
                 >
                   <span class="blot-glow" aria-hidden="true" />
                   <span class="blot-art">

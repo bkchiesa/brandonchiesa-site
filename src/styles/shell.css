@@ -259,11 +259,13 @@ html[data-shell="intro"] .skip-link {
   z-index: 1;
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 0.15rem;
-  margin-top: -0.35rem;
+  min-height: 0;
 }
 
-.blot-name {
+/* Default: labels live in the blot plate. HTML copy stays for a11y / bloom-before-label. */
+.blot[data-label-mode="in-blot"] .blot-copy {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -274,7 +276,21 @@ html[data-shell="intro"] .skip-link {
   border: 0;
 }
 
-.blot-blurb {
+/* Flip to under-blot captions if Pixel ships plates without in-art type. */
+.blot[data-label-mode="under"] .blot-name {
+  position: static;
+  width: auto;
+  height: auto;
+  margin: 0.15rem 0 0;
+  clip: auto;
+  overflow: visible;
+  font-family: var(--font-mono);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+}
+
+.blot[data-label-mode="under"] .blot-blurb {
   font-size: 0.72rem;
   color: var(--v3-charcoal);
   text-shadow: 0 1px 0 rgba(239, 230, 212, 0.75);

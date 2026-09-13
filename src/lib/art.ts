@@ -45,7 +45,8 @@ export const ART = {
    * Blot anim: state folders under `art/v3/anim/{intro,passive,active}/`.
    * Ignore legacy `art/v3/anim/{door}/` mirrors.
    * Current blot colors are interim — Pixel/Ink pastel recolor will overwrite
-   * these same filenames (do not rename).
+   * these same filenames (do not rename). Labels may be in-plate; menu uses
+   * data-label-mode="in-blot" | "under". Never wire leather_pad*.
    */
   v3: {
     blots: {
