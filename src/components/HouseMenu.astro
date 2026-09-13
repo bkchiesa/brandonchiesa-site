@@ -23,7 +23,7 @@ const brassUrl = hasBrass ? artUrl(brassRel) : hasTile ? artUrl(tileRel) : "";
       class="mist-nav house-after"
       aria-label="Rooms"
       data-brass={hasBrass || hasTile ? "true" : "false"}
-      style={brassUrl ? `--mist-brass-strip: url("${brassUrl}")` : undefined}
+      style={brassUrl ? `--mist-brass-strip: url('${brassUrl}')` : undefined}
     >
       <ul class="mist-list" role="list">
         {
