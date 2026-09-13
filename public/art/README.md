@@ -29,7 +29,7 @@ Navy / parchment / clay / tiffany. No greens.
 
 State-folder anim packs are canonical. Ignore `v3/anim/{door}/` mirrors.
 
-**Hold:** current blot colors are interim. Pixel/Ink pastel recolor (loop palette) drops from `finals/v3/menu/` onto these same filenames. Card texture from `finals/v3/cards/` → `leather_panel.png`. Do not rename. See `LOOK_V3_BRIEF.md`.
+**Hold:** r2 blot stills have in-plate names; colors stay interim. Pastel recolor and bloom frames drop from `finals/v3/menu/` onto these same filenames. Card texture from `finals/v3/cards/` → `leather_panel.png`. Do not rename. See `LOOK_V3_BRIEF.md`.
 
 | File | Use |
 | --- | --- |
@@ -39,7 +39,8 @@ State-folder anim packs are canonical. Ignore `v3/anim/{door}/` mirrors.
 | `v3/anim/active/blot_{id}_active_00..05.png` | Hover/focus loop |
 | `v3/anim/active/blot_{id}_selected.png` | Pressed/selected still |
 | `v3/leather_panel.png` | Room card texture fill |
-| `v3/leather_pad.png` `v3/leather_pad_flat.png` | Rejected — do not wire |
+| `v3/leather_pad.png` | True-alpha (~996KB) desk-pad prop — on disk, **do not wire** |
+| `v3/leather_pad_flat.png` | Flat pad illustration — on disk, **do not wire** |
 
 ## Room heroes
 

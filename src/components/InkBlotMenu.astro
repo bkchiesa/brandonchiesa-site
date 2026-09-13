@@ -23,6 +23,7 @@ import { rooms, SITE_NAME, SITE_TAGLINE, withBase } from "../lib/site";
       <p class="sr-only">
         Five rooms as wet ink-blot plates. Each blot blooms in, then breathes until hover or select.
       </p>
+      {/* r2 stills paint names in-plate. Flip data-label-mode to on-plate or under if type leaves the PNG. */}
       <ul class="blots" role="list">
         {
           rooms.map((room) => {

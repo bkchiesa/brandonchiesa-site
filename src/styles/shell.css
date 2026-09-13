@@ -175,7 +175,8 @@ html[data-shell="intro"] .skip-link {
 .blot-nav::before {
   content: "";
   position: absolute;
-  inset: 8% -4% 18%;
+  /* Even wash around the plates — no reserved caption gutter. */
+  inset: 4% -4% 4%;
   background: radial-gradient(
     ellipse 88% 70% at 50% 45%,
     rgba(250, 240, 214, 0.42),
@@ -186,6 +187,10 @@ html[data-shell="intro"] .skip-link {
   z-index: 0;
 }
 
+.blot-nav:has(.blot[data-label-mode="under"])::before {
+  inset: 8% -4% 18%;
+}
+
 .blots {
   list-style: none;
   position: relative;
@@ -193,7 +198,7 @@ html[data-shell="intro"] .skip-link {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
-  align-items: flex-end;
+  align-items: center;
   justify-content: center;
   gap: clamp(0.2rem, 1.4vw, 0.85rem);
   width: 100%;
@@ -205,6 +210,10 @@ html[data-shell="intro"] .skip-link {
   scrollbar-width: thin;
 }
 
+.blots:has(.blot[data-label-mode="under"]) {
+  align-items: flex-end;
+}
+
 .blots li {
   flex: 1 0 7.2rem;
   min-width: 7.2rem;
@@ -213,6 +222,9 @@ html[data-shell="intro"] .skip-link {
 }
 
 .blot {
+  /* Inset knobs if Pixel moves in-plate type (CSS overlay mode only). */
+  --blot-label-inset-x: 10%;
+  --blot-label-inset-y: 30%;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -224,7 +236,7 @@ html[data-shell="intro"] .skip-link {
 
 .blot-glow {
   position: absolute;
-  inset: 6% -6% 22%;
+  inset: 4% -6% 4%;
   background: radial-gradient(
     ellipse at 50% 48%,
     rgba(255, 246, 220, 0.55) 0%,
@@ -232,6 +244,10 @@ html[data-shell="intro"] .skip-link {
     transparent 72%
   );
   pointer-events: none;
+}
+
+.blot[data-label-mode="under"] .blot-glow {
+  inset: 6% -6% 22%;
 }
 
 .blot-art {
@@ -264,7 +280,12 @@ html[data-shell="intro"] .skip-link {
   min-height: 0;
 }
 
-/* Default: labels live in the blot plate. HTML copy stays for a11y / bloom-before-label. */
+/*
+ * Label modes — flip data-label-mode only; do not lock caption geometry.
+ *   in-blot  — type is in the PNG (r2 stills). HTML copy is a11y-only.
+ *   on-plate — HTML type overlaid inside the plate (bloom / no painted type).
+ *   under    — HTML captions below the plate.
+ */
 .blot[data-label-mode="in-blot"] .blot-copy {
   position: absolute;
   width: 1px;
@@ -276,22 +297,46 @@ html[data-shell="intro"] .skip-link {
   border: 0;
 }
 
-/* Flip to under-blot captions if Pixel ships plates without in-art type. */
+.blot[data-label-mode="on-plate"] .blot-copy {
+  position: absolute;
+  left: var(--blot-label-inset-x);
+  right: var(--blot-label-inset-x);
+  top: var(--blot-label-inset-y);
+  bottom: var(--blot-label-inset-y);
+  z-index: 2;
+  justify-content: center;
+  pointer-events: none;
+  text-align: center;
+}
+
+.blot[data-label-mode="on-plate"] .blot-name,
 .blot[data-label-mode="under"] .blot-name {
-  position: static;
-  width: auto;
-  height: auto;
-  margin: 0.15rem 0 0;
-  clip: auto;
-  overflow: visible;
   font-family: var(--font-mono);
   letter-spacing: 0.16em;
   text-transform: uppercase;
   font-size: 0.78rem;
 }
 
+.blot[data-label-mode="on-plate"] .blot-name {
+  color: var(--v3-cream);
+  text-shadow: 0 1px 8px rgba(12, 8, 5, 0.55);
+}
+
+.blot[data-label-mode="under"] .blot-name {
+  margin: 0.15rem 0 0;
+}
+
+.blot[data-label-mode="on-plate"] .blot-blurb,
 .blot[data-label-mode="under"] .blot-blurb {
   font-size: 0.72rem;
+}
+
+.blot[data-label-mode="on-plate"] .blot-blurb {
+  color: var(--v3-cream);
+  text-shadow: 0 1px 8px rgba(12, 8, 5, 0.55);
+}
+
+.blot[data-label-mode="under"] .blot-blurb {
   color: var(--v3-charcoal);
   text-shadow: 0 1px 0 rgba(239, 230, 212, 0.75);
 }

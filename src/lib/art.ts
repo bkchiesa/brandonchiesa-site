@@ -44,9 +44,11 @@ export const ART = {
    * Leather: `leatherPanel` only — never `leather_pad*`.
    * Blot anim: state folders under `art/v3/anim/{intro,passive,active}/`.
    * Ignore legacy `art/v3/anim/{door}/` mirrors.
-   * Current blot colors are interim — Pixel/Ink pastel recolor will overwrite
-   * these same filenames (do not rename). Labels may be in-plate; menu uses
-   * data-label-mode="in-blot" | "under". Never wire leather_pad*.
+   * r2 blot stills paint room names in-plate. Colors remain interim — pastel
+   * recolor / bloom frames overwrite the same filenames (do not rename).
+   * Menu: data-label-mode="in-blot" | "on-plate" | "under".
+   * leather_pad.png is true-alpha (~996KB) but still unwired — cards use
+   * leatherPanel only. Never wire leather_pad*.
    */
   v3: {
     blots: {

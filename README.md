@@ -53,8 +53,8 @@ The workflow lives at `.github/workflows/deploy.yml`.
 | --- | --- |
 | **Intro** | `public/video/intro.mp4` plays **once**, full-bleed, on first house load. **No menu, blots, or leather chrome over the intro.** Escape or an invisible tap skips; `prefers-reduced-motion`, footer Reduce motion, `?skip=1`, or a prior session skip go straight to the house. If autoplay is blocked, a tap-to-start prompt appears. |
 | **Loop** | Seamless handoff to `public/video/loop.mp4` — full-bleed, `object-fit: cover`, center-crop (does not tile). Reduced motion uses the loop poster. |
-| **Menu** | Horizontal wet ink-blots (Work · Make · Go · Roots · Now). After the video, each blot plays `anim/intro` once, then loops `anim/passive`. Hover/focus loops `anim/active`; press uses `*_selected.png`. Settled stills: `art/v3/blot_*.png`. **Blot colors are interim** — pastel recolor (loop palette) will hot-swap the same paths. |
-| **Rooms** | Leather **texture panel** from `public/art/v3/leather_panel.png` over a dark veil. No frosted glass. `leather_pad*` props are rejected and unwired. |
+| **Menu** | Horizontal wet ink-blots (Work · Make · Go · Roots · Now). After the video, each blot plays `anim/intro` once, then loops `anim/passive`. Hover/focus loops `anim/active`; press uses `*_selected.png`. Settled stills: `art/v3/blot_*.png` (r2, in-plate names). Labels default **in-blot**; `on-plate` / `under` stay available. **Blot colors are interim** — pastel recolor and bloom frames will hot-swap the same paths. |
+| **Rooms** | Leather **texture panel** from `public/art/v3/leather_panel.png` over a dark veil. No frosted glass. `leather_pad.png` is true-alpha on disk but **not wired**. |
 | **Motion** | Session skip: after one play (or Skip), refresh stays on the menu. **Replay intro** flies again. |
 
 Art swap: overwrite the files in `public/art/v3/` and `public/video/` (same names). Hooks live in `src/lib/art.ts`. Merge is **held** pending the blot pastel recolor.

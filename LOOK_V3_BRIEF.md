@@ -33,7 +33,7 @@ Skip / `prefers-reduced-motion` / `?skip=1` land on the house over the loop (or 
 - Horizontal blot row on desktop.
 - Stack (or wrap) is OK on mobile.
 - Current blot colors are **interim**. Pixel/Ink pastel recolor will overwrite the same filenames.
-- Labels may sit **in the blot art** (default `data-label-mode="in-blot"`) or under the plate (`under`). Bloom frames incoming — keep this toggle; do not hard-code caption geometry.
+- r2 stills already paint names **in the blot**. Default `data-label-mode="in-blot"` (HTML copy is a11y-only). `on-plate` overlays HTML inside the plate; `under` sits captions below. Bloom frames incoming — flip the attribute only; do not lock caption geometry.
 
 ## Art hooks (Pixel / Ink)
 
@@ -42,7 +42,7 @@ Source drops:
 - `finals/v3/menu/` → `public/art/v3/blot_*.png` and `public/art/v3/anim/{intro,passive,active}/`
 - `finals/v3/cards/` → `public/art/v3/leather_panel.png`
 
-Runtime contract is `src/lib/art.ts` (`ART.v3`, frame helpers). Do not rename public files. Never wire `leather_pad*`.
+Runtime contract is `src/lib/art.ts` (`ART.v3`, frame helpers). Do not rename public files. `leather_pad.png` is re-keyed true-alpha (~996KB) but **not wired** — cards use `leather_panel.png` only.
 
 ## Rooms
 
