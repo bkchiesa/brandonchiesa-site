@@ -2,6 +2,8 @@
 
 Approved Ink filenames live here and are referenced by the site.
 
+The cloud VM did not receive the original attachment bytes. Files here use the locked filenames and match the attached comps (navy / parchment / clay / tiffany). Drop Pixel’s original PNGs on top of these names when the binaries are available.
+
 ## Live
 
 - Intro: `intro_01_coast.png` `intro_02_piedmont.png` `intro_03_blueridge.png`
