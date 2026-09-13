@@ -1,5 +1,12 @@
 ---
+import { existsSync } from "node:fs";
+import { join } from "node:path";
+import { ART, artUrl } from "../lib/art";
 import { rooms, SITE_NAME, SITE_TAGLINE, withBase } from "../lib/site";
+
+const goldRel = ART.v3.mistUnderlineGold;
+const hasGoldTexture = existsSync(join(process.cwd(), "public", goldRel));
+const goldUrl = hasGoldTexture ? artUrl(goldRel) : "";
 ---
 
 <div class="house-ui" id="menu">
@@ -9,7 +16,12 @@ import { rooms, SITE_NAME, SITE_TAGLINE, withBase } from "../lib/site";
       <p class="tagline">{SITE_TAGLINE}</p>
     </header>
 
-    <nav class="mist-nav house-after" aria-label="Rooms">
+    <nav
+      class="mist-nav house-after"
+      aria-label="Rooms"
+      data-gold-texture={hasGoldTexture ? "true" : "false"}
+      style={hasGoldTexture ? `--mist-gold-texture: url("${goldUrl}")` : undefined}
+    >
       <ul class="mist-list" role="list">
         {
           rooms.map((room) => (
@@ -36,3 +48,17 @@ import { rooms, SITE_NAME, SITE_TAGLINE, withBase } from "../lib/site";
     </div>
   </section>
 </div>
+
+<script>
+  const labels = Array.from(document.querySelectorAll<HTMLElement>(".mist-label"));
+  labels.forEach((label) => {
+    label.addEventListener("pointerdown", () => {
+      labels.forEach((other) => {
+        other.classList.remove("is-selected");
+        other.removeAttribute("aria-current");
+      });
+      label.classList.add("is-selected");
+      label.setAttribute("aria-current", "page");
+    });
+  });
+</script>

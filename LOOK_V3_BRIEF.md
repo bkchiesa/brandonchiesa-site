@@ -32,7 +32,7 @@ Skip / `prefers-reduced-motion` / `?skip=1` land on the house over the loop (or 
 
 - **Pixel PASS:** HTML/CSS mist labels. Spec: `public/art/v3/menu/MIST_MENU_SPECS.md`.
 - PT Serif 400, ~32px @1280, `#F3EEE4` @ 0.95, gap `4.375vw`, vertical mid 50.3%.
-- Hover/focus: 2px cream underline ~5px below baseline (slight blur). No color invert. No blots, brass, chips, or cairns.
+- Hover/selected: ~6px faded textured-gold underline (~5px below baseline). Labels stay cream. No blots, chips, or cairns.
 - Blot assets may stay in `public/art/v3/`; they are not wired.
 - Room routes stay: `/work/` `/make/` `/go/` `/roots/` `/now/`.
 

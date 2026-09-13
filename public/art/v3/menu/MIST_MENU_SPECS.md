@@ -12,7 +12,7 @@
 | State | Treatment |
 |-------|-----------|
 | **Idle** | Five cream serif labels float mid-frame: `Work` `Make` `Go` `Roots` `Now` — **spaced words, no interpuncts** (mist #1, not brass/horizon dots). |
-| **Hover** | Soft thin cream underline under the hovered word only (~2px, soft edges, slight gap below baseline). **Not** color invert / fill swap. |
+| **Hover / selected** | Same bar: worn textured gold, ~6px visual weight @1280 (3× the original 2px cream spec), ~5px below baseline. **Not** cream `#F3EEE4` and not a flat hex fill. |
 | **Selected** | Keep existing **`leather_panel`** reveal for room content. Loop continues behind. Panel path unchanged. |
 
 ## Typography tokens (at 1280 CSS px width)
@@ -41,34 +41,14 @@ text-shadow:
   0 0 1px rgba(20, 24, 18, 0.18);
 ```
 
-## Hover underline
-```css
-/* preferred: ::after so underline softens independently */
-.nav-label {
-  position: relative;
-  text-decoration: none;
-}
-.nav-label::after {
-  content: "";
-  position: absolute;
-  left: 1px;
-  right: 1px;
-  top: calc(100% + 5px); /* ~5px gap below baseline box */
-  height: 2px;
-  background: rgba(243, 238, 228, 0.90);
-  border-radius: 1px;
-  opacity: 0;
-  filter: blur(0.6px);
-  box-shadow: 0 0 2px rgba(243, 238, 228, 0.35);
-  transition: opacity 160ms ease;
-}
-.nav-label:hover::after,
-.nav-label:focus-visible::after {
-  opacity: 1;
-}
-```
-- Underline color matches cream (warm white), **not** a brand accent invert.
-- Soft edges via light blur / soft shadow; keep ~2px visual weight.
+## Hover / selected underline (Brandon fine-tune)
+
+Same bar on hover, focus, and selected. Labels stay cream `#F3EEE4` @ 0.95.
+
+- Height ~**6px** @1280 (`clamp(5px, 0.47vw, 8px)`) — 3× the original 2px spec
+- Faded textured gold (worn brass grain), not flat cream and not a single hex fill
+- CSS layers a gold gradient + repeating grain; optional overlay `public/art/v3/menu/underline_gold.png` when Pixel drops it
+- Still ~5px below the baseline box via `top: calc(100% + 5px)`
 
 ## Layout sketch
 ```html

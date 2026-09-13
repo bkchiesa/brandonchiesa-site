@@ -243,24 +243,59 @@ html[data-reduce-motion="true"] .house-banner {
   left: 1px;
   right: 1px;
   top: calc(100% + 5px);
-  height: 2px;
-  background: rgba(243, 238, 228, 0.9);
+  height: clamp(5px, 0.47vw, 8px);
   border-radius: 1px;
   opacity: 0;
-  filter: blur(0.6px);
-  box-shadow: 0 0 2px rgba(243, 238, 228, 0.35);
   pointer-events: none;
+  filter: blur(0.35px);
+  box-shadow:
+    0 1px 1px rgba(40, 28, 10, 0.28),
+    0 0 3px rgba(168, 124, 48, 0.22);
+  background-color: #8a6a2c;
+  background-image:
+    var(--mist-gold-texture, none),
+    repeating-linear-gradient(
+      108deg,
+      rgba(62, 42, 14, 0.28) 0 1px,
+      transparent 1px 3px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      rgba(236, 208, 140, 0.2) 0 1px,
+      transparent 1px 2px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(120, 86, 32, 0.2),
+      rgba(196, 163, 106, 0.78) 18%,
+      rgba(214, 176, 96, 0.62) 46%,
+      rgba(154, 112, 42, 0.72) 74%,
+      rgba(120, 86, 32, 0.2)
+    );
+  background-size: 100% 100%, 6px 4px, 3px 3px, 100% 100%;
+  background-repeat: repeat, repeat, repeat, no-repeat;
   transition: opacity 160ms ease;
 }
 
+.mist-nav[data-gold-texture="true"] .mist-label::after {
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
 .mist-label:hover,
-.mist-label:focus-visible {
+.mist-label:focus-visible,
+.mist-label:active,
+.mist-label.is-selected,
+.mist-label[aria-current="page"] {
   color: rgba(243, 238, 228, 0.95);
   outline: none;
 }
 
 .mist-label:hover::after,
-.mist-label:focus-visible::after {
+.mist-label:focus-visible::after,
+.mist-label:active::after,
+.mist-label.is-selected::after,
+.mist-label[aria-current="page"]::after {
   opacity: 1;
 }
 
