@@ -189,16 +189,16 @@ html[data-reduce-motion="true"] .house-banner {
   color: var(--v3-olive);
 }
 
-/* Pixel PASS mist menu — see public/art/v3/menu/MIST_MENU_SPECS.md */
+/* Pixel PASS mist menu — public/art/v3/menu/MIST_MENU_SPECS.md */
 .mist-nav {
-  --mist-cream: #f3eee4;
   position: absolute;
   left: 50%;
   top: 50.3%;
-  z-index: 1;
+  z-index: 2;
   width: max-content;
   max-width: 94vw;
   transform: translate(-50%, -50%);
+  pointer-events: auto;
 }
 
 .mist-list {
@@ -212,12 +212,14 @@ html[data-reduce-motion="true"] .house-banner {
   padding: 0;
 }
 
+.mist-list li {
+  padding: 0.7rem 0.15rem;
+}
+
 .mist-label {
   position: relative;
   display: inline-block;
-  padding: 0.55rem 0.15rem 0.7rem;
-  color: var(--mist-cream);
-  opacity: 0.95;
+  color: rgba(243, 238, 228, 0.95);
   text-decoration: none;
   font-family: "PT Serif", "Source Serif 4", "Source Serif Pro", Georgia, "Times New Roman", serif;
   font-weight: 400;
@@ -225,10 +227,10 @@ html[data-reduce-motion="true"] .house-banner {
   letter-spacing: 0.025em;
   line-height: 1;
   text-shadow:
-    0 1px 1px rgba(12, 8, 5, 0.55),
-    0 2px 3px rgba(12, 8, 5, 0.4),
-    0 4px 10px rgba(12, 8, 5, 0.32),
-    0 0 14px rgba(12, 8, 5, 0.22);
+    0 2px 5px rgba(20, 24, 18, 0.37),
+    0 1px 3px rgba(20, 24, 18, 0.45),
+    1px 1px 1px rgba(20, 24, 18, 0.3),
+    0 0 1px rgba(20, 24, 18, 0.18);
 }
 
 .mist-name {
@@ -238,27 +240,28 @@ html[data-reduce-motion="true"] .house-banner {
 .mist-label::after {
   content: "";
   position: absolute;
-  left: 0;
-  right: 0;
-  top: calc(0.55rem + 1em + 5px);
+  left: 1px;
+  right: 1px;
+  top: calc(100% + 5px);
   height: 2px;
-  background: var(--mist-cream);
-  filter: blur(0.7px);
+  background: rgba(243, 238, 228, 0.9);
+  border-radius: 1px;
   opacity: 0;
+  filter: blur(0.6px);
+  box-shadow: 0 0 2px rgba(243, 238, 228, 0.35);
   pointer-events: none;
-  transition: opacity 220ms ease;
+  transition: opacity 160ms ease;
 }
 
 .mist-label:hover,
 .mist-label:focus-visible {
-  color: var(--mist-cream);
-  opacity: 0.95;
+  color: rgba(243, 238, 228, 0.95);
   outline: none;
 }
 
 .mist-label:hover::after,
 .mist-label:focus-visible::after {
-  opacity: 0.88;
+  opacity: 1;
 }
 
 html[data-reduce-motion="true"] .mist-label::after {
