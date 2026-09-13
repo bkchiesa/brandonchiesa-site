@@ -1,18 +1,36 @@
-# Art plates
+# Art swap hooks (Look v2 locked)
 
-Approved Ink filenames live here and are referenced by the site.
+Pixel→Ink finals go here. Overwrite the file; keep the name. `src/lib/art.ts` is the contract.
 
-The cloud VM did not receive the original attachment bytes. Files here use the locked filenames and match the attached comps (navy / parchment / clay / tiffany). Drop Pixel’s original PNGs on top of these names when the binaries are available.
+## Intro (crossfade 1→2→3)
 
-## Live
+| File | Beat |
+| --- | --- |
+| `intro_01_coast.png` | Newport News / Virginia Peninsula |
+| `intro_02_piedmont.png` | James River piedmont |
+| `intro_03_blueridge.png` | Blue Ridge |
 
-- Intro: `intro_01_coast.png` `intro_02_piedmont.png` `intro_03_blueridge.png`
-- Menu: `menu_doors_desktop.png` plus `door_*.png` and `icon_*.png`
-- Room heroes: `room_hero_work.png` `room_hero_make.png` `room_hero_go.png`
+## Menu (horizontal row)
 
-## HOLD — do not wire
+| File | Use |
+| --- | --- |
+| `door_work.png` `door_make.png` `door_go.png` `door_roots.png` `door_now.png` | Clickable door plates |
+| `icon_work.png` `icon_make.png` `icon_go.png` `icon_roots.png` `icon_now.png` | Room header icons |
+| `menu_doors_desktop.png` | Desktop strip reference (optional) |
 
-Pixel QA. Ink redraw coming. Do not reference in UI even if a file is added later:
+## Room heroes
 
-- `menu_doors_mobile.png` — broken crop. Narrow viewports use the CSS door row.
-- `room_hero_roots.png` — label glitch. Roots uses a parchment stub.
+| File | Room |
+| --- | --- |
+| `room_hero_work.png` | Work |
+| `room_hero_make.png` | Make |
+| `room_hero_go.png` | Go |
+
+Roots hero is a parchment stub until a cleared plate lands. Add `room_hero_roots.png` and wire it in `ART.heroes` only after Pixel QA.
+
+## HOLD — do not ship in UI
+
+- `menu_doors_mobile.png` — broken crop. Phones use the CSS door row.
+- `room_hero_roots.png` — label glitch.
+
+Look v2 tokens stay navy / parchment / clay / tiffany. No greens.

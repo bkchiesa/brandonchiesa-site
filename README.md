@@ -1,6 +1,8 @@
 # Brandon Chiesa — living archive
 
-Personal house-with-rooms site. Tech × Renaissance. Locked Look v2: **navy / parchment / sparse clay / tiffany HUD** — no greens. Public portfolio only.
+Personal house-with-rooms site. Tech × Renaissance.
+
+**Look v2 is LOCKED:** blues + tans (navy / parchment / sparse clay / tiffany HUD — no greens) and a place-accurate westbound intro (Newport News Peninsula → James River piedmont → Blue Ridge). Pixel→Ink finals drop onto `public/art/` using the filenames in `src/lib/art.ts`. This scaffold does not wait on art.
 
 **This is a personal website. It is not affiliated with, and does not represent, First Citizens Bank.**
 
@@ -55,7 +57,7 @@ The workflow lives at `.github/workflows/deploy.yml`. It does **not** deploy fro
 | **Roots** | Map + tree wireframes. Copy stubs: Valmozzola → Chicago → Virginia. |
 | **Now** | Empty field notes stub. |
 
-Art plates from Pixel/Ink can replace the SVG placeholders without changing the room structure. Tokens stay slate + parchment so later comps are not fighting a green HUD.
+Art swap: overwrite the files in `public/art/` (same names). No component changes needed. Held names (`menu_doors_mobile.png`, `room_hero_roots.png`) stay unwired until Pixel QA clears them.
 
 ## Palette (locked)
 

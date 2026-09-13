@@ -1,7 +1,10 @@
 import type { RoomId } from "./site";
 import { withBase } from "./site";
 
-/** Approved Ink plates. Held files are listed but must not be referenced in UI. */
+/**
+ * Look v2 asset hooks. Swap Pixel→Ink finals onto these exact public/ paths.
+ * Do not rename — components read only these filenames.
+ */
 export const ART = {
   intro: {
     coast: "art/intro_01_coast.png",
