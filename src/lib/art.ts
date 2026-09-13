@@ -55,8 +55,17 @@ export const ART = {
       roots: "art/v3/blot_roots.png",
       now: "art/v3/blot_now.png",
     } satisfies Record<RoomId, string>,
-    /** Flat leather texture fill. One-line swap if the filename changes. */
+    /** Flat leather texture fill. Pixel source: `finals/v3/cards/`. */
     leatherPanel: "art/v3/leather_panel.png",
+    /**
+     * Pixel/Ink drop folders (not served). Copy onto the public paths above.
+     * menu → blot_*.png + anim/{intro,passive,active}/
+     * cards → leather_panel.png
+     */
+    finals: {
+      menu: "finals/v3/menu/",
+      cards: "finals/v3/cards/",
+    },
   },
 } as const;
 

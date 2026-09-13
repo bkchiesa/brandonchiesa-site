@@ -2,7 +2,7 @@
 
 Personal house-with-rooms site. Tech × Renaissance.
 
-**Look v3 (this branch):** video-driven house. Intro flyover once, then a looping valley behind ink-blot rooms and leather-pad cards. Pixel interim chrome is in `public/art/v3/`. Look v2 door plates are **not** the primary menu.
+**Look v3 (this branch):** video-driven house locked in [`LOOK_V3_BRIEF.md`](LOOK_V3_BRIEF.md). Palette follows the **loop video** (olive/pine, ochre/tan, steely ridges, cream/charcoal) — not Look v2 navy/tiffany cartography. Merge **held**. Look v2 / PR #1 stay held.
 
 **This is a personal website. It is not affiliated with, and does not represent, First Citizens Bank.**
 
@@ -61,7 +61,7 @@ Art swap: overwrite the files in `public/art/v3/` and `public/video/` (same name
 
 ## Palette
 
-Navy `--navy`, parchment `--parchment`, sparse clay `--clay`, tiffany HUD `--tiffany` for type and cards. The video plates are the earthy field; leather and ink sit on top.
+Look v3 house chrome uses loop tokens (`--v3-pine`, `--v3-ochre`, `--v3-ridge`, `--v3-cream`, `--v3-charcoal`). Look v2 navy/parchment/tiffany stay in `global.css` for leftover room-card structure only — they are not the primary house look.
 
 ## SEO / agents
 

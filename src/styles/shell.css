@@ -1,8 +1,23 @@
-/* Look v3 video-driven house. No glassmorphism. */
+/* Look v3 video-driven house. Palette from the loop — not Look v2 cartography. */
 
 body.has-video-shell {
-  background: #1a1610;
-  color: var(--ink);
+  --v3-pine: #3d4a38;
+  --v3-olive: #5c6148;
+  --v3-ochre: #c4a36a;
+  --v3-tan: #d8c49a;
+  --v3-ridge: #6a7a88;
+  --v3-cream: #efe6d4;
+  --v3-charcoal: #2a2c28;
+  --v3-earth: #1c1a14;
+  --v3-field: #d4c09a;
+  background: var(--v3-earth);
+  color: var(--v3-charcoal);
+}
+
+body.has-video-shell .skip-link {
+  background: var(--v3-cream);
+  color: var(--v3-charcoal);
+  border-color: var(--v3-olive);
 }
 
 html[data-shell="intro"] .house-ui,
@@ -40,7 +55,7 @@ html[data-reduce-motion="true"] .room-stage {
   inset: 0;
   z-index: 0;
   overflow: hidden;
-  background: #1a1610;
+  background: var(--v3-earth, #1c1a14);
   pointer-events: none;
 }
 
@@ -109,7 +124,7 @@ html[data-shell="intro"] .video-hit:not([hidden]) {
 }
 
 html[data-shell="intro"] .skip-link {
-  color: var(--navy);
+  color: var(--v3-charcoal);
 }
 
 /* ——— Ink-blot menu (sky / open-ground band) ——— */
@@ -136,19 +151,19 @@ html[data-shell="intro"] .skip-link {
 }
 
 .identity--sky h1 {
-  color: var(--navy);
+  color: var(--v3-charcoal);
   text-shadow: 0 1px 0 rgba(255, 248, 230, 0.55);
 }
 
 .identity--sky .tagline,
 .identity--sky .hud-kicker {
-  color: var(--ink-soft);
+  color: var(--v3-olive);
 }
 
 .menu--blots .menu-status {
-  background: rgba(245, 236, 214, 0.88);
-  color: var(--navy);
-  border-color: rgba(11, 26, 43, 0.18);
+  background: rgba(239, 230, 212, 0.88);
+  color: var(--v3-charcoal);
+  border-color: rgba(92, 97, 72, 0.28);
 }
 
 .blot-nav {
@@ -203,7 +218,7 @@ html[data-shell="intro"] .skip-link {
   flex-direction: column;
   align-items: center;
   text-decoration: none;
-  color: var(--navy);
+  color: var(--v3-charcoal);
   min-height: var(--touch);
 }
 
@@ -234,7 +249,7 @@ html[data-shell="intro"] .skip-link {
 }
 
 .blot:focus-visible {
-  outline: 2px solid var(--navy);
+  outline: 2px solid var(--v3-ridge);
   outline-offset: 4px;
   border-radius: 40%;
 }
@@ -261,8 +276,8 @@ html[data-shell="intro"] .skip-link {
 
 .blot-blurb {
   font-size: 0.72rem;
-  color: var(--navy);
-  text-shadow: 0 1px 0 rgba(255, 248, 230, 0.7);
+  color: var(--v3-charcoal);
+  text-shadow: 0 1px 0 rgba(239, 230, 212, 0.75);
 }
 
 .menu-foot--sky {
@@ -271,14 +286,14 @@ html[data-shell="intro"] .skip-link {
 }
 
 .menu-foot--sky .text-btn {
-  background: rgba(245, 236, 214, 0.88);
-  border-color: rgba(11, 26, 43, 0.28);
-  color: var(--navy);
+  background: rgba(239, 230, 212, 0.9);
+  border-color: rgba(92, 97, 72, 0.4);
+  color: var(--v3-charcoal);
 }
 
 .menu-foot--sky .text-btn[aria-pressed="true"] {
-  background: var(--navy);
-  color: var(--parchment);
+  background: var(--v3-pine);
+  color: var(--v3-cream);
 }
 
 .menu-disclaimer {
@@ -348,11 +363,11 @@ html[data-shell="intro"] .skip-link {
   min-height: 0;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
-  color: var(--ink);
-  background: #ead4b0;
+  color: var(--v3-charcoal);
+  background: var(--v3-field);
   border-radius: 6px;
   padding: 0.7rem 0.85rem 1rem;
-  box-shadow: inset 0 0 0 1px rgba(80, 48, 24, 0.18);
+  box-shadow: inset 0 0 0 1px rgba(61, 74, 56, 0.18);
 }
 
 .leather-inset .site-header,
@@ -392,7 +407,25 @@ html[data-shell="intro"] .skip-link {
 
 .leather-inset .house-link,
 .leather-inset .text-btn {
-  background: color-mix(in srgb, var(--paper) 88%, white);
+  background: var(--v3-cream);
+  border-color: rgba(61, 74, 56, 0.35);
+  color: var(--v3-charcoal);
+}
+
+@media (max-width: 699px) {
+  .blots {
+    flex-wrap: wrap;
+    overflow: visible;
+    scroll-snap-type: none;
+    justify-content: center;
+    gap: 0.35rem 0.55rem;
+  }
+
+  .blots li {
+    flex: 0 1 calc(33.33% - 0.5rem);
+    min-width: 6.2rem;
+    max-width: 9.5rem;
+  }
 }
 
 @media (min-width: 700px) {

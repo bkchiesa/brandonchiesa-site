@@ -29,7 +29,7 @@ Navy / parchment / clay / tiffany. No greens.
 
 State-folder anim packs are canonical. Ignore `v3/anim/{door}/` mirrors.
 
-**Hold:** current blot colors are interim. Pixel/Ink will pastel-recolor to the loop palette — overwrite the same filenames under `anim/{intro,passive,active}/` and `blot_*.png`. Do not rename.
+**Hold:** current blot colors are interim. Pixel/Ink pastel recolor (loop palette) drops from `finals/v3/menu/` onto these same filenames. Card texture from `finals/v3/cards/` → `leather_panel.png`. Do not rename. See `LOOK_V3_BRIEF.md`.
 
 | File | Use |
 | --- | --- |
