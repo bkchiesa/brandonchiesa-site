@@ -20,8 +20,8 @@ body.has-video-shell .skip-link {
   border-color: var(--v3-olive);
 }
 
-html[data-shell="intro"] .house-ui,
-html[data-shell="intro"] .room-stage {
+html[data-shell="intro"] .room-stage,
+html[data-shell="intro"] .house-after {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
@@ -31,19 +31,14 @@ html[data-shell="intro"] .room-stage {
   position: relative;
   z-index: 2;
   min-height: 100dvh;
-  opacity: 0;
-  visibility: hidden;
   pointer-events: none;
-  transition: opacity 280ms ease;
 }
 
 html[data-shell="ready"] .house-ui {
-  opacity: 1;
-  visibility: visible;
   pointer-events: auto;
 }
 
-html[data-reduce-motion="true"] .house-ui,
+html[data-reduce-motion="true"] .house-after,
 html[data-reduce-motion="true"] .room-stage {
   transition: none;
 }
@@ -73,11 +68,23 @@ html[data-reduce-motion="true"] .room-stage {
 
 .video-layer {
   opacity: 0;
-  transition: opacity 420ms ease;
+  transition: opacity 1.2s ease;
+}
+
+.video-layer--loop {
+  z-index: 0;
+}
+
+.video-layer--intro {
+  z-index: 1;
 }
 
 .video-layer.is-active {
   opacity: 1;
+}
+
+.video-layer--intro.is-leaving {
+  opacity: 0;
 }
 
 html[data-reduce-motion="true"] .video-layer {
@@ -127,15 +134,47 @@ html[data-shell="intro"] .skip-link {
   color: var(--v3-charcoal);
 }
 
-/* ——— Ink-blot menu (sky / open-ground band) ——— */
+/* ——— House identity (blot menu held — Guido pitching replacements) ——— */
 
-.menu--blots {
+.menu--house {
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: clamp(2.2rem, 12vh, 6.5rem) var(--pad) 1.25rem;
+  padding: clamp(0.85rem, 4.5vh, 2.2rem) var(--pad) 1.25rem;
   text-align: center;
+}
+
+.house-banner {
+  opacity: 0;
+  transform: translateY(0.2rem);
+  transition: opacity 2.4s ease, transform 2.4s ease;
+}
+
+html[data-banner="in"] .house-banner,
+html[data-shell="ready"] .house-banner,
+html[data-reduce-motion="true"] .house-banner {
+  opacity: 1;
+  transform: none;
+}
+
+html[data-reduce-motion="true"] .house-banner {
+  transition: none;
+}
+
+.house-hold {
+  margin: 1.4rem 0 0;
+  max-width: 22rem;
+  color: var(--v3-cream);
+  text-shadow: 0 1px 8px rgba(12, 8, 5, 0.7);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.house-after {
+  transition: opacity 420ms ease;
 }
 
 .identity--sky {
@@ -383,6 +422,7 @@ html[data-shell="intro"] .skip-link {
   z-index: 0;
   background: rgba(14, 10, 7, 0.62);
   pointer-events: none;
+  animation: leatherVeil 640ms ease both;
 }
 
 .leather-panel {
@@ -418,6 +458,35 @@ html[data-shell="intro"] .skip-link {
     0 28px 60px rgba(0, 0, 0, 0.58),
     0 0 0 1px rgba(22, 12, 8, 0.8),
     inset 0 1px 0 rgba(255, 220, 180, 0.16);
+}
+
+.room-stage .leather-panel {
+  animation: leatherReveal 780ms ease both;
+}
+
+html[data-reduce-motion="true"] .room-stage .leather-panel,
+html[data-reduce-motion="true"] .room-veil {
+  animation: none;
+}
+
+@keyframes leatherReveal {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes leatherVeil {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .leather-inset {

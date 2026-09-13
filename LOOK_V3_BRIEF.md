@@ -21,19 +21,17 @@ Do **not** carry Look v2 blues/tans cartography tokens as the primary house look
 
 ## Flow
 
-1. **Intro once** — `public/video/intro.mp4`, full-bleed, **no UI chrome**.
-2. **Crossfade** to `public/video/loop.mp4` as `object-fit: cover` (center-crop, no tile).
-3. **Ink-blot reveals** — Work · Make · Go · Roots · Now bloom to labels, then idle.
-4. **On select** — opaque leather texture panel (`leather_panel.png`) over the continuing loop. Soft veil behind the card is OK. **No glassmorphism.** Brandon rejected the `leather_pad*` family — do not wire those files.
+1. **Intro once** — `public/video/intro.mp4`, full-bleed. Dual-video overlap crossfade into the loop so the last intro valley matches loop t=0 (no hard cut).
+2. **Banner** — name sits high; fades in at ~halfway through the intro; stays on the house. Reduce-motion skips the fade.
+3. **Menu held** — blot UI is off the live shell (assets stay in `public/art/v3/`). Identity-only chrome until Guido’s quieter replacements land.
+4. **On select** — `leather_panel.png` card with a short reveal over the continuing loop. Soft veil OK. **No glassmorphism.** Never wire `leather_pad*`. Pixel may hot-swap a richer panel on the same path.
 
 Skip / `prefers-reduced-motion` / `?skip=1` land on the house over the loop (or the loop poster).
 
 ## Menu
 
-- Horizontal blot row on desktop.
-- Stack (or wrap) is OK on mobile.
-- Blot contact/sprites are **still in revise**. Do not treat current stills as final. Expect r3 liquid/rounded swaps on the same filenames.
-- Keep blot hooks. Default `data-label-mode="in-blot"` (HTML copy is a11y-only). `on-plate` overlays HTML inside the plate; `under` sits captions below. Bloom frames incoming — flip the attribute only; do not lock caption geometry.
+- Live shell is **identity-only**. Blot plates are held (not deleted).
+- Room routes stay: `/work/` `/make/` `/go/` `/roots/` `/now/`.
 
 ## Art hooks (Pixel / Ink)
 

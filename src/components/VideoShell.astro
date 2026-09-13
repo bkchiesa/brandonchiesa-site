@@ -79,6 +79,9 @@ const { intro = false } = Astro.props;
 <script>
   const INTRO_KEY = "bc-intro-done";
   const MOTION_KEY = "bc-reduce-motion";
+  /** Overlap last intro valley with loop t=0 (same shot, different crop). */
+  const CROSSFADE_MS = 1200;
+  const BANNER_AT = 0.5;
 
   const shell = document.getElementById("video-shell");
   const introVideo = document.querySelector<HTMLVideoElement>("[data-video='intro']");
@@ -86,7 +89,6 @@ const { intro = false } = Astro.props;
   const hit = document.querySelector<HTMLButtonElement>("[data-video-hit]");
   const hitLabel = document.querySelector("[data-video-hit-label]");
   const loopPoster = document.querySelector<HTMLImageElement>(".video-poster--loop");
-  const status = document.querySelector("[data-menu-status]");
   const reduceButtons = document.querySelectorAll("[data-reduce-motion]");
   const skipButtons = document.querySelectorAll("[data-skip-intro]");
 
@@ -131,6 +133,14 @@ const { intro = false } = Astro.props;
     video.setAttribute("webkit-playsinline", "");
   }
 
+  function showBanner() {
+    document.documentElement.dataset.banner = "in";
+  }
+
+  function resetBanner() {
+    document.documentElement.dataset.banner = shouldReduce() ? "in" : "out";
+  }
+
   function setReduce(on: boolean) {
     document.documentElement.dataset.reduceMotion = on ? "true" : "false";
     try {
@@ -142,9 +152,10 @@ const { intro = false } = Astro.props;
     if (on) {
       introVideo?.pause();
       loopVideo?.pause();
-      introVideo?.classList.remove("is-active");
+      introVideo?.classList.remove("is-active", "is-leaving");
       loopVideo?.classList.remove("is-active");
       hideHit();
+      showBanner();
       becomeHouse();
     }
   }
@@ -156,7 +167,7 @@ const { intro = false } = Astro.props;
 
   function becomeHouse() {
     document.documentElement.dataset.shell = "ready";
-    if (status) status.textContent = "House";
+    showBanner();
     skipButtons.forEach((btn) => {
       if (!(btn instanceof HTMLElement)) return;
       if (btn.hasAttribute("data-video-hit")) return;
@@ -167,7 +178,7 @@ const { intro = false } = Astro.props;
 
   function becomeIntro() {
     document.documentElement.dataset.shell = "intro";
-    if (status) status.textContent = "Flyover";
+    resetBanner();
     skipButtons.forEach((btn) => {
       if (!(btn instanceof HTMLElement)) return;
       if (btn.hasAttribute("data-video-hit")) return;
@@ -219,7 +230,7 @@ const { intro = false } = Astro.props;
     loopVideo.classList.add("is-active");
     const ok = await playVideo(loopVideo);
     if (introVideo) {
-      introVideo.classList.remove("is-active");
+      introVideo.classList.remove("is-active", "is-leaving");
       introVideo.pause();
     }
     hideHit();
@@ -232,25 +243,91 @@ const { intro = false } = Astro.props;
 
   type Pending = "intro" | "loop" | null;
   let pending: Pending = null;
-  let endedBound = false;
+  let overlapStarted = false;
+  let timeBound = false;
   let safetyTimer = 0;
 
-  function bindIntroEnd() {
-    if (!introVideo || endedBound) return;
-    endedBound = true;
+  async function primeLoop() {
+    if (!loopVideo || shouldReduce()) return;
+    prep(loopVideo);
+    const primed = await playVideo(loopVideo);
+    if (primed) {
+      loopVideo.pause();
+      try {
+        loopVideo.currentTime = 0;
+      } catch {
+        /* seek may fail until metadata */
+      }
+    } else {
+      try {
+        loopVideo.currentTime = 0;
+      } catch {
+        /* ignore */
+      }
+    }
+  }
+
+  async function beginOverlap() {
+    if (overlapStarted) return;
+    overlapStarted = true;
+    window.clearTimeout(safetyTimer);
+    setIntroDone();
+
+    if (!loopVideo || shouldReduce()) {
+      await startLoop();
+      return;
+    }
+
+    if (loopPoster) loopPoster.hidden = false;
+    prep(loopVideo);
+    try {
+      if (loopVideo.currentTime > 0.12) loopVideo.currentTime = 0;
+    } catch {
+      /* ignore */
+    }
+    const ok = await playVideo(loopVideo);
+    loopVideo.classList.add("is-active");
+    introVideo?.classList.add("is-leaving");
+    hideHit();
+    becomeHouse();
+    window.setTimeout(() => {
+      if (!introVideo) return;
+      introVideo.classList.remove("is-active", "is-leaving");
+      introVideo.pause();
+    }, CROSSFADE_MS + 80);
+    if (!ok) {
+      showStartPrompt("Tap to play");
+      pending = "loop";
+    }
+  }
+
+  function onIntroTime() {
+    if (!introVideo || overlapStarted) return;
+    const duration = introVideo.duration;
+    if (!duration || !Number.isFinite(duration)) return;
+    if (introVideo.currentTime >= duration * BANNER_AT) showBanner();
+    if (introVideo.currentTime >= Math.max(0.2, duration - CROSSFADE_MS / 1000)) {
+      void beginOverlap();
+    }
+  }
+
+  function bindIntroClock() {
+    if (!introVideo || timeBound) return;
+    timeBound = true;
+    introVideo.addEventListener("timeupdate", onIntroTime);
     introVideo.addEventListener("ended", () => {
-      window.clearTimeout(safetyTimer);
-      setIntroDone();
-      void startLoop();
+      void beginOverlap();
     });
   }
 
   async function playIntro() {
     if (!introVideo || shouldReduce()) {
       setIntroDone();
+      showBanner();
       await startLoop();
       return;
     }
+    overlapStarted = false;
     becomeIntro();
     try {
       sessionStorage.removeItem(INTRO_KEY);
@@ -258,19 +335,18 @@ const { intro = false } = Astro.props;
       /* private mode */
     }
     if (loopPoster) loopPoster.hidden = true;
-    bindIntroEnd();
+    bindIntroClock();
     prep(introVideo);
     introVideo.currentTime = 0;
     introVideo.classList.add("is-active");
+    introVideo.classList.remove("is-leaving");
     loopVideo?.classList.remove("is-active");
     const ok = await playVideo(introVideo);
-    const durationMs = Math.max(1000, (introVideo.duration || 10) * 1000 + 250);
+    if (ok) await primeLoop();
+    const durationMs = Math.max(1200, (introVideo.duration || 10) * 1000);
     window.clearTimeout(safetyTimer);
     safetyTimer = window.setTimeout(() => {
-      if (document.documentElement.dataset.shell === "intro") {
-        setIntroDone();
-        void startLoop();
-      }
+      if (!overlapStarted) void beginOverlap();
     }, durationMs);
     if (!ok) {
       showStartPrompt("Tap to begin");
@@ -284,6 +360,8 @@ const { intro = false } = Astro.props;
   function skipIntro() {
     window.clearTimeout(safetyTimer);
     setIntroDone();
+    showBanner();
+    overlapStarted = true;
     void startLoop();
   }
 
@@ -314,15 +392,17 @@ const { intro = false } = Astro.props;
     syncReduceButtons();
     prep(introVideo);
     prep(loopVideo);
-    bindIntroEnd();
+    bindIntroClock();
 
     const skipQuery = new URLSearchParams(window.location.search).has("skip");
 
     if (!wantsIntro || shouldReduce() || skipQuery || introAlreadyDone()) {
       setIntroDone();
+      showBanner();
       void startLoop();
       return;
     }
+    resetBanner();
     void playIntro();
   }
 

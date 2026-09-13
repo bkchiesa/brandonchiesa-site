@@ -97,8 +97,10 @@ const personJsonLd = {
         var house = document.body.getAttribute("data-house") === "true";
         if (!house || reduce || skip || done) {
           document.documentElement.dataset.shell = "ready";
+          document.documentElement.dataset.banner = "in";
         } else {
           document.documentElement.dataset.shell = "intro";
+          document.documentElement.dataset.banner = "out";
         }
       })();
     </script>

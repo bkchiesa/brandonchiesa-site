@@ -45,7 +45,7 @@ export const ART = {
    * (flat / 3D / veil) — do not prefer or fall back to those files.
    * Blot anim: state folders under `art/v3/anim/{intro,passive,active}/`.
    * Ignore legacy `art/v3/anim/{door}/` mirrors.
-   * Menu: data-label-mode="in-blot" | "on-plate" | "under".
+   * Blot stills/anims stay on disk; live house chrome is identity-only.
    */
   v3: {
     blots: {
