@@ -1,17 +1,17 @@
-# Blot animation packs (Look v3 r3 LOCKED)
+# Look v3 r3 — Blot animation sets (LOCKED / Pixel PASS)
 
-## Canonical layout (prefer this)
+## Canonical for DojoDev (prefer these)
 ```
-anim/intro/blot_{id}_intro_00..05.png
-anim/passive/blot_{id}_passive_00..07.png   # 8f wet breathe
-anim/active/blot_{id}_active_00..05.png
-anim/active/blot_{id}_selected.png
+anim/intro/blot_{id}_intro_00..05.png      # 6f bloom-in; intro_05 === passive_00
+anim/passive/blot_{id}_passive_00..07.png  # 8f idle breathe
+anim/active/blot_{id}_active_00..05.png    # 6f hover/selected
+anim/active/blot_{id}_selected.png         # settled hold
 ```
-ids: work | make | go | roots | now · 512×512 RGBA · soft gloss · use with `cards/leather_panel.png`
 
-## Legacy convenience (door folders)
-`anim/<id>/{intro,passive,active}_00..05.png` (+ passive_06/07 + selected.png mirrored)
-Prefer state folders above if they differ.
+ids: `work` | `make` | `go` | `roots` | `now`  
+512×512 RGBA · soft gloss · shape source locked `../blot_*.png`  
+`leather_panel` only — no pad props.
 
-## Soft
-intro_05 may still be split-pool — Ink revising to unify into passive_00 silhouette (hot-swap).
+Door-folder copies under `anim/{door}/` are **legacy mirror** — do not prefer if they differ (esp. passive frame count).
+
+Contacts: `anim/{intro,passive,active}/_contact_*.png` · `all_doors_anim_contact.png` · `intro/_handoff_proof.png`
