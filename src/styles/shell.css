@@ -137,6 +137,7 @@ html[data-shell="intro"] .skip-link {
 /* ——— House identity + mist labels (blot menu scrapped from live shell) ——— */
 
 .menu--house {
+  position: relative;
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
@@ -188,12 +189,16 @@ html[data-reduce-motion="true"] .house-banner {
   color: var(--v3-olive);
 }
 
-/* Cream serif over the loop sky; hover is a horizon hairline only. */
+/* Pixel PASS mist menu — see public/art/v3/menu/MIST_MENU_SPECS.md */
 .mist-nav {
-  position: relative;
+  --mist-cream: #f3eee4;
+  position: absolute;
+  left: 50%;
+  top: 50.3%;
   z-index: 1;
-  width: min(46rem, 94vw);
-  margin-top: clamp(3.2rem, 14vh, 8.5rem);
+  width: max-content;
+  max-width: 94vw;
+  transform: translate(-50%, -50%);
 }
 
 .mist-list {
@@ -202,60 +207,58 @@ html[data-reduce-motion="true"] .house-banner {
   flex-wrap: wrap;
   align-items: baseline;
   justify-content: center;
-  gap: clamp(1.1rem, 4.2vw, 2.7rem);
+  gap: 4.375vw;
   margin: 0;
   padding: 0;
 }
 
 .mist-label {
-  display: inline-flex;
-  flex-direction: column;
-  align-items: center;
-  min-height: var(--touch);
-  justify-content: center;
-  padding: 0.15rem 0.05rem 0.2rem;
-  color: #f3ead6;
+  position: relative;
+  display: inline-block;
+  padding: 0.55rem 0.15rem 0.7rem;
+  color: var(--mist-cream);
+  opacity: 0.95;
   text-decoration: none;
-  opacity: 0.72;
-  text-shadow: 0 0 18px rgba(243, 234, 214, 0.28);
+  font-family: "PT Serif", "Source Serif 4", "Source Serif Pro", Georgia, "Times New Roman", serif;
+  font-weight: 400;
+  font-size: clamp(1.25rem, 2.5vw, 2.25rem);
+  letter-spacing: 0.025em;
+  line-height: 1;
+  text-shadow:
+    0 1px 1px rgba(12, 8, 5, 0.55),
+    0 2px 3px rgba(12, 8, 5, 0.4),
+    0 4px 10px rgba(12, 8, 5, 0.32),
+    0 0 14px rgba(12, 8, 5, 0.22);
 }
 
 .mist-name {
-  font-family: var(--font-serif);
-  font-weight: 500;
-  font-size: clamp(1.45rem, 3.4vw, 2rem);
-  letter-spacing: 0.04em;
-  line-height: 1.1;
+  font: inherit;
 }
 
 .mist-label::after {
   content: "";
-  display: block;
-  width: 0;
-  height: 1px;
-  margin-top: 0.38rem;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(243, 234, 214, 0.28) 18%,
-    rgba(243, 234, 214, 0.7) 50%,
-    rgba(243, 234, 214, 0.28) 82%,
-    transparent
-  );
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(0.55rem + 1em + 5px);
+  height: 2px;
+  background: var(--mist-cream);
+  filter: blur(0.7px);
   opacity: 0;
-  transition: width 320ms ease, opacity 320ms ease;
+  pointer-events: none;
+  transition: opacity 220ms ease;
 }
 
 .mist-label:hover,
 .mist-label:focus-visible {
-  opacity: 0.96;
+  color: var(--mist-cream);
+  opacity: 0.95;
   outline: none;
 }
 
 .mist-label:hover::after,
 .mist-label:focus-visible::after {
-  width: 118%;
-  opacity: 1;
+  opacity: 0.88;
 }
 
 html[data-reduce-motion="true"] .mist-label::after {
@@ -425,12 +428,8 @@ html[data-reduce-motion="true"] .room-veil {
 }
 
 @media (max-width: 699px) {
-  .mist-nav {
-    margin-top: clamp(2.2rem, 10vh, 5rem);
-  }
-
   .mist-list {
-    gap: 0.85rem 1.35rem;
+    row-gap: 1.1rem;
   }
 }
 

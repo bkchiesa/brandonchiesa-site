@@ -97,9 +97,9 @@ Video / loop sits full-bleed underneath (`object-fit: cover`). No menu sprite la
 ## Comp asset paths
 | File | Role |
 |------|------|
-| `/workspace/brandon-site-art/finals/v3/menu/mist_idle_on_loop.png` | Idle on exact `loop_07s` |
-| `/workspace/brandon-site-art/finals/v3/menu/mist_hover_make_on_loop.png` | Same + soft underline under **Make** |
-| `/workspace/brandon-site-art/finals/v3/menu/mist_contact.png` | Stacked idle \| hover contact with captions |
+| `public/art/v3/menu/mist_idle_on_loop.png` | Idle on exact `loop_07s` |
+| `public/art/v3/menu/mist_hover_make_on_loop.png` | Same + soft underline under **Make** |
+| `public/art/v3/menu/mist_contact.png` | Stacked idle \| hover contact with captions |
 | Concepts (ref only, do not overwrite) | `finals/v3/menu/concepts/01_mist_labels.png`, `05_horizon_type.png` |
 
 ## Out of scope / do not touch
@@ -108,6 +108,6 @@ Video / loop sits full-bleed underneath (`object-fit: cover`). No menu sprite la
 - Do not regenerate blot art for this menu path.
 
 ## Soft concerns
-- DejaVu is the **comp** face; swap to a licensed web serif with similar width before ship.
+- DejaVu is the **comp** face; swap to a licensed web serif with similar width before ship. **Production uses PT Serif** (not DejaVu).
 - Cream on bright mist patches needs the multi-pass shadow; if still thin on some loop frames, nudge shadow opacity slightly rather than adding chrome.
 - Word-gap may need ±8px tuning once live over motion video vs the still.
