@@ -54,10 +54,10 @@ The workflow lives at `.github/workflows/deploy.yml`.
 | **Intro** | `public/video/intro.mp4` plays **once**, full-bleed, on first house load. **No menu, blots, or leather chrome over the intro.** Escape or an invisible tap skips; `prefers-reduced-motion`, footer Reduce motion, `?skip=1`, or a prior session skip go straight to the house. If autoplay is blocked, a tap-to-start prompt appears. |
 | **Loop** | Seamless handoff to `public/video/loop.mp4` — full-bleed, `object-fit: cover`, center-crop (does not tile). Reduced motion uses the loop poster. |
 | **Menu** | Horizontal wet ink-blots (Work · Make · Go · Roots · Now). After the video, each blot plays `anim/intro` once, then loops `anim/passive`. Hover/focus loops `anim/active`; press uses `*_selected.png`. Settled stills: `art/v3/blot_*.png`. **Blots are still in revise** — r3 liquid/rounded swaps will hot-swap the same paths. Labels default **in-blot**; `on-plate` / `under` stay available. |
-| **Rooms** | Flat leather **texture panel** from `public/art/v3/leather_pad_flat.png` over `leather_pad_veil.png`. No frosted glass. 3D `leather_pad.png` is available but not the default card. |
+| **Rooms** | Leather **texture panel** from `public/art/v3/leather_panel.png` over a dark veil. No frosted glass. `leather_pad*` is rejected and unwired. |
 | **Motion** | Session skip: after one play (or Skip), refresh stays on the menu. **Replay intro** flies again. |
 
-Art swap: overwrite the files in `public/art/v3/` and `public/video/` (same names). Hooks live in `src/lib/art.ts`. Merge is **held** — leather chrome PASS; blot sprites still in revise.
+Art swap: overwrite the files in `public/art/v3/` and `public/video/` (same names). Hooks live in `src/lib/art.ts`. Merge is **held**. Cards are `leather_panel.png` only.
 
 ## Palette
 

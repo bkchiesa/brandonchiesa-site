@@ -41,13 +41,10 @@ export const ART = {
   } satisfies Partial<Record<RoomId, string>>,
   /**
    * Look v3 video-shell chrome.
-   * Leather (Pixel chrome PASS): prefer `leatherPadFlat` as the room-card
-   * fill. `leatherPadVeil` sits behind the card. `leatherPad` (3D prop) is
-   * available but not the default. `leatherPanel` is a texture-only fallback.
+   * Leather: `leatherPanel` only. Brandon rejected the `leather_pad*` family
+   * (flat / 3D / veil) — do not prefer or fall back to those files.
    * Blot anim: state folders under `art/v3/anim/{intro,passive,active}/`.
    * Ignore legacy `art/v3/anim/{door}/` mirrors.
-   * Blot contact/sprites are still in revise (r3 liquid/rounded incoming) —
-   * keep these filenames; do not treat current stills as final.
    * Menu: data-label-mode="in-blot" | "on-plate" | "under".
    */
   v3: {
@@ -58,18 +55,12 @@ export const ART = {
       roots: "art/v3/blot_roots.png",
       now: "art/v3/blot_now.png",
     } satisfies Record<RoomId, string>,
-    /** Preferred card fill — flat leather texture panel (not the 3D pad). */
-    leatherPadFlat: "art/v3/leather_pad_flat.png",
-    /** Soft contrast plate behind the card. */
-    leatherPadVeil: "art/v3/leather_pad_veil.png",
-    /** 3D desk-pad prop. Available; do not use as the default card. */
-    leatherPad: "art/v3/leather_pad.png",
-    /** Texture-only fallback if the flat pad is missing. */
+    /** Room-card fill. Pixel source: `finals/v3/cards/`. */
     leatherPanel: "art/v3/leather_panel.png",
     /**
      * Pixel/Ink drop folders (not served). Copy onto the public paths above.
      * menu → blot_*.png + anim/{intro,passive,active}/
-     * cards → leather_pad_flat.png (+ veil)
+     * cards → leather_panel.png
      */
     finals: {
       menu: "finals/v3/menu/",

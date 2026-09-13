@@ -16,7 +16,7 @@ anim/active/blot_{id}_selected.png
 ```
 Settled: `../blot_*.png` · loop contact: `../blot_menu_on_loop_still.png`
 512 RGBA · soft gloss · cream labels
-Cards: `leather_pad_flat` + `leather_pad_veil`. Do not default to the 3D `leather_pad` prop.
+Cards: `leather_panel` only — Brandon rejected the `leather_pad*` family.
 Dark pre-pastel archive: `work/v3-pre-pastel/settled/`
 
 ids: `work` | `make` | `go` | `roots` | `now`
