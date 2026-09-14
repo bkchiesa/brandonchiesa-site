@@ -37,10 +37,6 @@ const sections = videoSections();
       style={brassUrl ? `--career-brass-rule: url('${brassUrl}')` : undefined}
     >
       <h1 class="room-title">Videography</h1>
-      <p class="lede">
-        Filmmaker, church media, family travel. Stills from Brandon’s public YouTube
-        channels — tap a frame to watch there.
-      </p>
 
       <nav class="video-jump" aria-label="Channels">
         {
@@ -64,13 +60,7 @@ const sections = videoSections();
                 {section.videos.length} {section.videos.length === 1 ? "film" : "films"}
               </p>
               <h2 class="video-channel-title" id={headingId}>
-                <a
-                  href={section.channel.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {section.channel.title}
-                </a>
+                {section.channel.title}
               </h2>
               {
                 section.videos.length === 0 ? (
@@ -79,11 +69,15 @@ const sections = videoSections();
                   <ul class="video-grid">
                     {section.videos.map((video) => (
                       <li>
-                        <a
+                        <button
+                          type="button"
                           class="video-card"
-                          href={video.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
+                          aria-haspopup="dialog"
+                          data-video-open
+                          data-video-id={video.videoId}
+                          data-video-title={video.title}
+                          data-video-url={video.url}
+                          data-video-channel={video.channelHandle}
                         >
                           <span class="video-thumb">
                             <img
@@ -96,6 +90,9 @@ const sections = videoSections();
                               data-video-thumb
                               data-thumb-fallback={hqThumb(video.videoId)}
                             />
+                            <span class="video-play" aria-hidden="true">
+                              <span class="video-play-mark"></span>
+                            </span>
                             <span class="video-thumb-miss" hidden>
                               Still unavailable
                             </span>
@@ -108,7 +105,7 @@ const sections = videoSections();
                               {formatPublished(video.published)}
                             </time>
                           </p>
-                        </a>
+                        </button>
                       </li>
                     ))}
                   </ul>
@@ -121,6 +118,37 @@ const sections = videoSections();
     </main>
     <SiteFooter />
   </LeatherPad>
+
+  <dialog class="video-lightbox" data-video-lightbox aria-labelledby="video-lightbox-title">
+    <div class="video-lightbox-panel">
+      <div class="video-lightbox-stage">
+        <iframe
+          data-video-frame
+          src="about:blank"
+          title="Film"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen
+          referrerpolicy="strict-origin-when-cross-origin"
+        ></iframe>
+      </div>
+      <div class="video-lightbox-bar">
+        <p class="hud-kicker video-lightbox-kicker" data-video-kicker></p>
+        <h2 class="video-lightbox-title" id="video-lightbox-title"></h2>
+        <div class="video-lightbox-actions">
+          <a
+            class="house-link"
+            data-video-youtube
+            href="https://www.youtube.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Open on YouTube
+          </a>
+          <button type="button" class="text-btn" data-video-close>Close</button>
+        </div>
+      </div>
+    </div>
+  </dialog>
 </Base>
 
 <script>
@@ -151,5 +179,67 @@ const sections = videoSections();
       if (img.naturalWidth === 0) tryFallback();
       else if (img.naturalWidth <= 120) tryFallback();
     }
+  });
+
+  const lightbox = document.querySelector<HTMLDialogElement>("[data-video-lightbox]");
+  const frame = document.querySelector<HTMLIFrameElement>("[data-video-frame]");
+  const titleEl = document.querySelector<HTMLElement>("#video-lightbox-title");
+  const kickerEl = document.querySelector<HTMLElement>("[data-video-kicker]");
+  const youtubeLink = document.querySelector<HTMLAnchorElement>("[data-video-youtube]");
+  const closeBtn = document.querySelector<HTMLButtonElement>("[data-video-close]");
+
+  const reduceMotion = () =>
+    document.documentElement.dataset.reduceMotion === "true" ||
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  const embedSrc = (videoId: string, autoplay: boolean) => {
+    const params = new URLSearchParams({
+      rel: "0",
+      modestbranding: "1",
+      playsinline: "1",
+    });
+    if (autoplay) params.set("autoplay", "1");
+    return `https://www.youtube-nocookie.com/embed/${videoId}?${params.toString()}`;
+  };
+
+  const stopPlayback = () => {
+    if (!frame) return;
+    frame.src = "about:blank";
+    frame.removeAttribute("src");
+  };
+
+  const closeLightbox = () => {
+    stopPlayback();
+    lightbox?.close();
+  };
+
+  const openLightbox = (card: HTMLElement) => {
+    if (!lightbox || !frame || !titleEl || !kickerEl || !youtubeLink) return;
+    const id = card.dataset.videoId;
+    const title = card.dataset.videoTitle ?? "Film";
+    const url = card.dataset.videoUrl;
+    const channel = card.dataset.videoChannel ?? "";
+    if (!id || !url) return;
+
+    titleEl.textContent = title;
+    kickerEl.textContent = channel;
+    youtubeLink.href = url;
+    frame.title = title;
+    frame.src = embedSrc(id, !reduceMotion());
+    if (!lightbox.open) lightbox.showModal();
+  };
+
+  document.querySelectorAll<HTMLElement>("[data-video-open]").forEach((card) => {
+    card.addEventListener("click", () => openLightbox(card));
+  });
+
+  closeBtn?.addEventListener("click", () => closeLightbox());
+
+  lightbox?.addEventListener("click", (event) => {
+    if (event.target === lightbox) closeLightbox();
+  });
+
+  lightbox?.addEventListener("close", () => {
+    stopPlayback();
   });
 </script>

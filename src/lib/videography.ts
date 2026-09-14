@@ -33,6 +33,17 @@ export function hqThumb(videoId: string): string {
   return `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
 }
 
+/** Privacy-enhanced player. Cookies stay off until play. */
+export function nocookieEmbed(videoId: string, autoplay = false): string {
+  const params = new URLSearchParams({
+    rel: "0",
+    modestbranding: "1",
+    playsinline: "1",
+  });
+  if (autoplay) params.set("autoplay", "1");
+  return `https://www.youtube-nocookie.com/embed/${videoId}?${params.toString()}`;
+}
+
 export function channelAnchor(handle: ChannelHandle): string {
   return handle.replace(/^@/, "");
 }
