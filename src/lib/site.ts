@@ -10,6 +10,7 @@ export const SITE_BIO = `${SITE_BIO_LEAD} He’s also a maker, an investor, and 
 export const SITE_CANONICAL = "https://bkchiesa.github.io/brandonchiesa-site/";
 
 export const DOJO_URL = "https://bkchiesa.github.io/Sensei-mooses-dojo/";
+export const ITALY_URL = "https://bkchiesa.github.io/Chiesa-italy-2026/";
 export const LINKEDIN_URL = "https://www.linkedin.com/in/bkchiesa";
 
 export const YOUTUBE_CHANNELS = [

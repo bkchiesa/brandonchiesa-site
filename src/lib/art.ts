@@ -61,6 +61,15 @@ export const ART = {
     /** Career interior brass rule (1200×6). Do not bake body copy into PNGs. */
     careerBrassRule: "art/v3/career/brass_rule.png",
     careerBrassRuleTile: "art/v3/career/brass_rule_tile.png",
+    /** Coding feature stills. Pixel drop; do not invent art. */
+    coding: {
+      /** Feature 1 — Sensei Moose’s Dojo action still (Pixel PASS, 1600×900). */
+      dojoActionStill: "art/v3/coding/dojo_action_still.png",
+      /** Optional mobile crop; unwired. Pixel PASS 1080×1080. */
+      dojoActionStillSquare: "art/v3/coding/dojo_action_still_square.png",
+      /** Feature 2 — clean Italy Travel hero from the public scrubbed app. */
+      italyTravelHero: "art/v3/coding/italy_travel_hero.png",
+    },
     /**
      * Pixel/Ink drop folders (not served). Copy onto the public paths above.
      * menu → blot_*.png + anim/{intro,passive,active}/

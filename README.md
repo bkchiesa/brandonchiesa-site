@@ -76,7 +76,7 @@ Look v3 house chrome uses loop tokens (`--v3-pine`, `--v3-ochre`, `--v3-ridge`, 
 | Door | What shipped |
 | --- | --- |
 | **Career** (`/career/`) | Education, Work, and Community — each on its own leather card. Cream serif + brass rules. Generic employer disclaimer. Was `/work/`. |
-| **Coding** (`/coding/`) | Hero card for [Sensei Moose’s Dojo](https://bkchiesa.github.io/Sensei-mooses-dojo/). Other cards are placeholders. Was `/make/`. |
+| **Coding** (`/coding/`) | Three feature cards: [Sensei Moose’s Dojo](https://bkchiesa.github.io/Sensei-mooses-dojo/), [Italy Travel](https://bkchiesa.github.io/Chiesa-italy-2026/) (public app anonymized), and Coming soon. Was `/make/`. |
 | **Videography** (`/videography/`) | Film-strip placeholders. Privacy-enhanced YouTube embed ready (`youtube-nocookie.com`); channel links for `@brandonchiesa3886` and `@chiesab`. Video IDs TBD. Was `/go/`. |
 
 Roots and Now are unpublished for now (old URLs redirect to the house). They can return later.

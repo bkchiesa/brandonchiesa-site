@@ -635,6 +635,149 @@ html[data-reduce-motion="true"] body[data-room="career"] .career-deck .leather-p
   color: var(--v3-charcoal);
 }
 
+/* Coding features — leather panel, cream inset, brass rules */
+.coding-features {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 1.65rem;
+}
+
+.coding-feature {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.coding-feature-media {
+  display: block;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: 8px;
+  background: rgba(28, 16, 12, 0.16);
+  box-shadow: 0 0 0 1px rgba(181, 154, 98, 0.32);
+  text-decoration: none;
+  color: inherit;
+}
+
+.coding-feature-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+
+.coding-media-hook,
+.coding-teaser {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  text-align: center;
+}
+
+.coding-media-hook {
+  background:
+    linear-gradient(180deg, rgba(244, 236, 220, 0.35), rgba(28, 16, 12, 0.08)),
+    repeating-linear-gradient(
+      -12deg,
+      transparent,
+      transparent 11px,
+      rgba(181, 154, 98, 0.08) 11px,
+      rgba(181, 154, 98, 0.08) 12px
+    );
+  color: var(--v3-charcoal);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.coding-media-hook code {
+  display: block;
+  margin-top: 0.45rem;
+  font-size: 0.68rem;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  color: rgba(42, 44, 40, 0.78);
+}
+
+.coding-teaser {
+  background:
+    radial-gradient(ellipse at 50% 42%, rgba(181, 154, 98, 0.16), transparent 62%),
+    linear-gradient(165deg, rgba(244, 236, 220, 0.42), rgba(28, 16, 12, 0.12));
+}
+
+.coding-teaser-rule {
+  display: block;
+  width: min(42%, 12rem);
+  height: clamp(4px, 0.38vw, 6px);
+  border-radius: 1px;
+  background-color: rgba(181, 154, 98, 0.55);
+  background-image: var(--career-brass-rule);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.7;
+}
+
+.coding-feature-title {
+  position: relative;
+  margin: 0.15rem 0 0;
+  padding-bottom: 0.5em;
+  font-family: "PT Serif", "Source Serif 4", Georgia, "Times New Roman", serif;
+  font-weight: 400;
+  font-size: clamp(1.25rem, 2.1vw, 1.7rem);
+  letter-spacing: 0.022em;
+  line-height: 1.2;
+  color: var(--v3-charcoal);
+}
+
+.coding-feature-title::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 28%;
+  bottom: 0;
+  height: clamp(4px, 0.38vw, 6px);
+  max-width: 22rem;
+  border-radius: 1px;
+  background-color: rgba(181, 154, 98, 0.55);
+  background-image: var(--career-brass-rule);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: left center;
+  opacity: 0.85;
+  pointer-events: none;
+}
+
+.coding-feature-title a {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+
+.coding-feature-title a:hover,
+.coding-feature-title a:focus-visible {
+  border-bottom-color: #b59a62;
+}
+
+.coding-feature-copy {
+  margin: 0;
+  max-width: 42rem;
+  font-family: "PT Serif", "Source Serif 4", Georgia, "Times New Roman", serif;
+  font-size: clamp(0.98rem, 1.2vw, 1.12rem);
+  letter-spacing: 0.01em;
+  line-height: 1.45;
+  color: rgba(42, 44, 40, 0.82);
+}
+
+body[data-room="coding"] .room-icon {
+  display: none;
+}
+
 /* Career interior — cream serif on leather grain; leather_panel.png untouched */
 html:has(body[data-room="career"]),
 body[data-room="career"] {

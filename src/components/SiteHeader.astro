@@ -4,11 +4,13 @@ import { rooms, withBase, type RoomId } from "../lib/site";
 
 interface Props {
   current?: RoomId;
+  /** Room-letter chrome (A · Career). Off on Coding. */
+  showLetter?: boolean;
 }
 
-const { current } = Astro.props;
+const { current, showLetter = true } = Astro.props;
 const room = rooms.find((item) => item.id === current);
-const icon = current ? ART.icons[current] : undefined;
+const icon = current && showLetter ? ART.icons[current] : undefined;
 ---
 
 <header class="site-header">
@@ -21,11 +23,16 @@ const icon = current ? ART.icons[current] : undefined;
     ← Home
   </a>
   {
-    room && (
+    room && showLetter && (
       <p class="room-letter">
         {icon && <img class="room-icon" src={artUrl(icon)} alt="" width="48" height="48" />}
         {room.letter} · {room.name}
       </p>
+    )
+  }
+  {
+    room && !showLetter && (
+      <p class="room-letter">{room.name}</p>
     )
   }
 </header>

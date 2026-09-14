@@ -45,6 +45,9 @@ State-folder anim packs are canonical. Ignore `v3/anim/{door}/` mirrors.
 | `v3/menu/mist_underline_brass.png` | Hover/selected underline strip (192×10 RGBA, mid `#B59A62`) |
 | `v3/menu/mist_underline_brass_tile.png` | Optional 1D-seamless brass tile |
 | `v3/leather_panel.png` | Room card fill — 1600×900 cognac/espresso (Pixel PASS) |
+| `v3/coding/dojo_action_still.png` | Coding Feature 1 — Sensei Moose’s Dojo action still (Pixel PASS, 1600×900) |
+| `v3/coding/dojo_action_still_square.png` | Optional 1080² crop — on disk, unwired |
+| `v3/coding/italy_travel_hero.png` | Coding Feature 2 — clean Italy Travel overview (public anonymized app) |
 | `v3/career/brass_rule.png` | Career section underline (1200×6). Mock is ref only. |
 | `v3/leather_panel_mock.png` | Contrast mock only — do not wire |
 | `v3/leather_pad.png` `v3/leather_pad_flat.png` `v3/leather_pad_veil.png` | Rejected — do not wire |
