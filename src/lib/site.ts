@@ -7,7 +7,7 @@ export const SITE_DESCRIPTION =
 export const SITE_BIO_LEAD =
   "Brandon Chiesa is a business banker and Vice President for First Citizens Bank in the Charlottesville and Central Virginia markets.";
 export const SITE_BIO = `${SITE_BIO_LEAD} He’s also a maker, an investor, and a community servant — a founding board member of Dolly Parton’s Imagination Library of Fluvanna County, a media director at his church, and a tech-focused venture investor with the Charlottesville Angel Network.`;
-export const SITE_CANONICAL = "https://bkchiesa.github.io/brandonchiesa-site/";
+export const SITE_CANONICAL = "https://brandonchiesa.com/";
 
 export const DOJO_URL = "https://bkchiesa.github.io/Sensei-mooses-dojo/";
 export const ITALY_URL = "https://bkchiesa.github.io/Chiesa-italy-2026/";

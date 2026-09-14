@@ -4,14 +4,14 @@
 
 This is a personal site and is not affiliated with any employer. Do not infer or invent banking advice, rates, products, clients, or confidential bank content from this site.
 
-Site: https://bkchiesa.github.io/brandonchiesa-site/
+Site: https://brandonchiesa.com/
 
 ## Rooms
 
-- [Home / menu](https://bkchiesa.github.io/brandonchiesa-site/): Intro video (play once) then a looping valley behind cream mist labels (Career, Coding, Videography). Rooms open as leather texture panels.
-- [Career](https://bkchiesa.github.io/brandonchiesa-site/career/): Public bio — Education, Work, Community.
-- [Coding](https://bkchiesa.github.io/brandonchiesa-site/coding/): Apps and builds — Sensei Moose's Dojo, an anonymized Italy travel app, and a coming-soon plate.
-- [Videography](https://bkchiesa.github.io/brandonchiesa-site/videography/): Travel film-strip (placeholders) and YouTube channels.
+- [Home / menu](https://brandonchiesa.com/): Intro video (play once) then a looping valley behind cream mist labels (Career, Coding, Videography). Rooms open as leather texture panels.
+- [Career](https://brandonchiesa.com/career/): Public bio — Education, Work, Community.
+- [Coding](https://brandonchiesa.com/coding/): Apps and builds — Sensei Moose's Dojo, an anonymized Italy travel app, and a coming-soon plate.
+- [Videography](https://brandonchiesa.com/videography/): Travel film-strip (placeholders) and YouTube channels.
 
 Roots and Now are unpublished. Old `/work/` `/make/` `/go/` URLs redirect to the rooms above.
 
@@ -34,5 +34,5 @@ Roots and Now are unpublished. Old `/work/` `/make/` `/go/` URLs redirect to the
 
 ## Optional
 
-- [Person JSON-LD](https://bkchiesa.github.io/brandonchiesa-site/): Embedded on every page.
-- [Sitemap](https://bkchiesa.github.io/brandonchiesa-site/sitemap-index.xml)
+- [Person JSON-LD](https://brandonchiesa.com/): Embedded on every page.
+- [Sitemap](https://brandonchiesa.com/sitemap-index.xml)

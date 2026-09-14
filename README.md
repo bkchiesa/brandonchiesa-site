@@ -6,11 +6,11 @@ Personal house-with-rooms site. Tech × Renaissance.
 
 **This is a personal site and is not affiliated with any employer.**
 
-Expected GitHub Pages URL (after Pages is enabled and the deploy workflow has run):
+Production URL (custom domain on GitHub Pages):
 
-**https://bkchiesa.github.io/brandonchiesa-site/**
+**https://brandonchiesa.com/**
 
-Custom domain can be added later; it is not required for v1.
+The old project-pages path `https://bkchiesa.github.io/brandonchiesa-site/` may break until merge/DNS; the custom domain is the production target.
 
 ## Run locally
 
@@ -21,27 +21,24 @@ npm install
 npm run dev
 ```
 
-Astro serves the project-pages base path, so open:
+Astro serves the site at the domain root (`base: "/"`), so open:
 
-**http://localhost:4321/brandonchiesa-site/**
+**http://localhost:4321/**
 
 ```bash
 npm run build
 npm run preview
 ```
 
-`preview` also uses `/brandonchiesa-site/`.
+`preview` also uses `/`.
 
 ## GitHub Pages
 
-This repo is configured for **GitHub Actions** → Pages (Astro static `dist/`). `astro.config.mjs` sets `site` to `https://bkchiesa.github.io` and `base` to `/brandonchiesa-site`.
-
-Pages is **not enabled on the repo yet** (the Pages API still 404s). After a maintainer sets **Settings → Pages → Source: GitHub Actions**:
+This repo is configured for **GitHub Actions** → Pages (Astro static `dist/`). `astro.config.mjs` sets `site` to `https://brandonchiesa.com` and `base` to `/`. `public/CNAME` keeps the custom domain on deploy.
 
 1. Open **Actions → Deploy to GitHub Pages**.
 2. **Run workflow** and choose this PR branch `cursor/video-shell-v3` (or `main` after merge).
-3. The first deploy creates the `github-pages` environment. The site is then at  
-   `https://bkchiesa.github.io/brandonchiesa-site/`.
+3. The site is then at `https://brandonchiesa.com/`.
 
 Push to `main` or to `cursor/video-shell-v3` also triggers the workflow. This PR is not merged.
 
@@ -67,7 +64,7 @@ Look v3 house chrome uses loop tokens (`--v3-pine`, `--v3-ochre`, `--v3-ridge`, 
 
 - Real HTML text (intro is overlay; the menu and rooms stay in the document).
 - Person JSON-LD on every page.
-- `robots.txt`, Astro sitemap, [`/llms.txt`](https://bkchiesa.github.io/brandonchiesa-site/llms.txt).
+- `robots.txt`, Astro sitemap, [`/llms.txt`](https://brandonchiesa.com/llms.txt).
 - Open Graph image: `og.png` (plus `og.svg`).
 - Landmarks: skip link, header, nav, main, footer.
 

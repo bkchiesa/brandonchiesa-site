@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://bkchiesa.github.io/brandonchiesa-site/sitemap-index.xml
+Sitemap: https://brandonchiesa.com/sitemap-index.xml

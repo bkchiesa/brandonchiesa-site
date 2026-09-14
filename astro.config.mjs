@@ -1,10 +1,10 @@
 import sitemap from "@astrojs/sitemap";
 import { defineConfig } from "astro/config";
 
-// Project Pages URL: https://bkchiesa.github.io/brandonchiesa-site/
+// Custom domain (GitHub Pages): https://brandonchiesa.com/
 export default defineConfig({
-  site: "https://bkchiesa.github.io",
-  base: "/brandonchiesa-site",
+  site: "https://brandonchiesa.com",
+  base: "/",
   trailingSlash: "always",
   integrations: [
     sitemap({
@@ -13,7 +13,7 @@ export default defineConfig({
       lastmod: new Date(),
       filter: (page) =>
         !["/work/", "/make/", "/go/", "/roots/", "/now/"].some((slug) =>
-          page.includes(`/brandonchiesa-site${slug}`),
+          page.includes(slug),
         ),
     }),
   ],
