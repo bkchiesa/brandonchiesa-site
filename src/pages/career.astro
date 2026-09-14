@@ -257,15 +257,13 @@ const sections = [
   const pickFocused = () => {
     if (!stage || cards.length === 0) return cards[0];
     const root = stage.getBoundingClientRect();
-    const mid = root.top + root.height * 0.42;
     let best = cards[0];
-    let bestDist = Number.POSITIVE_INFINITY;
+    let bestVisible = -1;
     for (const card of cards) {
       const box = card.getBoundingClientRect();
-      if (box.bottom <= root.top || box.top >= root.bottom) continue;
-      const dist = Math.abs(box.top + box.height / 2 - mid);
-      if (dist < bestDist) {
-        bestDist = dist;
+      const visible = Math.max(0, Math.min(box.bottom, root.bottom) - Math.max(box.top, root.top));
+      if (visible > bestVisible) {
+        bestVisible = visible;
         best = card;
       }
     }
