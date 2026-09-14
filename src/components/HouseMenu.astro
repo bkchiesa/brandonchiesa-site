@@ -15,14 +15,21 @@ import {
 const publicDir = join(process.cwd(), "public");
 const brassRel = ART.v3.mistUnderlineBrass;
 const tileRel = ART.v3.mistUnderlineBrassTile;
+const plateRel = ART.v3.leatherPanel;
 const hasBrass = existsSync(join(publicDir, brassRel));
 const hasTile = existsSync(join(publicDir, tileRel));
+const hasPlate = existsSync(join(publicDir, plateRel));
 const brassUrl = hasBrass ? artUrl(brassRel) : hasTile ? artUrl(tileRel) : "";
+const plateUrl = hasPlate ? artUrl(plateRel) : "";
 ---
 
-<div class="house-ui" id="menu">
+<div
+  class="house-ui"
+  id="menu"
+  style={plateUrl ? `--letter-plate: url('${plateUrl}')` : undefined}
+>
   <section class="menu menu--house" aria-labelledby="identity-name">
-    <header class="house-banner identity identity--sky" data-house-banner>
+    <header class="house-banner identity identity--sky letter-plate" data-house-banner>
       <h1 id="identity-name">{SITE_NAME}</h1>
       <p class="tagline">
         {SITE_TAGLINE_LEAD}{" "}
@@ -50,7 +57,7 @@ const brassUrl = hasBrass ? artUrl(brassRel) : hasTile ? artUrl(tileRel) : "";
       </ul>
     </nav>
 
-    <p class="house-bio house-after">{SITE_BIO}</p>
+    <p class="house-bio house-after letter-plate">{SITE_BIO}</p>
 
     <div class="menu-foot menu-foot--sky house-after">
       <button type="button" class="text-btn mono" data-skip-intro>Skip intro</button>

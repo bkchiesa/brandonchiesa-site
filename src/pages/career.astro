@@ -23,8 +23,11 @@ interface CareerEntry extends CareerRole {
 
 const publicDir = join(process.cwd(), "public");
 const brassRel = ART.v3.careerBrassRule;
+const plateRel = ART.v3.leatherPanel;
 const hasBrass = existsSync(join(publicDir, brassRel));
+const hasPlate = existsSync(join(publicDir, plateRel));
 const brassUrl = hasBrass ? artUrl(brassRel) : "";
+const plateUrl = hasPlate ? artUrl(plateRel) : "";
 
 const education: CareerEntry[] = [
   {
@@ -36,7 +39,7 @@ const education: CareerEntry[] = [
     org: "Hampden-Sydney College",
     role: "B.A., History & Political Science",
     dates: "2001–2005",
-    notes: ["Head RA · ODK Student of the Year, 2005"],
+    notes: ["ODK Student of the Year, 2005"],
   },
   {
     org: "University of Oxford",
@@ -86,6 +89,7 @@ const work: CareerEntry[] = [
 const community: CareerEntry[] = [
   {
     org: "Dolly Parton’s Imagination Library Fluvanna",
+    href: "https://imaginationlibrary.com/usa/affiliate/VAFLUVANNA/",
     role: "Founding Board Member",
     dates: "2023 –PRESENT",
   },
@@ -135,7 +139,10 @@ const sections = [
   description="Public bio of Brandon Chiesa: education, work, and community."
 >
   <VideoShell />
-  <div class="room-stage room-stage--deck">
+  <div
+    class="room-stage room-stage--deck"
+    style={plateUrl ? `--letter-plate: url('${plateUrl}')` : undefined}
+  >
     <div class="room-veil" aria-hidden="true"></div>
     <SiteHeader current="career" />
     <main
@@ -232,4 +239,61 @@ const sections = [
       });
     });
   });
+
+  const deck = document.querySelector<HTMLElement>(".career-deck");
+  const stage = document.querySelector<HTMLElement>(".room-stage--deck");
+  const cards = deck
+    ? Array.from(deck.querySelectorAll<HTMLElement>(".leather-panel"))
+    : [];
+
+  const setFocus = (active: HTMLElement | undefined) => {
+    cards.forEach((card) => {
+      const on = card === active;
+      card.classList.toggle("is-focus", on);
+      card.classList.toggle("is-dim", !on);
+    });
+  };
+
+  const pickFocused = () => {
+    if (!stage || cards.length === 0) return cards[0];
+    const root = stage.getBoundingClientRect();
+    const mid = root.top + root.height * 0.42;
+    let best = cards[0];
+    let bestDist = Number.POSITIVE_INFINITY;
+    for (const card of cards) {
+      const box = card.getBoundingClientRect();
+      if (box.bottom <= root.top || box.top >= root.bottom) continue;
+      const dist = Math.abs(box.top + box.height / 2 - mid);
+      if (dist < bestDist) {
+        bestDist = dist;
+        best = card;
+      }
+    }
+    return best;
+  };
+
+  if (cards.length > 0) {
+    if (reduceMotion()) {
+      cards.forEach((card) => {
+        card.classList.add("is-focus");
+        card.classList.remove("is-dim");
+      });
+    } else if (stage) {
+      let ticking = false;
+      const update = () => {
+        ticking = false;
+        setFocus(pickFocused());
+      };
+      stage.addEventListener(
+        "scroll",
+        () => {
+          if (ticking) return;
+          ticking = true;
+          window.requestAnimationFrame(update);
+        },
+        { passive: true },
+      );
+      update();
+    }
+  }
 </script>

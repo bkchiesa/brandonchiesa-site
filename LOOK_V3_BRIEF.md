@@ -47,4 +47,4 @@ Runtime contract is `src/lib/art.ts` (`ART.v3`, frame helpers). Do not rename pu
 
 ## Rooms
 
-Live routes: `/career/` `/coding/` `/videography/`. Career is three leather cards (Education, Work, Community) with cream serif + brass rules (`leather_panel.png` untouched). SEO, Person JSON-LD, generic employer disclaimer stay. `/work/` `/make/` `/go/` redirect; Roots and Now can return later.
+Live routes: `/career/` `/coding/` `/videography/`. Home title/byline and bio sit on faint leather letter-plates. Career is three leather cards (Education, Work, Community) with cream serif + brass rules (`leather_panel.png` untouched); scroll keeps one card in focus and plates ← Home. SEO, Person JSON-LD, generic employer disclaimer stay. `/work/` `/make/` `/go/` redirect; Roots and Now can return later.

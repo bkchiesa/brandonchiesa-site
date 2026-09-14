@@ -167,26 +167,38 @@ html[data-reduce-motion="true"] .house-banner {
   transition: opacity 420ms ease;
 }
 
+.letter-plate {
+  background-color: rgba(22, 14, 10, 0.4);
+  background-image:
+    linear-gradient(180deg, rgba(22, 14, 10, 0.22), rgba(16, 10, 8, 0.34)),
+    var(--letter-plate);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 10px;
+  box-shadow:
+    0 10px 28px rgba(0, 0, 0, 0.28),
+    0 0 0 1px rgba(12, 8, 6, 0.32),
+    inset 0 1px 0 rgba(255, 220, 180, 0.1);
+}
+
 .identity--sky {
   position: relative;
   z-index: 1;
-  padding: 0.55rem 1.2rem 0.7rem;
-  background: radial-gradient(
-    ellipse 68% 78% at 50% 40%,
-    rgba(245, 236, 214, 0.42) 0%,
-    rgba(245, 236, 214, 0.12) 52%,
-    transparent 76%
-  );
+  padding: 0.65rem 1.35rem 0.8rem;
 }
 
 .identity--sky h1 {
-  color: var(--v3-charcoal);
-  text-shadow: 0 1px 0 rgba(255, 248, 230, 0.55);
+  color: rgba(243, 238, 228, 0.95);
+  text-shadow:
+    0 2px 5px rgba(20, 24, 18, 0.4),
+    0 1px 3px rgba(20, 24, 18, 0.45),
+    1px 1px 1px rgba(20, 24, 18, 0.28);
 }
 
 .identity--sky .tagline,
 .identity--sky .hud-kicker {
-  color: var(--v3-olive);
+  color: rgba(210, 200, 185, 0.88);
 }
 
 .identity--sky .tagline {
@@ -312,6 +324,10 @@ html[data-reduce-motion="true"] .mist-label::after {
   pointer-events: none;
 }
 
+.house-bio.letter-plate {
+  padding: 0.8rem 1.15rem 0.9rem;
+}
+
 @media (max-width: 699px) {
   .house-bio {
     top: calc(50.3% + 6.4rem);
@@ -363,6 +379,8 @@ html[data-reduce-motion="true"] .mist-label::after {
   gap: 1.15rem;
   overflow: auto;
   place-items: unset;
+  scroll-snap-type: y proximity;
+  scroll-padding-block: 4.75rem 1.25rem;
 }
 
 .room-veil {
@@ -427,6 +445,24 @@ html[data-reduce-motion="true"] .mist-label::after {
 html[data-reduce-motion="true"] .room-stage .leather-panel,
 html[data-reduce-motion="true"] .room-veil {
   animation: none;
+}
+
+html[data-reduce-motion="true"] .room-stage--deck {
+  scroll-snap-type: none;
+}
+
+html[data-reduce-motion="true"] body[data-room="career"] .career-deck .leather-panel.is-dim {
+  opacity: 1;
+  filter: none;
+}
+
+html[data-reduce-motion="true"] .room-stage--deck {
+  scroll-snap-type: none;
+}
+
+html[data-reduce-motion="true"] body[data-room="career"] .career-deck .leather-panel.is-dim {
+  opacity: 1;
+  filter: none;
 }
 
 @keyframes leatherReveal {
@@ -532,7 +568,23 @@ body[data-room="career"] {
 
 body[data-room="career"] .leather-panel {
   width: min(68rem, 95vw);
-  max-height: none;
+  max-height: calc(100dvh - 5.75rem);
+  scroll-snap-align: center;
+  transition: opacity 360ms ease, filter 360ms ease;
+}
+
+body[data-room="career"] .career-deck .leather-panel.is-dim {
+  opacity: 0.4;
+  filter: saturate(0.82);
+}
+
+body[data-room="career"] .career-deck .leather-panel.is-focus {
+  opacity: 1;
+  filter: none;
+}
+
+body[data-room="career"] .career-deck .leather-panel[data-has-texture="true"] {
+  animation-fill-mode: backwards;
 }
 
 body[data-room="career"] .career-deck .leather-panel:nth-of-type(2) {
@@ -558,6 +610,13 @@ body[data-room="career"] .leather-inset .site-footer {
   border-color: rgba(181, 154, 98, 0.22);
 }
 
+body[data-room="career"] .site-header {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  border-bottom: 0;
+}
+
 body[data-room="career"] .house-link,
 body[data-room="career"] .text-btn,
 body[data-room="career"] .leather-inset .house-link,
@@ -565,6 +624,17 @@ body[data-room="career"] .leather-inset .text-btn {
   background: transparent;
   border-color: rgba(181, 154, 98, 0.38);
   color: var(--career-cream, rgba(243, 238, 228, 0.95));
+}
+
+body[data-room="career"] .house-link.letter-plate {
+  background-color: rgba(22, 14, 10, 0.45);
+  background-image:
+    linear-gradient(180deg, rgba(22, 14, 10, 0.22), rgba(16, 10, 8, 0.34)),
+    var(--letter-plate);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 10px;
 }
 
 body[data-room="career"] .room-letter,

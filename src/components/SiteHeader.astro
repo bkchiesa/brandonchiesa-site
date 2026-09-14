@@ -12,7 +12,14 @@ const icon = current ? ART.icons[current] : undefined;
 ---
 
 <header class="site-header">
-  <a class="house-link mono" href={withBase()} data-home-link aria-label="Back to home">← Home</a>
+  <a
+    class:list={["house-link", "mono", current === "career" && "letter-plate"]}
+    href={withBase()}
+    data-home-link
+    aria-label="Back to home"
+  >
+    ← Home
+  </a>
   {
     room && (
       <p class="room-letter">
