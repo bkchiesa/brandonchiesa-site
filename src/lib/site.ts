@@ -17,10 +17,12 @@ export const YOUTUBE_CHANNELS = [
   {
     handle: "@brandonchiesa3886",
     href: "https://www.youtube.com/@brandonchiesa3886",
+    channelId: "UC0UMcc4XeZtjTkLwp0qdEMw",
   },
   {
     handle: "@chiesab",
     href: "https://www.youtube.com/@chiesab",
+    channelId: "UC6xX6wSpdGnXZGPguF89Tsw",
   },
 ] as const;
 

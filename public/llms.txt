@@ -11,7 +11,7 @@ Site: https://brandonchiesa.com/
 - [Home / menu](https://brandonchiesa.com/): Intro video (play once) then a looping valley behind cream mist labels (Career, Coding, Videography). Rooms open as leather texture panels.
 - [Career](https://brandonchiesa.com/career/): Public bio — Education, Work, Community.
 - [Coding](https://brandonchiesa.com/coding/): Apps and builds — Sensei Moose's Dojo, an anonymized Italy travel app, and a coming-soon plate.
-- [Videography](https://brandonchiesa.com/videography/): Travel film-strip (placeholders) and YouTube channels.
+- [Videography](https://brandonchiesa.com/videography/): Public YouTube stills gallery from @brandonchiesa3886 and @chiesab (outbound watch links).
 
 Roots and Now are unpublished. Old `/work/` `/make/` `/go/` URLs redirect to the rooms above.
 
