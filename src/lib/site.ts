@@ -14,8 +14,6 @@ export const ITALY_URL = "https://bkchiesa.github.io/Chiesa-italy-2026/";
 export const LINKEDIN_URL = "https://www.linkedin.com/in/bkchiesa";
 export const X_URL = "https://x.com/bkchiesa";
 export const X_HANDLE = "@bkchiesa";
-/** Work banking inbox — unset until Brandon locks an address. Do not invent one. */
-export const CONTACT_EMAIL: string | null = null;
 
 export const YOUTUBE_CHANNELS = [
   {
@@ -66,7 +64,7 @@ export const rooms: Room[] = [
   {
     id: "contact",
     name: "Contact",
-    blurb: "X and banking inquiries",
+    blurb: "X and LinkedIn",
     path: "contact/",
   },
 ];

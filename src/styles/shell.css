@@ -814,7 +814,7 @@ body[data-room="contact"] .room-icon {
 /* Contact — leather pad, cream inset, brass rules */
 .contact-channels {
   list-style: none;
-  margin: 1.15rem 0 0;
+  margin: 0.85rem 0 0;
   padding: 0;
   display: grid;
   gap: 1.55rem;
@@ -873,10 +873,6 @@ body[data-room="contact"] .room-icon {
 .contact-channel-copy a:hover,
 .contact-channel-copy a:focus-visible {
   border-bottom-color: #b59a62;
-}
-
-.contact-mail.is-pending {
-  color: rgba(42, 44, 40, 0.7);
 }
 
 /* Videography gallery — leather pad, cream inset, brass rules */

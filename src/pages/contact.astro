@@ -7,20 +7,19 @@ import SiteHeader from "../components/SiteHeader.astro";
 import VideoShell from "../components/VideoShell.astro";
 import Base from "../layouts/Base.astro";
 import { ART, artUrl } from "../lib/art";
-import { CONTACT_EMAIL, X_HANDLE, X_URL } from "../lib/site";
+import { LINKEDIN_URL, X_HANDLE, X_URL } from "../lib/site";
 
 const publicDir = join(process.cwd(), "public");
 const brassRel = ART.v3.careerBrassRule;
 const hasBrass = existsSync(join(publicDir, brassRel));
 const brassUrl = hasBrass ? artUrl(brassRel) : "";
-const mailHref = CONTACT_EMAIL ? `mailto:${CONTACT_EMAIL}` : undefined;
 ---
 
 <Base
   title="Contact"
   room="contact"
   videoShell
-  description="Reach Brandon Chiesa on X (@bkchiesa). Work banking email coming soon. A personal site, not affiliated with any employer."
+  description="Reach Brandon Chiesa on X (@bkchiesa) and LinkedIn. A personal site, not affiliated with any employer."
 >
   <VideoShell />
   <LeatherPad title="Contact">
@@ -32,10 +31,6 @@ const mailHref = CONTACT_EMAIL ? `mailto:${CONTACT_EMAIL}` : undefined;
       style={brassUrl ? `--career-brass-rule: url('${brassUrl}')` : undefined}
     >
       <h1 class="room-title">Contact</h1>
-      <p class="lede">
-        For business-banking conversations in Charlottesville and Central Virginia —
-        introductions and public notes. This is a personal door, not a bank channel.
-      </p>
 
       <ul class="contact-channels">
         <li>
@@ -48,15 +43,11 @@ const mailHref = CONTACT_EMAIL ? `mailto:${CONTACT_EMAIL}` : undefined;
         </li>
         <li>
           <article class="contact-channel">
-            <h2 class="contact-channel-title">Email</h2>
+            <h2 class="contact-channel-title">LinkedIn</h2>
             <p class="contact-channel-copy">
-              {
-                mailHref && CONTACT_EMAIL ? (
-                  <a href={mailHref}>{CONTACT_EMAIL}</a>
-                ) : (
-                  <span class="contact-mail is-pending">Email coming soon</span>
-                )
-              }
+              <a href={LINKEDIN_URL} rel="me noopener noreferrer" target="_blank">
+                linkedin.com/in/bkchiesa
+              </a>
             </p>
           </article>
         </li>
