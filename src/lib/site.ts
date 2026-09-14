@@ -7,6 +7,7 @@ export const SITE_DESCRIPTION =
 export const SITE_CANONICAL = "https://bkchiesa.github.io/brandonchiesa-site/";
 
 export const DOJO_URL = "https://bkchiesa.github.io/Sensei-mooses-dojo/";
+export const LINKEDIN_URL = "https://www.linkedin.com/in/bkchiesa";
 
 export const YOUTUBE_CHANNELS = [
   {

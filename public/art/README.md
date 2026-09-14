@@ -45,6 +45,7 @@ State-folder anim packs are canonical. Ignore `v3/anim/{door}/` mirrors.
 | `v3/menu/mist_underline_brass.png` | Hover/selected underline strip (192×10 RGBA, mid `#B59A62`) |
 | `v3/menu/mist_underline_brass_tile.png` | Optional 1D-seamless brass tile |
 | `v3/leather_panel.png` | Room card fill — 1600×900 cognac/espresso (Pixel PASS) |
+| `v3/career/brass_rule.png` | Career section underline (1200×6). Mock is ref only. |
 | `v3/leather_panel_mock.png` | Contrast mock only — do not wire |
 | `v3/leather_pad.png` `v3/leather_pad_flat.png` `v3/leather_pad_veil.png` | Rejected — do not wire |
 

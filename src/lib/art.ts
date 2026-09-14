@@ -58,6 +58,9 @@ export const ART = {
     mistUnderlineBrass: "art/v3/menu/mist_underline_brass.png",
     /** Optional repeat-x grain if the strip needs tiling. */
     mistUnderlineBrassTile: "art/v3/menu/mist_underline_brass_tile.png",
+    /** Career interior brass rule (1200×6). Do not bake body copy into PNGs. */
+    careerBrassRule: "art/v3/career/brass_rule.png",
+    careerBrassRuleTile: "art/v3/career/brass_rule_tile.png",
     /**
      * Pixel/Ink drop folders (not served). Copy onto the public paths above.
      * menu → blot_*.png + anim/{intro,passive,active}/

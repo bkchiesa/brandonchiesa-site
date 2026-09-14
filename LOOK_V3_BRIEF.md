@@ -47,4 +47,4 @@ Runtime contract is `src/lib/art.ts` (`ART.v3`, frame helpers). Do not rename pu
 
 ## Rooms
 
-Live routes: `/career/` `/coding/` `/videography/`. Existing Career/Coding/Videography facts and stubs stay in the leather inset. SEO, Person JSON-LD, generic employer disclaimer stay. `/work/` `/make/` `/go/` redirect; Roots and Now can return later.
+Live routes: `/career/` `/coding/` `/videography/`. Career interior is cream serif + brass rules on the leather grain (HTML/CSS; `leather_panel.png` untouched). SEO, Person JSON-LD, generic employer disclaimer stay. `/work/` `/make/` `/go/` redirect; Roots and Now can return later.

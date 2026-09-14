@@ -1,28 +1,104 @@
 ---
+import { existsSync } from "node:fs";
+import { join } from "node:path";
 import LeatherPad from "../components/LeatherPad.astro";
-import RoomHero from "../components/RoomHero.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import SiteHeader from "../components/SiteHeader.astro";
 import VideoShell from "../components/VideoShell.astro";
 import Base from "../layouts/Base.astro";
-import { SITE_DISCLAIMER } from "../lib/site";
+import { ART, artUrl } from "../lib/art";
+import { LINKEDIN_URL, SITE_DISCLAIMER } from "../lib/site";
 
-const blocks = [
+interface CareerEntry {
+  org: string;
+  role: string;
+  meta?: string;
+  notes?: string[];
+  quiet?: boolean;
+}
+
+const publicDir = join(process.cwd(), "public");
+const brassRel = ART.v3.careerBrassRule;
+const hasBrass = existsSync(join(publicDir, brassRel));
+const brassUrl = hasBrass ? artUrl(brassRel) : "";
+
+const education: CareerEntry[] = [
   {
-    id: "education",
-    title: "Education",
-    body: "Hampden-Sydney College — Classical History & Political Science.",
+    org: "Hampden-Sydney College",
+    role: "B.A., History & Political Science",
+    meta: "2001–2005",
+    notes: ["Head RA · ODK Student of the Year, 2005"],
   },
   {
-    id: "career",
-    title: "Career",
-    body: "Truist → First Citizens Bank. VP / Business Banker, Charlottesville / Fluvanna area.",
+    org: "University of Oxford",
+    role: "Virginia Program at Oxford — English / History",
+    meta: "2004",
+  },
+];
+
+const work: CareerEntry[] = [
+  {
+    org: "First Citizens Bank",
+    role: "Business Banker / Vice President",
+    meta: "Oct 2021–Present · Charlottesville VA",
+    notes: [
+      "Markets: Charlottesville, Albemarle, Fluvanna, Nelson, Louisa, and surrounding",
+      "Growth-phase business clients; long-term partnership",
+    ],
   },
   {
-    id: "community",
-    title: "Community",
-    body: "Fluvanna Imagination Library (Dolly Parton’s Imagination Library / DPIL) — local nonprofit literacy work.",
+    org: "Truist",
+    role: "Business Banker",
+    meta: "Jan 2020–Oct 2021 · Greater Charlottesville",
   },
+  {
+    org: "BB&T",
+    role: "Small Business Specialist, then AVP & Market Leader",
+    meta: "2008–2020 · Palmyra & Fork Union",
+    notes: ["Leadership program in Winston-Salem."],
+  },
+  {
+    org: "Commonwealth-Strategies Political Consulting",
+    role: "Founding Partner",
+    meta: "2007–2011",
+    quiet: true,
+  },
+];
+
+const volunteering: CareerEntry[] = [
+  {
+    org: "Dolly Parton’s Imagination Library Fluvanna",
+    role: "Founding Board Member",
+    meta: "Dec 2022–Present",
+    notes: ["Stood up the local affiliate — fundraising, enrollment, chapter database."],
+  },
+  {
+    org: "Community Investment Collaborative",
+    role: "Loan Review Committee",
+    meta: "Jan 2020–Present",
+  },
+  {
+    org: "Fluvanna Ruritan Club",
+    role: "Past President",
+  },
+  {
+    org: "Fluvanna County Broadband Area Task Force",
+    role: "Member",
+    meta: "2017–2018",
+    quiet: true,
+  },
+  {
+    org: "Fork Union Community Day",
+    role: "Founding Director",
+    meta: "2010–2014",
+    quiet: true,
+  },
+];
+
+const sections = [
+  { id: "education", title: "Education", entries: education },
+  { id: "work", title: "Work", entries: work },
+  { id: "volunteering", title: "Volunteering", entries: volunteering },
 ];
 ---
 
@@ -30,49 +106,56 @@ const blocks = [
   title="Career"
   room="career"
   videoShell
-  description="Public bio of Brandon Chiesa: Hampden-Sydney education, banking career path, and Fluvanna Imagination Library community work."
+  description="Public bio of Brandon Chiesa: Hampden-Sydney and Oxford, business banking in Charlottesville, and Fluvanna community work."
 >
   <VideoShell />
   <LeatherPad title="Career">
-  <SiteHeader current="career" />
-  <main id="main" class="page-main">
-    <RoomHero room="career" alt="The path is the work — a five-stage timeline from foundation to legacy" />
-    <p class="hud-kicker">Room A</p>
-    <h1 class="room-title">Career</h1>
-    <p class="lede">
-      Three public chapters only. No banking advice, rates, products, clients, or confidential bank content.
-    </p>
+    <SiteHeader current="career" />
+    <main
+      id="main"
+      class="page-main career-bio"
+      data-brass={hasBrass ? "true" : "false"}
+      style={brassUrl ? `--career-brass-rule: url('${brassUrl}')` : undefined}
+    >
+      <h1 class="sr-only">Career</h1>
+      <p class="career-eyebrow">
+        Vice President, Business Banker at First Citizens Bank · Dolly Parton’s Imagination Library
+        Fluvanna
+      </p>
 
-    <nav class="timeline" aria-label="Career chapters">
-      <p class="hud-kicker">Path</p>
-      <ol>
-        {
-          blocks.map((block, index) => (
-            <li>
-              <a href={`#${block.id}`}>
-                <span class="mono">0{index + 1}</span>
-                <span>{block.title}</span>
-              </a>
-            </li>
-          ))
-        }
-      </ol>
-    </nav>
-
-    <section class="card-grid three" aria-label="Public bio">
       {
-        blocks.map((block) => (
-          <article class="card frame" id={block.id}>
-            <p class="hud-kicker">{block.title}</p>
-            <h2>{block.title}</h2>
-            <p>{block.body}</p>
-          </article>
+        sections.map((section) => (
+          <section class="career-section" id={section.id} aria-labelledby={`${section.id}-title`}>
+            <h2 class="career-heading" id={`${section.id}-title`}>
+              {section.title}
+            </h2>
+            <ul class="career-list">
+              {section.entries.map((entry) => (
+                <li class:list={["career-entry", entry.quiet && "is-quiet"]}>
+                  <h3 class="career-org">{entry.org}</h3>
+                  <p class="career-role">{entry.role}</p>
+                  {entry.meta && <p class="career-meta">{entry.meta}</p>}
+                  {entry.notes && entry.notes.length > 0 && (
+                    <ul class="career-notes">
+                      {entry.notes.map((note) => (
+                        <li>{note}</li>
+                      ))}
+                    </ul>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </section>
         ))
       }
-    </section>
 
-    <p class="disclaimer">{SITE_DISCLAIMER}</p>
-  </main>
-  <SiteFooter showDisclaimer />
+      <p class="career-more">
+        <a class="career-link" href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer">
+          LinkedIn
+        </a>
+      </p>
+      <p class="disclaimer">{SITE_DISCLAIMER}</p>
+    </main>
+    <SiteFooter showDisclaimer />
   </LeatherPad>
 </Base>
