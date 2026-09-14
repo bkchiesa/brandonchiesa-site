@@ -29,9 +29,9 @@ const plateUrl = hasPlate ? artUrl(plateRel) : "";
   style={plateUrl ? `--letter-plate: url('${plateUrl}')` : undefined}
 >
   <section class="menu menu--house" aria-labelledby="identity-name">
-    <header class="house-banner identity identity--sky letter-plate" data-house-banner>
+    <header class="house-banner identity identity--sky" data-house-banner>
       <h1 id="identity-name">{SITE_NAME}</h1>
-      <p class="tagline">
+      <p class="tagline letter-plate">
         {SITE_TAGLINE_LEAD}{" "}
         <span class="tagline-rooted">{SITE_TAGLINE_ROOTED}</span>
       </p>

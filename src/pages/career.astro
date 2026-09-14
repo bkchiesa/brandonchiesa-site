@@ -149,6 +149,7 @@ const sections = [
       id="main"
       class="career-deck"
       data-brass={hasBrass ? "true" : "false"}
+      data-wheel="true"
       style={brassUrl ? `--career-brass-rule: url('${brassUrl}')` : undefined}
     >
       <h1 class="sr-only">Career</h1>
@@ -246,52 +247,117 @@ const sections = [
     ? Array.from(deck.querySelectorAll<HTMLElement>(".leather-panel"))
     : [];
 
-  const setFocus = (active: HTMLElement | undefined) => {
-    cards.forEach((card) => {
-      const on = card === active;
-      card.classList.toggle("is-focus", on);
-      card.classList.toggle("is-dim", !on);
-    });
-  };
+  if (deck && stage && cards.length > 0) {
+    const last = cards.length - 1;
+    const quiet = reduceMotion();
+    let target = 0;
+    let offset = 0;
+    let snapTimer = 0;
+    let pointerY = 0;
+    let pointerActive = false;
+    let raf = 0;
 
-  const pickFocused = () => {
-    if (!stage || cards.length === 0) return cards[0];
-    const root = stage.getBoundingClientRect();
-    let best = cards[0];
-    let bestVisible = -1;
-    for (const card of cards) {
-      const box = card.getBoundingClientRect();
-      const visible = Math.max(0, Math.min(box.bottom, root.bottom) - Math.max(box.top, root.top));
-      if (visible > bestVisible) {
-        bestVisible = visible;
-        best = card;
-      }
-    }
-    return best;
-  };
+    const clamp = (value: number) => Math.min(last, Math.max(0, value));
 
-  if (cards.length > 0) {
-    if (reduceMotion()) {
-      cards.forEach((card) => {
-        card.classList.add("is-focus");
-        card.classList.remove("is-dim");
+    const apply = (value: number) => {
+      cards.forEach((card, index) => {
+        const delta = index - value;
+        const abs = Math.abs(delta);
+        card.style.setProperty("--wheel-y", `${delta * 22}vh`);
+        card.style.setProperty("--wheel-scale", String(1 - Math.min(abs, 1.2) * 0.08));
+        card.style.setProperty("--wheel-opacity", String(abs < 0.12 ? 1 : Math.max(0.14, 1 - abs * 0.62)));
+        card.style.setProperty("--wheel-z", String(Math.round((2 - abs) * 10)));
+        card.classList.toggle("is-focus", abs < 0.5);
+        card.classList.toggle("is-dim", abs >= 0.5);
       });
-    } else if (stage) {
-      let ticking = false;
-      const update = () => {
-        ticking = false;
-        setFocus(pickFocused());
-      };
-      stage.addEventListener(
-        "scroll",
-        () => {
-          if (ticking) return;
-          ticking = true;
-          window.requestAnimationFrame(update);
-        },
-        { passive: true },
-      );
-      update();
-    }
+    };
+
+    const render = () => {
+      raf = 0;
+      if (quiet) {
+        offset = target;
+        apply(offset);
+        return;
+      }
+      offset += (target - offset) * 0.22;
+      if (Math.abs(target - offset) < 0.002) offset = target;
+      apply(offset);
+      if (offset !== target) raf = window.requestAnimationFrame(render);
+    };
+
+    const go = (next: number, snap = false) => {
+      target = clamp(next);
+      if (snap || quiet) target = Math.round(target);
+      if (!raf) raf = window.requestAnimationFrame(render);
+    };
+
+    const scheduleSnap = () => {
+      window.clearTimeout(snapTimer);
+      snapTimer = window.setTimeout(() => go(Math.round(target), true), quiet ? 0 : 140);
+    };
+
+    const focusedInset = () =>
+      cards[Math.round(offset)]?.querySelector<HTMLElement>(".leather-inset") ?? null;
+
+    const insetCanScroll = (deltaY: number) => {
+      const inset = focusedInset();
+      if (!inset) return false;
+      const max = inset.scrollHeight - inset.clientHeight;
+      if (max <= 1) return false;
+      if (deltaY > 0 && inset.scrollTop < max - 1) return true;
+      if (deltaY < 0 && inset.scrollTop > 1) return true;
+      return false;
+    };
+
+    stage.addEventListener(
+      "wheel",
+      (event) => {
+        if (event.defaultPrevented) return;
+        if (insetCanScroll(event.deltaY)) return;
+        event.preventDefault();
+        const step = event.deltaMode === 1 ? event.deltaY * 0.55 : event.deltaY / 420;
+        go(target + step);
+        scheduleSnap();
+      },
+      { passive: false },
+    );
+
+    stage.addEventListener("pointerdown", (event) => {
+      if (event.pointerType === "mouse" && event.button !== 0) return;
+      if ((event.target as HTMLElement | null)?.closest(".leather-inset")) {
+        pointerActive = false;
+        return;
+      }
+      pointerActive = true;
+      pointerY = event.clientY;
+    });
+
+    stage.addEventListener("pointerup", (event) => {
+      if (!pointerActive) return;
+      pointerActive = false;
+      const dy = event.clientY - pointerY;
+      if (Math.abs(dy) < 48) return;
+      if ((event.target as HTMLElement | null)?.closest("a,button")) return;
+      go(Math.round(target) + (dy < 0 ? 1 : -1), true);
+    });
+
+    window.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowDown" || event.key === "PageDown") {
+        event.preventDefault();
+        go(Math.round(target) + 1, true);
+      } else if (event.key === "ArrowUp" || event.key === "PageUp") {
+        event.preventDefault();
+        go(Math.round(target) - 1, true);
+      }
+    });
+
+    cards.forEach((card, index) => {
+      card.addEventListener("click", () => {
+        if (Math.round(offset) === index) return;
+        go(index, true);
+      });
+    });
+
+    apply(0);
   }
 </script>
