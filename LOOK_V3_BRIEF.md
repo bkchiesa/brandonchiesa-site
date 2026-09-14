@@ -31,10 +31,10 @@ Skip / `prefers-reduced-motion` / `?skip=1` land on the house over the loop (or 
 ## Menu
 
 - **Pixel PASS:** HTML/CSS mist labels. Spec: `public/art/v3/menu/MIST_MENU_SPECS.md`.
-- PT Serif 400, ~32px @1280, `#F3EEE4` @ 0.95, gap `6.875vw` (~88px @1280), vertical mid 50.3%. Three labels only: Career, Coding, Videography.
+- PT Serif 400, ~32px @1280, `#F3EEE4` @ 0.95, vertical mid 50.3%. Live labels: Career, Coding, Videography, Contact.
 - Hover/selected: Pixel PASS `mist_underline_brass.png` (~6px @1280, ~5px below baseline, mid `#B59A62`). Labels stay cream. No cream hairline. No blots, chips, or cairns.
 - Blot assets may stay in `public/art/v3/`; they are not wired.
-- Live rooms: Career, Coding, Videography — `/career/` `/coding/` `/videography/`. Roots and Now are unpublished (redirect home). Old `/work/` `/make/` `/go/` redirect to the new slugs.
+- Live rooms: Career, Coding, Videography, Contact — `/career/` `/coding/` `/videography/` `/contact/`. Roots and Now are unpublished (redirect home). Old `/work/` `/make/` `/go/` redirect to the new slugs.
 
 ## Art hooks (Pixel / Ink)
 
@@ -47,4 +47,4 @@ Runtime contract is `src/lib/art.ts` (`ART.v3`, frame helpers). Do not rename pu
 
 ## Rooms
 
-Live routes: `/career/` `/coding/` `/videography/`. Home name is bare; byline and bio sit on 15% leather letter-plates. Career is a fixed Rolodex of three leather cards (Education, Work, Community) with cream serif + brass rules (`leather_panel.png` untouched); wheel moves the cards, not the page. ← Home is plated. Coding is three feature cards (Dojo, Italy Travel, Coming soon) on the leather/cream/brass pad — no Room B chrome. Videography is a channel-sectioned YouTube stills gallery on the same pad — no Room C chrome; tap a still to play on-site (`youtube-nocookie.com`). SEO, Person JSON-LD, generic employer disclaimer stay. `/work/` `/make/` `/go/` redirect; Roots and Now can return later.
+Live routes: `/career/` `/coding/` `/videography/` `/contact/`. Home name is bare; byline and bio sit on 15% leather letter-plates (full bio, no internal scroll). Career is a fixed Rolodex of three leather cards (Education, Work, Community) with cream serif + brass rules (`leather_panel.png` untouched); wheel moves the cards, not the page. ← Home is plated; room dismiss is a slow fade-out. Coding is three feature cards (Dojo, Italy Travel, Coming soon) on the leather/cream/brass pad — no Room B chrome. Videography is a channel-sectioned YouTube stills gallery on the same pad — no Room C chrome; tap a still to play on-site (`youtube-nocookie.com`). Contact is the same pad — no Room letters — with X `@bkchiesa` and a pending work-email stub. SEO, Person JSON-LD, generic employer disclaimer stay. `/work/` `/make/` `/go/` redirect; Roots and Now can return later.

@@ -50,7 +50,7 @@ The workflow lives at `.github/workflows/deploy.yml`.
 | --- | --- |
 | **Intro** | `public/video/intro.mp4` plays **once**, full-bleed. Headline fades in at ~halfway. Escape or an invisible tap skips; reduce-motion / `?skip=1` / a prior session skip go to the house. Tap-to-start if autoplay is blocked. |
 | **Loop** | Dual-video overlap crossfade into `public/video/loop.mp4` — loop starts at t=0 under the last intro valley. Cover, center-crop, no tile. Reduced motion uses the loop poster. |
-| **Menu** | Mist labels (PT Serif HTML/CSS) mid-frame over the loop. Hover/selected use `mist_underline_brass.png` (~6px @1280). Spec: `public/art/v3/menu/MIST_MENU_SPECS.md`. Blot UI is **off** the live shell. |
+| **Menu** | Mist labels (PT Serif HTML/CSS) mid-frame over the loop: Career · Coding · Videography · Contact. Hover/selected use `mist_underline_brass.png` (~6px @1280). Spec: `public/art/v3/menu/MIST_MENU_SPECS.md`. Blot UI is **off** the live shell. |
 | **Rooms** | Leather **texture panel** from `public/art/v3/leather_panel.png` with a short reveal over a dark veil. No frosted glass. `leather_pad*` is rejected and unwired. |
 | **Motion** | Session skip: after one play (or Skip), refresh stays on the menu. **Replay intro** flies again. |
 
@@ -75,5 +75,6 @@ Look v3 house chrome uses loop tokens (`--v3-pine`, `--v3-ochre`, `--v3-ridge`, 
 | **Career** (`/career/`) | Education, Work, and Community — each on its own leather card. Cream serif + brass rules. Generic employer disclaimer. Was `/work/`. |
 | **Coding** (`/coding/`) | Three feature cards: [Sensei Moose’s Dojo](https://bkchiesa.github.io/Sensei-mooses-dojo/), [Italy Travel](https://bkchiesa.github.io/Chiesa-italy-2026/) (public app anonymized), and Coming soon. Was `/make/`. |
 | **Videography** (`/videography/`) | Channel-sectioned YouTube stills gallery (Guido inventory in `src/data/youtube_inventory.json`). `@brandonchiesa3886` and `@chiesab`. Tap a still to play on-site (`youtube-nocookie.com`); Open on YouTube is secondary. Was `/go/`. |
+| **Contact** (`/contact/`) | Leather pad, no Room letters. X [`@bkchiesa`](https://x.com/bkchiesa). Work banking email pending — “Email coming soon,” no invented address. Generic employer disclaimer. |
 
 Roots and Now are unpublished for now (old URLs redirect to the house). They can return later.

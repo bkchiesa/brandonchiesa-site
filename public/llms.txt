@@ -8,10 +8,11 @@ Site: https://brandonchiesa.com/
 
 ## Rooms
 
-- [Home / menu](https://brandonchiesa.com/): Intro video (play once) then a looping valley behind cream mist labels (Career, Coding, Videography). Rooms open as leather texture panels.
+- [Home / menu](https://brandonchiesa.com/): Intro video (play once) then a looping valley behind cream mist labels (Career, Coding, Videography, Contact). Rooms open as leather texture panels.
 - [Career](https://brandonchiesa.com/career/): Public bio — Education, Work, Community.
 - [Coding](https://brandonchiesa.com/coding/): Apps and builds — Sensei Moose's Dojo, an anonymized Italy travel app, and a coming-soon plate.
 - [Videography](https://brandonchiesa.com/videography/): Public YouTube stills gallery from @brandonchiesa3886 and @chiesab. Plays on-site via privacy-enhanced embeds.
+- [Contact](https://brandonchiesa.com/contact/): X @bkchiesa. Work banking email pending (do not invent an address).
 
 Roots and Now are unpublished. Old `/work/` `/make/` `/go/` URLs redirect to the rooms above.
 
@@ -31,6 +32,7 @@ Roots and Now are unpublished. Old `/work/` `/make/` `/go/` URLs redirect to the
 
 - YouTube: https://www.youtube.com/@brandonchiesa3886
 - YouTube: https://www.youtube.com/@chiesab
+- X: https://x.com/bkchiesa
 
 ## Optional
 

@@ -250,7 +250,8 @@ html[data-reduce-motion="true"] .house-banner {
   flex-wrap: wrap;
   align-items: baseline;
   justify-content: center;
-  gap: 6.875vw;
+  column-gap: 4.75vw;
+  row-gap: 1.05rem;
   margin: 0;
   padding: 0;
 }
@@ -327,15 +328,15 @@ html[data-reduce-motion="true"] .mist-label::after {
 .house-copy {
   position: absolute;
   left: 50%;
-  top: calc(50.3% + 3.85rem);
-  bottom: max(var(--house-foot), calc(6.25rem + env(safe-area-inset-bottom, 0px)));
+  top: calc(50.3% + 2.45rem);
+  bottom: auto;
   z-index: 2;
   display: flex;
   flex-direction: column;
   align-items: center;
   width: min(40.5rem, 86vw);
   transform: translateX(-50%);
-  overflow: hidden;
+  overflow: visible;
   pointer-events: none;
 }
 
@@ -343,14 +344,9 @@ html[data-reduce-motion="true"] .mist-label::after {
   position: relative;
   z-index: 2;
   width: 100%;
-  max-height: 100%;
+  max-height: none;
   margin: 0;
-  overflow-x: hidden;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  overscroll-behavior: contain;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(243, 238, 228, 0.28) transparent;
+  overflow: visible;
   font-family: "PT Serif", "Source Serif 4", "Source Serif Pro", Georgia, "Times New Roman", serif;
   font-weight: 400;
   font-size: clamp(0.82rem, 1.35vw, 1.02rem);
@@ -417,9 +413,14 @@ html[data-reduce-motion="true"] .mist-label::after {
     --house-foot: 8.75rem;
   }
 
+  .mist-list {
+    column-gap: 1.65rem;
+    row-gap: 0.85rem;
+  }
+
   .house-copy {
-    top: calc(50.3% + 5.6rem);
-    bottom: max(var(--house-foot), calc(7.5rem + env(safe-area-inset-bottom, 0px)));
+    top: calc(50.3% + 3.25rem);
+    bottom: auto;
     width: min(34rem, 90vw);
   }
 
@@ -438,9 +439,26 @@ html[data-reduce-motion="true"] .mist-label::after {
   }
 }
 
+@media (max-height: 700px) {
+  .house-bio {
+    font-size: clamp(0.76rem, 1.2vw, 0.92rem);
+    line-height: 1.42;
+  }
+
+  .house-bio.letter-plate {
+    padding: 0.62rem 0.9rem 0.68rem;
+  }
+}
+
+@media (max-height: 700px) and (min-width: 700px) {
+  .house-copy {
+    top: calc(50.3% + 2.15rem);
+  }
+}
+
 @media (max-height: 560px) {
   .house-copy {
-    top: calc(50.3% + 2.75rem);
+    top: calc(50.3% + 1.85rem);
   }
 
   .menu-foot--sky {
@@ -525,11 +543,16 @@ html[data-reduce-motion="true"] .mist-label::after {
 }
 
 .room-stage.is-dismissing .leather-panel {
-  animation: leatherDismiss 920ms cubic-bezier(0.64, 0, 0.78, 0) both;
+  animation: leatherDismiss 2000ms ease-out both;
 }
 
 .room-stage.is-dismissing .room-veil {
-  animation: leatherVeilOut 640ms ease both;
+  animation: leatherVeilOut 2000ms ease-out both;
+}
+
+.room-stage--deck.is-dismissing .site-header,
+.room-stage--deck.is-dismissing .site-footer {
+  animation: leatherFade 2000ms ease-out both;
 }
 
 html[data-reduce-motion="true"] .room-stage .leather-panel,
@@ -559,7 +582,16 @@ html[data-reduce-motion="true"] body[data-room="career"] .career-deck .leather-p
   }
   to {
     opacity: 0;
-    transform: translateY(14px) scale(0.988);
+    transform: translateY(4px) scale(0.997);
+  }
+}
+
+@keyframes leatherFade {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
   }
 }
 
@@ -774,8 +806,77 @@ html[data-reduce-motion="true"] body[data-room="career"] .career-deck .leather-p
   color: rgba(42, 44, 40, 0.82);
 }
 
-body[data-room="coding"] .room-icon {
+body[data-room="coding"] .room-icon,
+body[data-room="contact"] .room-icon {
   display: none;
+}
+
+/* Contact — leather pad, cream inset, brass rules */
+.contact-channels {
+  list-style: none;
+  margin: 1.15rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 1.55rem;
+}
+
+.contact-channel {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.contact-channel-title {
+  position: relative;
+  margin: 0;
+  padding-bottom: 0.5em;
+  font-family: "PT Serif", "Source Serif 4", Georgia, "Times New Roman", serif;
+  font-weight: 400;
+  font-size: clamp(1.25rem, 2.1vw, 1.7rem);
+  letter-spacing: 0.022em;
+  line-height: 1.2;
+  color: var(--v3-charcoal);
+}
+
+.contact-channel-title::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 28%;
+  bottom: 0;
+  height: clamp(4px, 0.38vw, 6px);
+  max-width: 22rem;
+  border-radius: 1px;
+  background-color: rgba(181, 154, 98, 0.55);
+  background-image: var(--career-brass-rule);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: left center;
+  opacity: 0.85;
+  pointer-events: none;
+}
+
+.contact-channel-copy {
+  margin: 0;
+  font-family: "PT Serif", "Source Serif 4", Georgia, "Times New Roman", serif;
+  font-size: clamp(0.98rem, 1.2vw, 1.12rem);
+  letter-spacing: 0.01em;
+  line-height: 1.45;
+  color: rgba(42, 44, 40, 0.82);
+}
+
+.contact-channel-copy a {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(181, 154, 98, 0.55);
+}
+
+.contact-channel-copy a:hover,
+.contact-channel-copy a:focus-visible {
+  border-bottom-color: #b59a62;
+}
+
+.contact-mail.is-pending {
+  color: rgba(42, 44, 40, 0.7);
 }
 
 /* Videography gallery — leather pad, cream inset, brass rules */

@@ -1,4 +1,4 @@
-import type { RoomId } from "./site";
+import type { LetteredRoomId, RoomId } from "./site";
 import { withBase } from "./site";
 
 /**
@@ -23,12 +23,12 @@ export const ART = {
     career: "art/door_work.png",
     coding: "art/door_make.png",
     videography: "art/door_go.png",
-  } satisfies Record<RoomId, string>,
+  } satisfies Record<LetteredRoomId, string>,
   icons: {
     career: "art/icon_work.png",
     coding: "art/icon_make.png",
     videography: "art/icon_go.png",
-  } satisfies Record<RoomId, string>,
+  } satisfies Record<LetteredRoomId, string>,
   heroes: {
     career: "art/room_hero_work.png",
     coding: "art/room_hero_make.png",
