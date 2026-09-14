@@ -4,6 +4,7 @@ import { join } from "node:path";
 import { ART, artUrl } from "../lib/art";
 import {
   rooms,
+  SITE_BIO,
   SITE_DISCLAIMER,
   SITE_NAME,
   SITE_TAGLINE_LEAD,
@@ -48,6 +49,8 @@ const brassUrl = hasBrass ? artUrl(brassRel) : hasTile ? artUrl(tileRel) : "";
         }
       </ul>
     </nav>
+
+    <p class="house-bio house-after">{SITE_BIO}</p>
 
     <div class="menu-foot menu-foot--sky house-after">
       <button type="button" class="text-btn mono" data-skip-intro>Skip intro</button>

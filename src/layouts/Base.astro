@@ -1,7 +1,7 @@
 ---
 import "../styles/global.css";
 import "../styles/shell.css";
-import { LINKEDIN_URL, SITE_CANONICAL, SITE_DESCRIPTION, SITE_DISCLAIMER, SITE_NAME, SITE_TAGLINE, withBase } from "../lib/site";
+import { LINKEDIN_URL, SITE_BIO_LEAD, SITE_CANONICAL, SITE_DESCRIPTION, SITE_DISCLAIMER, SITE_NAME, SITE_TAGLINE, withBase } from "../lib/site";
 
 interface Props {
   title?: string;
@@ -20,7 +20,7 @@ const personJsonLd = {
   "@type": "Person",
   name: SITE_NAME,
   url: SITE_CANONICAL,
-  description: SITE_TAGLINE,
+  description: SITE_BIO_LEAD,
   alumniOf: {
     "@type": "CollegeOrUniversity",
     name: "Hampden-Sydney College",

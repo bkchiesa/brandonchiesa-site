@@ -291,6 +291,34 @@ html[data-reduce-motion="true"] .mist-label::after {
   transition: none;
 }
 
+.house-bio {
+  position: absolute;
+  left: 50%;
+  top: calc(50.3% + 3.85rem);
+  z-index: 2;
+  width: min(40.5rem, 86vw);
+  margin: 0;
+  transform: translateX(-50%);
+  font-family: "PT Serif", "Source Serif 4", "Source Serif Pro", Georgia, "Times New Roman", serif;
+  font-weight: 400;
+  font-size: clamp(0.82rem, 1.35vw, 1.02rem);
+  letter-spacing: 0.015em;
+  line-height: 1.5;
+  text-align: center;
+  color: rgba(243, 238, 228, 0.88);
+  text-shadow:
+    0 2px 5px rgba(20, 24, 18, 0.37),
+    0 1px 3px rgba(20, 24, 18, 0.4);
+  pointer-events: none;
+}
+
+@media (max-width: 699px) {
+  .house-bio {
+    top: calc(50.3% + 6.4rem);
+    width: min(34rem, 90vw);
+  }
+}
+
 .menu-foot--sky {
   margin-top: auto;
   padding-top: 1.25rem;
