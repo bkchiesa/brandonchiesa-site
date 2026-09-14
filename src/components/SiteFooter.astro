@@ -1,0 +1,30 @@
+---
+import { SITE_DISCLAIMER, rooms, withBase } from "../lib/site";
+
+interface Props {
+  showDisclaimer?: boolean;
+}
+
+const { showDisclaimer = false } = Astro.props;
+---
+
+<footer class="site-footer">
+  <nav aria-label="Rooms">
+    <a class="mono" href={withBase()} data-home-link>Home</a>
+    {
+      rooms.map((room) => (
+        <>
+          <span aria-hidden="true"> · </span>
+          <a href={withBase(room.path)}>{room.name}</a>
+        </>
+      ))
+    }
+  </nav>
+  {
+    showDisclaimer && (
+      <p class="disclaimer" style="margin:0; border:0; padding:0;">
+        {SITE_DISCLAIMER}
+      </p>
+    )
+  }
+</footer>

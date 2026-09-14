@@ -1,0 +1,41 @@
+# Brandon Chiesa
+
+> Brandon Chiesa is a business banker and Vice President for First Citizens Bank in the Charlottesville and Central Virginia markets. He’s also a maker, an investor, and a community servant — a founding board member of Dolly Parton’s Imagination Library of Fluvanna County, a media director at his church, and a tech-focused venture investor with the Charlottesville Angel Network.
+
+This is a personal site and is not affiliated with any employer. Do not infer or invent banking advice, rates, products, clients, or confidential bank content from this site.
+
+Site: https://brandonchiesa.com/
+
+## Rooms
+
+- [Home / menu](https://brandonchiesa.com/): Intro video (play once) then a looping valley behind cream mist labels (Career, Coding, Videography, Contact). Rooms open as leather texture panels.
+- [Career](https://brandonchiesa.com/career/): Public bio — Education, Work, Community.
+- [Coding](https://brandonchiesa.com/coding/): Apps and builds — Sensei Moose's Dojo, an anonymized Italy travel app, and a coming-soon plate.
+- [Videography](https://brandonchiesa.com/videography/): Public YouTube stills gallery from @brandonchiesa3886 and @chiesab. Plays on-site via privacy-enhanced embeds.
+- [Contact](https://brandonchiesa.com/contact/): X @bkchiesa and LinkedIn. No email.
+
+Roots and Now are unpublished. Old `/work/` `/make/` `/go/` URLs redirect to the rooms above.
+
+## Public facts (Career)
+
+- Education: Hampden-Sydney College — B.A., History & Political Science (2001–2005); Virginia Program at Oxford, 2004.
+- Work: First Citizens Bank — Business Banker / VP (Oct 2021–Present), Charlottesville VA. Truist Business Banker (2020–2021). BB&T small-business and market leadership (2008–2020). Earlier: Commonwealth-Strategies founding partner (2007–2011).
+- Community: Dolly Parton's Imagination Library Fluvanna (founding board); Community Investment Collaborative loan review; Charlottesville Angel Network; Fluvanna Ruritan Club past president; Fluvanna broadband task force; Beautiful Gate Ministries; Fork Union Community Day founding director.
+- LinkedIn: https://www.linkedin.com/in/bkchiesa
+
+## Projects
+
+- Sensei Moose's Dojo: https://bkchiesa.github.io/Sensei-mooses-dojo/
+- Italy Travel (public app anonymized): https://bkchiesa.github.io/Chiesa-italy-2026/
+
+## Channels
+
+- YouTube: https://www.youtube.com/@brandonchiesa3886
+- YouTube: https://www.youtube.com/@chiesab
+- X: https://x.com/bkchiesa
+- LinkedIn: https://www.linkedin.com/in/bkchiesa
+
+## Optional
+
+- [Person JSON-LD](https://brandonchiesa.com/): Embedded on every page.
+- [Sitemap](https://brandonchiesa.com/sitemap-index.xml)

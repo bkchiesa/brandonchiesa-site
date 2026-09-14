@@ -1,0 +1,39 @@
+---
+import { ART, artUrl } from "../lib/art";
+import { rooms, withBase, type RoomId } from "../lib/site";
+
+interface Props {
+  current?: RoomId;
+  /** Room-letter chrome (A · Career). Off on Coding, Videography, and Contact. */
+  showLetter?: boolean;
+}
+
+const { current, showLetter = true } = Astro.props;
+const room = rooms.find((item) => item.id === current);
+const useLetter = Boolean(showLetter && room?.letter);
+const icon = current && useLetter ? ART.icons[current as keyof typeof ART.icons] : undefined;
+---
+
+<header class="site-header">
+  <a
+    class:list={["house-link", "mono", current === "career" && "letter-plate"]}
+    href={withBase()}
+    data-home-link
+    aria-label="Back to home"
+  >
+    ← Home
+  </a>
+  {
+    room && useLetter && (
+      <p class="room-letter">
+        {icon && <img class="room-icon" src={artUrl(icon)} alt="" width="48" height="48" />}
+        {room.letter} · {room.name}
+      </p>
+    )
+  }
+  {
+    room && !useLetter && (
+      <p class="room-letter">{room.name}</p>
+    )
+  }
+</header>

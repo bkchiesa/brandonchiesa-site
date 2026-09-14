@@ -1,0 +1,13 @@
+---
+import HouseMenu from "../components/HouseMenu.astro";
+import VideoShell from "../components/VideoShell.astro";
+import Base from "../layouts/Base.astro";
+import { SITE_BIO_LEAD } from "../lib/site";
+---
+
+<Base description={SITE_BIO_LEAD} house videoShell>
+  <VideoShell intro />
+  <main id="main">
+    <HouseMenu />
+  </main>
+</Base>

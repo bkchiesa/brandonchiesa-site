@@ -1,0 +1,434 @@
+---
+import { VIDEO, artUrl } from "../lib/art";
+
+interface Props {
+  intro?: boolean;
+}
+
+const { intro = false } = Astro.props;
+---
+
+<div
+  class="video-shell"
+  id="video-shell"
+  data-intro={intro ? "true" : "false"}
+  data-intro-src={artUrl(VIDEO.intro)}
+  data-loop-src={artUrl(VIDEO.loop)}
+>
+  <img
+    class="video-poster"
+    src={artUrl(intro ? VIDEO.introPoster : VIDEO.loopPoster)}
+    alt=""
+    width={intro ? 1168 : 1280}
+    height={intro ? 784 : 720}
+  />
+  <img class="video-poster video-poster--loop" src={artUrl(VIDEO.loopPoster)} alt="" width="1280" height="720" hidden />
+
+  {
+    intro && (
+      <video
+        class="video-layer video-layer--intro"
+        data-video="intro"
+        poster={artUrl(VIDEO.introPoster)}
+        preload="auto"
+        playsinline
+        webkit-playsinline
+        muted
+        disablePictureInPicture
+        disableRemotePlayback
+      >
+        <source src={artUrl(VIDEO.intro)} type="video/mp4" />
+      </video>
+    )
+  }
+
+  <video
+    class="video-layer video-layer--loop"
+    data-video="loop"
+    poster={artUrl(VIDEO.loopPoster)}
+    preload="auto"
+    playsinline
+    webkit-playsinline
+    muted
+    loop
+    disablePictureInPicture
+    disableRemotePlayback
+  >
+    <source src={artUrl(VIDEO.loop)} type="video/mp4" />
+  </video>
+
+  <button type="button" class="video-hit" data-video-hit hidden>
+    <span class="video-hit-label" data-video-hit-label>Tap to begin</span>
+  </button>
+</div>
+
+<noscript>
+  <style>
+    .house-ui {
+      opacity: 1 !important;
+      visibility: visible !important;
+      pointer-events: auto !important;
+    }
+    .video-shell video,
+    .video-hit {
+      display: none !important;
+    }
+  </style>
+</noscript>
+
+<script>
+  const INTRO_KEY = "bc-intro-done";
+  const MOTION_KEY = "bc-reduce-motion";
+  /** Overlap last intro valley with loop t=0 (same shot, different crop). */
+  const CROSSFADE_MS = 1200;
+  const BANNER_AT = 0.5;
+
+  const shell = document.getElementById("video-shell");
+  const introVideo = document.querySelector<HTMLVideoElement>("[data-video='intro']");
+  const loopVideo = document.querySelector<HTMLVideoElement>("[data-video='loop']");
+  const hit = document.querySelector<HTMLButtonElement>("[data-video-hit]");
+  const hitLabel = document.querySelector("[data-video-hit-label]");
+  const loopPoster = document.querySelector<HTMLImageElement>(".video-poster--loop");
+  const reduceButtons = document.querySelectorAll("[data-reduce-motion]");
+  const skipButtons = document.querySelectorAll("[data-skip-intro]");
+
+  const wantsIntro = shell?.dataset.intro === "true";
+
+  const osReduce = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const userReduce = () => {
+    try {
+      return localStorage.getItem(MOTION_KEY) === "1";
+    } catch {
+      return false;
+    }
+  };
+  const shouldReduce = () =>
+    document.documentElement.dataset.reduceMotion === "true" ||
+    userReduce() ||
+    (localStorage.getItem(MOTION_KEY) !== "0" && osReduce());
+
+  function setIntroDone() {
+    try {
+      sessionStorage.setItem(INTRO_KEY, "1");
+    } catch {
+      /* private mode */
+    }
+  }
+
+  function introAlreadyDone() {
+    try {
+      return sessionStorage.getItem(INTRO_KEY) === "1";
+    } catch {
+      return false;
+    }
+  }
+
+  function prep(video: HTMLVideoElement | null) {
+    if (!video) return;
+    video.muted = true;
+    video.defaultMuted = true;
+    video.volume = 0;
+    video.playsInline = true;
+    video.setAttribute("playsinline", "");
+    video.setAttribute("webkit-playsinline", "");
+  }
+
+  function showBanner() {
+    document.documentElement.dataset.banner = "in";
+  }
+
+  function resetBanner() {
+    document.documentElement.dataset.banner = shouldReduce() ? "in" : "out";
+  }
+
+  function setReduce(on: boolean) {
+    document.documentElement.dataset.reduceMotion = on ? "true" : "false";
+    try {
+      localStorage.setItem(MOTION_KEY, on ? "1" : "0");
+    } catch {
+      /* private mode */
+    }
+    reduceButtons.forEach((btn) => btn.setAttribute("aria-pressed", on ? "true" : "false"));
+    if (on) {
+      introVideo?.pause();
+      loopVideo?.pause();
+      introVideo?.classList.remove("is-active", "is-leaving");
+      loopVideo?.classList.remove("is-active");
+      hideHit();
+      showBanner();
+      becomeHouse();
+    }
+  }
+
+  function syncReduceButtons() {
+    const on = shouldReduce();
+    reduceButtons.forEach((btn) => btn.setAttribute("aria-pressed", on ? "true" : "false"));
+  }
+
+  function becomeHouse() {
+    document.documentElement.dataset.shell = "ready";
+    showBanner();
+    skipButtons.forEach((btn) => {
+      if (!(btn instanceof HTMLElement)) return;
+      if (btn.hasAttribute("data-video-hit")) return;
+      btn.textContent = "Replay intro";
+    });
+    document.dispatchEvent(new CustomEvent("bc:house-ready"));
+  }
+
+  function becomeIntro() {
+    document.documentElement.dataset.shell = "intro";
+    resetBanner();
+    skipButtons.forEach((btn) => {
+      if (!(btn instanceof HTMLElement)) return;
+      if (btn.hasAttribute("data-video-hit")) return;
+      btn.textContent = "Skip intro";
+    });
+  }
+
+  function hideHit() {
+    if (!hit) return;
+    hit.hidden = true;
+    hit.classList.remove("is-prompt");
+    hit.removeAttribute("aria-label");
+  }
+
+  function armSkipHit() {
+    if (!hit || !hitLabel) return;
+    hit.hidden = false;
+    hit.classList.remove("is-prompt");
+    hit.setAttribute("aria-label", "Skip intro");
+    hitLabel.textContent = "Skip intro";
+  }
+
+  function showStartPrompt(label: string) {
+    if (!hit || !hitLabel) return;
+    hit.hidden = false;
+    hit.classList.add("is-prompt");
+    hit.setAttribute("aria-label", label);
+    hitLabel.textContent = label;
+  }
+
+  async function playVideo(video: HTMLVideoElement) {
+    prep(video);
+    try {
+      await video.play();
+      return true;
+    } catch {
+      return false;
+    }
+  }
+
+  async function startLoop() {
+    if (loopPoster) loopPoster.hidden = false;
+    if (!loopVideo || shouldReduce()) {
+      hideHit();
+      becomeHouse();
+      return;
+    }
+    prep(loopVideo);
+    loopVideo.classList.add("is-active");
+    const ok = await playVideo(loopVideo);
+    if (introVideo) {
+      introVideo.classList.remove("is-active", "is-leaving");
+      introVideo.pause();
+    }
+    hideHit();
+    becomeHouse();
+    if (!ok) {
+      showStartPrompt("Tap to play");
+      pending = "loop";
+    }
+  }
+
+  type Pending = "intro" | "loop" | null;
+  let pending: Pending = null;
+  let overlapStarted = false;
+  let timeBound = false;
+  let safetyTimer = 0;
+
+  async function primeLoop() {
+    if (!loopVideo || shouldReduce()) return;
+    prep(loopVideo);
+    const primed = await playVideo(loopVideo);
+    if (primed) {
+      loopVideo.pause();
+      try {
+        loopVideo.currentTime = 0;
+      } catch {
+        /* seek may fail until metadata */
+      }
+    } else {
+      try {
+        loopVideo.currentTime = 0;
+      } catch {
+        /* ignore */
+      }
+    }
+  }
+
+  async function beginOverlap() {
+    if (overlapStarted) return;
+    overlapStarted = true;
+    window.clearTimeout(safetyTimer);
+    setIntroDone();
+
+    if (!loopVideo || shouldReduce()) {
+      await startLoop();
+      return;
+    }
+
+    if (loopPoster) loopPoster.hidden = false;
+    prep(loopVideo);
+    try {
+      if (loopVideo.currentTime > 0.12) loopVideo.currentTime = 0;
+    } catch {
+      /* ignore */
+    }
+    const ok = await playVideo(loopVideo);
+    loopVideo.classList.add("is-active");
+    introVideo?.classList.add("is-leaving");
+    hideHit();
+    becomeHouse();
+    window.setTimeout(() => {
+      if (!introVideo) return;
+      introVideo.classList.remove("is-active", "is-leaving");
+      introVideo.pause();
+    }, CROSSFADE_MS + 80);
+    if (!ok) {
+      showStartPrompt("Tap to play");
+      pending = "loop";
+    }
+  }
+
+  function onIntroTime() {
+    if (!introVideo || overlapStarted) return;
+    const duration = introVideo.duration;
+    if (!duration || !Number.isFinite(duration)) return;
+    if (introVideo.currentTime >= duration * BANNER_AT) showBanner();
+    if (introVideo.currentTime >= Math.max(0.2, duration - CROSSFADE_MS / 1000)) {
+      void beginOverlap();
+    }
+  }
+
+  function bindIntroClock() {
+    if (!introVideo || timeBound) return;
+    timeBound = true;
+    introVideo.addEventListener("timeupdate", onIntroTime);
+    introVideo.addEventListener("ended", () => {
+      void beginOverlap();
+    });
+  }
+
+  async function playIntro() {
+    if (!introVideo || shouldReduce()) {
+      setIntroDone();
+      showBanner();
+      await startLoop();
+      return;
+    }
+    overlapStarted = false;
+    becomeIntro();
+    try {
+      sessionStorage.removeItem(INTRO_KEY);
+    } catch {
+      /* private mode */
+    }
+    if (loopPoster) loopPoster.hidden = true;
+    bindIntroClock();
+    prep(introVideo);
+    introVideo.currentTime = 0;
+    introVideo.classList.add("is-active");
+    introVideo.classList.remove("is-leaving");
+    loopVideo?.classList.remove("is-active");
+    const ok = await playVideo(introVideo);
+    if (ok) await primeLoop();
+    const durationMs = Math.max(1200, (introVideo.duration || 10) * 1000);
+    window.clearTimeout(safetyTimer);
+    safetyTimer = window.setTimeout(() => {
+      if (!overlapStarted) void beginOverlap();
+    }, durationMs);
+    if (!ok) {
+      showStartPrompt("Tap to begin");
+      pending = "intro";
+    } else {
+      armSkipHit();
+      pending = null;
+    }
+  }
+
+  function skipIntro() {
+    window.clearTimeout(safetyTimer);
+    setIntroDone();
+    showBanner();
+    overlapStarted = true;
+    void startLoop();
+  }
+
+  function onHit() {
+    if (pending === "intro" && introVideo) {
+      pending = null;
+      hideHit();
+      void playIntro();
+      return;
+    }
+    if (pending === "loop" && loopVideo) {
+      pending = null;
+      hideHit();
+      void playVideo(loopVideo).then((ok) => {
+        if (!ok) {
+          showStartPrompt("Tap to play");
+          pending = "loop";
+        }
+      });
+      return;
+    }
+    if (document.documentElement.dataset.shell === "intro") {
+      skipIntro();
+    }
+  }
+
+  function boot() {
+    syncReduceButtons();
+    prep(introVideo);
+    prep(loopVideo);
+    bindIntroClock();
+
+    const skipQuery = new URLSearchParams(window.location.search).has("skip");
+
+    if (!wantsIntro || shouldReduce() || skipQuery || introAlreadyDone()) {
+      setIntroDone();
+      showBanner();
+      void startLoop();
+      return;
+    }
+    resetBanner();
+    void playIntro();
+  }
+
+  hit?.addEventListener("click", onHit);
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && document.documentElement.dataset.shell === "intro") {
+      skipIntro();
+    }
+  });
+
+  skipButtons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      if (document.documentElement.dataset.shell === "intro") {
+        skipIntro();
+      } else if (!shouldReduce() && wantsIntro) {
+        void playIntro();
+      }
+    });
+  });
+
+  reduceButtons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      setReduce(document.documentElement.dataset.reduceMotion !== "true");
+    });
+  });
+
+  boot();
+</script>
