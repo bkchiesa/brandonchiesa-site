@@ -1,20 +1,24 @@
 ---
 import { existsSync } from "node:fs";
 import { join } from "node:path";
-import LeatherPad from "../components/LeatherPad.astro";
+import LeatherCard from "../components/LeatherCard.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import SiteHeader from "../components/SiteHeader.astro";
 import VideoShell from "../components/VideoShell.astro";
 import Base from "../layouts/Base.astro";
 import { ART, artUrl } from "../lib/art";
-import { LINKEDIN_URL, SITE_DISCLAIMER } from "../lib/site";
 
-interface CareerEntry {
+interface CareerRole {
+  role?: string;
+  place?: string;
+  dates?: string;
+}
+
+interface CareerEntry extends CareerRole {
   org: string;
-  role: string;
-  meta?: string;
+  href?: string;
   notes?: string[];
-  quiet?: boolean;
+  nested?: CareerRole[];
 }
 
 const publicDir = join(process.cwd(), "public");
@@ -24,15 +28,20 @@ const brassUrl = hasBrass ? artUrl(brassRel) : "";
 
 const education: CareerEntry[] = [
   {
+    org: "Warwick High School",
+    dates: "2001",
+    place: "Newport News, VA",
+  },
+  {
     org: "Hampden-Sydney College",
     role: "B.A., History & Political Science",
-    meta: "2001–2005",
+    dates: "2001–2005",
     notes: ["Head RA · ODK Student of the Year, 2005"],
   },
   {
     org: "University of Oxford",
-    role: "Virginia Program at Oxford — English / History",
-    meta: "2004",
+    role: "Virginia Program at Oxford — St. Annes College",
+    dates: "2004",
   },
 ];
 
@@ -40,42 +49,56 @@ const work: CareerEntry[] = [
   {
     org: "First Citizens Bank",
     role: "Business Banker / Vice President",
-    meta: "Oct 2021–Present · Charlottesville VA",
-    notes: [
-      "Markets: Charlottesville, Albemarle, Fluvanna, Nelson, Louisa, and surrounding",
-      "Growth-phase business clients; long-term partnership",
-    ],
+    place:
+      "Charlottesville, Farmville, Albemarle, Fluvanna, Nelson, Louisa, Greene, Buckingham, Prince Edward, Cumberland Counties",
+    dates: "2021 - PRESENT",
   },
   {
-    org: "Truist",
+    org: "Truist (BB&T)",
     role: "Business Banker",
-    meta: "Jan 2020–Oct 2021 · Greater Charlottesville",
-  },
-  {
-    org: "BB&T",
-    role: "Small Business Specialist, then AVP & Market Leader",
-    meta: "2008–2020 · Palmyra & Fork Union",
-    notes: ["Leadership program in Winston-Salem."],
+    place: "Greater Charlottesville area",
+    dates: "2014 – 2021",
+    nested: [
+      {
+        role: "Branch Manager",
+        place: "Fluvanna County, Virginia",
+        dates: "2008 - 2014",
+      },
+      {
+        role: "BB&T Leadership Development Program (LDP)",
+        place: "Winston-Salem, NC",
+        dates: "2008",
+      },
+    ],
   },
   {
     org: "Commonwealth-Strategies Political Consulting",
     role: "Founding Partner",
-    meta: "2007–2011",
-    quiet: true,
+    dates: "2007–2011",
+  },
+  {
+    org: "State Farm Insurance",
+    place: "Farmville, VA",
+    dates: "2005-2008",
   },
 ];
 
-const volunteering: CareerEntry[] = [
+const community: CareerEntry[] = [
   {
     org: "Dolly Parton’s Imagination Library Fluvanna",
     role: "Founding Board Member",
-    meta: "Dec 2022–Present",
-    notes: ["Stood up the local affiliate — fundraising, enrollment, chapter database."],
+    dates: "2023 –PRESENT",
   },
   {
     org: "Community Investment Collaborative",
+    href: "https://cicville.org",
     role: "Loan Review Committee",
-    meta: "Jan 2020–Present",
+    dates: "2020–PRESENT",
+  },
+  {
+    org: "Charlottesville Angel Network",
+    href: "https://cvilleangelnetwork.net",
+    dates: "2025 - PRESENT",
   },
   {
     org: "Fluvanna Ruritan Club",
@@ -84,21 +107,24 @@ const volunteering: CareerEntry[] = [
   {
     org: "Fluvanna County Broadband Area Task Force",
     role: "Member",
-    meta: "2017–2018",
-    quiet: true,
+    dates: "2017–2018",
+  },
+  {
+    org: "Beautiful Gate Ministries",
+    role: "Sunday Media and Live Stream Director",
+    dates: "2014 - PRESENT",
   },
   {
     org: "Fork Union Community Day",
     role: "Founding Director",
-    meta: "2010–2014",
-    quiet: true,
+    dates: "2010–2014",
   },
 ];
 
 const sections = [
   { id: "education", title: "Education", entries: education },
   { id: "work", title: "Work", entries: work },
-  { id: "volunteering", title: "Volunteering", entries: volunteering },
+  { id: "community", title: "Community", entries: community },
 ];
 ---
 
@@ -106,56 +132,104 @@ const sections = [
   title="Career"
   room="career"
   videoShell
-  description="Public bio of Brandon Chiesa: Hampden-Sydney and Oxford, business banking in Charlottesville, and Fluvanna community work."
+  description="Public bio of Brandon Chiesa: education, work, and community."
 >
   <VideoShell />
-  <LeatherPad title="Career">
+  <div class="room-stage room-stage--deck">
+    <div class="room-veil" aria-hidden="true"></div>
     <SiteHeader current="career" />
     <main
       id="main"
-      class="page-main career-bio"
+      class="career-deck"
       data-brass={hasBrass ? "true" : "false"}
       style={brassUrl ? `--career-brass-rule: url('${brassUrl}')` : undefined}
     >
       <h1 class="sr-only">Career</h1>
-      <p class="career-eyebrow">
-        Vice President, Business Banker at First Citizens Bank · Dolly Parton’s Imagination Library
-        Fluvanna
-      </p>
-
       {
         sections.map((section) => (
-          <section class="career-section" id={section.id} aria-labelledby={`${section.id}-title`}>
-            <h2 class="career-heading" id={`${section.id}-title`}>
-              {section.title}
-            </h2>
-            <ul class="career-list">
-              {section.entries.map((entry) => (
-                <li class:list={["career-entry", entry.quiet && "is-quiet"]}>
-                  <h3 class="career-org">{entry.org}</h3>
-                  <p class="career-role">{entry.role}</p>
-                  {entry.meta && <p class="career-meta">{entry.meta}</p>}
-                  {entry.notes && entry.notes.length > 0 && (
-                    <ul class="career-notes">
-                      {entry.notes.map((note) => (
-                        <li>{note}</li>
-                      ))}
-                    </ul>
-                  )}
-                </li>
-              ))}
-            </ul>
-          </section>
+          <LeatherCard title={section.title}>
+            <section class="career-section" id={section.id} aria-labelledby={`${section.id}-title`}>
+              <h2 class="career-heading" id={`${section.id}-title`}>
+                {section.title}
+              </h2>
+              <ul class="career-list">
+                {section.entries.map((entry) => (
+                  <li class="career-entry">
+                    <h3 class="career-org">
+                      {entry.href ? (
+                        <a
+                          class="career-link"
+                          href={entry.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {entry.org}
+                        </a>
+                      ) : (
+                        entry.org
+                      )}
+                    </h3>
+                    {entry.role && <p class="career-role">{entry.role}</p>}
+                    {entry.place && <p class="career-place">{entry.place}</p>}
+                    {entry.dates && <p class="career-meta">{entry.dates}</p>}
+                    {entry.notes && entry.notes.length > 0 && (
+                      <ul class="career-notes">
+                        {entry.notes.map((note) => (
+                          <li>{note}</li>
+                        ))}
+                      </ul>
+                    )}
+                    {entry.nested && entry.nested.length > 0 && (
+                      <ul class="career-nested">
+                        {entry.nested.map((child) => (
+                          <li>
+                            {child.role && <p class="career-role">{child.role}</p>}
+                            {child.place && <p class="career-place">{child.place}</p>}
+                            {child.dates && <p class="career-meta">{child.dates}</p>}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </section>
+          </LeatherCard>
         ))
       }
-
-      <p class="career-more">
-        <a class="career-link" href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer">
-          LinkedIn
-        </a>
-      </p>
-      <p class="disclaimer">{SITE_DISCLAIMER}</p>
     </main>
     <SiteFooter showDisclaimer />
-  </LeatherPad>
+  </div>
 </Base>
+
+<script>
+  const DISMISS_MS = 920;
+
+  const reduceMotion = () =>
+    document.documentElement.dataset.reduceMotion === "true" ||
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  document.querySelectorAll<HTMLElement>(".room-stage").forEach((stage) => {
+    if (stage.dataset.dismissBound === "true") return;
+    stage.dataset.dismissBound = "true";
+
+    stage.querySelectorAll<HTMLAnchorElement>("[data-home-link]").forEach((link) => {
+      link.addEventListener("click", (event) => {
+        if (event.defaultPrevented || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
+          return;
+        }
+        if (link.target === "_blank") return;
+        if (reduceMotion()) return;
+        if (stage.classList.contains("is-dismissing")) {
+          event.preventDefault();
+          return;
+        }
+        event.preventDefault();
+        stage.classList.add("is-dismissing");
+        window.setTimeout(() => {
+          window.location.assign(link.href);
+        }, DISMISS_MS);
+      });
+    });
+  });
+</script>

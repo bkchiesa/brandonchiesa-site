@@ -1,32 +1,18 @@
 ---
-import { existsSync } from "node:fs";
-import { join } from "node:path";
-import { ART, artUrl } from "../lib/art";
+import LeatherCard from "./LeatherCard.astro";
 
 interface Props {
   title: string;
 }
 
 const { title } = Astro.props;
-
-/** Brandon rejected leather_pad*. Texture is leather_panel.png only. */
-const leatherTextureRel = ART.v3.leatherPanel;
-const hasLeatherTexture = existsSync(join(process.cwd(), "public", leatherTextureRel));
-const textureUrl = hasLeatherTexture ? artUrl(leatherTextureRel) : "";
 ---
 
 <div class="room-stage">
   <div class="room-veil" aria-hidden="true"></div>
-  <article
-    class="leather-panel"
-    aria-label={title}
-    data-has-texture={hasLeatherTexture ? "true" : "false"}
-    style={hasLeatherTexture ? `--leather-texture: url("${textureUrl}")` : undefined}
-  >
-    <div class="leather-inset">
-      <slot />
-    </div>
-  </article>
+  <LeatherCard title={title}>
+    <slot />
+  </LeatherCard>
 </div>
 
 <script>

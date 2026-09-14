@@ -355,6 +355,16 @@ html[data-reduce-motion="true"] .mist-label::after {
   padding: max(0.65rem, env(safe-area-inset-top)) var(--pad) max(0.85rem, env(safe-area-inset-bottom));
 }
 
+.room-stage--deck {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1.15rem;
+  overflow: auto;
+  place-items: unset;
+}
+
 .room-veil {
   position: fixed;
   inset: 0;
@@ -514,30 +524,47 @@ html[data-reduce-motion="true"] .room-veil {
 }
 
 /* Career interior — cream serif on leather grain; leather_panel.png untouched */
-body[data-room="career"] .leather-panel {
-  width: min(68rem, 95vw);
-}
-
-body[data-room="career"] .leather-inset {
+body[data-room="career"] {
   --career-cream: rgba(243, 238, 228, 0.95);
   --career-body: rgba(210, 200, 185, 0.78);
   --career-brass-mid: #b59a62;
+}
+
+body[data-room="career"] .leather-panel {
+  width: min(68rem, 95vw);
+  max-height: none;
+}
+
+body[data-room="career"] .career-deck .leather-panel:nth-of-type(2) {
+  animation-delay: 70ms;
+}
+
+body[data-room="career"] .career-deck .leather-panel:nth-of-type(3) {
+  animation-delay: 140ms;
+}
+
+body[data-room="career"] .leather-inset {
   color: var(--career-body);
   background: transparent;
   box-shadow: none;
   padding: clamp(1.15rem, 4.4vw, 2.6rem) clamp(1.35rem, 5.2vw, 3.75rem) clamp(1.25rem, 4vw, 2.4rem);
 }
 
+body[data-room="career"] .site-header,
+body[data-room="career"] .site-footer,
 body[data-room="career"] .leather-inset .site-header,
 body[data-room="career"] .leather-inset .site-footer {
+  width: min(68rem, 95vw);
   border-color: rgba(181, 154, 98, 0.22);
 }
 
+body[data-room="career"] .house-link,
+body[data-room="career"] .text-btn,
 body[data-room="career"] .leather-inset .house-link,
 body[data-room="career"] .leather-inset .text-btn {
   background: transparent;
   border-color: rgba(181, 154, 98, 0.38);
-  color: var(--career-cream);
+  color: var(--career-cream, rgba(243, 238, 228, 0.95));
 }
 
 body[data-room="career"] .room-letter,
@@ -555,36 +582,12 @@ body[data-room="career"] .disclaimer {
   color: rgba(210, 200, 185, 0.62);
 }
 
-.career-bio {
-  max-width: 46rem;
-}
-
-.career-eyebrow {
-  margin: 0 0 1.6rem;
-  font-family: "PT Serif", "Source Serif 4", Georgia, "Times New Roman", serif;
-  font-weight: 400;
-  font-size: clamp(0.95rem, 1.35vw, 1.15rem);
-  letter-spacing: 0.02em;
-  line-height: 1.45;
-  color: var(--career-body);
-  text-shadow: 0 1px 2px rgba(8, 6, 4, 0.4);
-}
-
-.career-section + .career-section {
-  margin-top: 1.85rem;
-}
-
-.career-section + .career-section::before {
-  content: "";
-  display: block;
-  height: 4px;
-  max-width: 42rem;
-  margin: 0 0 1.45rem;
-  background-color: rgba(181, 154, 98, 0.28);
-  background-image: var(--career-brass-rule);
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  opacity: 0.5;
+.career-deck {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.15rem;
+  width: 100%;
 }
 
 .career-heading {
@@ -640,6 +643,7 @@ body[data-room="career"] .disclaimer {
 }
 
 .career-role,
+.career-place,
 .career-notes li {
   margin: 0;
   font-family: "PT Serif", "Source Serif 4", Georgia, "Times New Roman", serif;
@@ -681,12 +685,13 @@ body[data-room="career"] .disclaimer {
   background: var(--career-brass-mid);
 }
 
-.career-entry.is-quiet {
-  opacity: 0.78;
-}
-
-.career-more {
-  margin: 1.7rem 0 0.35rem;
+.career-nested {
+  list-style: none;
+  display: grid;
+  gap: 0.75rem;
+  margin: 0.7rem 0 0;
+  padding: 0.15rem 0 0 1.05rem;
+  border-left: 1px solid rgba(181, 154, 98, 0.32);
 }
 
 .career-link {

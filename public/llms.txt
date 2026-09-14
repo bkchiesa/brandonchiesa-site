@@ -9,7 +9,7 @@ Site: https://bkchiesa.github.io/brandonchiesa-site/
 ## Rooms
 
 - [Home / menu](https://bkchiesa.github.io/brandonchiesa-site/): Intro video (play once) then a looping valley behind cream mist labels (Career, Coding, Videography). Rooms open as leather texture panels.
-- [Career](https://bkchiesa.github.io/brandonchiesa-site/career/): Public bio — Education, Work, Volunteering.
+- [Career](https://bkchiesa.github.io/brandonchiesa-site/career/): Public bio — Education, Work, Community.
 - [Coding](https://bkchiesa.github.io/brandonchiesa-site/coding/): Apps and builds, including Sensei Moose's Dojo.
 - [Videography](https://bkchiesa.github.io/brandonchiesa-site/videography/): Travel film-strip (placeholders) and YouTube channels.
 
@@ -19,7 +19,7 @@ Roots and Now are unpublished. Old `/work/` `/make/` `/go/` URLs redirect to the
 
 - Education: Hampden-Sydney College — B.A., History & Political Science (2001–2005); Virginia Program at Oxford, 2004.
 - Work: First Citizens Bank — Business Banker / VP (Oct 2021–Present), Charlottesville VA. Truist Business Banker (2020–2021). BB&T small-business and market leadership (2008–2020). Earlier: Commonwealth-Strategies founding partner (2007–2011).
-- Volunteering: Dolly Parton's Imagination Library Fluvanna (founding board); Community Investment Collaborative loan review; Fluvanna Ruritan Club past president; Fluvanna broadband task force; Fork Union Community Day founding director.
+- Community: Dolly Parton's Imagination Library Fluvanna (founding board); Community Investment Collaborative loan review; Charlottesville Angel Network; Fluvanna Ruritan Club past president; Fluvanna broadband task force; Beautiful Gate Ministries; Fork Union Community Day founding director.
 - LinkedIn: https://www.linkedin.com/in/bkchiesa
 
 ## Projects
