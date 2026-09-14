@@ -136,14 +136,26 @@ html[data-shell="intro"] .skip-link {
 
 /* ——— House identity + mist labels (blot menu scrapped from live shell) ——— */
 
+html:has(body[data-house="true"]),
+body[data-house="true"] {
+  height: 100%;
+  overflow: hidden;
+}
+
 .menu--house {
+  --house-foot: 7.25rem;
   position: relative;
   min-height: 100dvh;
+  min-height: 100svh;
+  height: 100dvh;
+  height: 100svh;
+  max-height: 100svh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: clamp(0.85rem, 4.5vh, 2.2rem) var(--pad) 1.25rem;
+  padding: clamp(0.85rem, 4.5vh, 2.2rem) var(--pad) 0;
   text-align: center;
+  overflow: hidden;
 }
 
 .house-banner {
@@ -312,14 +324,33 @@ html[data-reduce-motion="true"] .mist-label::after {
   transition: none;
 }
 
-.house-bio {
+.house-copy {
   position: absolute;
   left: 50%;
   top: calc(50.3% + 3.85rem);
+  bottom: max(var(--house-foot), calc(6.25rem + env(safe-area-inset-bottom, 0px)));
   z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: min(40.5rem, 86vw);
-  margin: 0;
   transform: translateX(-50%);
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.house-bio {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-height: 100%;
+  margin: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(243, 238, 228, 0.28) transparent;
   font-family: "PT Serif", "Source Serif 4", "Source Serif Pro", Georgia, "Times New Roman", serif;
   font-weight: 400;
   font-size: clamp(0.82rem, 1.35vw, 1.02rem);
@@ -330,23 +361,34 @@ html[data-reduce-motion="true"] .mist-label::after {
   text-shadow:
     0 2px 5px rgba(20, 24, 18, 0.37),
     0 1px 3px rgba(20, 24, 18, 0.4);
-  pointer-events: none;
+  pointer-events: auto;
 }
 
 .house-bio.letter-plate {
   padding: 0.8rem 1.15rem 0.9rem;
 }
 
-@media (max-width: 699px) {
-  .house-bio {
-    top: calc(50.3% + 6.4rem);
-    width: min(34rem, 90vw);
-  }
+.menu-foot--sky {
+  position: sticky;
+  bottom: 0;
+  z-index: 4;
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.55rem;
+  width: 100%;
+  margin-top: auto;
+  padding: 0.45rem 0 max(1.15rem, calc(0.85rem + env(safe-area-inset-bottom, 0px)));
 }
 
-.menu-foot--sky {
-  margin-top: auto;
-  padding-top: 1.25rem;
+.menu-controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.45rem 0.75rem;
 }
 
 .menu-foot--sky .text-btn {
@@ -362,11 +404,49 @@ html[data-reduce-motion="true"] .mist-label::after {
 
 .menu-disclaimer {
   width: 100%;
-  margin: 0.35rem 0 0;
+  max-width: 36rem;
+  margin: 0;
   color: #f4ead2;
   text-shadow: 0 1px 8px rgba(12, 8, 5, 0.85);
   font-size: 0.78rem;
-  max-width: 36rem;
+  line-height: 1.45;
+}
+
+@media (max-width: 699px) {
+  .menu--house {
+    --house-foot: 8.75rem;
+  }
+
+  .house-copy {
+    top: calc(50.3% + 5.6rem);
+    bottom: max(var(--house-foot), calc(7.5rem + env(safe-area-inset-bottom, 0px)));
+    width: min(34rem, 90vw);
+  }
+
+  .house-bio.letter-plate {
+    padding: 0.7rem 0.95rem 0.75rem;
+  }
+
+  .menu-foot--sky {
+    gap: 0.62rem;
+    padding: 0.4rem 0 max(1.35rem, calc(1rem + env(safe-area-inset-bottom, 0px)));
+  }
+
+  .menu-disclaimer {
+    max-width: 22.5rem;
+    padding: 0 0.85rem;
+  }
+}
+
+@media (max-height: 560px) {
+  .house-copy {
+    top: calc(50.3% + 2.75rem);
+  }
+
+  .menu-foot--sky {
+    gap: 0.4rem;
+    padding-bottom: max(0.7rem, env(safe-area-inset-bottom, 0px));
+  }
 }
 
 /* ——— Leather texture panel (leather_panel.png only — no pad family) ——— */

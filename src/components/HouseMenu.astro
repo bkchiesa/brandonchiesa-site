@@ -57,13 +57,17 @@ const plateUrl = hasPlate ? artUrl(plateRel) : "";
       </ul>
     </nav>
 
-    <p class="house-bio house-after letter-plate">{SITE_BIO}</p>
+    <div class="house-copy house-after">
+      <p class="house-bio letter-plate">{SITE_BIO}</p>
+    </div>
 
     <div class="menu-foot menu-foot--sky house-after">
-      <button type="button" class="text-btn mono" data-skip-intro>Skip intro</button>
-      <button type="button" class="text-btn mono" data-reduce-motion aria-pressed="false">
-        Reduce motion
-      </button>
+      <div class="menu-controls">
+        <button type="button" class="text-btn mono" data-skip-intro>Skip intro</button>
+        <button type="button" class="text-btn mono" data-reduce-motion aria-pressed="false">
+          Reduce motion
+        </button>
+      </div>
       <p class="menu-disclaimer">{SITE_DISCLAIMER}</p>
     </div>
   </section>
@@ -81,4 +85,17 @@ const plateUrl = hasPlate ? artUrl(plateRel) : "";
       label.setAttribute("aria-current", "page");
     });
   });
+
+  const menu = document.querySelector(".menu--house");
+  const foot = document.querySelector(".menu-foot--sky");
+  const syncHouseFoot = () => {
+    if (!(menu instanceof HTMLElement) || !(foot instanceof HTMLElement)) return;
+    const gap = 12;
+    menu.style.setProperty("--house-foot", `${Math.ceil(foot.getBoundingClientRect().height + gap)}px`);
+  };
+  syncHouseFoot();
+  if (foot instanceof HTMLElement && "ResizeObserver" in window) {
+    new ResizeObserver(syncHouseFoot).observe(foot);
+  }
+  window.addEventListener("resize", syncHouseFoot);
 </script>
