@@ -67,8 +67,8 @@ export const ART = {
       dojoActionStill: "art/v3/coding/dojo_action_still.png",
       /** Optional mobile crop; unwired. Pixel PASS 1080×1080. */
       dojoActionStillSquare: "art/v3/coding/dojo_action_still_square.png",
-      /** Feature 2 — clean Italy Travel hero from the public scrubbed app. */
-      italyTravelHero: "art/v3/coding/italy_travel_hero.png",
+      /** Feature 2 — Brandon LOCK mockup (not a live Pages screenshot). */
+      italyAppCard: "art/v3/coding/italy_app_card.jpeg",
     },
     /**
      * Pixel/Ink drop folders (not served). Copy onto the public paths above.

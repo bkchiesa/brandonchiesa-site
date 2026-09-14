@@ -12,10 +12,10 @@ import { DOJO_URL, ITALY_URL } from "../lib/site";
 const publicDir = join(process.cwd(), "public");
 const brassRel = ART.v3.careerBrassRule;
 const dojoRel = ART.v3.coding.dojoActionStill;
-const italyRel = ART.v3.coding.italyTravelHero;
+const italyRel = ART.v3.coding.italyAppCard;
 const hasBrass = existsSync(join(publicDir, brassRel));
 const hasDojoStill = existsSync(join(publicDir, dojoRel));
-const hasItalyHero = existsSync(join(publicDir, italyRel));
+const hasItalyCard = existsSync(join(publicDir, italyRel));
 const brassUrl = hasBrass ? artUrl(brassRel) : "";
 ---
 
@@ -86,18 +86,18 @@ const brassUrl = hasBrass ? artUrl(brassRel) : "";
               rel="noopener noreferrer"
             >
               {
-                hasItalyHero ? (
+                hasItalyCard ? (
                   <img
                     src={artUrl(italyRel)}
-                    alt="Italy Travel app — anonymized public overview"
-                    width="1600"
-                    height="900"
+                    alt="Italy Travel app — Brandon’s card mockup of the anonymized public app"
+                    width="1376"
+                    height="768"
                   />
                 ) : (
-                  <div class="coding-media-hook" role="img" aria-label="Italy Travel hero screenshot pending">
+                  <div class="coding-media-hook" role="img" aria-label="Italy Travel card mockup pending">
                     <p>
-                      Screenshot hook
-                      <code>public/art/v3/coding/italy_travel_hero.png</code>
+                      Brandon lock
+                      <code>public/art/v3/coding/italy_app_card.jpeg</code>
                     </p>
                   </div>
                 )
