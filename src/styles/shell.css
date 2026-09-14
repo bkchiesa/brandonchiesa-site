@@ -583,8 +583,8 @@ body[data-room="career"] .leather-panel {
   position: absolute;
   left: 50%;
   top: 50%;
-  width: min(68rem, 95vw);
-  max-height: calc(100dvh - 7.25rem);
+  width: min(52rem, 88vw);
+  max-height: min(28.5rem, calc(100dvh - 15.5rem));
   transform: translate(-50%, calc(-50% + var(--wheel-y, 0vh))) scale(var(--wheel-scale, 1));
   transform-origin: center center;
   opacity: var(--wheel-opacity, 1);
@@ -601,16 +601,16 @@ body[data-room="career"] .career-deck .leather-panel:nth-child(2) {
 }
 
 body[data-room="career"] .career-deck .leather-panel:nth-child(3) {
-  --wheel-y: 22vh;
-  --wheel-scale: 0.92;
-  --wheel-opacity: 0.34;
+  --wheel-y: 30vh;
+  --wheel-scale: 0.9;
+  --wheel-opacity: 0.42;
   --wheel-z: 2;
 }
 
 body[data-room="career"] .career-deck .leather-panel:nth-child(4) {
-  --wheel-y: 40vh;
-  --wheel-scale: 0.86;
-  --wheel-opacity: 0.16;
+  --wheel-y: 52vh;
+  --wheel-scale: 0.84;
+  --wheel-opacity: 0.22;
   --wheel-z: 1;
 }
 
@@ -631,6 +631,8 @@ body[data-room="career"] .leather-inset {
   background: transparent;
   box-shadow: none;
   padding: clamp(1.15rem, 4.4vw, 2.6rem) clamp(1.35rem, 5.2vw, 3.75rem) clamp(1.25rem, 4vw, 2.4rem);
+  scrollbar-width: thin;
+  scrollbar-color: rgba(181, 154, 98, 0.35) transparent;
 }
 
 body[data-room="career"] .site-header,
