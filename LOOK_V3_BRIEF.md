@@ -21,12 +21,12 @@ Do **not** carry Look v2 blues/tans cartography tokens as the primary house look
 
 ## Flow
 
-1. **Intro once** — `public/video/intro.mp4`, full-bleed. Dual-video overlap crossfade into the loop so the last intro valley matches loop t=0 (no hard cut).
-2. **Banner** — name sits high; fades in at ~halfway through the intro; stays on the house. Reduce-motion skips the fade.
+1. **House** — first paint is the home state over `public/video/loop.mp4`. No intro video, splash, or gate. The loop is already running (cover, center-crop).
+2. **Banner** — name sits high and is visible immediately with the mist menu. Reduce-motion keeps the loop poster instead of the video.
 3. **Menu** — Pixel PASS mist labels (HTML/CSS). PT Serif 400, `#F3EEE4` @ 0.95, mid-frame at 50.3%. Hover/selected use `mist_underline_brass.png` (~6px @1280, mid `#B59A62`). Idle labels stay cream. Blot UI is off the live shell.
 4. **On select** — `leather_panel.png` (1600×900 cognac/espresso, Pixel PASS) with a short reveal over the continuing loop. Soft veil OK. **No glassmorphism.** Never wire `leather_pad*` or `leather_panel_mock`. A half-step lighter lift can overwrite the same filename if Brandon asks.
 
-Skip / `prefers-reduced-motion` / `?skip=1` land on the house over the loop (or the loop poster).
+`prefers-reduced-motion` shows the loop poster. There is no intro to skip.
 
 ## Menu
 

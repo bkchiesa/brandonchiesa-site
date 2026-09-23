@@ -2,8 +2,9 @@
 
 | File | Use |
 | --- | --- |
-| `intro.mp4` | Play once on first house load (~10s, 1168×784). Full-bleed, no UI chrome. |
-| `loop.mp4` | Seamless looping background after intro (~15s, 1280×720). `object-fit: cover`. |
-| `intro.jpg` `loop.jpg` | Posters for first paint, reduced motion, and autoplay-blocked fallback. |
+| `loop.mp4` | Seamless looping background from first paint (~15s, 1280×720). `object-fit: cover`. |
+| `loop.jpg` | Poster for first paint, reduced motion, and autoplay-blocked fallback. |
 
 Overwrite the files; keep the names. Paths are hooked in `src/lib/art.ts` as `VIDEO`.
+
+The opening intro (`intro.mp4` / `intro.jpg`) is not part of the house. Do not add it back in front of the loop.
