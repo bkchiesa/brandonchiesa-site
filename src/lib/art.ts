@@ -110,9 +110,7 @@ export function blotSelectedStill(id: BlotId): string {
 }
 
 export const VIDEO = {
-  intro: "video/intro.mp4",
   loop: "video/loop.mp4",
-  introPoster: "video/intro.jpg",
   loopPoster: "video/loop.jpg",
 } as const;
 

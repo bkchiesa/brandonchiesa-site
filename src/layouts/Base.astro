@@ -43,7 +43,7 @@ const personJsonLd = {
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" data-shell="ready" data-banner="in">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -87,23 +87,8 @@ const personJsonLd = {
         if (stored === "1" || (stored !== "0" && osReduce)) {
           document.documentElement.dataset.reduceMotion = "true";
         }
-        var skip = false;
-        try {
-          skip = new URLSearchParams(location.search).has("skip");
-        } catch (e) {}
-        var done = false;
-        try {
-          done = sessionStorage.getItem("bc-intro-done") === "1";
-        } catch (e) {}
-        var reduce = document.documentElement.dataset.reduceMotion === "true";
-        var house = document.body.getAttribute("data-house") === "true";
-        if (!house || reduce || skip || done) {
-          document.documentElement.dataset.shell = "ready";
-          document.documentElement.dataset.banner = "in";
-        } else {
-          document.documentElement.dataset.shell = "intro";
-          document.documentElement.dataset.banner = "out";
-        }
+        document.documentElement.dataset.shell = "ready";
+        document.documentElement.dataset.banner = "in";
       })();
     </script>
     <p class="sr-only">{SITE_DISCLAIMER}</p>

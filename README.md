@@ -48,11 +48,10 @@ The workflow lives at `.github/workflows/deploy.yml`.
 
 | Beat | What shipped |
 | --- | --- |
-| **Intro** | `public/video/intro.mp4` plays **once**, full-bleed. Headline fades in at ~halfway. Escape or an invisible tap skips; reduce-motion / `?skip=1` / a prior session skip go to the house. Tap-to-start if autoplay is blocked. |
-| **Loop** | Dual-video overlap crossfade into `public/video/loop.mp4` — loop starts at t=0 under the last intro valley. Cover, center-crop, no tile. Reduced motion uses the loop poster. |
+| **Loop** | `public/video/loop.mp4` is the full-bleed background from first load. Cover, center-crop, no tile. Reduced motion uses the loop poster. Tap to play if autoplay is blocked. |
 | **Menu** | Mist labels (PT Serif HTML/CSS) mid-frame over the loop: Career · Coding · Videography · Contact. Hover/selected use `mist_underline_brass.png` (~6px @1280). Spec: `public/art/v3/menu/MIST_MENU_SPECS.md`. Blot UI is **off** the live shell. |
 | **Rooms** | Leather **texture panel** from `public/art/v3/leather_panel.png` with a short reveal over a dark veil. No frosted glass. `leather_pad*` is rejected and unwired. |
-| **Motion** | Session skip: after one play (or Skip), refresh stays on the menu. **Replay intro** flies again. |
+| **Motion** | No opening intro. Refresh opens on the house with the loop already running. |
 
 Art swap: overwrite the files in `public/art/v3/` and `public/video/` (same names). Hooks live in `src/lib/art.ts`. Merge is **held**. Cards are `leather_panel.png` only.
 
@@ -62,7 +61,7 @@ Look v3 house chrome uses loop tokens (`--v3-pine`, `--v3-ochre`, `--v3-ridge`, 
 
 ## SEO / agents
 
-- Real HTML text (intro is overlay; the menu and rooms stay in the document).
+- Real HTML text (the menu and rooms stay in the document).
 - Person JSON-LD on every page.
 - `robots.txt`, Astro sitemap, [`/llms.txt`](https://brandonchiesa.com/llms.txt).
 - Open Graph image: `og.png` (plus `og.svg`).
