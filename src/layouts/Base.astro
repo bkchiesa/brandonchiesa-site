@@ -1,0 +1,96 @@
+---
+import "../styles/global.css";
+import "../styles/shell.css";
+import { LINKEDIN_URL, SITE_BIO_LEAD, SITE_CANONICAL, SITE_DESCRIPTION, SITE_DISCLAIMER, SITE_NAME, SITE_TAGLINE, X_URL, withBase } from "../lib/site";
+
+interface Props {
+  title?: string;
+  description?: string;
+  room?: string;
+  house?: boolean;
+  videoShell?: boolean;
+}
+
+const { title, description = SITE_DESCRIPTION, room, house = false, videoShell = false } = Astro.props;
+const pageTitle = title ? `${title} — ${SITE_NAME}` : `${SITE_NAME} — ${SITE_TAGLINE}`;
+const canonical = new URL(Astro.url.pathname, SITE_CANONICAL).href;
+const ogImage = new URL(withBase("og.png"), SITE_CANONICAL).href;
+const personJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: SITE_NAME,
+  url: SITE_CANONICAL,
+  description: SITE_BIO_LEAD,
+  alumniOf: {
+    "@type": "CollegeOrUniversity",
+    name: "Hampden-Sydney College",
+  },
+  jobTitle: "VP / Business Banker",
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Charlottesville",
+    addressRegion: "VA",
+    addressCountry: "US",
+  },
+  sameAs: [
+    "https://www.youtube.com/@brandonchiesa3886",
+    "https://www.youtube.com/@chiesab",
+    "https://bkchiesa.github.io/Sensei-mooses-dojo/",
+    LINKEDIN_URL,
+    X_URL,
+  ],
+};
+---
+
+<!doctype html>
+<html lang="en" data-shell="ready" data-banner="in">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="author" content={SITE_NAME} />
+    <meta name="theme-color" content={videoShell ? "#3d4a38" : "#0b1a2b"} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href={withBase("favicon.svg")} type="image/svg+xml" />
+    <link rel="apple-touch-icon" href={withBase("favicon.svg")} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={SITE_NAME} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=PT+Serif:wght@400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <script type="application/ld+json" set:html={JSON.stringify(personJsonLd)} />
+  </head>
+  <body
+    class:list={[videoShell && "has-video-shell"]}
+    data-room={room}
+    data-house={house ? "true" : undefined}
+  >
+    <a class="skip-link" href="#main">Skip to content</a>
+    <slot />
+    <script is:inline>
+      (function () {
+        var key = "bc-reduce-motion";
+        var stored = localStorage.getItem(key);
+        var osReduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        if (stored === "1" || (stored !== "0" && osReduce)) {
+          document.documentElement.dataset.reduceMotion = "true";
+        }
+        document.documentElement.dataset.shell = "ready";
+        document.documentElement.dataset.banner = "in";
+      })();
+    </script>
+    <p class="sr-only">{SITE_DISCLAIMER}</p>
+  </body>
+</html>

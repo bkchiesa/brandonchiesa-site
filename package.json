@@ -1,0 +1,20 @@
+{
+  "name": "brandonchiesa-site",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Brandon Chiesa personal site — living archive / house with rooms.",
+  "scripts": {
+    "dev": "astro dev --host",
+    "build": "astro build",
+    "preview": "astro preview --host",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.5.1",
+    "astro": "^5.13.7"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

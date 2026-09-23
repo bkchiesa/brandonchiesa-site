@@ -1,0 +1,100 @@
+---
+import { existsSync } from "node:fs";
+import { join } from "node:path";
+import { ART, artUrl } from "../lib/art";
+import {
+  rooms,
+  SITE_BIO,
+  SITE_DISCLAIMER,
+  SITE_NAME,
+  SITE_TAGLINE_LEAD,
+  SITE_TAGLINE_ROOTED,
+  withBase,
+} from "../lib/site";
+
+const publicDir = join(process.cwd(), "public");
+const brassRel = ART.v3.mistUnderlineBrass;
+const tileRel = ART.v3.mistUnderlineBrassTile;
+const plateRel = ART.v3.leatherPanel;
+const hasBrass = existsSync(join(publicDir, brassRel));
+const hasTile = existsSync(join(publicDir, tileRel));
+const hasPlate = existsSync(join(publicDir, plateRel));
+const brassUrl = hasBrass ? artUrl(brassRel) : hasTile ? artUrl(tileRel) : "";
+const plateUrl = hasPlate ? artUrl(plateRel) : "";
+---
+
+<div
+  class="house-ui"
+  id="menu"
+  style={plateUrl ? `--letter-plate: url('${plateUrl}')` : undefined}
+>
+  <section class="menu menu--house" aria-labelledby="identity-name">
+    <header class="house-banner identity identity--sky" data-house-banner>
+      <h1 id="identity-name">{SITE_NAME}</h1>
+      <p class="tagline letter-plate">
+        {SITE_TAGLINE_LEAD}{" "}
+        <span class="tagline-rooted">{SITE_TAGLINE_ROOTED}</span>
+      </p>
+    </header>
+
+    <nav
+      class="mist-nav house-after"
+      aria-label="Rooms"
+      data-brass={hasBrass || hasTile ? "true" : "false"}
+      style={brassUrl ? `--mist-brass-strip: url('${brassUrl}')` : undefined}
+    >
+      <ul class="mist-list" role="list">
+        {
+          rooms.map((room) => (
+            <li>
+              <a class="mist-label" href={withBase(room.path)} data-room={room.id}>
+                <span class="mist-name">{room.name}</span>
+                <span class="sr-only"> — {room.blurb}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="house-copy house-after">
+      <p class="house-bio letter-plate">{SITE_BIO}</p>
+    </div>
+
+    <div class="menu-foot menu-foot--sky house-after">
+      <div class="menu-controls">
+        <button type="button" class="text-btn mono" data-reduce-motion aria-pressed="false">
+          Reduce motion
+        </button>
+      </div>
+      <p class="menu-disclaimer">{SITE_DISCLAIMER}</p>
+    </div>
+  </section>
+</div>
+
+<script>
+  const labels = Array.from(document.querySelectorAll<HTMLElement>(".mist-label"));
+  labels.forEach((label) => {
+    label.addEventListener("pointerdown", () => {
+      labels.forEach((other) => {
+        other.classList.remove("is-selected");
+        other.removeAttribute("aria-current");
+      });
+      label.classList.add("is-selected");
+      label.setAttribute("aria-current", "page");
+    });
+  });
+
+  const menu = document.querySelector(".menu--house");
+  const foot = document.querySelector(".menu-foot--sky");
+  const syncHouseFoot = () => {
+    if (!(menu instanceof HTMLElement) || !(foot instanceof HTMLElement)) return;
+    const gap = 12;
+    menu.style.setProperty("--house-foot", `${Math.ceil(foot.getBoundingClientRect().height + gap)}px`);
+  };
+  syncHouseFoot();
+  if (foot instanceof HTMLElement && "ResizeObserver" in window) {
+    new ResizeObserver(syncHouseFoot).observe(foot);
+  }
+  window.addEventListener("resize", syncHouseFoot);
+</script>
