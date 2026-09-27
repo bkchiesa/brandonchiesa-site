@@ -1,43 +1,69 @@
-/** Placeholder downloads. Real files replace these later. Contents must say PLACEHOLDER. */
+/** Published downloads. File bytes are measured at build time. */
 
-export interface BankingTemplate {
-  title: string;
-  description: string;
-  /** Path under `public/`, no leading slash. */
+export interface BankingDownload {
   href: string;
-  /** Short type label shown on the card. */
-  typeLabel: string;
+  typeLabel: "PDF" | "XLSX";
+  /** PDF opens in a new tab. Spreadsheets download. */
+  open: "preview" | "download";
 }
 
-export const BANKING_TEMPLATES: readonly BankingTemplate[] = [
+export interface BankingCard {
+  id: string;
+  title: string;
+  description: string;
+  /** Guide page, when the card is also an HTML summary. */
+  page?: string;
+  files: readonly BankingDownload[];
+}
+
+export const BANKING_CARDS: readonly BankingCard[] = [
   {
-    title: "Loan package checklist",
-    description: "A starter list of documents lenders often ask for.",
-    href: "downloads/banking/loan-package-checklist.pdf",
-    typeLabel: "PDF",
+    id: "loan-package-checklist",
+    title: "Loan package checklist (PDF, XLSX)",
+    description:
+      "The documents lenders commonly ask for, organized by loan type, so you can gather them before you apply.",
+    files: [
+      { href: "downloads/banking/loan-package-checklist.pdf", typeLabel: "PDF", open: "preview" },
+      { href: "downloads/banking/loan-package-checklist.xlsx", typeLabel: "XLSX", open: "download" },
+    ],
   },
   {
-    title: "Cash flow projection",
-    description: "A blank workbook for a simple cash-flow projection.",
-    href: "downloads/banking/cash-flow-projection.xlsx",
-    typeLabel: "XLSX",
+    id: "cash-flow-projection",
+    title: "12-month cash flow projection (XLSX)",
+    description: "Map out cash coming in and going out each month and spot tight months before they hit.",
+    files: [{ href: "downloads/banking/cash-flow-projection-12mo.xlsx", typeLabel: "XLSX", open: "download" }],
   },
   {
-    title: "SBA loan prep guide",
-    description: "A short guide for gathering an SBA 7(a) or 504 file.",
-    href: "downloads/banking/sba-loan-prep-guide.pdf",
-    typeLabel: "PDF",
+    id: "sba-7a-504",
+    title: "SBA 7(a) and 504 prep guide (PDF)",
+    description: "What each SBA program is for, how they differ, what to gather, and what to ask a lender.",
+    page: "/banking/guides/sba-7a-504/",
+    files: [{ href: "downloads/banking/sba-7a-504-prep-guide.pdf", typeLabel: "PDF", open: "preview" }],
   },
   {
-    title: "Personal financial statement",
-    description: "A blank personal financial statement for owners and guarantors.",
-    href: "downloads/banking/personal-financial-statement.pdf",
-    typeLabel: "PDF",
+    id: "dscr-worksheet",
+    title: "DSCR worksheet (XLSX)",
+    description: "Work out your debt service coverage ratio step by step, with a filled-in example.",
+    files: [{ href: "downloads/banking/dscr-worksheet.xlsx", typeLabel: "XLSX", open: "download" }],
   },
   {
-    title: "Business debt schedule",
-    description: "A blank schedule of notes, lines, and other business debt.",
-    href: "downloads/banking/business-debt-schedule.xlsx",
-    typeLabel: "XLSX",
+    id: "personal-financial-statement",
+    title: "Personal financial statement walkthrough (PDF)",
+    description:
+      "How to fill out a personal financial statement accurately, line by line, and the mistakes to avoid.",
+    page: "/banking/guides/personal-financial-statement/",
+    files: [
+      {
+        href: "downloads/banking/personal-financial-statement-walkthrough.pdf",
+        typeLabel: "PDF",
+        open: "preview",
+      },
+    ],
+  },
+  {
+    id: "sources-and-uses",
+    title: "Sources and uses worksheet (XLSX)",
+    description: "Line up every project cost against every source of money, so you know if there is a gap.",
+    files: [{ href: "downloads/banking/sources-and-uses-worksheet.xlsx", typeLabel: "XLSX", open: "download" }],
   },
 ];

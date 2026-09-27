@@ -1,0 +1,101 @@
+---
+import DisclaimerLine from "../../../components/banking/DisclaimerLine.astro";
+import BankingShell from "../../../components/banking/BankingShell.astro";
+import HowTo from "../../../components/banking/HowTo.astro";
+import RelatedTools from "../../../components/banking/RelatedTools.astro";
+import { BREAK_EVEN_DESCRIPTION, BREAK_EVEN_FOLLOW_UP, BREAK_EVEN_STEPS, REVIEWED_LINE } from "../../../data/banking/copy";
+import { BREAK_EVEN_PATH } from "../../../data/banking/tools";
+import { BREAK_EVEN_FOOTNOTE, breakEven, breakEvenMathText, breakEvenSummary, formatUsd } from "../../../lib/banking/calc";
+import { BANKING_CRUMB, HOME_CRUMB, breadcrumbJsonLd, calculatorJsonLd, graphJsonLd } from "../../../lib/banking/seo";
+
+const title = "Break-even calculator";
+const math = breakEven({ fixedMonthly: 20000, price: 85, variableCost: 35 });
+const summary = math.ok ? breakEvenSummary({ unitLabel: "units", targetProfit: 0, fixedMonthly: 20000, result: math }) : "";
+const mathText = math.ok
+  ? breakEvenMathText({ fixedMonthly: 20000, price: 85, variableCost: 35, targetProfit: 0, result: math })
+  : "";
+const jsonLd = graphJsonLd([
+  calculatorJsonLd({ name: title, path: BREAK_EVEN_PATH, description: BREAK_EVEN_DESCRIPTION }),
+  breadcrumbJsonLd([HOME_CRUMB, BANKING_CRUMB, { name: title, path: BREAK_EVEN_PATH }]),
+]);
+---
+
+<BankingShell title={title} description={BREAK_EVEN_DESCRIPTION} jsonLd={jsonLd} section="calculators">
+  <h1 class="room-title">{title}</h1>
+  <p class="lede">{BREAK_EVEN_DESCRIPTION}</p>
+  <div class="bank-tool" data-break-even data-has-result="true">
+    <div class="bank-fields bank-fields--split">
+      <p class="bank-field">
+        <label for="be-fixed">Monthly fixed costs</label>
+        <input id="be-fixed" data-field="fixed" type="text" inputmode="decimal" value="20000" autocomplete="off" />
+        <span class="bank-error" data-error="fixed"></span>
+      </p>
+      <p class="bank-field">
+        <label for="be-price">Price per sale</label>
+        <input id="be-price" data-field="price" type="text" inputmode="decimal" value="85" autocomplete="off" />
+        <span class="bank-error" data-error="price"></span>
+      </p>
+      <p class="bank-field">
+        <label for="be-variable">Direct cost per sale</label>
+        <input id="be-variable" data-field="variable" type="text" inputmode="decimal" value="35" autocomplete="off" />
+        <span class="bank-error" data-error="variable"></span>
+      </p>
+      <p class="bank-field">
+        <label for="be-target">Monthly profit goal <span class="bank-help-inline">(optional)</span></label>
+        <input id="be-target" data-field="target" type="text" inputmode="decimal" value="" autocomplete="off" />
+        <span class="bank-error" data-error="target"></span>
+      </p>
+      <p class="bank-field">
+        <label for="be-unit">What you sell</label>
+        <input id="be-unit" data-field="unit" type="text" value="units" maxlength="20" autocomplete="off" />
+        <span class="bank-error" data-error="unit"></span>
+      </p>
+    </div>
+    <div class="bank-results" data-results aria-live="polite">
+      <dl class="bank-stats">
+        <div>
+          <dt>Break-even sales</dt>
+          <dd data-out="units">{math.ok ? `${math.beUnits} units` : ""}</dd>
+        </div>
+        <div>
+          <dt>Break-even revenue</dt>
+          <dd data-out="revenue">{math.ok ? formatUsd(math.beRevenue) : ""}</dd>
+        </div>
+        <div>
+          <dt>Left after direct costs</dt>
+          <dd data-out="margin">{math.ok ? formatUsd(math.cm) : ""}</dd>
+        </div>
+        <div data-target-stat hidden>
+          <dt>Sales for the profit goal</dt>
+          <dd data-out="target"></dd>
+        </div>
+      </dl>
+      <p class="bank-summary" data-out="summary">{summary}</p>
+      <p class="bank-note">{BREAK_EVEN_FOOTNOTE}</p>
+      <p class="bank-reviewed">{REVIEWED_LINE}</p>
+      <div class="bank-actions">
+        <button class="bank-btn" type="button" data-print>Print results</button>
+      </div>
+    </div>
+    <details class="bank-math" id="show-the-math">
+      <summary>Show the math</summary>
+      <p data-out="math">{mathText}</p>
+    </details>
+  </div>
+  <section class="bank-block">
+    <h2 class="bank-section-title">What to do with your results</h2>
+    <ul class="bank-questions-list">
+      {BREAK_EVEN_FOLLOW_UP.map((question) => <li>{question}</li>)}
+    </ul>
+  </section>
+  <HowTo steps={BREAK_EVEN_STEPS} />
+  <RelatedTools path={BREAK_EVEN_PATH} />
+  <DisclaimerLine />
+</BankingShell>
+
+<script>
+  import { bindBreakEven } from "../../../scripts/banking/break-even";
+  const root = document.querySelector<HTMLElement>("[data-break-even]");
+  root?.querySelector("[data-print]")?.addEventListener("click", () => window.print());
+  bindBreakEven(root);
+</script>

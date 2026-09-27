@@ -1,0 +1,138 @@
+---
+import DisclaimerLine from "../../../components/banking/DisclaimerLine.astro";
+import BankingShell from "../../../components/banking/BankingShell.astro";
+import HowTo from "../../../components/banking/HowTo.astro";
+import RelatedTools from "../../../components/banking/RelatedTools.astro";
+import { LOAN_DESCRIPTION, LOAN_FOLLOW_UP, LOAN_STEPS, REVIEWED_LINE } from "../../../data/banking/copy";
+import { DSCR_PATH, LOAN_PATH } from "../../../data/banking/tools";
+import {
+  LOAN_FOOTNOTE,
+  currentMonthValue,
+  formatUsd,
+  loanCalc,
+  loanMathText,
+  loanSummary,
+} from "../../../lib/banking/calc";
+import { BANKING_CRUMB, HOME_CRUMB, breadcrumbJsonLd, calculatorJsonLd, graphJsonLd } from "../../../lib/banking/seo";
+import { withBase } from "../../../lib/site";
+
+const title = "Loan payment calculator";
+const loan = loanCalc({ principal: 250000, annualRatePct: 7.5, n: 120, startDate: currentMonthValue() });
+const summary =
+  loan.ok
+    ? loanSummary({ n: 120, annualRatePct: 7.5, payment: loan.payment, totalInterest: loan.totalInterest, totalPaid: loan.totalPaid, balloon: loan.balloon })
+    : "";
+const math = loan.ok
+  ? loanMathText({ principal: 250000, annualRatePct: 7.5, n: 120, amortMonths: null, payment: loan.payment })
+  : "";
+const jsonLd = graphJsonLd([
+  calculatorJsonLd({ name: title, path: LOAN_PATH, description: LOAN_DESCRIPTION }),
+  breadcrumbJsonLd([HOME_CRUMB, BANKING_CRUMB, { name: title, path: LOAN_PATH }]),
+]);
+---
+
+<BankingShell title={title} description={LOAN_DESCRIPTION} jsonLd={jsonLd} section="calculators">
+  <h1 class="room-title">{title}</h1>
+  <p class="lede">{LOAN_DESCRIPTION}</p>
+  <div class="bank-tool" data-loan data-dscr-base={withBase(DSCR_PATH)} data-has-result="true">
+    <div class="bank-fields bank-fields--split">
+      <p class="bank-field">
+        <label for="loan-principal">Loan amount</label>
+        <input id="loan-principal" data-field="principal" type="text" inputmode="decimal" value="250000" autocomplete="off" />
+        <span class="bank-error" data-error="principal"></span>
+      </p>
+      <p class="bank-field">
+        <label for="loan-rate">Interest rate <span class="bank-example">(example only)</span></label>
+        <input id="loan-rate" data-field="rate" type="text" inputmode="decimal" value="7.50" autocomplete="off" />
+        <span class="bank-error" data-error="rate"></span>
+      </p>
+      <fieldset class="bank-field">
+        <legend>Term</legend>
+        <div class="bank-term">
+          <input id="loan-term" data-field="term" type="text" inputmode="numeric" value="120" autocomplete="off" />
+          <div class="bank-segment">
+            <label><input type="radio" name="termUnit" value="months" checked /> Months</label>
+            <label><input type="radio" name="termUnit" value="years" /> Years</label>
+          </div>
+        </div>
+        <span class="bank-error" data-error="term"></span>
+      </fieldset>
+      <p class="bank-field">
+        <label for="loan-amort">Amortization in months <span class="bank-help-inline">(optional)</span></label>
+        <input id="loan-amort" data-field="amort" type="text" inputmode="numeric" value="" placeholder="Blank means fully amortizing" autocomplete="off" />
+        <span class="bank-error" data-error="amort"></span>
+      </p>
+      <p class="bank-field">
+        <label for="loan-start">First payment month <span class="bank-help-inline">(optional)</span></label>
+        <input id="loan-start" data-field="start" type="month" value={currentMonthValue()} />
+      </p>
+    </div>
+    <div class="bank-results" data-results aria-live="polite">
+      <dl class="bank-stats">
+        <div>
+          <dt>Estimated monthly payment</dt>
+          <dd data-out="payment">{loan.ok ? formatUsd(loan.payment) : ""}</dd>
+        </div>
+        <div>
+          <dt>Total interest</dt>
+          <dd data-out="interest">{loan.ok ? formatUsd(loan.totalInterest) : ""}</dd>
+        </div>
+        <div>
+          <dt>Total paid</dt>
+          <dd data-out="total">{loan.ok ? formatUsd(loan.totalPaid) : ""}</dd>
+        </div>
+        <div data-balloon-stat hidden>
+          <dt>Balloon</dt>
+          <dd data-out="balloon"></dd>
+        </div>
+      </dl>
+      <p class="bank-summary" data-out="summary">{summary}</p>
+      <p class="bank-note">{LOAN_FOOTNOTE}</p>
+      <p class="bank-reviewed">{REVIEWED_LINE}</p>
+      <div class="bank-actions">
+        <button class="bank-btn" type="button" data-print>Print results</button>
+        <button class="bank-btn bank-btn--quiet" type="button" data-csv>Download CSV</button>
+        <a class="bank-btn bank-btn--quiet" data-dscr-link href={withBase(DSCR_PATH)}>Send to DSCR</a>
+      </div>
+      <div class="bank-schedule">
+        <h2 class="bank-section-title">Schedule</h2>
+        <div class="bank-table-wrap">
+          <table class="bank-table">
+            <caption class="bank-help">First 12 months, then the rest when you choose Show all. A balloon row stays visible.</caption>
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Month</th>
+                <th scope="col">Beginning balance</th>
+                <th scope="col">Payment</th>
+                <th scope="col">Interest</th>
+                <th scope="col">Principal</th>
+                <th scope="col">Ending balance</th>
+              </tr>
+            </thead>
+            <tbody data-schedule></tbody>
+          </table>
+        </div>
+        <button class="bank-btn bank-btn--quiet" type="button" data-show-all aria-expanded="false" hidden>Show all</button>
+      </div>
+    </div>
+    <details class="bank-math" id="show-the-math">
+      <summary>Show the math</summary>
+      <p data-out="math">{math}</p>
+    </details>
+  </div>
+  <section class="bank-block">
+    <h2 class="bank-section-title">What to do with your results</h2>
+    <ul class="bank-questions-list">
+      {LOAN_FOLLOW_UP.map((question) => <li>{question}</li>)}
+    </ul>
+  </section>
+  <HowTo steps={LOAN_STEPS} />
+  <RelatedTools path={LOAN_PATH} />
+  <DisclaimerLine />
+</BankingShell>
+
+<script>
+  import { bindLoanCalculator } from "../../../scripts/banking/loan";
+  bindLoanCalculator(document.querySelector<HTMLElement>("[data-loan]"));
+</script>

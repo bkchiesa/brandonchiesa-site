@@ -8,14 +8,16 @@ import LeatherPad from "../LeatherPad.astro";
 import SiteFooter from "../SiteFooter.astro";
 import SiteHeader from "../SiteHeader.astro";
 import VideoShell from "../VideoShell.astro";
+import BankingNav from "./BankingNav.astro";
 
 interface Props {
   title: string;
   description: string;
   jsonLd: Record<string, unknown>;
+  section?: "hub" | "calculators" | "templates" | "disclaimer";
 }
 
-const { title, description, jsonLd } = Astro.props;
+const { title, description, jsonLd, section = "hub" } = Astro.props;
 const brassRel = ART.v3.careerBrassRule;
 const hasBrass = existsSync(join(process.cwd(), "public", brassRel));
 const brassUrl = hasBrass ? artUrl(brassRel) : "";
@@ -31,6 +33,7 @@ const brassUrl = hasBrass ? artUrl(brassRel) : "";
       data-brass={hasBrass ? "true" : "false"}
       style={brassUrl ? `--career-brass-rule: url('${brassUrl}')` : undefined}
     >
+      <BankingNav section={section} />
       <slot />
     </main>
     <SiteFooter showDisclaimer />

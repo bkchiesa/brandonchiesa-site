@@ -70,6 +70,24 @@ export function collectionJsonLd(opts: {
   };
 }
 
+export function webPageJsonLd(opts: {
+  name: string;
+  path: string;
+  description: string;
+}): Record<string, unknown> {
+  return {
+    "@type": "WebPage",
+    name: opts.name,
+    url: absoluteUrl(opts.path),
+    description: opts.description,
+    isPartOf: {
+      "@type": "WebSite",
+      name: SITE_NAME,
+      url: SITE_CANONICAL,
+    },
+  };
+}
+
 export function graphJsonLd(nodes: readonly Record<string, unknown>[]): Record<string, unknown> {
   return {
     "@context": "https://schema.org",

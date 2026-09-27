@@ -3,8 +3,14 @@ export function setText(root: ParentNode, name: string, text: string): void {
   if (node) node.textContent = text;
 }
 
-export function textField(root: ParentNode, name: string): HTMLInputElement | null {
+export function field(root: ParentNode, name: string): HTMLInputElement | HTMLSelectElement | null {
   const node = root.querySelector(`[data-field="${name}"]`);
+  if (node instanceof HTMLInputElement || node instanceof HTMLSelectElement) return node;
+  return null;
+}
+
+export function inputField(root: ParentNode, name: string): HTMLInputElement | null {
+  const node = field(root, name);
   return node instanceof HTMLInputElement ? node : null;
 }
 
@@ -25,16 +31,44 @@ export function downloadText(filename: string, contents: string, mime: string): 
   URL.revokeObjectURL(url);
 }
 
-export function fillTable(body: HTMLElement, rows: string[][]): void {
-  body.replaceChildren();
-  for (const cells of rows) {
-    const tr = document.createElement("tr");
-    cells.forEach((value, index) => {
-      const cell = document.createElement(index === 0 ? "th" : "td");
-      cell.textContent = value;
-      if (index === 0 && cell instanceof HTMLTableCellElement) cell.scope = "row";
-      tr.append(cell);
-    });
-    body.append(tr);
+export function clearErrors(root: ParentNode): void {
+  root.querySelectorAll<HTMLElement>("[data-error]").forEach((node) => {
+    node.textContent = "";
+  });
+}
+
+export function showError(root: ParentNode, name: string, message: string): void {
+  const node = root.querySelector(`[data-error="${name}"]`);
+  if (node) node.textContent = message;
+  const input = root.querySelector(`[data-field="${name}"]`);
+  if (input instanceof HTMLElement) input.setAttribute("aria-invalid", "true");
+}
+
+export function clearInvalid(root: ParentNode): void {
+  root.querySelectorAll<HTMLElement>("[aria-invalid]").forEach((node) => {
+    node.removeAttribute("aria-invalid");
+  });
+}
+
+export function markStale(root: HTMLElement, stale: boolean): void {
+  const results = root.querySelector<HTMLElement>("[data-results]");
+  if (!results) return;
+  if (stale && root.dataset.hasResult === "true") {
+    results.classList.add("is-stale");
+    results.hidden = false;
+    return;
   }
+  results.classList.remove("is-stale");
+}
+
+export function bindDebounced(root: HTMLElement, render: () => void): void {
+  let timer = 0;
+  const schedule = () => {
+    window.clearTimeout(timer);
+    timer = window.setTimeout(render, 150);
+  };
+  root.addEventListener("input", schedule);
+  root.addEventListener("change", schedule);
+  render();
+  root.dataset.ready = "true";
 }

@@ -461,6 +461,217 @@ body[data-room="banking"] .leather-panel {
   color: var(--bank-ink-soft);
 }
 
+.bank-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.9rem;
+  margin: 0 0 0.9rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.bank-nav a {
+  color: var(--bank-ink);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.bank-nav a[aria-current="page"],
+.bank-nav a:hover,
+.bank-nav a:focus-visible {
+  border-bottom-color: var(--bank-brass);
+}
+
+.bank-example,
+.bank-help-inline {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  text-transform: none;
+  color: var(--bank-ink-soft);
+}
+
+.bank-error {
+  min-height: 1.2em;
+  margin: 0;
+  font-family: "PT Serif", Georgia, serif;
+  font-size: 0.95rem;
+  color: #6b2a1d;
+}
+
+.bank-error:empty {
+  display: none;
+}
+
+.banking-room select,
+.banking-room input[type="month"] {
+  width: 100%;
+  min-height: 48px;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid rgba(61, 52, 40, 0.45);
+  border-radius: 8px;
+  background: var(--bank-cream);
+  color: var(--bank-ink);
+  font-family: "PT Serif", Georgia, serif;
+  font-size: 1.05rem;
+}
+
+.bank-results.is-stale {
+  opacity: 0.55;
+}
+
+.bank-disclaimer {
+  margin: 0.75rem 0 0;
+  font-family: "PT Serif", Georgia, serif;
+  font-size: 0.95rem;
+  line-height: 1.45;
+  color: var(--bank-ink-soft);
+}
+
+.bank-disclaimer a,
+.bank-related a,
+.bank-jumps a,
+.bank-block a,
+.bank-help a,
+.bank-card-title a {
+  color: var(--bank-ink);
+}
+
+.bank-reviewed {
+  margin: 0.85rem 0 0;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  color: var(--bank-ink-soft);
+}
+
+.bank-callout {
+  margin: 0.75rem 0 0;
+  padding: 0.75rem 0.85rem;
+  border-radius: 8px;
+  background: rgba(247, 241, 228, 0.72);
+  box-shadow: inset 0 0 0 1px rgba(181, 154, 98, 0.45);
+  font-family: "PT Serif", Georgia, serif;
+  color: var(--bank-ink);
+}
+
+.bank-math {
+  margin-top: 0.85rem;
+}
+
+.bank-math summary {
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-family: "PT Serif", Georgia, serif;
+  font-size: 1.15rem;
+  color: var(--bank-ink);
+}
+
+.bank-math p,
+.bank-block p,
+.bank-steps,
+.bank-questions-list {
+  font-family: "PT Serif", Georgia, serif;
+  line-height: 1.45;
+  color: var(--bank-ink);
+}
+
+.bank-block {
+  margin-top: 1.15rem;
+}
+
+.bank-steps,
+.bank-questions-list,
+.bank-related {
+  margin: 0.6rem 0 0;
+  padding-left: 1.2rem;
+}
+
+.bank-steps li + li,
+.bank-questions-list li + li,
+.bank-related li + li {
+  margin-top: 0.35rem;
+}
+
+.bank-file-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.35rem;
+}
+
+.bank-card--static {
+  height: auto;
+}
+
+.bank-stack {
+  display: grid;
+  gap: 0.85rem;
+  margin-top: 0.85rem;
+}
+
+.bank-jumps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem 0.9rem;
+  margin-top: 0.9rem;
+  font-family: "PT Serif", Georgia, serif;
+}
+
+.bank-source {
+  font-family: "PT Serif", Georgia, serif;
+}
+
+.bank-source summary {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.bank-balloon {
+  background: rgba(181, 154, 98, 0.2);
+}
+
+.bank-grid > li {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 700px) {
+  .bank-stats--four {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media print {
+  .video-shell,
+  .site-header,
+  .site-footer,
+  .bank-nav,
+  .room-veil,
+  .bank-actions,
+  .video-hit {
+    display: none !important;
+  }
+
+  body[data-room="banking"] .leather-panel {
+    width: auto;
+    background: #fff !important;
+  }
+
+  .bank-results.is-stale {
+    opacity: 1;
+  }
+}
+
 @media (min-width: 700px) {
   .bank-grid {
     grid-template-columns: 1fr 1fr;

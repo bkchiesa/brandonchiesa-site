@@ -1,48 +1,59 @@
 ---
-import BankNote from "../../components/banking/BankNote.astro";
 import BankingShell from "../../components/banking/BankingShell.astro";
-import { bankingTemplateFiles } from "../../lib/banking/downloads";
+import TemplateCard from "../../components/banking/TemplateCard.astro";
 import {
-  BANKING_CRUMB,
-  HOME_CRUMB,
-  breadcrumbJsonLd,
-  collectionJsonLd,
-  graphJsonLd,
-} from "../../lib/banking/seo";
-import { withBase } from "../../lib/site";
+  CASH_FLOW_DESCRIPTION,
+  CASH_FLOW_STEPS,
+  CHECKLIST_DESCRIPTION,
+  CHECKLIST_STEPS,
+  DSCR_SHEET_DESCRIPTION,
+  DSCR_SHEET_STEPS,
+  PFS_DESCRIPTION,
+  PFS_STEPS,
+  SBA_GUIDE_DESCRIPTION,
+  SBA_GUIDE_STEPS,
+  SOURCES_DESCRIPTION,
+  SOURCES_STEPS,
+  TEMPLATES_PAGE_DESCRIPTION,
+} from "../../data/banking/copy";
+import { TEMPLATES_PATH } from "../../data/banking/tools";
+import { bankingCards } from "../../lib/banking/downloads";
+import { BANKING_CRUMB, HOME_CRUMB, breadcrumbJsonLd, collectionJsonLd, graphJsonLd } from "../../lib/banking/seo";
 
-const description =
-  "Download placeholder banking templates: loan package checklist, cash flow projection, SBA prep guide, personal financial statement, and business debt schedule. No sign-up.";
-const files = bankingTemplateFiles();
+const title = "Templates and guides";
+const cards = bankingCards();
+const details: Record<string, { description: string; steps: readonly string[] }> = {
+  "loan-package-checklist": { description: CHECKLIST_DESCRIPTION, steps: CHECKLIST_STEPS },
+  "cash-flow-projection": { description: CASH_FLOW_DESCRIPTION, steps: CASH_FLOW_STEPS },
+  "sba-7a-504": { description: SBA_GUIDE_DESCRIPTION, steps: SBA_GUIDE_STEPS },
+  "dscr-worksheet": { description: DSCR_SHEET_DESCRIPTION, steps: DSCR_SHEET_STEPS },
+  "personal-financial-statement": { description: PFS_DESCRIPTION, steps: PFS_STEPS },
+  "sources-and-uses": { description: SOURCES_DESCRIPTION, steps: SOURCES_STEPS },
+};
 const jsonLd = graphJsonLd([
   collectionJsonLd({
-    name: "Banking templates",
-    path: "/banking/templates/",
-    description,
-    items: files.map((file) => ({ name: file.title, path: `/${file.href}` })),
+    name: title,
+    path: TEMPLATES_PATH,
+    description: TEMPLATES_PAGE_DESCRIPTION,
+    items: cards.map((card) => ({ name: card.title, path: card.page ?? `${TEMPLATES_PATH}#${card.id}` })),
   }),
-  breadcrumbJsonLd([HOME_CRUMB, BANKING_CRUMB, { name: "Templates", path: "/banking/templates/" }]),
+  breadcrumbJsonLd([HOME_CRUMB, BANKING_CRUMB, { name: title, path: TEMPLATES_PATH }]),
 ]);
 ---
 
-<BankingShell title="Banking templates" description={description} jsonLd={jsonLd}>
-  <p class="bank-back"><a href={withBase("banking/")}>All banking tools</a></p>
-  <h1 class="room-title">Templates</h1>
-  <p class="lede">Download a file. No sign-up. Each one is a placeholder until the real template arrives.</p>
-  <ul class="bank-grid">
+<BankingShell title={title} description={TEMPLATES_PAGE_DESCRIPTION} jsonLd={jsonLd} section="templates">
+  <h1 class="room-title">{title}</h1>
+  <p class="lede">{TEMPLATES_PAGE_DESCRIPTION}</p>
+  <div class="bank-stack">
     {
-      files.map((file) => (
-        <li>
-          <a class="bank-card" href={withBase(file.href)} download>
-            <h3 class="bank-card-title">{file.title}</h3>
-            <p class="bank-card-copy">{file.description}</p>
-            <p class="bank-card-meta">
-              {file.typeLabel} · {file.sizeLabel}
-            </p>
-          </a>
-        </li>
+      cards.map((card) => (
+        <TemplateCard
+          card={card}
+          heading="h2"
+          description={details[card.id]?.description}
+          steps={details[card.id]?.steps}
+        />
       ))
     }
-  </ul>
-  <BankNote />
+  </div>
 </BankingShell>

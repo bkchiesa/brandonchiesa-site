@@ -1,0 +1,96 @@
+---
+import DisclaimerLine from "../../../components/banking/DisclaimerLine.astro";
+import BankingShell from "../../../components/banking/BankingShell.astro";
+import HowTo from "../../../components/banking/HowTo.astro";
+import { PFS_DESCRIPTION, PFS_STEPS, REVIEWED_LINE } from "../../../data/banking/copy";
+import { PFS_GUIDE_PATH } from "../../../data/banking/tools";
+import { bankingCards } from "../../../lib/banking/downloads";
+import { BANKING_CRUMB, HOME_CRUMB, breadcrumbJsonLd, graphJsonLd, webPageJsonLd } from "../../../lib/banking/seo";
+import { withBase } from "../../../lib/site";
+
+const title = "Personal financial statement walkthrough";
+const card = bankingCards().find((item) => item.id === "personal-financial-statement");
+const file = card?.files[0];
+const formUrl = "https://www.sba.gov/document/sba-form-413-personal-financial-statement";
+const jumps = [
+  ["what-it-is", "What a PFS is"],
+  ["gather", "Gather these first"],
+  ["assets", "Assets"],
+  ["liabilities", "Liabilities"],
+  ["contingent", "Contingent liabilities"],
+  ["income", "Income"],
+  ["real-estate", "Real estate"],
+  ["mistakes", "Common mistakes"],
+];
+const jsonLd = graphJsonLd([
+  webPageJsonLd({ name: title, path: PFS_GUIDE_PATH, description: PFS_DESCRIPTION }),
+  breadcrumbJsonLd([HOME_CRUMB, BANKING_CRUMB, { name: title, path: PFS_GUIDE_PATH }]),
+]);
+---
+
+<BankingShell title={title} description={PFS_DESCRIPTION} jsonLd={jsonLd} section="templates">
+  <h1 class="room-title">{title}</h1>
+  <p class="lede">{PFS_DESCRIPTION}</p>
+  <p class="bank-reviewed">{REVIEWED_LINE}</p>
+  <p class="bank-callout">
+    This page explains the sections. It does not reproduce the form. Get the current <a href={formUrl}>SBA Form 413</a> from SBA.gov, or use your lender's own form.
+  </p>
+  {
+    file && (
+      <p class="bank-actions">
+        <a class="bank-btn" href={withBase(file.href)} target="_blank" rel="noopener">
+          Preview PDF · {file.sizeLabel}
+        </a>
+      </p>
+    )
+  }
+  <nav class="bank-jumps" aria-label="On this page">
+    {jumps.map(([id, label]) => <a href={`#${id}`}>{label}</a>)}
+  </nav>
+  <section class="bank-block" id="what-it-is">
+    <h2 class="bank-section-title">What a PFS is</h2>
+    <p>A personal financial statement is a snapshot of what you own, what you owe, and what you earn, as of a specific date. Lenders use it for the people who will stand behind a business loan. Each owner of 20 percent or more is commonly asked to complete one.</p>
+  </section>
+  <section class="bank-block" id="gather">
+    <h2 class="bank-section-title">Before you start, gather these</h2>
+    <ul class="bank-reasons">
+      <li>Bank, brokerage, and retirement statements.</li>
+      <li>Mortgage, auto, student loan, line of credit, and credit card statements.</li>
+      <li>A tax assessment or appraisal for real estate you own.</li>
+      <li>Life insurance cash surrender value, not the death benefit.</li>
+      <li>Your latest personal tax return, and a list of loans you have guaranteed.</li>
+    </ul>
+  </section>
+  <section class="bank-block" id="assets">
+    <h2 class="bank-section-title">Assets</h2>
+    <p>List personal cash, retirement balances, marketable securities at today's value, cash surrender value of life insurance, and a supportable value for real estate and vehicles. Business cash and equipment stay on the business balance sheet. Do not list the face amount of a life insurance policy as an asset.</p>
+  </section>
+  <section class="bank-block" id="liabilities">
+    <h2 class="bank-section-title">Liabilities</h2>
+    <p>Include mortgages, installment loans, lines of credit, credit cards, unpaid taxes, and loans against life insurance. Credit cards and home equity lines are the items people most often leave off. Net worth is total assets minus total liabilities. Recheck the arithmetic.</p>
+  </section>
+  <section class="bank-block" id="contingent">
+    <h2 class="bank-section-title">Contingent liabilities</h2>
+    <p>These are amounts you might have to pay if something else goes wrong. List every personal guarantee, including your own business's loans and leases, plus lawsuits, judgments, and taxes you expect to owe.</p>
+  </section>
+  <section class="bank-block" id="income">
+    <h2 class="bank-section-title">Income</h2>
+    <p>Use annual amounts that match your tax return: salary, investment income, real estate income, and other income with the source named. If this year is very different, add a short note.</p>
+  </section>
+  <section class="bank-block" id="real-estate">
+    <h2 class="bank-section-title">Real estate schedule</h2>
+    <p>For each property, give the address, purchase date, original cost, present value, mortgage holder, balance, monthly payment, and whether the mortgage is current. If an LLC or other people own it with you, show your share. Rental property on Schedule E belongs here too.</p>
+  </section>
+  <section class="bank-block" id="mistakes">
+    <h2 class="bank-section-title">Common mistakes</h2>
+    <ul class="bank-reasons">
+      <li>Listing life insurance face value instead of cash surrender value.</li>
+      <li>Forgetting personal guarantees, credit cards, or a home equity line.</li>
+      <li>Using a hopeful listing price instead of a supportable value.</li>
+      <li>Totals that do not add up, a stale date, or a blank section instead of "none".</li>
+      <li>Forgetting to sign and date it.</li>
+    </ul>
+  </section>
+  <HowTo steps={PFS_STEPS} />
+  <DisclaimerLine />
+</BankingShell>

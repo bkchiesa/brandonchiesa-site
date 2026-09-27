@@ -78,12 +78,15 @@ export const rooms: Room[] = [
 
 export function withBase(path = ""): string {
   const base = import.meta.env.BASE_URL;
-  const normalized = path.replace(/^\//, "");
-  if (!normalized) return base;
+  const hashAt = path.indexOf("#");
+  const hash = hashAt === -1 ? "" : path.slice(hashAt);
+  const withoutHash = hashAt === -1 ? path : path.slice(0, hashAt);
+  const normalized = withoutHash.replace(/^\//, "");
+  if (!normalized) return `${base}${hash}`;
   if (normalized.includes(".") && !normalized.endsWith("/")) {
-    return `${base}${normalized}`;
+    return `${base}${normalized}${hash}`;
   }
-  return `${base}${normalized}${normalized.endsWith("/") ? "" : "/"}`;
+  return `${base}${normalized}${normalized.endsWith("/") ? "" : "/"}${hash}`;
 }
 
 export const SITE_DISCLAIMER =

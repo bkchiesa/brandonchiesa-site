@@ -1,323 +1,283 @@
 import { describe, expect, it } from "vitest";
-import { SBA_QUESTIONS } from "../../data/banking/sba-eligibility";
-import type { SbaQuestion } from "../../data/banking/sba-eligibility";
+import { SBA_FIT_ANSWERS, SBA_QUESTIONS } from "../../data/banking/sba-quick-check";
 import {
-  calculateBreakEven,
-  calculateDscr,
-  calculateLoan,
-  evaluateSba,
-  loanScheduleCsv,
-  readAmount,
-  type LoanInput,
+  MSG,
+  breakEven,
+  breakEvenSummary,
+  cfadsFromParts,
+  dscr,
+  dscrSummary,
+  formatPercent,
+  formatUsd,
+  loanCalc,
+  loanSummary,
+  proposedAnnualFromLoan,
+  quickCheck,
+  validateLoan,
+  type SbaAnswer,
 } from "./calc";
 
-function mustLoan(input: LoanInput) {
-  const result = calculateLoan(input);
-  if (!result.ok) throw new Error(result.error);
-  return result;
+function fit(overrides: Partial<Record<string, SbaAnswer>> = {}): Record<string, SbaAnswer> {
+  return { ...SBA_FIT_ANSWERS, ...overrides };
 }
 
-describe("readAmount", () => {
-  it("parses currency and percent text", () => {
-    expect(readAmount("200,000")).toBe(200000);
-    expect(readAmount("$1,932.56")).toBe(1932.56);
-    expect(readAmount(" 6.5% ")).toBe(6.5);
-    expect(readAmount("")).toBeNull();
-    expect(readAmount("abc")).toBeNull();
-  });
-});
-
-describe("calculateLoan", () => {
-  it("matches the standard $100,000 / 6% / 30-year payment", () => {
-    const result = mustLoan({
-      principal: 100_000,
-      annualRatePercent: 6,
-      termCount: 30,
-      termUnit: "years",
+describe("specs.md loan cases", () => {
+  it("L1 fully amortizing example loan", () => {
+    const loan = loanCalc({ principal: 250_000, annualRatePct: 7.5, n: 120 });
+    expect(loan.ok).toBe(true);
+    if (!loan.ok) return;
+    expect(loan.payment).toBe(2967.54);
+    expect(loan.balloon).toBe(0);
+    expect(loan.rows[0]).toMatchObject({
+      begin: 250000,
+      payment: 2967.54,
+      interest: 1562.5,
+      principal: 1405.04,
+      end: 248594.96,
     });
-    expect(result.monthlyPayment).toBe(599.55);
-    expect(result.termMonths).toBe(360);
-    expect(result.schedule).toHaveLength(360);
-    expect(result.totalInterest).toBe(115838.45);
-    expect(result.totalPaid).toBe(215838.45);
-    expect(result.schedule.at(-1)?.balance).toBe(0);
-    expect(result.summary).toBe(
-      "Your monthly payment is $599.55. Over 30 years you'd pay $115,838.45 in interest. In total you'd pay $215,838.45.",
+    expect(loan.rows[119]).toMatchObject({
+      begin: 2949.78,
+      payment: 2968.22,
+      interest: 18.44,
+      principal: 2949.78,
+      end: 0,
+    });
+    expect(loan.totalInterest).toBe(106105.48);
+    expect(loan.totalPaid).toBe(356105.48);
+    expect(loanSummary({ ...loan, n: 120, annualRatePct: 7.5 })).toBe(
+      "Estimated monthly payment: $2,967.54 Over 120 months you would pay about $106,105.48 in interest, $356,105.48 in total.",
     );
   });
 
-  it("states a 10-year loan in plain English", () => {
-    const result = mustLoan({
-      principal: 200_000,
-      annualRatePercent: 6,
-      termCount: 10,
-      termUnit: "years",
-    });
-    expect(result.monthlyPayment).toBe(2220.41);
-    expect(result.totalInterest).toBe(66449.21);
-    expect(result.totalPaid).toBe(266449.21);
-    expect(result.years).toHaveLength(10);
-    expect(result.years[9]?.balance).toBe(0);
-    expect(result.summary).toContain("Your monthly payment is $2,220.41.");
-    expect(result.summary).toContain("Over 10 years you'd pay $66,449.21 in interest.");
-  });
-
-  it("keeps principal, interest, and payments in balance", () => {
-    const cases: LoanInput[] = [
-      { principal: 250_000, annualRatePercent: 7.25, termCount: 15, termUnit: "years" },
-      { principal: 18_500, annualRatePercent: 0, termCount: 18, termUnit: "months" },
-      { principal: 80_000, annualRatePercent: 5.5, termCount: 7, termUnit: "years", balloon: 20_000 },
-    ];
-    for (const input of cases) {
-      const result = mustLoan(input);
-      const principalPaid = result.schedule.reduce((sum, row) => sum + Math.round(row.principal * 100), 0);
-      const interestPaid = result.schedule.reduce((sum, row) => sum + Math.round(row.interest * 100), 0);
-      const payments = result.schedule.reduce((sum, row) => sum + Math.round(row.payment * 100), 0);
-      expect(principalPaid).toBe(Math.round(input.principal * 100));
-      expect(interestPaid).toBe(Math.round(result.totalInterest * 100));
-      expect(payments).toBe(Math.round(result.totalPaid * 100));
-      expect(result.schedule.at(-1)?.balance).toBe(0);
-    }
-  });
-
-  it("charges no interest when the rate is zero", () => {
-    const result = mustLoan({
-      principal: 12_000,
-      annualRatePercent: 0,
-      termCount: 1,
-      termUnit: "years",
-    });
-    expect(result.monthlyPayment).toBe(1000);
-    expect(result.totalInterest).toBe(0);
-    expect(result.totalPaid).toBe(12_000);
-    expect(result.summary).toContain("Over 1 year you'd pay $0.00 in interest.");
-  });
-
-  it("treats a balloon equal to principal as interest-only, then a payoff", () => {
-    const result = mustLoan({
-      principal: 100_000,
-      annualRatePercent: 6,
-      termCount: 12,
-      termUnit: "months",
-      balloon: 100_000,
-    });
-    expect(result.monthlyPayment).toBe(500);
-    expect(result.schedule).toHaveLength(13);
-    expect(result.schedule[0]?.principal).toBe(0);
-    expect(result.schedule.at(-1)).toMatchObject({ label: "Balloon", payment: 100_000, balance: 0 });
-    expect(result.totalInterest).toBe(6000);
-    expect(result.totalPaid).toBe(106_000);
-    expect(result.years).toHaveLength(1);
-    expect(result.years[0]?.balance).toBe(0);
-    expect(result.summary).toContain("A $100,000.00 balloon is due at the end.");
-    expect(result.summary).toContain("Over 12 months you'd pay $6,000.00 in interest.");
-  });
-
-  it("rejects a balloon larger than the loan and a term past 50 years", () => {
-    expect(
-      calculateLoan({
-        principal: 10_000,
-        annualRatePercent: 5,
-        termCount: 5,
-        termUnit: "years",
-        balloon: 10_001,
-      }).ok,
-    ).toBe(false);
-    expect(
-      calculateLoan({
-        principal: 10_000,
-        annualRatePercent: 5,
-        termCount: 601,
-        termUnit: "months",
-      }).ok,
-    ).toBe(false);
-  });
-
-  it("writes a CSV schedule with a balloon row", () => {
-    const result = mustLoan({
-      principal: 100_000,
-      annualRatePercent: 6,
-      termCount: 1,
-      termUnit: "years",
-      balloon: 100_000,
-    });
-    const csv = loanScheduleCsv(result.schedule);
-    expect(csv.startsWith("Period,Payment,Interest,Principal,Ending Balance\n")).toBe(true);
-    expect(csv).toContain("\n1,500.00,500.00,0.00,100000.00");
-    expect(csv.endsWith("\nBalloon,100000.00,0.00,100000.00,0.00")).toBe(true);
-  });
-});
-
-describe("calculateDscr", () => {
-  it("reads 1.25 against the common thresholds and the max debt service", () => {
-    const result = calculateDscr({ noi: 150_000, annualDebtService: 120_000, targetDscr: 1.25 });
-    if (!result.ok) throw new Error(result.error);
-    expect(result.dscr).toBe(1.25);
-    expect(result.band).toBe("meets-1-25");
-    expect(result.maxDebtService).toBe(120_000);
-    expect(result.summary).toContain("Your DSCR is 1.25.");
-    expect(result.summary).toContain("meets a common 1.25 lender minimum");
-    expect(result.summary).toContain("supports up to $120,000.00");
-  });
-
-  it("classifies 1.00, 1.20, and coverage below 1.00", () => {
-    const atOne = calculateDscr({ noi: 100_000, annualDebtService: 100_000 });
-    const atTwenty = calculateDscr({ noi: 120_000, annualDebtService: 100_000 });
-    const thin = calculateDscr({ noi: 110_000, annualDebtService: 100_000 });
-    const below = calculateDscr({ noi: 90_000, annualDebtService: 100_000 });
-    if (!atOne.ok || !atTwenty.ok || !thin.ok || !below.ok) throw new Error("expected ok");
-    expect(atOne.band).toBe("covers-thin");
-    expect(thin.band).toBe("covers-thin");
-    expect(atTwenty.band).toBe("meets-1-20");
-    expect(below.band).toBe("below-1");
-    expect(below.summary).toContain("does not cover the debt service");
-  });
-
-  it("derives annual debt service from the loan module and leaves the balloon out", () => {
-    const loan = mustLoan({
-      principal: 100_000,
-      annualRatePercent: 6,
-      termCount: 30,
-      termUnit: "years",
-    });
-    const result = calculateDscr({
-      noi: 10_000,
-      loan: {
-        principal: 100_000,
-        annualRatePercent: 6,
-        termCount: 30,
-        termUnit: "years",
-      },
-    });
-    if (!result.ok) throw new Error(result.error);
-    expect(result.annualDebtService).toBe(Math.round(loan.monthlyPayment * 12 * 100) / 100);
-    expect(result.debtFromLoan).toBe(true);
-
-    const withBalloon = calculateDscr({
-      revenue: 80_000,
-      operatingExpenses: 20_000,
-      loan: {
-        principal: 100_000,
-        annualRatePercent: 6,
-        termCount: 12,
-        termUnit: "months",
-        balloon: 100_000,
-      },
-    });
-    if (!withBalloon.ok) throw new Error(withBalloon.error);
-    expect(withBalloon.noi).toBe(60_000);
-    expect(withBalloon.annualDebtService).toBe(6_000);
-    expect(withBalloon.excludesBalloon).toBe(true);
-    expect(withBalloon.summary).toContain("leaves out the balloon");
-  });
-
-  it("does not invent a ratio when debt service is zero", () => {
-    const result = calculateDscr({ noi: 50_000, annualDebtService: 0 });
-    if (!result.ok) throw new Error(result.error);
-    expect(result.dscr).toBeNull();
-    expect(result.band).toBe("no-debt");
-    expect(result.maxDebtService).toBe(40_000);
-    expect(result.summary).toContain("isn't meaningful");
-  });
-});
-
-describe("calculateBreakEven", () => {
-  it("explains units, revenue, and contribution margin", () => {
-    const result = calculateBreakEven({
-      fixedCosts: 10_000,
-      pricePerUnit: 50,
-      variableCostPerUnit: 30,
-    });
-    if (!result.ok) throw new Error(result.error);
-    expect(result.contributionMargin).toBe(20);
-    expect(result.contributionMarginRatio).toBeCloseTo(0.4);
-    expect(result.breakEvenUnits).toBe(500);
-    expect(result.breakEvenRevenue).toBe(25_000);
-    expect(result.summary).toBe(
-      "You break even at 500 units, or $25,000.00 in revenue. Each unit contributes $20.00 (40% of the price) toward fixed costs.",
+  it("L2 zero interest", () => {
+    const loan = loanCalc({ principal: 60_000, annualRatePct: 0, n: 60 });
+    expect(loan.ok).toBe(true);
+    if (!loan.ok) return;
+    expect(loan.payment).toBe(1000);
+    expect(loan.totalInterest).toBe(0);
+    expect(loan.balloon).toBe(0);
+    expect(loan.totalPaid).toBe(60000);
+    expect(loan.rows.every((row) => row.interest === 0)).toBe(true);
+    expect(loanSummary({ ...loan, n: 60, annualRatePct: 0 })).toContain(
+      "At 0% interest, your payment is simply the loan amount divided by the number of months.",
     );
   });
 
-  it("adds the units needed for a target profit", () => {
-    const result = calculateBreakEven({
-      fixedCosts: 10_000,
-      pricePerUnit: 50,
-      variableCostPerUnit: 30,
-      targetProfit: 5_000,
-    });
-    if (!result.ok) throw new Error(result.error);
-    expect(result.targetUnits).toBe(750);
-    expect(result.targetRevenue).toBe(37_500);
-    expect(result.summary).toContain("To also clear $5,000.00 in profit, you'd sell 750 units ($37,500.00 in revenue).");
+  it("L3 balloon with longer amortization", () => {
+    const loan = loanCalc({ principal: 500_000, annualRatePct: 7, n: 120, amortMonths: 240 });
+    expect(loan.ok).toBe(true);
+    if (!loan.ok) return;
+    expect(loan.payment).toBe(3876.49);
+    expect(loan.balloon).toBe(333869.2);
+    expect(loan.totalInterest).toBe(299048);
+    expect(loan.rows.at(-1)?.balloon).toBe(true);
+    expect(loanSummary({ ...loan, n: 120, annualRatePct: 7 })).toContain(
+      "After 120 payments, about $333,869.20 would still be owed (a balloon payment). Many borrowers refinance or pay it off at that point.",
+    );
   });
 
-  it("rounds a fractional break-even up to whole units in the sentence", () => {
-    const result = calculateBreakEven({
-      fixedCosts: 1_000,
-      pricePerUnit: 25,
-      variableCostPerUnit: 10,
-    });
-    if (!result.ok) throw new Error(result.error);
-    expect(result.summary).toContain("You break even at 66.67 units, or $1,666.67 in revenue.");
-    expect(result.summary).toContain("Rounded up, that's 67 whole units.");
-  });
-
-  it("says there is no break-even when price does not cover variable cost", () => {
-    const result = calculateBreakEven({
-      fixedCosts: 10_000,
-      pricePerUnit: 20,
-      variableCostPerUnit: 20,
-    });
-    if (!result.ok) throw new Error(result.error);
-    expect(result.summary).toContain("There is no break-even at this price.");
-  });
-});
-
-describe("evaluateSba", () => {
-  const fixture: SbaQuestion[] = [
-    {
-      id: "profit",
-      prompt: "For profit?",
-      detail: "",
-      choices: [
-        { value: "yes", label: "Yes", effect: "pass", reason: "For-profit." },
-        { value: "no", label: "No", effect: "fail", reason: "Not for-profit." },
-        { value: "unsure", label: "Not sure", effect: "soft", reason: "Profit status is unclear." },
-      ],
-    },
-  ];
-
-  it("follows pass, soft, and fail effects on a fixture", () => {
-    expect(evaluateSba({ profit: "yes" }, fixture).verdict).toBe("likely-eligible");
-    expect(evaluateSba({ profit: "unsure" }, fixture)).toMatchObject({
-      verdict: "check-with-lender",
-      headline: "Check with a lender",
-    });
-    const failed = evaluateSba({ profit: "no" }, fixture);
-    expect(failed.verdict).toBe("likely-not-eligible");
-    expect(failed.reasons).toEqual(["Not for-profit."]);
-    expect(evaluateSba({}, fixture).verdict).toBe("incomplete");
-  });
-
-  it("marks the draft questionnaire eligible only when every live rule passes", () => {
-    const passing = Object.fromEntries(
-      SBA_QUESTIONS.map((question) => {
-        const choice = question.choices.find((item) => item.effect === "pass");
-        if (!choice) throw new Error(`missing pass choice for ${question.id}`);
-        return [question.id, choice.value];
+  it("L4 zero principal has a validation message and no result", () => {
+    expect(loanCalc({ principal: 0, annualRatePct: 7.5, n: 120 })).toEqual({ ok: false, error: "invalid" });
+    expect(
+      validateLoan({
+        principal: 0,
+        annualRatePct: 7.5,
+        rateText: "7.50",
+        termValue: 120,
+        termText: "120",
+        termUnit: "months",
+        amortText: "",
       }),
+    ).toEqual({ ok: false, field: "principal", message: "Enter a loan amount greater than $0." });
+  });
+
+  it("L5 amortization shorter than the term", () => {
+    expect(loanCalc({ principal: 250_000, annualRatePct: 7.5, n: 120, amortMonths: 60 })).toEqual({
+      ok: false,
+      error: "invalid",
+    });
+    expect(
+      validateLoan({
+        principal: 250_000,
+        annualRatePct: 7.5,
+        rateText: "7.5",
+        termValue: 120,
+        termText: "120",
+        termUnit: "months",
+        amortText: "60",
+      }),
+    ).toEqual({
+      ok: false,
+      field: "amort",
+      message: "Amortization has to be at least as long as the term.",
+    });
+  });
+});
+
+describe("specs.md DSCR cases", () => {
+  it("D1 mode B with the example loan", () => {
+    const cfads = cfadsFromParts({
+      netIncome: 180_000,
+      depreciation: 45_000,
+      amortization: 5_000,
+      interestExpense: 30_000,
+      nonrecurring: 10_000,
+      excessOwnerComp: 0,
+      ownerDraws: 60_000,
+      otherAdj: 0,
+    });
+    expect(cfads).toBe(210_000);
+    const proposed = proposedAnnualFromLoan(250_000, 7.5, 120);
+    expect(proposed).toBe(35610.48);
+    const result = dscr({ cfads, existing: 90_000, proposed: proposed ?? 0 });
+    expect(result).toMatchObject({
+      tds: 125610.48,
+      dscr: 1.67,
+      band: "comfortable",
+      cushion: 84389.52,
+      maxDS125: 168000,
+    });
+    expect(dscrSummary(result)).toBe(
+      "Your estimated DSCR is 1.67x. For every $1.00 of loan payments, the business has about $1.67 of cash flow available. Roughly 1.25x or higher is often viewed as comfortable. Each lender sets its own standard. Cushion after payments: $84,389.52 per year. At a 1.25x ratio, this cash flow would support about $168,000.00 in total annual payments.",
     );
-    const eligible = evaluateSba(passing, SBA_QUESTIONS);
-    expect(eligible.verdict).toBe("likely-eligible");
-    expect(eligible.headline).toBe("Likely eligible");
-    expect(eligible.reasons.length).toBe(SBA_QUESTIONS.length);
+  });
 
-    const withSoft = { ...passing, "owner-equity": "no" };
-    expect(evaluateSba(withSoft, SBA_QUESTIONS).verdict).toBe("check-with-lender");
+  it("D2 mode A thin coverage", () => {
+    const result = dscr({ cfads: 150_000, existing: 90_000, proposed: 35610.48 });
+    expect(result).toMatchObject({
+      dscr: 1.19,
+      band: "thin",
+      cushion: 24389.52,
+      maxDS125: 120000,
+      tds: 125610.48,
+    });
+    expect(dscrSummary(result)).toContain("Payments are covered, but the cushion is thin. Many lenders look for more room.");
+  });
 
-    const withFail = { ...passing, "for-profit": "no" };
-    const notEligible = evaluateSba(withFail, SBA_QUESTIONS);
-    expect(notEligible.verdict).toBe("likely-not-eligible");
-    expect(notEligible.summary).toContain("not for-profit");
+  it("D3 short coverage", () => {
+    const result = dscr({ cfads: 80_000, existing: 100_000, proposed: 0 });
+    expect(result).toMatchObject({
+      dscr: 0.8,
+      band: "short",
+      cushion: -20000,
+      maxDS125: 64000,
+      tds: 100000,
+    });
+    expect(formatUsd(result.cushion ?? 0)).toBe("-$20,000.00");
+    expect(dscrSummary(result)).toContain("Below 1.00x means cash flow does not fully cover the payments.");
+    expect(dscrSummary(result)).toContain("Your estimated DSCR is 0.80x.");
+  });
+
+  it("D4 no debt service", () => {
+    const result = dscr({ cfads: 150_000, existing: 0, proposed: 0 });
+    expect(result.dscr).toBeNull();
+    expect(result.band).toBe("none");
+    expect(dscrSummary(result)).toBe("Enter your loan payments to see a result.");
+  });
+});
+
+describe("specs.md SBA quick-check cases", () => {
+  it("E1 possible fit", () => {
+    const result = quickCheck(fit(), SBA_QUESTIONS);
+    expect(result.result).toBe("possible_fit");
+    expect(result.summary.startsWith("Looks like a possible fit. Talk to a lender.")).toBe(true);
+    expect(result.summary.toLowerCase()).not.toMatch(/eligible|qualify/);
+  });
+
+  it("E2 for-profit no", () => {
+    const result = quickCheck(fit({ forProfit: "no" }), SBA_QUESTIONS);
+    expect(result.result).toBe("possible_issue");
+    expect(result.summary.startsWith("Possible issue: SBA business loans are for for-profit businesses.")).toBe(true);
+    expect(result.issues).toEqual(["SBA business loans are for for-profit businesses."]);
+  });
+
+  it("E3 credit elsewhere and an unsure size standard", () => {
+    const result = quickCheck(fit({ creditElsewhere: "yes", small: "unsure" }), SBA_QUESTIONS);
+    expect(result.result).toBe("possible_issue");
+    expect(result.issues).toEqual([
+      "SBA loans are for credit that is not available on reasonable terms without the SBA guarantee. A conventional loan may be the better fit.",
+    ]);
+    expect(result.unsure).toEqual(["size standard"]);
+    expect(result.summary).toContain("Also confirm: size standard.");
+    expect(result.summary).not.toMatch(/\beligible\b|\bqualify\b/i);
+  });
+
+  it("E4 two items to confirm", () => {
+    const result = quickCheck(fit({ small: "unsure", repayment: "unsure" }), SBA_QUESTIONS);
+    expect(result.result).toBe("possible_fit_confirm");
+    expect(result.summary).toBe(
+      "Looks like a possible fit, with a few things to confirm. Ask a lender about: size standard and repayment ability.",
+    );
+    expect(result.summary.toLowerCase()).not.toMatch(/eligible|qualify/);
+  });
+
+  it("E5 two possible issues", () => {
+    const result = quickCheck(fit({ operating: "no", ineligibleType: "yes" }), SBA_QUESTIONS);
+    expect(result.result).toBe("possible_issue");
+    expect(result.issues).toEqual([
+      "SBA loans generally go to operating businesses (with a limited exception for certain real estate holding companies that lease to an operating business).",
+      "The type of business may be on SBA's list of ineligible businesses.",
+    ]);
+    expect(result.summary).toContain("Possible issue: SBA loans generally go to operating businesses");
+    expect(result.summary).toContain("Possible issue: The type of business may be on SBA's list of ineligible businesses.");
+    expect(result.summary.replace(/ineligible/gi, "")).not.toMatch(/eligible|qualify/i);
+  });
+});
+
+describe("specs.md break-even cases", () => {
+  it("B1 base case", () => {
+    const result = breakEven({ fixedMonthly: 20_000, price: 85, variableCost: 35 });
+    expect(result.ok).toBe(true);
+    if (!result.ok) return;
+    expect(result.cm).toBe(50);
+    expect(formatPercent(result.cmr)).toBe("58.82%");
+    expect(result.beUnits).toBe(400);
+    expect(result.beRevenue).toBe(34000);
+    expect(
+      breakEvenSummary({ unitLabel: "units", targetProfit: 0, fixedMonthly: 20_000, result }),
+    ).toBe(
+      "Each units brings in $50.00 after its direct costs. That is 58.82% of the price. To break even, you need about 400 units a month, or about $34,000.00 in monthly sales.",
+    );
+  });
+
+  it("B2 profit target", () => {
+    const result = breakEven({ fixedMonthly: 20_000, price: 85, variableCost: 35, targetProfit: 5_000 });
+    expect(result.ok).toBe(true);
+    if (!result.ok) return;
+    expect(result.targetUnits).toBe(500);
+    expect(result.targetRevenue).toBe(42500);
+    expect(
+      breakEvenSummary({ unitLabel: "units", targetProfit: 5_000, fixedMonthly: 20_000, result }),
+    ).toContain("To earn $5,000.00 a month, you need about 500 units, or about $42,500.00 in monthly sales.");
+  });
+
+  it("B3 rounds units up and shows the exact value in the math", () => {
+    const result = breakEven({ fixedMonthly: 12_500, price: 40, variableCost: 17 });
+    expect(result.ok).toBe(true);
+    if (!result.ok) return;
+    expect(result.beUnitsExact).toBeCloseTo(543.47826, 4);
+    expect(result.beUnits).toBe(544);
+    expect(result.beRevenue).toBe(21739.13);
+  });
+
+  it("B4 no contribution margin", () => {
+    expect(breakEven({ fixedMonthly: 20_000, price: 30, variableCost: 35 })).toEqual({
+      ok: false,
+      error: "noMargin",
+    });
+    expect(MSG.noMargin).toBe(
+      "Each sale costs as much or more than it brings in, so there is no break-even point at this price. Raise the price or lower the cost per unit.",
+    );
+  });
+
+  it("B5 zero fixed costs", () => {
+    const result = breakEven({ fixedMonthly: 0, price: 85, variableCost: 35 });
+    expect(result.ok).toBe(true);
+    if (!result.ok) return;
+    expect(result.beUnits).toBe(0);
+    expect(result.beRevenue).toBe(0);
+    expect(breakEvenSummary({ unitLabel: "units", targetProfit: 0, fixedMonthly: 0, result })).toContain(
+      "With no fixed costs, every sale above variable cost is profit.",
+    );
   });
 });
