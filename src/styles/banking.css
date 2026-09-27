@@ -1,7 +1,47 @@
 /* Banking room — leather panel, cream inset, brass rules. Scoped by body[data-room="banking"]. */
 
+body[data-room="banking"] .room-stage {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+
 body[data-room="banking"] .leather-panel {
-  width: min(54rem, 96vw);
+  width: min(54rem, 100%);
+  max-width: 100%;
+  min-width: 0;
+}
+
+body[data-room="banking"] .leather-inset,
+body[data-room="banking"] .leather-inset .page-main,
+body[data-room="banking"] .bank-tool,
+body[data-room="banking"] .bank-results,
+body[data-room="banking"] .bank-schedule,
+body[data-room="banking"] .bank-card,
+body[data-room="banking"] .bank-grid,
+body[data-room="banking"] .bank-stack,
+body[data-room="banking"] .bank-fields,
+body[data-room="banking"] .bank-stats,
+body[data-room="banking"] .bank-math,
+body[data-room="banking"] .bank-actions,
+body[data-room="banking"] .bank-file-row,
+body[data-room="banking"] .bank-nav,
+body[data-room="banking"] fieldset {
+  min-width: 0;
+  max-width: 100%;
+}
+
+body[data-room="banking"] .bank-summary,
+body[data-room="banking"] .bank-math p,
+body[data-room="banking"] .bank-stats dd,
+body[data-room="banking"] .bank-note,
+body[data-room="banking"] .bank-disclaimer,
+body[data-room="banking"] .lede,
+body[data-room="banking"] .bank-card-copy,
+body[data-room="banking"] .bank-help,
+body[data-room="banking"] .bank-callout {
+  max-width: 100%;
+  overflow-wrap: anywhere;
 }
 
 .banking-room {
@@ -219,8 +259,10 @@ body[data-room="banking"] .leather-panel {
 
 .bank-segment {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 0.5rem;
+  min-width: 0;
+  max-width: 100%;
 }
 
 .bank-choice,
@@ -264,6 +306,8 @@ body[data-room="banking"] .leather-panel {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 0.5rem;
+  min-width: 0;
+  max-width: 100%;
 }
 
 .bank-results {
@@ -382,13 +426,18 @@ body[data-room="banking"] .leather-panel {
 }
 
 .bank-table-wrap {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   margin-top: 0.65rem;
 }
 
 .bank-table {
-  width: 100%;
+  width: max-content;
+  min-width: 100%;
   border-collapse: collapse;
   font-family: "PT Serif", Georgia, serif;
   font-size: 0.98rem;
