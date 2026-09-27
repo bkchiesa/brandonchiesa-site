@@ -9,8 +9,6 @@ export const SHORT_DISCLAIMER =
 export const REVIEWED_LINE =
   "Reviewed Sep 2026 by Brandon Chiesa, a Central Virginia business banker with 15+ years of experience.";
 
-export const LENDER_MATCH_URL = "https://lending.sba.gov/lender-match/";
-
 export const LOAN_DESCRIPTION =
   "Before you sign for a loan, it helps to know what it will really cost each month and over its life. Enter the loan amount, an interest rate, and the term to see an estimated payment, the total interest, and a month-by-month schedule. If your loan has a balloon (for example, a 10-year term on a 20-year amortization), you can see what would still be owed at the end.";
 

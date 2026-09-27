@@ -3,7 +3,7 @@ import DisclaimerLine from "../../../components/banking/DisclaimerLine.astro";
 import BankingShell from "../../../components/banking/BankingShell.astro";
 import HowTo from "../../../components/banking/HowTo.astro";
 import RelatedTools from "../../../components/banking/RelatedTools.astro";
-import { LENDER_MATCH_URL, REVIEWED_LINE, SBA_DESCRIPTION, SBA_FOLLOW_UP, SBA_STEPS } from "../../../data/banking/copy";
+import { REVIEWED_LINE, SBA_DESCRIPTION, SBA_FOLLOW_UP, SBA_STEPS } from "../../../data/banking/copy";
 import { SBA_CHOICES, SBA_QUESTIONS } from "../../../data/banking/sba-quick-check";
 import { SBA_PATH } from "../../../data/banking/tools";
 import { MSG, SBA_RULES_NOTE } from "../../../lib/banking/calc";
@@ -87,9 +87,6 @@ const jsonLd = graphJsonLd([
           Each question has one answer that raises a possible issue. If any of those answers is selected, the result lists that issue. If none are selected and some answers are Not sure, the result asks you to confirm those items. If every answer is in the fit direction, the result is a possible fit. Unsure on every question adds a note to talk with a lender. This is a checklist of basic rules, not a score.
         </p>
       </details>
-      <p>
-        <a data-lender-link href={LENDER_MATCH_URL} hidden>Talk to a lender</a>
-      </p>
       <p class="bank-note" data-out="note"></p>
       <p class="bank-reviewed">{REVIEWED_LINE}</p>
       <div class="bank-actions">
@@ -100,10 +97,7 @@ const jsonLd = graphJsonLd([
   <section class="bank-block">
     <h2 class="bank-section-title">What to do with your results</h2>
     <ul class="bank-questions-list">
-      <li>{SBA_FOLLOW_UP[0]}</li>
-      <li>
-        If a possible issue showed up, <a href={LENDER_MATCH_URL}>ask a lender</a> whether an exception or a different loan still fits.
-      </li>
+      {SBA_FOLLOW_UP.map((question) => <li>{question}</li>)}
     </ul>
   </section>
   <HowTo steps={SBA_STEPS} />

@@ -28,8 +28,6 @@ export function bindSbaCheck(root: HTMLElement | null): void {
     box.hidden = false;
     setText(root, "summary", result.summary);
     setText(root, "note", SBA_RESULT_NOTE);
-    const link = root.querySelector<HTMLElement>("[data-lender-link]");
-    if (link) link.hidden = false;
   };
 
   root.addEventListener("change", render);

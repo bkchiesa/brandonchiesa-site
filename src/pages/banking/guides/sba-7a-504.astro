@@ -2,7 +2,7 @@
 import DisclaimerLine from "../../../components/banking/DisclaimerLine.astro";
 import BankingShell from "../../../components/banking/BankingShell.astro";
 import HowTo from "../../../components/banking/HowTo.astro";
-import { LENDER_MATCH_URL, REVIEWED_LINE, SBA_GUIDE_DESCRIPTION, SBA_GUIDE_STEPS } from "../../../data/banking/copy";
+import { REVIEWED_LINE, SBA_GUIDE_DESCRIPTION, SBA_GUIDE_STEPS } from "../../../data/banking/copy";
 import { SBA_GUIDE_PATH } from "../../../data/banking/tools";
 import { bankingCards } from "../../../lib/banking/downloads";
 import { BANKING_CRUMB, HOME_CRUMB, breadcrumbJsonLd, graphJsonLd, webPageJsonLd } from "../../../lib/banking/seo";
@@ -76,7 +76,7 @@ const jsonLd = graphJsonLd([
     <h2 class="bank-section-title">The steps</h2>
     <ol class="bank-steps">
       <li>Get your numbers in order: tax returns, year-to-date financials, debt schedule, and a personal financial statement.</li>
-      <li>Talk with a lender early about whether SBA or a conventional loan fits. <a href={LENDER_MATCH_URL}>SBA Lender Match</a> can connect you with SBA lenders.</li>
+      <li>Talk with your own lender early about whether SBA or a conventional loan fits.</li>
       <li>The lender reviews the file, orders any third-party reports, and either uses delegated authority or submits the request to SBA.</li>
       <li>Closing waits on documents, insurance, and those reports. Ask the lender for a realistic timeline for your deal.</li>
     </ol>
