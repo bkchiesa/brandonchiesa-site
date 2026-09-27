@@ -8,9 +8,10 @@ Site: https://brandonchiesa.com/
 
 ## Rooms
 
-- [Home / menu](https://brandonchiesa.com/): Intro video (play once) then a looping valley behind cream mist labels (Career, Coding, Videography, Contact). Rooms open as leather texture panels.
+- [Home / menu](https://brandonchiesa.com/): Looping valley behind cream mist labels (Career, Coding, Banking, Videography, Contact). Rooms open as leather texture panels.
 - [Career](https://brandonchiesa.com/career/): Public bio — Education, Work, Community.
 - [Coding](https://brandonchiesa.com/coding/): Apps and builds — Sensei Moose's Dojo, an anonymized Italy travel app, and a coming-soon plate.
+- [Banking](https://brandonchiesa.com/banking/): Educational calculators and placeholder templates. Not a lending decision.
 - [Videography](https://brandonchiesa.com/videography/): Public YouTube stills gallery from @brandonchiesa3886 and @chiesab. Plays on-site via privacy-enhanced embeds.
 - [Contact](https://brandonchiesa.com/contact/): X @bkchiesa and LinkedIn. No email.
 
@@ -34,6 +35,17 @@ Roots and Now are unpublished. Old `/work/` `/make/` `/go/` URLs redirect to the
 - YouTube: https://www.youtube.com/@chiesab
 - X: https://x.com/bkchiesa
 - LinkedIn: https://www.linkedin.com/in/bkchiesa
+
+## Banking tools
+
+Educational estimates typed into the page. Nothing is sent to a server. Not a loan offer, a credit decision, or an employer page. SBA questions are draft placeholders. Download files marked PLACEHOLDER are not real templates.
+
+- [Banking hub](https://brandonchiesa.com/banking/): Calculators and templates.
+- [Loan calculator](https://brandonchiesa.com/banking/loan-calculator/): Monthly payment, interest, total paid, and an amortization schedule (CSV).
+- [DSCR calculator](https://brandonchiesa.com/banking/dscr-calculator/): Debt service coverage ratio and maximum debt service at a target ratio.
+- [SBA eligibility quick-check](https://brandonchiesa.com/banking/sba-eligibility/): Draft yes/no read for SBA 7(a)/504. Not an eligibility determination.
+- [Break-even calculator](https://brandonchiesa.com/banking/break-even-calculator/): Units and revenue to cover fixed costs, plus an optional profit target.
+- [Templates](https://brandonchiesa.com/banking/templates/): Placeholder downloads — loan package checklist, cash flow projection, SBA loan prep guide, personal financial statement, business debt schedule.
 
 ## Optional
 

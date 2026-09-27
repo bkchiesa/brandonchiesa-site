@@ -28,8 +28,9 @@ export const YOUTUBE_CHANNELS = [
   },
 ] as const;
 
-export type RoomId = "career" | "coding" | "videography" | "contact";
-export type LetteredRoomId = Exclude<RoomId, "contact">;
+export type RoomId = "career" | "coding" | "banking" | "videography" | "contact";
+/** Career, Coding, and Videography keep room letters. Banking and Contact do not. */
+export type LetteredRoomId = Exclude<RoomId, "contact" | "banking">;
 
 export interface Room {
   id: RoomId;
@@ -53,6 +54,12 @@ export const rooms: Room[] = [
     name: "Coding",
     blurb: "Apps & builds",
     path: "coding/",
+  },
+  {
+    id: "banking",
+    name: "Banking",
+    blurb: "Calculators and templates",
+    path: "banking/",
   },
   {
     id: "videography",

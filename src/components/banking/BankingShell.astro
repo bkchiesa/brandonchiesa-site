@@ -1,0 +1,38 @@
+---
+import { existsSync } from "node:fs";
+import { join } from "node:path";
+import "../../styles/banking.css";
+import Base from "../../layouts/Base.astro";
+import { ART, artUrl } from "../../lib/art";
+import LeatherPad from "../LeatherPad.astro";
+import SiteFooter from "../SiteFooter.astro";
+import SiteHeader from "../SiteHeader.astro";
+import VideoShell from "../VideoShell.astro";
+
+interface Props {
+  title: string;
+  description: string;
+  jsonLd: Record<string, unknown>;
+}
+
+const { title, description, jsonLd } = Astro.props;
+const brassRel = ART.v3.careerBrassRule;
+const hasBrass = existsSync(join(process.cwd(), "public", brassRel));
+const brassUrl = hasBrass ? artUrl(brassRel) : "";
+---
+
+<Base title={title} description={description} room="banking" videoShell jsonLd={jsonLd}>
+  <VideoShell />
+  <LeatherPad title={title}>
+    <SiteHeader current="banking" showLetter={false} />
+    <main
+      id="main"
+      class="page-main banking-room"
+      data-brass={hasBrass ? "true" : "false"}
+      style={brassUrl ? `--career-brass-rule: url('${brassUrl}')` : undefined}
+    >
+      <slot />
+    </main>
+    <SiteFooter showDisclaimer />
+  </LeatherPad>
+</Base>

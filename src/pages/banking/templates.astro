@@ -1,0 +1,48 @@
+---
+import BankNote from "../../components/banking/BankNote.astro";
+import BankingShell from "../../components/banking/BankingShell.astro";
+import { bankingTemplateFiles } from "../../lib/banking/downloads";
+import {
+  BANKING_CRUMB,
+  HOME_CRUMB,
+  breadcrumbJsonLd,
+  collectionJsonLd,
+  graphJsonLd,
+} from "../../lib/banking/seo";
+import { withBase } from "../../lib/site";
+
+const description =
+  "Download placeholder banking templates: loan package checklist, cash flow projection, SBA prep guide, personal financial statement, and business debt schedule. No sign-up.";
+const files = bankingTemplateFiles();
+const jsonLd = graphJsonLd([
+  collectionJsonLd({
+    name: "Banking templates",
+    path: "/banking/templates/",
+    description,
+    items: files.map((file) => ({ name: file.title, path: `/${file.href}` })),
+  }),
+  breadcrumbJsonLd([HOME_CRUMB, BANKING_CRUMB, { name: "Templates", path: "/banking/templates/" }]),
+]);
+---
+
+<BankingShell title="Banking templates" description={description} jsonLd={jsonLd}>
+  <p class="bank-back"><a href={withBase("banking/")}>All banking tools</a></p>
+  <h1 class="room-title">Templates</h1>
+  <p class="lede">Download a file. No sign-up. Each one is a placeholder until the real template arrives.</p>
+  <ul class="bank-grid">
+    {
+      files.map((file) => (
+        <li>
+          <a class="bank-card" href={withBase(file.href)} download>
+            <h3 class="bank-card-title">{file.title}</h3>
+            <p class="bank-card-copy">{file.description}</p>
+            <p class="bank-card-meta">
+              {file.typeLabel} · {file.sizeLabel}
+            </p>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+  <BankNote />
+</BankingShell>

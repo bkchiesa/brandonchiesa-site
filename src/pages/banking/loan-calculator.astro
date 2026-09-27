@@ -1,0 +1,178 @@
+---
+import BankNote from "../../components/banking/BankNote.astro";
+import BankingShell from "../../components/banking/BankingShell.astro";
+import { calculateLoan, formatUsd } from "../../lib/banking/calc";
+import {
+  BANKING_CRUMB,
+  HOME_CRUMB,
+  breadcrumbJsonLd,
+  calculatorJsonLd,
+  graphJsonLd,
+} from "../../lib/banking/seo";
+import { withBase } from "../../lib/site";
+
+const description =
+  "Estimate a monthly loan payment, total interest, and an amortization schedule. Optional balloon. Runs in the browser. Educational, not a loan offer.";
+const example = {
+  principal: 200_000,
+  annualRatePercent: 6,
+  termCount: 10,
+  termUnit: "years" as const,
+};
+const initial = calculateLoan(example);
+if (!initial.ok) throw new Error(initial.error);
+
+const jsonLd = graphJsonLd([
+  calculatorJsonLd({
+    name: "Loan calculator",
+    path: "/banking/loan-calculator/",
+    description,
+  }),
+  breadcrumbJsonLd([
+    HOME_CRUMB,
+    BANKING_CRUMB,
+    { name: "Loan calculator", path: "/banking/loan-calculator/" },
+  ]),
+]);
+---
+
+<BankingShell title="Loan calculator" description={description} jsonLd={jsonLd}>
+  <div data-loan-calculator>
+    <p class="bank-back"><a href={withBase("banking/")}>All banking tools</a></p>
+    <h1 class="room-title">Loan calculator</h1>
+    <p class="lede">Payment, interest, and a schedule you can download. The example below is filled in so you can change any number and see a new answer.</p>
+
+    <div class="bank-fields bank-fields--split">
+      <p class="bank-field">
+        <label for="loan-principal">Loan amount</label>
+        <input
+          id="loan-principal"
+          data-field="principal"
+          type="text"
+          inputmode="decimal"
+          autocomplete="off"
+          spellcheck="false"
+          value={example.principal}
+        />
+      </p>
+      <p class="bank-field">
+        <label for="loan-rate">Annual interest rate (%)</label>
+        <input
+          id="loan-rate"
+          data-field="rate"
+          type="text"
+          inputmode="decimal"
+          autocomplete="off"
+          spellcheck="false"
+          value={example.annualRatePercent}
+        />
+      </p>
+      <div class="bank-field">
+        <label for="loan-term">Term</label>
+        <div class="bank-term">
+          <input
+            id="loan-term"
+            data-field="term"
+            type="text"
+            inputmode="decimal"
+            autocomplete="off"
+            spellcheck="false"
+            value={example.termCount}
+          />
+          <div class="bank-segment" role="group" aria-label="Term unit">
+            <label>
+              <input type="radio" name="loan-term-unit" value="years" checked />
+              <span>Years</span>
+            </label>
+            <label>
+              <input type="radio" name="loan-term-unit" value="months" />
+              <span>Months</span>
+            </label>
+          </div>
+        </div>
+      </div>
+      <p class="bank-field">
+        <label for="loan-balloon">Balloon at the end (optional)</label>
+        <input
+          id="loan-balloon"
+          data-field="balloon"
+          type="text"
+          inputmode="decimal"
+          autocomplete="off"
+          spellcheck="false"
+          placeholder="Leave blank if none"
+        />
+      </p>
+    </div>
+
+    <div class="bank-results" role="status" aria-live="polite" aria-atomic="true" aria-label="Results">
+      <dl class="bank-stats">
+        <div>
+          <dt>Monthly payment</dt>
+          <dd data-out="payment">{formatUsd(initial.monthlyPayment)}</dd>
+        </div>
+        <div>
+          <dt>Total interest</dt>
+          <dd data-out="interest">{formatUsd(initial.totalInterest)}</dd>
+        </div>
+        <div>
+          <dt>Total paid</dt>
+          <dd data-out="total">{formatUsd(initial.totalPaid)}</dd>
+        </div>
+      </dl>
+      <p class="bank-summary" data-out="summary">{initial.summary}</p>
+    </div>
+
+    <div class="bank-actions" style="margin-top: 0.85rem;">
+      <button class="bank-btn" type="button" data-csv>Download CSV</button>
+    </div>
+
+    <details class="bank-schedule">
+      <summary>Amortization schedule</summary>
+      <div class="bank-actions" style="margin-top: 0.75rem;">
+        <button class="bank-btn bank-btn--quiet" type="button" data-schedule-mode="year" aria-pressed="true">
+          By year
+        </button>
+        <button class="bank-btn bank-btn--quiet" type="button" data-schedule-mode="month" aria-pressed="false">
+          Monthly
+        </button>
+      </div>
+      <p class="bank-help">By year is the easier read on a phone. The last row may differ by a few cents so the balance lands on zero. A balloon, if you entered one, is its own row.</p>
+      <div class="bank-table-wrap">
+        <table class="bank-table">
+          <caption class="sr-only" data-schedule-caption>Amortization by year</caption>
+          <thead>
+            <tr>
+              <th scope="col" data-period-head>Year</th>
+              <th scope="col">Payment</th>
+              <th scope="col">Interest</th>
+              <th scope="col">Principal</th>
+              <th scope="col">Ending balance</th>
+            </tr>
+          </thead>
+          <tbody data-schedule-body>
+            {
+              initial.years.map((year) => (
+                <tr>
+                  <th scope="row">Year {year.year}</th>
+                  <td>{formatUsd(year.payment)}</td>
+                  <td>{formatUsd(year.interest)}</td>
+                  <td>{formatUsd(year.principal)}</td>
+                  <td>{formatUsd(year.balance)}</td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+    </details>
+    <BankNote />
+  </div>
+</BankingShell>
+
+<script>
+  import { bindLoanCalculator } from "../../scripts/banking/loan";
+
+  const root = document.querySelector("[data-loan-calculator]");
+  if (root instanceof HTMLElement) bindLoanCalculator(root);
+</script>

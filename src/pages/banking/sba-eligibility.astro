@@ -1,0 +1,85 @@
+---
+import BankNote from "../../components/banking/BankNote.astro";
+import BankingShell from "../../components/banking/BankingShell.astro";
+import { SBA_DISCLAIMER } from "../../data/banking/copy";
+import { SBA_QUESTIONS, SBA_RULES_NOTE } from "../../data/banking/sba-eligibility";
+import { evaluateSba } from "../../lib/banking/calc";
+import {
+  BANKING_CRUMB,
+  HOME_CRUMB,
+  breadcrumbJsonLd,
+  calculatorJsonLd,
+  graphJsonLd,
+} from "../../lib/banking/seo";
+import { withBase } from "../../lib/site";
+
+const description =
+  "A short educational yes/no check for SBA 7(a) and 504 eligibility. Draft questions, plain-English result, and a reminder that a lender makes the real decision.";
+const initial = evaluateSba({}, SBA_QUESTIONS);
+const jsonLd = graphJsonLd([
+  calculatorJsonLd({
+    name: "SBA eligibility quick-check",
+    path: "/banking/sba-eligibility/",
+    description,
+  }),
+  breadcrumbJsonLd([
+    HOME_CRUMB,
+    BANKING_CRUMB,
+    { name: "SBA eligibility", path: "/banking/sba-eligibility/" },
+  ]),
+]);
+---
+
+<BankingShell title="SBA eligibility" description={description} jsonLd={jsonLd}>
+  <div data-sba-check>
+    <p class="bank-back"><a href={withBase("banking/")}>All banking tools</a></p>
+    <h1 class="room-title">SBA eligibility</h1>
+    <p class="lede">A quick read on a 7(a) or 504 conversation. Answer each question. Nothing is saved or sent.</p>
+    <p class="bank-kicker">{SBA_RULES_NOTE}</p>
+
+    <div class="bank-questions">
+      {
+        SBA_QUESTIONS.map((question, index) => (
+          <fieldset class="bank-q">
+            <legend>
+              <span class="bank-q-index">
+                {index + 1} of {SBA_QUESTIONS.length}
+              </span>
+              {question.prompt}
+            </legend>
+            <p class="bank-help" id={`${question.id}-help`}>
+              {question.detail}
+            </p>
+            <div class="bank-choices">
+              {question.choices.map((choice) => (
+                <label class="bank-choice">
+                  <input
+                    type="radio"
+                    name={question.id}
+                    value={choice.value}
+                    aria-describedby={`${question.id}-help`}
+                  />
+                  <span>{choice.label}</span>
+                </label>
+              ))}
+            </div>
+          </fieldset>
+        ))
+      }
+    </div>
+
+    <div class="bank-results" role="status" aria-live="polite" aria-atomic="true" aria-label="Results">
+      <h2 class="bank-section-title" data-out="headline">{initial.headline}</h2>
+      <p class="bank-summary" data-out="summary">{initial.summary}</p>
+      <ul class="bank-reasons" data-reasons hidden></ul>
+    </div>
+    <BankNote extra={SBA_DISCLAIMER} />
+  </div>
+</BankingShell>
+
+<script>
+  import { bindSbaCheck } from "../../scripts/banking/sba";
+
+  const root = document.querySelector("[data-sba-check]");
+  if (root instanceof HTMLElement) bindSbaCheck(root);
+</script>

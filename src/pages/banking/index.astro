@@ -1,0 +1,68 @@
+---
+import BankNote from "../../components/banking/BankNote.astro";
+import BankingShell from "../../components/banking/BankingShell.astro";
+import { BANKING_INTRO } from "../../data/banking/copy";
+import { BANKING_TEMPLATES } from "../../data/banking/templates";
+import { BANKING_CALCULATORS, BANKING_TEMPLATES_PATH } from "../../data/banking/tools";
+import { bankingTemplateFiles } from "../../lib/banking/downloads";
+import { BANKING_CRUMB, HOME_CRUMB, breadcrumbJsonLd, collectionJsonLd, graphJsonLd } from "../../lib/banking/seo";
+import { withBase } from "../../lib/site";
+
+const description =
+  "Free banking calculators and starter templates from Brandon Chiesa: loan payment, DSCR, SBA quick-check, and break-even. Educational, not a lending decision.";
+const files = bankingTemplateFiles();
+const jsonLd = graphJsonLd([
+  collectionJsonLd({
+    name: "Banking",
+    path: "/banking/",
+    description,
+    items: [
+      ...BANKING_CALCULATORS.map((tool) => ({ name: tool.title, path: tool.path })),
+      { name: "Templates", path: BANKING_TEMPLATES_PATH },
+      ...BANKING_TEMPLATES.map((file) => ({ name: file.title, path: `/${file.href}` })),
+    ],
+  }),
+  breadcrumbJsonLd([HOME_CRUMB, BANKING_CRUMB]),
+]);
+---
+
+<BankingShell title="Banking" description={description} jsonLd={jsonLd}>
+  <h1 class="room-title">Banking</h1>
+  <p class="lede">{BANKING_INTRO}</p>
+
+  <h2 class="bank-group-title">Calculators</h2>
+  <ul class="bank-grid">
+    {
+      BANKING_CALCULATORS.map((tool) => (
+        <li>
+          <a class="bank-card" href={withBase(tool.path)}>
+            <h3 class="bank-card-title">{tool.title}</h3>
+            <p class="bank-card-copy">{tool.description}</p>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+
+  <h2 class="bank-group-title" id="templates">Templates</h2>
+  <p class="bank-group-note">No sign-up. The files below are placeholders until the final templates arrive.</p>
+  <ul class="bank-grid">
+    {
+      files.map((file) => (
+        <li>
+          <a class="bank-card" href={withBase(file.href)} download>
+            <h3 class="bank-card-title">{file.title}</h3>
+            <p class="bank-card-copy">{file.description}</p>
+            <p class="bank-card-meta">
+              {file.typeLabel} · {file.sizeLabel}
+            </p>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+  <p class="bank-more">
+    <a href={withBase(BANKING_TEMPLATES_PATH)}>Open the templates page</a>
+  </p>
+  <BankNote />
+</BankingShell>

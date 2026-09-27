@@ -1,0 +1,215 @@
+---
+import BankNote from "../../components/banking/BankNote.astro";
+import BankingShell from "../../components/banking/BankingShell.astro";
+import { calculateDscr, formatUsd } from "../../lib/banking/calc";
+import {
+  BANKING_CRUMB,
+  HOME_CRUMB,
+  breadcrumbJsonLd,
+  calculatorJsonLd,
+  graphJsonLd,
+} from "../../lib/banking/seo";
+import { withBase } from "../../lib/site";
+
+const description =
+  "Estimate a DSCR from net operating income and annual debt service, or from a sample loan. See how it compares with 1.00, 1.20, and 1.25. Educational only.";
+const example = { noi: 150_000, annualDebtService: 120_000, targetDscr: 1.25 };
+const initial = calculateDscr(example);
+if (!initial.ok) throw new Error(initial.error);
+
+const jsonLd = graphJsonLd([
+  calculatorJsonLd({
+    name: "DSCR calculator",
+    path: "/banking/dscr-calculator/",
+    description,
+  }),
+  breadcrumbJsonLd([
+    HOME_CRUMB,
+    BANKING_CRUMB,
+    { name: "DSCR calculator", path: "/banking/dscr-calculator/" },
+  ]),
+]);
+---
+
+<BankingShell title="DSCR calculator" description={description} jsonLd={jsonLd}>
+  <div data-dscr-calculator>
+    <p class="bank-back"><a href={withBase("banking/")}>All banking tools</a></p>
+    <h1 class="room-title">DSCR calculator</h1>
+    <p class="lede">Debt service coverage is cash flow divided by the debt payments due in a year. Change a number and the read updates.</p>
+
+    <div class="bank-fields">
+      <fieldset class="bank-q">
+        <legend>Cash flow</legend>
+        <div class="bank-segment" role="group" aria-label="How to enter cash flow">
+          <label>
+            <input type="radio" name="noi-mode" value="direct" checked />
+            <span>Net operating income</span>
+          </label>
+          <label>
+            <input type="radio" name="noi-mode" value="built" />
+            <span>Revenue and expenses</span>
+          </label>
+        </div>
+        <p class="bank-field" data-panel="noi" data-mode="direct">
+          <label for="dscr-noi">Annual net operating income</label>
+          <input
+            id="dscr-noi"
+            data-field="noi"
+            type="text"
+            inputmode="decimal"
+            autocomplete="off"
+            spellcheck="false"
+            value={example.noi}
+          />
+        </p>
+        <div class="bank-fields bank-fields--split" data-panel="noi" data-mode="built" hidden>
+          <p class="bank-field">
+            <label for="dscr-revenue">Annual revenue</label>
+            <input
+              id="dscr-revenue"
+              data-field="revenue"
+              type="text"
+              inputmode="decimal"
+              autocomplete="off"
+              spellcheck="false"
+              value="200000"
+            />
+          </p>
+          <p class="bank-field">
+            <label for="dscr-expenses">Cash operating expenses</label>
+            <input
+              id="dscr-expenses"
+              data-field="expenses"
+              type="text"
+              inputmode="decimal"
+              autocomplete="off"
+              spellcheck="false"
+              value="50000"
+            />
+          </p>
+          <p class="bank-help bank-field--wide">
+            Placeholder EBITDA-style math: revenue minus cash operating expenses. Leave interest, taxes, depreciation, and amortization out of the expenses if that is the cash flow you mean.
+          </p>
+        </div>
+      </fieldset>
+
+      <fieldset class="bank-q">
+        <legend>Debt service</legend>
+        <div class="bank-segment" role="group" aria-label="How to enter debt service">
+          <label>
+            <input type="radio" name="debt-mode" value="direct" checked />
+            <span>Annual amount</span>
+          </label>
+          <label>
+            <input type="radio" name="debt-mode" value="loan" />
+            <span>From a loan</span>
+          </label>
+        </div>
+        <p class="bank-field" data-panel="debt" data-mode="direct">
+          <label for="dscr-debt">Annual debt service</label>
+          <input
+            id="dscr-debt"
+            data-field="debt"
+            type="text"
+            inputmode="decimal"
+            autocomplete="off"
+            spellcheck="false"
+            value={example.annualDebtService}
+          />
+        </p>
+        <div class="bank-fields bank-fields--split" data-panel="debt" data-mode="loan" hidden>
+          <p class="bank-field">
+            <label for="dscr-principal">Loan amount</label>
+            <input
+              id="dscr-principal"
+              data-field="principal"
+              type="text"
+              inputmode="decimal"
+              autocomplete="off"
+              spellcheck="false"
+              value="500000"
+            />
+          </p>
+          <p class="bank-field">
+            <label for="dscr-rate">Annual interest rate (%)</label>
+            <input
+              id="dscr-rate"
+              data-field="rate"
+              type="text"
+              inputmode="decimal"
+              autocomplete="off"
+              spellcheck="false"
+              value="7"
+            />
+          </p>
+          <div class="bank-field bank-field--wide">
+            <label for="dscr-term">Term</label>
+            <div class="bank-term">
+              <input
+                id="dscr-term"
+                data-field="term"
+                type="text"
+                inputmode="decimal"
+                autocomplete="off"
+                spellcheck="false"
+                value="10"
+              />
+              <div class="bank-segment" role="group" aria-label="Loan term unit">
+                <label>
+                  <input type="radio" name="dscr-term-unit" value="years" checked />
+                  <span>Years</span>
+                </label>
+                <label>
+                  <input type="radio" name="dscr-term-unit" value="months" />
+                  <span>Months</span>
+                </label>
+              </div>
+            </div>
+          </div>
+          <p class="bank-help bank-field--wide">
+            Annual debt service is the monthly payment times 12, or times a shorter term. A balloon payoff is not included.
+          </p>
+        </div>
+      </fieldset>
+
+      <p class="bank-field">
+        <label for="dscr-target">Target DSCR</label>
+        <input
+          id="dscr-target"
+          data-field="target"
+          type="text"
+          inputmode="decimal"
+          autocomplete="off"
+          spellcheck="false"
+          value={example.targetDscr}
+        />
+      </p>
+    </div>
+
+    <div class="bank-results" role="status" aria-live="polite" aria-atomic="true" aria-label="Results">
+      <dl class="bank-stats">
+        <div>
+          <dt>DSCR</dt>
+          <dd data-out="dscr">{initial.dscrLabel}</dd>
+        </div>
+        <div>
+          <dt>Annual debt service</dt>
+          <dd data-out="debt">{formatUsd(initial.annualDebtService)}</dd>
+        </div>
+        <div>
+          <dt>Max at target</dt>
+          <dd data-out="max">{formatUsd(initial.maxDebtService)}</dd>
+        </div>
+      </dl>
+      <p class="bank-summary" data-out="summary">{initial.summary}</p>
+    </div>
+    <BankNote />
+  </div>
+</BankingShell>
+
+<script>
+  import { bindDscrCalculator } from "../../scripts/banking/dscr";
+
+  const root = document.querySelector("[data-dscr-calculator]");
+  if (root instanceof HTMLElement) bindDscrCalculator(root);
+</script>
