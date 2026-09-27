@@ -37,7 +37,6 @@ const jsonLd = graphJsonLd([
             <h3 class="bank-card-title">{tool.title}</h3>
             <p class="bank-card-copy">{tool.description}</p>
           </a>
-          <DisclaimerLine />
         </li>
       ))
     }
@@ -48,4 +47,5 @@ const jsonLd = graphJsonLd([
     {cards.map((card) => <TemplateCard card={card} />)}
   </div>
   <p class="bank-reviewed">{REVIEWED_LINE}</p>
+  <DisclaimerLine />
 </BankingShell>

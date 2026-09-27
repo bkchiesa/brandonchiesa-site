@@ -1,7 +1,6 @@
 ---
 import type { BankingCardView } from "../../lib/banking/downloads";
 import { withBase } from "../../lib/site";
-import DisclaimerLine from "./DisclaimerLine.astro";
 
 interface Props {
   card: BankingCardView;
@@ -40,6 +39,5 @@ const { card, heading: Heading = "h3", description = card.description, steps } =
         </a>
       ))
     }
-  </div>
-  <DisclaimerLine />
+    </div>
 </article>

@@ -1,5 +1,6 @@
 ---
 import BankingShell from "../../components/banking/BankingShell.astro";
+import DisclaimerLine from "../../components/banking/DisclaimerLine.astro";
 import TemplateCard from "../../components/banking/TemplateCard.astro";
 import {
   CASH_FLOW_DESCRIPTION,
@@ -56,4 +57,5 @@ const jsonLd = graphJsonLd([
       ))
     }
   </div>
+  <DisclaimerLine />
 </BankingShell>
