@@ -1,0 +1,43 @@
+---
+import type { BankingCardView } from "../../lib/banking/downloads";
+import { withBase } from "../../lib/site";
+
+interface Props {
+  card: BankingCardView;
+  heading?: "h2" | "h3";
+  description?: string;
+  steps?: readonly string[];
+}
+
+const { card, heading: Heading = "h3", description = card.description, steps } = Astro.props;
+---
+
+<article class="bank-card bank-card--static" id={card.id}>
+  <Heading class="bank-card-title">
+    {card.page ? <a href={withBase(card.page)}>{card.title}</a> : card.title}
+  </Heading>
+  <p class="bank-card-copy">{description}</p>
+  {
+    steps && (
+      <ol class="bank-steps">
+        {steps.map((step) => (
+          <li>{step}</li>
+        ))}
+      </ol>
+    )
+  }
+  <div class="bank-file-row">
+    {
+      card.files.map((file) => (
+        <a
+          class="bank-btn bank-btn--quiet"
+          href={withBase(file.href)}
+          {...file.open === "preview" ? { target: "_blank", rel: "noopener" } : { download: "" }}
+        >
+          {file.open === "preview" ? "Preview" : "Download"} {file.typeLabel}
+          <span class="bank-btn-size"> · {file.sizeLabel}</span>
+        </a>
+      ))
+    }
+    </div>
+</article>

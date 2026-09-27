@@ -9,9 +9,12 @@ interface Props {
   room?: string;
   house?: boolean;
   videoShell?: boolean;
+  /** Extra JSON-LD graph. Person schema stays on every page. */
+  jsonLd?: Record<string, unknown>;
 }
 
-const { title, description = SITE_DESCRIPTION, room, house = false, videoShell = false } = Astro.props;
+const { title, description = SITE_DESCRIPTION, room, house = false, videoShell = false, jsonLd } = Astro.props;
+const extraJsonLd = jsonLd ? JSON.stringify(jsonLd).replace(/</g, "\\u003c") : "";
 const pageTitle = title ? `${title} — ${SITE_NAME}` : `${SITE_NAME} — ${SITE_TAGLINE}`;
 const canonical = new URL(Astro.url.pathname, SITE_CANONICAL).href;
 const ogImage = new URL(withBase("og.png"), SITE_CANONICAL).href;
@@ -71,6 +74,7 @@ const personJsonLd = {
       rel="stylesheet"
     />
     <script type="application/ld+json" set:html={JSON.stringify(personJsonLd)} />
+    {extraJsonLd && <script type="application/ld+json" set:html={extraJsonLd} />}
   </head>
   <body
     class:list={[videoShell && "has-video-shell"]}

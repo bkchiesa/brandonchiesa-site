@@ -28,8 +28,9 @@ export const YOUTUBE_CHANNELS = [
   },
 ] as const;
 
-export type RoomId = "career" | "coding" | "videography" | "contact";
-export type LetteredRoomId = Exclude<RoomId, "contact">;
+export type RoomId = "career" | "coding" | "banking" | "videography" | "contact";
+/** Career, Coding, and Videography keep room letters. Banking and Contact do not. */
+export type LetteredRoomId = Exclude<RoomId, "contact" | "banking">;
 
 export interface Room {
   id: RoomId;
@@ -55,6 +56,12 @@ export const rooms: Room[] = [
     path: "coding/",
   },
   {
+    id: "banking",
+    name: "Banking",
+    blurb: "Calculators and templates",
+    path: "banking/",
+  },
+  {
     id: "videography",
     letter: "C",
     name: "Videography",
@@ -71,12 +78,15 @@ export const rooms: Room[] = [
 
 export function withBase(path = ""): string {
   const base = import.meta.env.BASE_URL;
-  const normalized = path.replace(/^\//, "");
-  if (!normalized) return base;
+  const hashAt = path.indexOf("#");
+  const hash = hashAt === -1 ? "" : path.slice(hashAt);
+  const withoutHash = hashAt === -1 ? path : path.slice(0, hashAt);
+  const normalized = withoutHash.replace(/^\//, "");
+  if (!normalized) return `${base}${hash}`;
   if (normalized.includes(".") && !normalized.endsWith("/")) {
-    return `${base}${normalized}`;
+    return `${base}${normalized}${hash}`;
   }
-  return `${base}${normalized}${normalized.endsWith("/") ? "" : "/"}`;
+  return `${base}${normalized}${normalized.endsWith("/") ? "" : "/"}${hash}`;
 }
 
 export const SITE_DISCLAIMER =
