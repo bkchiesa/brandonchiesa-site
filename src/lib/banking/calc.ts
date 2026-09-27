@@ -245,7 +245,7 @@ export function loanSummary(input: {
   balloon: number;
 }): string {
   const lines = [
-    `Estimated monthly payment: ${formatUsd(input.payment)}`,
+    `Estimated monthly payment: ${formatUsd(input.payment)}.`,
     `Over ${input.n} months you would pay about ${formatUsd(input.totalInterest)} in interest, ${formatUsd(input.totalPaid)} in total.`,
   ];
   if (input.balloon > 0) {

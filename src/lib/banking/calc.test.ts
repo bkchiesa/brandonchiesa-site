@@ -45,7 +45,7 @@ describe("specs.md loan cases", () => {
     expect(loan.totalInterest).toBe(106105.48);
     expect(loan.totalPaid).toBe(356105.48);
     expect(loanSummary({ ...loan, n: 120, annualRatePct: 7.5 })).toBe(
-      "Estimated monthly payment: $2,967.54 Over 120 months you would pay about $106,105.48 in interest, $356,105.48 in total.",
+      "Estimated monthly payment: $2,967.54. Over 120 months you would pay about $106,105.48 in interest, $356,105.48 in total.",
     );
   });
 
