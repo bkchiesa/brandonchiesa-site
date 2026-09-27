@@ -81,6 +81,12 @@ const jsonLd = graphJsonLd([
     <p class="bank-summary" data-waiting>{MSG.sbaIncomplete}</p>
     <div class="bank-results" data-results hidden aria-live="polite">
       <p class="bank-summary" data-out="summary"></p>
+      <details class="bank-math">
+        <summary>Show the math</summary>
+        <p>
+          Each question has one answer that raises a possible issue. If any of those answers is selected, the result lists that issue. If none are selected and some answers are Not sure, the result asks you to confirm those items. If every answer is in the fit direction, the result is a possible fit. Unsure on every question adds a note to talk with a lender. This is a checklist of basic rules, not a score.
+        </p>
+      </details>
       <p>
         <a data-lender-link href={LENDER_MATCH_URL} hidden>Talk to a lender</a>
       </p>
