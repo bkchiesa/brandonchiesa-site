@@ -53,7 +53,7 @@ describe("about copy", () => {
       "Brandon Chiesa is a Vice President and Business Banker at First Citizens Bank, serving small businesses in Charlottesville, Albemarle, Fluvanna, Louisa, Greene, Nelson, Buckingham, Farmville, Prince Edward, and Cumberland.",
     );
     const bio = ABOUT_PARAGRAPHS.join(" ");
-    expect(bio).toMatch(/more than 15 years/);
+    expect(bio).toMatch(/over 20 years in banking/);
     expect(bio).toMatch(/BB&T/);
     expect(bio).toMatch(/Truist/);
     expect(bio).toMatch(/2008/);
