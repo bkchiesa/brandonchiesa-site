@@ -160,6 +160,16 @@ button {
   flex-wrap: wrap;
 }
 
+.site-footer nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: 0.35rem;
+  row-gap: 0.25rem;
+  min-width: 0;
+  max-width: 100%;
+}
+
 .brand-lockup {
   display: flex;
   flex-direction: column;

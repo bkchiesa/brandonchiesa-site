@@ -1,5 +1,5 @@
 ---
-import { SITE_DISCLAIMER, rooms, withBase } from "../lib/site";
+import { ABOUT_PATH, SITE_DISCLAIMER, rooms, withBase } from "../lib/site";
 
 interface Props {
   showDisclaimer?: boolean;
@@ -9,7 +9,7 @@ const { showDisclaimer = false } = Astro.props;
 ---
 
 <footer class="site-footer">
-  <nav aria-label="Rooms">
+  <nav aria-label="Site">
     <a class="mono" href={withBase()} data-home-link>Home</a>
     {
       rooms.map((room) => (
@@ -19,6 +19,8 @@ const { showDisclaimer = false } = Astro.props;
         </>
       ))
     }
+    <span aria-hidden="true"> · </span>
+    <a href={withBase(ABOUT_PATH)}>About</a>
   </nav>
   {
     showDisclaimer && (

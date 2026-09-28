@@ -4,6 +4,7 @@ import { join } from "node:path";
 import { ART, artUrl } from "../lib/art";
 import {
   rooms,
+  ABOUT_PATH,
   SITE_BIO,
   SITE_DISCLAIMER,
   SITE_NAME,
@@ -67,7 +68,11 @@ const plateUrl = hasPlate ? artUrl(plateRel) : "";
           Reduce motion
         </button>
       </div>
-      <p class="menu-disclaimer">{SITE_DISCLAIMER}</p>
+      <p class="menu-disclaimer">
+        <a href={withBase(ABOUT_PATH)}>About</a>
+        <span aria-hidden="true"> · </span>
+        {SITE_DISCLAIMER}
+      </p>
     </div>
   </section>
 </div>
