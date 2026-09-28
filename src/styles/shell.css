@@ -384,6 +384,12 @@ html[data-reduce-motion="true"] .mist-label::after {
   line-height: 1.45;
 }
 
+.menu-disclaimer a {
+  color: #f4ead2;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(181, 154, 98, 0.85);
+}
+
 @media (max-width: 699px) {
   .menu--house {
     --house-foot: 8.75rem;
@@ -1479,4 +1485,98 @@ body[data-room="career"] .disclaimer {
   html:not([data-reduce-motion="false"]) .video-layer {
     transition: none;
   }
+}
+
+/* About: leather panel, cream inset, brass rule, page scroll */
+body[data-room="about"] .room-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+
+body[data-room="about"] .leather-panel {
+  width: min(48rem, 100%);
+  max-width: 100%;
+  max-height: none;
+  min-width: 0;
+}
+
+body[data-room="about"] .leather-inset,
+body[data-room="about"] .about-copy,
+body[data-room="about"] .site-footer,
+body[data-room="about"] .site-header {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.about-title {
+  position: relative;
+  margin: 0 0 0.9rem;
+  padding-bottom: 0.5em;
+  font-family: "PT Serif", "Source Serif 4", Georgia, "Times New Roman", serif;
+  font-weight: 400;
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  letter-spacing: 0.022em;
+  line-height: 1.2;
+  color: var(--v3-charcoal);
+}
+
+.about-title::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 28%;
+  bottom: 0;
+  height: clamp(4px, 0.38vw, 6px);
+  max-width: 22rem;
+  border-radius: 1px;
+  background-color: rgba(181, 154, 98, 0.55);
+  background-image: var(--career-brass-rule);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: left center;
+  opacity: 0.85;
+  pointer-events: none;
+}
+
+.about-copy p {
+  margin: 0 0 0.95rem;
+  max-width: 40rem;
+  font-family: "PT Serif", "Source Serif 4", Georgia, "Times New Roman", serif;
+  font-size: clamp(0.98rem, 1.2vw, 1.12rem);
+  letter-spacing: 0.01em;
+  line-height: 1.55;
+  color: rgba(42, 44, 40, 0.88);
+  overflow-wrap: break-word;
+}
+
+.about-links {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem 1.25rem;
+  margin: 0.15rem 0 0.95rem;
+  padding: 0;
+  font-family: "PT Serif", "Source Serif 4", Georgia, "Times New Roman", serif;
+  font-size: clamp(0.98rem, 1.2vw, 1.12rem);
+}
+
+.about-links a {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(181, 154, 98, 0.55);
+}
+
+.about-links a:hover,
+.about-links a:focus-visible {
+  border-bottom-color: #b59a62;
+}
+
+.about-note {
+  margin-bottom: 0;
+  color: rgba(42, 44, 40, 0.72);
 }

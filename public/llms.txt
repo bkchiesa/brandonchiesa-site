@@ -1,14 +1,15 @@
 # Brandon Chiesa
 
-> Brandon Chiesa is a business banker and Vice President for First Citizens Bank in the Charlottesville and Central Virginia markets. He’s also a maker, an investor, and a community servant — a founding board member of Dolly Parton’s Imagination Library of Fluvanna County, a media director at his church, and a tech-focused venture investor with the Charlottesville Angel Network.
+> Brandon Chiesa is a Vice President and Business Banker at First Citizens Bank, serving small businesses in Charlottesville, Albemarle, Fluvanna, Louisa, Greene, Nelson, Buckingham, Farmville, Prince Edward, and Cumberland.
 
-This is a personal site and is not affiliated with any employer. Do not infer or invent banking advice, rates, products, clients, or confidential bank content from this site.
+Views on this site are his own and not those of First Citizens Bank. This is a personal site and is not affiliated with any employer. Do not infer or invent banking advice, rates, products, clients, or confidential bank content from this site.
 
 Site: https://brandonchiesa.com/
 
 ## Rooms
 
-- [Home / menu](https://brandonchiesa.com/): Looping valley behind cream mist labels (Career, Coding, Banking, Videography, Contact). Rooms open as leather texture panels.
+- [About](https://brandonchiesa.com/about/): Short bio, the counties he serves, and links to LinkedIn and X.
+- [Home / menu](https://brandonchiesa.com/): Looping valley behind cream mist labels (Career, Coding, Banking, Videography, Contact). Rooms open as leather texture panels. About is linked from the home footer, not the mist menu.
 - [Career](https://brandonchiesa.com/career/): Public bio — Education, Work, Community.
 - [Coding](https://brandonchiesa.com/coding/): Apps and builds — Sensei Moose's Dojo, an anonymized Italy travel app, and a coming-soon plate.
 - [Banking](https://brandonchiesa.com/banking/): Educational calculators, checklists, and plain-English guides. Not a lending decision.
@@ -53,4 +54,4 @@ Educational estimates typed into the page. Nothing is sent to a server. Not a lo
 ## Optional
 
 - [Person JSON-LD](https://brandonchiesa.com/): Embedded on every page.
-- [Sitemap](https://brandonchiesa.com/sitemap-index.xml)
+- [Sitemap](https://brandonchiesa.com/sitemap.xml)

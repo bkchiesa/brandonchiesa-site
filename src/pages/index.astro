@@ -2,10 +2,11 @@
 import HouseMenu from "../components/HouseMenu.astro";
 import VideoShell from "../components/VideoShell.astro";
 import Base from "../layouts/Base.astro";
+import { websiteJsonLd } from "../lib/seo";
 import { SITE_BIO_LEAD } from "../lib/site";
 ---
 
-<Base description={SITE_BIO_LEAD} house videoShell>
+<Base description={SITE_BIO_LEAD} house videoShell jsonLd={websiteJsonLd()}>
   <VideoShell />
   <main id="main">
     <HouseMenu />

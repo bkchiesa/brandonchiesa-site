@@ -6,9 +6,11 @@ interface Props {
   current?: RoomId;
   /** Room-letter chrome (A · Career). Off on Coding, Videography, and Contact. */
   showLetter?: boolean;
+  /** Plain header label when the page is not a mist-menu room. */
+  label?: string;
 }
 
-const { current, showLetter = true } = Astro.props;
+const { current, showLetter = true, label } = Astro.props;
 const room = rooms.find((item) => item.id === current);
 const useLetter = Boolean(showLetter && room?.letter);
 const icon = current && useLetter ? ART.icons[current as keyof typeof ART.icons] : undefined;
@@ -36,4 +38,5 @@ const icon = current && useLetter ? ART.icons[current as keyof typeof ART.icons]
       <p class="room-letter">{room.name}</p>
     )
   }
+  {!room && label && <p class="room-letter">{label}</p>}
 </header>

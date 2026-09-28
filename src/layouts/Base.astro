@@ -1,10 +1,13 @@
 ---
 import "../styles/global.css";
 import "../styles/shell.css";
-import { LINKEDIN_URL, SITE_BIO_LEAD, SITE_CANONICAL, SITE_DESCRIPTION, SITE_DISCLAIMER, SITE_NAME, SITE_TAGLINE, X_URL, withBase } from "../lib/site";
+import { personJsonLd } from "../lib/seo";
+import { SITE_CANONICAL, SITE_DESCRIPTION, SITE_DISCLAIMER, SITE_NAME, SITE_TAGLINE, X_HANDLE, withBase } from "../lib/site";
 
 interface Props {
   title?: string;
+  /** Full title tag. Skips the existing site-name suffix. */
+  documentTitle?: string;
   description?: string;
   room?: string;
   house?: boolean;
@@ -13,36 +16,24 @@ interface Props {
   jsonLd?: Record<string, unknown>;
 }
 
-const { title, description = SITE_DESCRIPTION, room, house = false, videoShell = false, jsonLd } = Astro.props;
+const {
+  title,
+  documentTitle,
+  description = SITE_DESCRIPTION,
+  room,
+  house = false,
+  videoShell = false,
+  jsonLd,
+} = Astro.props;
 const extraJsonLd = jsonLd ? JSON.stringify(jsonLd).replace(/</g, "\\u003c") : "";
-const pageTitle = title ? `${title} — ${SITE_NAME}` : `${SITE_NAME} — ${SITE_TAGLINE}`;
+const pageTitle = documentTitle
+  ? documentTitle
+  : title
+    ? `${title} — ${SITE_NAME}`
+    : `${SITE_NAME} — ${SITE_TAGLINE}`;
 const canonical = new URL(Astro.url.pathname, SITE_CANONICAL).href;
 const ogImage = new URL(withBase("og.png"), SITE_CANONICAL).href;
-const personJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "Person",
-  name: SITE_NAME,
-  url: SITE_CANONICAL,
-  description: SITE_BIO_LEAD,
-  alumniOf: {
-    "@type": "CollegeOrUniversity",
-    name: "Hampden-Sydney College",
-  },
-  jobTitle: "VP / Business Banker",
-  address: {
-    "@type": "PostalAddress",
-    addressLocality: "Charlottesville",
-    addressRegion: "VA",
-    addressCountry: "US",
-  },
-  sameAs: [
-    "https://www.youtube.com/@brandonchiesa3886",
-    "https://www.youtube.com/@chiesab",
-    "https://bkchiesa.github.io/Sensei-mooses-dojo/",
-    LINKEDIN_URL,
-    X_URL,
-  ],
-};
+const personJson = JSON.stringify(personJsonLd()).replace(/</g, "\\u003c");
 ---
 
 <!doctype html>
@@ -63,17 +54,23 @@ const personJsonLd = {
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={ogImage} />
+    <meta property="og:image:alt" content={SITE_NAME} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content={X_HANDLE} />
     <meta name="twitter:title" content={pageTitle} />
     <meta name="twitter:description" content={description} />
+    <meta name="twitter:url" content={canonical} />
     <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content={SITE_NAME} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=PT+Serif:wght@400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap"
       rel="stylesheet"
     />
-    <script type="application/ld+json" set:html={JSON.stringify(personJsonLd)} />
+    <script type="application/ld+json" set:html={personJson} />
     {extraJsonLd && <script type="application/ld+json" set:html={extraJsonLd} />}
   </head>
   <body

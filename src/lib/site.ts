@@ -91,3 +91,6 @@ export function withBase(path = ""): string {
 
 export const SITE_DISCLAIMER =
   "This is a personal site and is not affiliated with any employer.";
+
+/** Not a mist-menu room. Linked from the home footer and the room footer. */
+export const ABOUT_PATH = "about/";
