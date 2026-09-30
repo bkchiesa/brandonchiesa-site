@@ -129,7 +129,7 @@ describe("page titles and descriptions", () => {
     const descriptions = [
       SITE_BIO_LEAD,
       "Public bio of Brandon Chiesa: education, work, and community.",
-      "Apps Brandon Chiesa builds: Sensei Moose’s Dojo, an anonymized Italy travel app, and more to come.",
+      "Apps Brandon Chiesa builds: Sensei Moose’s Dojo, an anonymized Italy travel app, and Susie Bookkeeper.",
       BANKING_INTRO,
       LOAN_DESCRIPTION,
       DSCR_DESCRIPTION,
