@@ -1,5 +1,5 @@
 /**
- * Banking calculator math from the Sep 2026 content spec.
+ * Banking calculator math from the Oct 2026 content spec.
  * Money shown to the cent uses round2. Ratios shown to 2 decimals use a separate round.
  * Band thresholds use the unrounded DSCR.
  */
@@ -16,10 +16,10 @@ export const BREAK_EVEN_FOOTNOTE =
 export const SBA_RESULT_NOTE =
   "This quick-check is educational. It is not a determination of eligibility. SBA rules change; check SBA.gov or a lender.";
 export const SBA_RULES_NOTE =
-  "SBA rules change. This quick-check reflects SBA's basic rules as of September 2026. Check SBA.gov or a lender.";
+  "SBA rules change. This quick-check reflects SBA's basic rules as of October 1, 2026. Check SBA.gov or a lender.";
 export const ZERO_RATE_NOTE =
   "At 0% interest, your payment is simply the loan amount divided by the number of months.";
-export const REVIEWED = "Reviewed Sep 2026";
+export const REVIEWED = "Reviewed October 1, 2026";
 
 export const MSG = {
   principal: "Enter a loan amount greater than $0.",

@@ -122,11 +122,12 @@ export const SBA_QUESTIONS: readonly SbaQuestion[] = [
     key: "citizenship",
     prompt:
       "Are all owners (direct and indirect) U.S. citizens or U.S. nationals whose principal residence is in the U.S.?",
-    helper: "SBA revised these rules effective March 1, 2026. Confirm with a lender.",
+    helper:
+      "SOP 50 10 8.1 requires U.S. citizens or U.S. nationals with principal residence in the U.S., its territories, or possessions for owners and SBA-required guarantors. Confirm with a lender.",
     issueIf: "no",
     issue: "SBA's current ownership citizenship and residency rules may be an issue.",
     shortName: "citizenship and residency",
-    sourceLabel: "SBA Procedural Notice 5000-876626",
+    sourceLabel: "SOP 50 10 8.1 Section A, Ch. 1, Para. F; SBA Procedural Notice 5000-876626",
     sourceHref:
       "https://www.sba.gov/document/procedural-notice-5000-876626-revised-applicant-ownership-citizenship-residency-requirements-7a-504-loans",
   },
@@ -134,11 +135,11 @@ export const SBA_QUESTIONS: readonly SbaQuestion[] = [
     key: "equity",
     prompt: "Will the owners put their own money into the project?",
     helper:
-      "SBA sets equity rules for some loans (for example, startups and business purchases). For 504 projects, SBA describes at least 10% from the borrower.",
+      "Under SOP 50 10 8.1, startups (about one year of revenue or less) and many business purchases generally need at least 10% equity. Acquisition details vary by transaction type in Appendix 15. For 504 projects, SBA describes at least 10% from the borrower.",
     issueIf: "no",
     issue: "Lenders and SBA generally expect owners to put their own money into the project.",
     shortName: "owner money in the project",
-    sourceLabel: "SOP 50 10; sba.gov lender program page",
+    sourceLabel: "SOP 50 10 8.1; sba.gov lender program page",
     sourceHref: "https://www.sba.gov/document/sop-50-10-lender-development-company-loan-programs",
   },
   {

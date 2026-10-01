@@ -34,7 +34,7 @@ const jsonLd = graphJsonLd([
   <p class="lede">{SBA_GUIDE_DESCRIPTION}</p>
   <p class="bank-reviewed">{REVIEWED_LINE}</p>
   <p class="bank-callout">
-    SBA rules change. SOP 50 10 8.1 takes effect October 1, 2026. Confirm details at SBA.gov or with a lender before you rely on them.
+    SBA rules change, sometimes several times a year. SOP 50 10 8.1 is effective October 1, 2026 for applications issued an SBA loan number on or after that date. Facts on this page were checked on SBA.gov and in SOP 50 10 8.1 on October 1, 2026. Confirm details at SBA.gov or with a lender before you rely on them.
   </p>
   {
     file && (
@@ -54,23 +54,28 @@ const jsonLd = graphJsonLd([
   </section>
   <section class="bank-block" id="program-7a">
     <h2 class="bank-section-title">The 7(a) program at a glance</h2>
-    <p>7(a) is the flexible program: real estate, equipment, working capital, refinancing business debt, or buying a business. SBA listed a $5 million maximum for most 7(a) loans when this was checked in September 2026. Rate and term are negotiated with the lender, inside SBA caps. Ask the lender for the current guaranty fee.</p>
+    <p>7(a) is the flexible program: real estate, equipment, working capital, refinancing business debt, or buying a business. SBA listed a $5 million maximum for most 7(a) loans, and $500,000 for SBA Express, when this was checked on October 1, 2026. The individual 7(a) maximum is still $5 million. Rate and term are negotiated with the lender, inside SBA caps. Ask the lender for the current guaranty fee.</p>
+    <p>Buying a business: SOP 50 10 8.1 puts change-of-ownership rules in Appendix 15. That appendix covers coverage standards, valuation, and Quality of Earnings for acquisitions. Those requirements can be stricter than for other loan purposes. Ask a lender early if the deal is an acquisition or an owner buyout.</p>
   </section>
   <section class="bank-block" id="program-504">
     <h2 class="bank-section-title">The 504 program at a glance</h2>
-    <p>504 is for major fixed assets, such as an owner-occupied building or long-life equipment. A common structure is a private lender, a CDC loan, and at least 10 percent from the borrower. It is not for working capital or inventory.</p>
+    <p>504 is for major fixed assets, such as an owner-occupied building or long-life equipment. A common structure is up to 50 percent from a private lender, up to 40 percent from a CDC loan backed by an SBA-guaranteed debenture, and at least 10 percent from the borrower. It is not for working capital or inventory.</p>
+    <p>Standard projects are generally capped at a $5 million aggregate gross debenture. Small manufacturers and certain energy public policy projects can reach $5.5 million per eligible project. That limit applies to the SBA-backed CDC portion. Confirm current limits with a CDC.</p>
   </section>
   <section class="bank-block" id="compare">
     <h2 class="bank-section-title">7(a) and 504 side by side</h2>
-    <p>Choose 7(a) when the project mixes uses or includes working capital or a business purchase. Choose 504 when the project is a major fixed asset and you want a fixed rate on the CDC portion. Some projects use both. A lender can walk through that.</p>
+    <p>Choose 7(a) when the project mixes uses or includes working capital or a business purchase. Choose 504 when the project is a major fixed asset and you want a fixed rate on the CDC portion. Some projects use both.</p>
+    <p>Under Policy Notice 5000-879058 (effective July 4, 2026, and folded into SOP 50 10 8.1), outstanding 7(a) generally does not reduce 504 debenture capacity when the 7(a) is approved first, then the 504. The individual 7(a) maximum is still $5 million. A lender or CDC can walk through the tradeoffs.</p>
   </section>
   <section class="bank-block" id="basic-rules">
     <h2 class="bank-section-title">Basic rules</h2>
-    <p>Both programs start from the same basic rules: a for-profit operating business in the United States, small under SBA size standards (count affiliates), a sound use of the money, and a reasonable ability to repay. Meeting those rules does not mean approval. Use the <a href={withBase("/banking/calculators/sba-quick-check/")}>SBA quick-check</a> to spot obvious issues, then confirm with a lender.</p>
+    <p>Both programs start from the same basic rules: a for-profit operating business in the United States, small under SBA size standards (count affiliates), a sound use of the money, and a reasonable ability to repay. Meeting those rules does not mean approval.</p>
+    <p>Under SOP 50 10 8.1, all direct and indirect owners and SBA-required guarantors generally must be U.S. citizens or U.S. nationals whose principal residence is in the United States, its territories, or possessions.</p>
+    <p>Startups (about one year of revenue or less) and many business purchases generally need at least 10 percent equity. Acquisition details vary by transaction type in Appendix 15. For 504 projects, SBA describes at least 10 percent from the borrower. Use the <a href={withBase("/banking/calculators/sba-quick-check/")}>SBA quick-check</a> to spot obvious issues, then confirm with a lender.</p>
   </section>
   <section class="bank-block" id="documents">
     <h2 class="bank-section-title">Documents and SBA forms</h2>
-    <p>Expect tax returns, financial statements, a debt schedule, and a personal financial statement, plus SBA forms your lender names. Common ones are Form 1919 for 7(a), Form 1244 for 504, and Form 413 for the personal financial statement. Download forms from SBA.gov or get them from your lender. The <a href={withBase("/banking/templates/#loan-package-checklist")}>loan package checklist</a> lists the financial documents by loan type.</p>
+    <p>Expect tax returns, financial statements, a debt schedule, and a personal financial statement, plus SBA forms your lender names. Common ones are Form 1919 for 7(a) (current version effective March 19, 2025), Form 1244 for 504, and Form 413 for the personal financial statement (current version effective February 13, 2025). Those versions were checked on October 1, 2026. Download forms from SBA.gov or get them from your lender. The <a href={withBase("/banking/templates/#loan-package-checklist")}>loan package checklist</a> lists the financial documents by loan type.</p>
   </section>
   <section class="bank-block" id="steps">
     <h2 class="bank-section-title">The steps</h2>
@@ -107,7 +112,10 @@ const jsonLd = graphJsonLd([
       <li><a href="https://www.sba.gov/funding-programs/loans/7a-loans">SBA 7(a) loans</a></li>
       <li><a href="https://www.sba.gov/funding-programs/loans/504-loans">SBA 504 loans</a></li>
       <li><a href="https://www.sba.gov/partners/lenders/7a-loan-program/terms-conditions-eligibility">SBA lender program terms</a></li>
-      <li><a href="https://www.sba.gov/document/sop-50-10-lender-development-company-loan-programs">SOP 50 10</a></li>
+      <li><a href="https://www.sba.gov/document/sop-50-10-lender-development-company-loan-programs">SOP 50 10 8.1</a> (effective October 1, 2026)</li>
+      <li><a href="https://www.sba.gov/document/information-notice-5000-880695-issuance-sop-50-10-81">Information Notice 5000-880695</a> (issuance of SOP 50 10 8.1)</li>
+      <li><a href="https://www.sba.gov/document/policy-notice-5000-879058-coordination-7a-504-maximum-loan-limits">Policy Notice 5000-879058</a> (7(a) and 504 maximum loan limits)</li>
+      <li><a href="https://www.sba.gov/document/procedural-notice-5000-876626-revised-applicant-ownership-citizenship-residency-requirements-7a-504-loans">Procedural Notice 5000-876626</a> (citizenship and residency)</li>
       <li><a href="https://www.ecfr.gov/current/title-13/chapter-I/part-120">13 CFR Part 120</a></li>
     </ul>
   </section>
