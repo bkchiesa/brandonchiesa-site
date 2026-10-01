@@ -1,4 +1,4 @@
-/** Verbatim page copy from the Sep 2026 content package, plus short follow-up questions. */
+/** Verbatim page copy from the Oct 2026 content package, plus short follow-up questions. */
 
 export const BANKING_INTRO =
   "I have spent more than 15 years as a business banker here in Central Virginia, sitting across the table from owners of dental practices, farms, auto shops, contractors, landscapers, and trucking companies. The best conversations always started the same way: the owner knew their numbers and came in organized. This section is meant to help you get there on your own time, with free calculators, checklists, and plain-English guides. No sign-ups and no sales pitch. Use what helps, and bring your questions to your own lender, accountant, or attorney.";
@@ -7,7 +7,7 @@ export const SHORT_DISCLAIMER =
   "Estimates for education only. Not an offer of credit or a promise of approval. Actual terms depend on the lender and credit approval. Not affiliated with any employer.";
 
 export const REVIEWED_LINE =
-  "Reviewed Sep 2026 by Brandon Chiesa, a Central Virginia business banker with 15+ years of experience.";
+  "Reviewed October 1, 2026 by Brandon Chiesa, a Central Virginia business banker with 15+ years of experience.";
 
 export const LOAN_DESCRIPTION =
   "Before you sign for a loan, it helps to know what it will really cost each month and over its life. Enter the loan amount, an interest rate, and the term to see an estimated payment, the total interest, and a month-by-month schedule. If your loan has a balloon (for example, a 10-year term on a 20-year amortization), you can see what would still be owed at the end.";
@@ -64,7 +64,7 @@ export const CASH_FLOW_STEPS = [
 ] as const;
 
 export const SBA_GUIDE_DESCRIPTION =
-  "A plain-English guide to SBA's two main loan programs: what each is for, how they differ, the basic eligibility rules, the forms you will see, the steps, common mistakes, and questions to ask a lender. SBA facts are cited to SBA.gov and were checked in September 2026.";
+  "A plain-English guide to SBA's two main loan programs: what each is for, how they differ, the basic eligibility rules, the forms you will see, the steps, common mistakes, and questions to ask a lender. SBA facts are cited to SBA.gov and were checked on October 1, 2026.";
 
 export const SBA_GUIDE_STEPS = [
   "Read the side-by-side comparison to see which program fits your project.",
@@ -144,7 +144,7 @@ export const DISCLAIMER_SECTIONS = [
   },
   {
     title: "SBA program details change.",
-    body: "SBA rules, forms, fees, and limits change, sometimes several times a year. Information in this section was checked in September 2026. Always verify current details at SBA.gov or with a lender before making decisions.",
+    body: "SBA rules, forms, fees, and limits change, sometimes several times a year. Information in this section was checked on October 1, 2026. Always verify current details at SBA.gov or with a lender before making decisions.",
   },
   {
     title: "Talk to your own advisors.",

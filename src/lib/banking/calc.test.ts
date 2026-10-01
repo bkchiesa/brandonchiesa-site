@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import { SBA_FIT_ANSWERS, SBA_QUESTIONS } from "../../data/banking/sba-quick-check";
 import {
   MSG,
+  SBA_RULES_NOTE,
   breakEven,
   breakEvenSummary,
   cfadsFromParts,
@@ -177,6 +178,13 @@ describe("specs.md DSCR cases", () => {
 });
 
 describe("specs.md SBA quick-check cases", () => {
+  it("uses the October 1, 2026 rules note and does not call a result eligible", () => {
+    expect(SBA_RULES_NOTE).toBe(
+      "SBA rules change. This quick-check reflects SBA's basic rules as of October 1, 2026. Check SBA.gov or a lender.",
+    );
+    expect(SBA_RULES_NOTE.toLowerCase()).not.toMatch(/eligible|qualify|takes effect/);
+  });
+
   it("E1 possible fit", () => {
     const result = quickCheck(fit(), SBA_QUESTIONS);
     expect(result.result).toBe("possible_fit");
