@@ -1,0 +1,245 @@
+---
+import { existsSync } from "node:fs";
+import { join } from "node:path";
+import LeatherPad from "../components/LeatherPad.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import VideoShell from "../components/VideoShell.astro";
+import Base from "../layouts/Base.astro";
+import { ART, artUrl } from "../lib/art";
+import {
+  channelAnchor,
+  formatPublished,
+  hqThumb,
+  videoSections,
+} from "../lib/videography";
+
+const publicDir = join(process.cwd(), "public");
+const brassRel = ART.v3.careerBrassRule;
+const hasBrass = existsSync(join(publicDir, brassRel));
+const brassUrl = hasBrass ? artUrl(brassRel) : "";
+const sections = videoSections();
+---
+
+<Base
+  title="Videography"
+  room="videography"
+  videoShell
+  description="Films by Brandon Chiesa — church media, family travel, and journeys — from two YouTube channels."
+>
+  <VideoShell />
+  <LeatherPad title="Videography">
+    <SiteHeader current="videography" showLetter={false} />
+    <main
+      id="main"
+      class="page-main videography-room"
+      data-brass={hasBrass ? "true" : "false"}
+      style={brassUrl ? `--career-brass-rule: url('${brassUrl}')` : undefined}
+    >
+      <h1 class="room-title">Videography</h1>
+
+      <nav class="video-jump" aria-label="Channels">
+        {
+          sections.map((section) => (
+            <a class="video-jump-link" href={`#${channelAnchor(section.channel.handle)}`}>
+              {section.channel.handle}
+            </a>
+          ))
+        }
+      </nav>
+
+      {
+        sections.map((section) => {
+          const anchor = channelAnchor(section.channel.handle);
+          const headingId = `${anchor}-title`;
+          return (
+            <section class="video-channel" id={anchor} aria-labelledby={headingId}>
+              <p class="hud-kicker video-channel-kicker">
+                {section.channel.handle}
+                <span aria-hidden="true"> · </span>
+                {section.videos.length} {section.videos.length === 1 ? "film" : "films"}
+              </p>
+              <h2 class="video-channel-title" id={headingId}>
+                {section.channel.title}
+              </h2>
+              {
+                section.videos.length === 0 ? (
+                  <p class="video-empty">No public films on this channel yet.</p>
+                ) : (
+                  <ul class="video-grid">
+                    {section.videos.map((video) => (
+                      <li>
+                        <button
+                          type="button"
+                          class="video-card"
+                          aria-haspopup="dialog"
+                          data-video-open
+                          data-video-id={video.videoId}
+                          data-video-title={video.title}
+                          data-video-url={video.url}
+                          data-video-channel={video.channelHandle}
+                        >
+                          <span class="video-thumb">
+                            <img
+                              src={video.thumb}
+                              alt=""
+                              width="1280"
+                              height="720"
+                              loading="lazy"
+                              decoding="async"
+                              data-video-thumb
+                              data-thumb-fallback={hqThumb(video.videoId)}
+                            />
+                            <span class="video-play" aria-hidden="true">
+                              <span class="video-play-mark"></span>
+                            </span>
+                            <span class="video-thumb-miss" hidden>
+                              Still unavailable
+                            </span>
+                          </span>
+                          <h3 class="video-card-title">{video.title}</h3>
+                          <p class="video-meta">
+                            <span>{video.channelHandle}</span>
+                            <span aria-hidden="true"> · </span>
+                            <time datetime={video.published}>
+                              {formatPublished(video.published)}
+                            </time>
+                          </p>
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                )
+              }
+            </section>
+          );
+        })
+      }
+    </main>
+    <SiteFooter />
+  </LeatherPad>
+
+  <dialog class="video-lightbox" data-video-lightbox aria-labelledby="video-lightbox-title">
+    <div class="video-lightbox-panel">
+      <div class="video-lightbox-stage">
+        <iframe
+          data-video-frame
+          src="about:blank"
+          title="Film"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen
+          referrerpolicy="strict-origin-when-cross-origin"
+        ></iframe>
+      </div>
+      <div class="video-lightbox-bar">
+        <p class="hud-kicker video-lightbox-kicker" data-video-kicker></p>
+        <h2 class="video-lightbox-title" id="video-lightbox-title"></h2>
+        <div class="video-lightbox-actions">
+          <a
+            class="house-link"
+            data-video-youtube
+            href="https://www.youtube.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Open on YouTube
+          </a>
+          <button type="button" class="text-btn" data-video-close>Close</button>
+        </div>
+      </div>
+    </div>
+  </dialog>
+</Base>
+
+<script>
+  document.querySelectorAll<HTMLImageElement>("[data-video-thumb]").forEach((img) => {
+    const fail = () => {
+      const frame = img.closest(".video-thumb");
+      img.hidden = true;
+      frame?.classList.add("is-miss");
+      const miss = frame?.querySelector<HTMLElement>(".video-thumb-miss");
+      if (miss) miss.hidden = false;
+    };
+
+    const tryFallback = () => {
+      const fallback = img.getAttribute("data-thumb-fallback");
+      if (fallback && img.getAttribute("src") !== fallback) {
+        img.setAttribute("src", fallback);
+        return;
+      }
+      fail();
+    };
+
+    img.addEventListener("error", tryFallback);
+    img.addEventListener("load", () => {
+      if (img.naturalWidth > 0 && img.naturalWidth <= 120) tryFallback();
+    });
+
+    if (img.complete) {
+      if (img.naturalWidth === 0) tryFallback();
+      else if (img.naturalWidth <= 120) tryFallback();
+    }
+  });
+
+  const lightbox = document.querySelector<HTMLDialogElement>("[data-video-lightbox]");
+  const frame = document.querySelector<HTMLIFrameElement>("[data-video-frame]");
+  const titleEl = document.querySelector<HTMLElement>("#video-lightbox-title");
+  const kickerEl = document.querySelector<HTMLElement>("[data-video-kicker]");
+  const youtubeLink = document.querySelector<HTMLAnchorElement>("[data-video-youtube]");
+  const closeBtn = document.querySelector<HTMLButtonElement>("[data-video-close]");
+
+  const reduceMotion = () =>
+    document.documentElement.dataset.reduceMotion === "true" ||
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  const embedSrc = (videoId: string, autoplay: boolean) => {
+    const params = new URLSearchParams({
+      rel: "0",
+      modestbranding: "1",
+      playsinline: "1",
+    });
+    if (autoplay) params.set("autoplay", "1");
+    return `https://www.youtube-nocookie.com/embed/${videoId}?${params.toString()}`;
+  };
+
+  const stopPlayback = () => {
+    if (!frame) return;
+    frame.src = "about:blank";
+    frame.removeAttribute("src");
+  };
+
+  const closeLightbox = () => {
+    stopPlayback();
+    lightbox?.close();
+  };
+
+  const openLightbox = (card: HTMLElement) => {
+    if (!lightbox || !frame || !titleEl || !kickerEl || !youtubeLink) return;
+    const id = card.dataset.videoId;
+    const title = card.dataset.videoTitle ?? "Film";
+    const url = card.dataset.videoUrl;
+    const channel = card.dataset.videoChannel ?? "";
+    if (!id || !url) return;
+
+    titleEl.textContent = title;
+    kickerEl.textContent = channel;
+    youtubeLink.href = url;
+    frame.title = title;
+    frame.src = embedSrc(id, !reduceMotion());
+    if (!lightbox.open) lightbox.showModal();
+  };
+
+  document.querySelectorAll<HTMLElement>("[data-video-open]").forEach((card) => {
+    card.addEventListener("click", () => openLightbox(card));
+  });
+
+  closeBtn?.addEventListener("click", () => closeLightbox());
+
+  lightbox?.addEventListener("click", (event) => {
+    if (event.target === lightbox) closeLightbox();
+  });
+
+  lightbox?.addEventListener("close", () => {
+    stopPlayback();
+  });
+</script>

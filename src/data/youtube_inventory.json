@@ -1,0 +1,47 @@
+{
+  "channels": [
+    {
+      "handle": "@brandonchiesa3886",
+      "channelId": "UC0UMcc4XeZtjTkLwp0qdEMw",
+      "url": "https://www.youtube.com/@brandonchiesa3886",
+      "title": "Brandon Chiesa (Bkchiesa)"
+    },
+    {
+      "handle": "@chiesab",
+      "channelId": "UC6xX6wSpdGnXZGPguF89Tsw",
+      "url": "https://www.youtube.com/@chiesab",
+      "title": "chiesab"
+    }
+  ],
+  "videos": [
+    {"videoId": "iHv0jKIhFYA", "title": "Italy 2026", "url": "https://www.youtube.com/watch?v=iHv0jKIhFYA", "thumb": "https://i.ytimg.com/vi/iHv0jKIhFYA/maxresdefault.jpg", "published": "2026-07-28T20:08:06+00:00", "channelHandle": "@brandonchiesa3886"},
+    {"videoId": "NWhTXcB86cI", "title": "Italy 2026 (original)", "url": "https://www.youtube.com/watch?v=NWhTXcB86cI", "thumb": "https://i.ytimg.com/vi/NWhTXcB86cI/maxresdefault.jpg", "published": "2026-07-27T22:35:35+00:00", "channelHandle": "@brandonchiesa3886"},
+    {"videoId": "SALaPpQkiVM", "title": "Universal Orlando 2025", "url": "https://www.youtube.com/watch?v=SALaPpQkiVM", "thumb": "https://i.ytimg.com/vi/SALaPpQkiVM/maxresdefault.jpg", "published": "2025-06-23T01:04:50+00:00", "channelHandle": "@brandonchiesa3886"},
+    {"videoId": "AROcw4EEb6Q", "title": "Disney Treasure Cruise 2025", "url": "https://www.youtube.com/watch?v=AROcw4EEb6Q", "thumb": "https://i.ytimg.com/vi/AROcw4EEb6Q/maxresdefault.jpg", "published": "2025-03-08T17:06:01+00:00", "channelHandle": "@brandonchiesa3886"},
+    {"videoId": "mOj20r6EHnA", "title": "Abacos 2024", "url": "https://www.youtube.com/watch?v=mOj20r6EHnA", "thumb": "https://i.ytimg.com/vi/mOj20r6EHnA/maxresdefault.jpg", "published": "2024-06-12T02:11:41+00:00", "channelHandle": "@brandonchiesa3886"},
+    {"videoId": "8Sh4ODvtsNI", "title": "The Chiesa Family Roadtrip 2023", "url": "https://www.youtube.com/watch?v=8Sh4ODvtsNI", "thumb": "https://i.ytimg.com/vi/8Sh4ODvtsNI/maxresdefault.jpg", "published": "2023-07-29T18:10:56+00:00", "channelHandle": "@brandonchiesa3886"},
+    {"videoId": "gskHO-FsETA", "title": "Disney Fantasy Cruise 2023", "url": "https://www.youtube.com/watch?v=gskHO-FsETA", "thumb": "https://i.ytimg.com/vi/gskHO-FsETA/hqdefault.jpg", "published": "2023-02-19T02:01:52+00:00", "channelHandle": "@brandonchiesa3886"},
+    {"videoId": "hiwQBDPxceQ", "title": "Abacos 2022", "url": "https://www.youtube.com/watch?v=hiwQBDPxceQ", "thumb": "https://i.ytimg.com/vi/hiwQBDPxceQ/maxresdefault.jpg", "published": "2022-06-12T02:26:47+00:00", "channelHandle": "@brandonchiesa3886"},
+    {"videoId": "c3GrIF5IYsY", "title": "Jonah and the Whale", "url": "https://www.youtube.com/watch?v=c3GrIF5IYsY", "thumb": "https://i.ytimg.com/vi/c3GrIF5IYsY/maxresdefault.jpg", "published": "2022-06-05T18:14:00+00:00", "channelHandle": "@brandonchiesa3886"},
+    {"videoId": "seqnhtMvc7Q", "title": "California Adventure 2017", "url": "https://www.youtube.com/watch?v=seqnhtMvc7Q", "thumb": "https://i.ytimg.com/vi/seqnhtMvc7Q/hqdefault.jpg", "published": "2022-05-08T23:43:04+00:00", "channelHandle": "@brandonchiesa3886"},
+    {"videoId": "PStfTjLl9Wo", "title": "Hawaii 2019", "url": "https://www.youtube.com/watch?v=PStfTjLl9Wo", "thumb": "https://i.ytimg.com/vi/PStfTjLl9Wo/maxresdefault.jpg", "published": "2022-05-08T23:38:12+00:00", "channelHandle": "@brandonchiesa3886"},
+    {"videoId": "C_Ie1I5nITo", "title": "London 2010", "url": "https://www.youtube.com/watch?v=C_Ie1I5nITo", "thumb": "https://i.ytimg.com/vi/C_Ie1I5nITo/hqdefault.jpg", "published": "2022-05-08T21:30:31+00:00", "channelHandle": "@brandonchiesa3886"},
+    {"videoId": "KVJccvvK-0o", "title": "Italy 2009-2010", "url": "https://www.youtube.com/watch?v=KVJccvvK-0o", "thumb": "https://i.ytimg.com/vi/KVJccvvK-0o/hqdefault.jpg", "published": "2022-05-08T21:21:54+00:00", "channelHandle": "@brandonchiesa3886"},
+    {"videoId": "2SVpouyp2y0", "title": "Myrtle Beach 2010", "url": "https://www.youtube.com/watch?v=2SVpouyp2y0", "thumb": "https://i.ytimg.com/vi/2SVpouyp2y0/maxresdefault.jpg", "published": "2022-05-08T21:14:47+00:00", "channelHandle": "@brandonchiesa3886"},
+    {"videoId": "ynTCm9kyMSA", "title": "Virginia's London Adventure 2014", "url": "https://www.youtube.com/watch?v=ynTCm9kyMSA", "thumb": "https://i.ytimg.com/vi/ynTCm9kyMSA/hqdefault.jpg", "published": "2022-05-08T20:52:57+00:00", "channelHandle": "@brandonchiesa3886"},
+    {"videoId": "hwhfeyx0n8E", "title": "Adelle's California Adventure 2016", "url": "https://www.youtube.com/watch?v=hwhfeyx0n8E", "thumb": "https://i.ytimg.com/vi/hwhfeyx0n8E/maxresdefault.jpg", "published": "2022-05-08T00:00:00+00:00", "channelHandle": "@brandonchiesa3886"},
+    {"videoId": "caAEdTVfATg", "title": "Christmas 2021 reaction", "url": "https://www.youtube.com/watch?v=caAEdTVfATg", "thumb": "https://i.ytimg.com/vi/caAEdTVfATg/maxresdefault.jpg", "published": "2021-12-27T00:00:00+00:00", "channelHandle": "@brandonchiesa3886"},
+    {"videoId": "1exICexRs7k", "title": "Christmas 2021", "url": "https://www.youtube.com/watch?v=1exICexRs7k", "thumb": "https://i.ytimg.com/vi/1exICexRs7k/maxresdefault.jpg", "published": "2021-12-27T00:00:00+00:00", "channelHandle": "@brandonchiesa3886"},
+    {"videoId": "UadtcVEOKIc", "title": "Disney Fantasy Cruise 2013", "url": "https://www.youtube.com/watch?v=UadtcVEOKIc", "thumb": "https://i.ytimg.com/vi/UadtcVEOKIc/hqdefault.jpg", "published": "2014-08-17T09:23:30-07:00", "channelHandle": "@brandonchiesa3886"},
+    {"videoId": "DtHCBaSEL18", "title": "Sea World 2013", "url": "https://www.youtube.com/watch?v=DtHCBaSEL18", "thumb": "https://i.ytimg.com/vi/DtHCBaSEL18/hqdefault.jpg", "published": "2014-08-17T08:30:06-07:00", "channelHandle": "@brandonchiesa3886"},
+    {"videoId": "PHCO0-_UdGE", "title": "Fluvanna Ruritan Club 75th Anniversary Video", "url": "https://www.youtube.com/watch?v=PHCO0-_UdGE", "thumb": "https://i.ytimg.com/vi/PHCO0-_UdGE/maxresdefault.jpg", "published": "2014-08-31T20:12:26+00:00", "channelHandle": "@chiesab"},
+    {"videoId": "EcA011crHCk", "title": "The Magic Kingdom 2013", "url": "https://www.youtube.com/watch?v=EcA011crHCk", "thumb": "https://i.ytimg.com/vi/EcA011crHCk/hqdefault.jpg", "published": "2014-08-31T01:05:45+00:00", "channelHandle": "@chiesab"},
+    {"videoId": "MHMM0JXW5A8", "title": "Disney Fantasy Cruise 2013", "url": "https://www.youtube.com/watch?v=MHMM0JXW5A8", "thumb": "https://i.ytimg.com/vi/MHMM0JXW5A8/hqdefault.jpg", "published": "2014-08-30T20:17:14+00:00", "channelHandle": "@chiesab"},
+    {"videoId": "fojl9gxUYZA", "title": "Sea World 2013", "url": "https://www.youtube.com/watch?v=fojl9gxUYZA", "thumb": "https://i.ytimg.com/vi/fojl9gxUYZA/hqdefault.jpg", "published": "2014-08-30T19:27:19+00:00", "channelHandle": "@chiesab"},
+    {"videoId": "5BTzvhTnSSc", "title": "New Baby News", "url": "https://www.youtube.com/watch?v=5BTzvhTnSSc", "thumb": "https://i.ytimg.com/vi/5BTzvhTnSSc/maxresdefault.jpg", "published": "2012-04-01T17:06:41+00:00", "channelHandle": "@chiesab"},
+    {"videoId": "VQPOKvd95Rc", "title": "Disney World 2011", "url": "https://www.youtube.com/watch?v=VQPOKvd95Rc", "thumb": "https://i.ytimg.com/vi/VQPOKvd95Rc/maxresdefault.jpg", "published": "2011-11-28T12:35:42+00:00", "channelHandle": "@chiesab"},
+    {"videoId": "su-LUNsfDlM", "title": "Disney Cruise 2011", "url": "https://www.youtube.com/watch?v=su-LUNsfDlM", "thumb": "https://i.ytimg.com/vi/su-LUNsfDlM/maxresdefault.jpg", "published": "2011-11-27T09:15:34+00:00", "channelHandle": "@chiesab"},
+    {"videoId": "EtTZGUpVy-k", "title": "First Year in Review", "url": "https://www.youtube.com/watch?v=EtTZGUpVy-k", "thumb": "https://i.ytimg.com/vi/EtTZGUpVy-k/hqdefault.jpg", "published": "2010-09-23T04:58:11+00:00", "channelHandle": "@chiesab"},
+    {"videoId": "Vlf4EFiCjH4", "title": "Ms. Virginia gets a move on", "url": "https://www.youtube.com/watch?v=Vlf4EFiCjH4", "thumb": "https://i.ytimg.com/vi/Vlf4EFiCjH4/hqdefault.jpg", "published": "2008-10-25T14:01:47+00:00", "channelHandle": "@chiesab"}
+  ]
+}

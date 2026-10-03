@@ -1,0 +1,48 @@
+---
+import LeatherCard from "./LeatherCard.astro";
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<div class="room-stage">
+  <div class="room-veil" aria-hidden="true"></div>
+  <LeatherCard title={title}>
+    <slot />
+  </LeatherCard>
+</div>
+
+<script>
+  const DISMISS_MS = 2000;
+
+  const reduceMotion = () =>
+    document.documentElement.dataset.reduceMotion === "true" ||
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  document.querySelectorAll<HTMLElement>(".room-stage").forEach((stage) => {
+    if (stage.dataset.dismissBound === "true") return;
+    stage.dataset.dismissBound = "true";
+
+    stage.querySelectorAll<HTMLAnchorElement>("[data-home-link]").forEach((link) => {
+      link.addEventListener("click", (event) => {
+        if (event.defaultPrevented || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
+          return;
+        }
+        if (link.target === "_blank") return;
+        if (reduceMotion()) return;
+        if (stage.classList.contains("is-dismissing")) {
+          event.preventDefault();
+          return;
+        }
+        event.preventDefault();
+        stage.classList.add("is-dismissing");
+        window.setTimeout(() => {
+          window.location.assign(link.href);
+        }, DISMISS_MS);
+      });
+    });
+  });
+</script>

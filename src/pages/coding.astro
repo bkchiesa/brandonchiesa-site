@@ -1,0 +1,136 @@
+---
+import { existsSync } from "node:fs";
+import { join } from "node:path";
+import LeatherPad from "../components/LeatherPad.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import VideoShell from "../components/VideoShell.astro";
+import Base from "../layouts/Base.astro";
+import { ART, artUrl } from "../lib/art";
+import { DOJO_URL, ITALY_URL } from "../lib/site";
+
+const publicDir = join(process.cwd(), "public");
+const brassRel = ART.v3.careerBrassRule;
+const dojoRel = ART.v3.coding.dojoActionStill;
+const italyRel = ART.v3.coding.italyAppCard;
+const hasBrass = existsSync(join(publicDir, brassRel));
+const hasDojoStill = existsSync(join(publicDir, dojoRel));
+const hasItalyCard = existsSync(join(publicDir, italyRel));
+const brassUrl = hasBrass ? artUrl(brassRel) : "";
+---
+
+<Base
+  title="Coding"
+  room="coding"
+  videoShell
+  description="Apps Brandon Chiesa builds: Sensei Moose’s Dojo, an anonymized Italy travel app, and more to come."
+>
+  <VideoShell />
+  <LeatherPad title="Coding">
+    <SiteHeader current="coding" showLetter={false} />
+    <main
+      id="main"
+      class="page-main coding-room"
+      data-brass={hasBrass ? "true" : "false"}
+      style={brassUrl ? `--career-brass-rule: url('${brassUrl}')` : undefined}
+    >
+      <h1 class="room-title">Coding</h1>
+      <p class="lede">Apps and builds.</p>
+
+      <ul class="coding-features">
+        <li>
+          <article class="coding-feature">
+            <a
+              class="coding-feature-media"
+              href={DOJO_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {
+                hasDojoStill ? (
+                  <img
+                    src={artUrl(dojoRel)}
+                    alt="Sensei Moose’s Dojo — action still from the game"
+                    width="1600"
+                    height="900"
+                  />
+                ) : (
+                  <div class="coding-media-hook" role="img" aria-label="Dojo action still pending Pixel drop">
+                    <p>
+                      Pixel drop
+                      <code>public/art/v3/coding/dojo_action_still.png</code>
+                    </p>
+                  </div>
+                )
+              }
+            </a>
+            <h2 class="coding-feature-title">
+              <a href={DOJO_URL} target="_blank" rel="noopener noreferrer">
+                Sensei Moose’s Dojo
+              </a>
+            </h2>
+            <p class="coding-feature-copy">
+              A fun Street Fighter style game using the actual dojo and its students at Axsom
+              Martial Arts in Newport News, VA. Backgrounds in the game are based on actual
+              locations around the Peninsula.
+            </p>
+          </article>
+        </li>
+
+        <li>
+          <article class="coding-feature">
+            <a
+              class="coding-feature-media"
+              href={ITALY_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {
+                hasItalyCard ? (
+                  <img
+                    src={artUrl(italyRel)}
+                    alt="Italy Travel app — Brandon’s card mockup of the anonymized public app"
+                    width="1376"
+                    height="768"
+                  />
+                ) : (
+                  <div class="coding-media-hook" role="img" aria-label="Italy Travel card mockup pending">
+                    <p>
+                      Brandon lock
+                      <code>public/art/v3/coding/italy_app_card.jpeg</code>
+                    </p>
+                  </div>
+                )
+              }
+            </a>
+            <h2 class="coding-feature-title">
+              <a href={ITALY_URL} target="_blank" rel="noopener noreferrer">
+                Italy Travel
+              </a>
+            </h2>
+            <p class="coding-feature-copy">
+              A family travel app for a trip through Italy. The public app is anonymized —
+              actual train tickets, tour, and accommodation details have been removed.
+            </p>
+          </article>
+        </li>
+
+        <li>
+          <article class="coding-feature coding-feature--soon">
+            <div
+              class="coding-feature-media coding-feature-media--teaser"
+              aria-hidden="true"
+            >
+              <div class="coding-teaser">
+                <span class="coding-teaser-rule"></span>
+              </div>
+            </div>
+            <h2 class="coding-feature-title">Coming soon</h2>
+            <p class="coding-feature-copy">A future app will sit on this plate.</p>
+          </article>
+        </li>
+      </ul>
+    </main>
+    <SiteFooter />
+  </LeatherPad>
+</Base>
