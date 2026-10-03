@@ -3,6 +3,7 @@ import DisclaimerLine from "../../../components/banking/DisclaimerLine.astro";
 import BankingShell from "../../../components/banking/BankingShell.astro";
 import HowTo from "../../../components/banking/HowTo.astro";
 import RelatedTools from "../../../components/banking/RelatedTools.astro";
+import TakeWithYou from "../../../components/banking/TakeWithYou.astro";
 import { REVIEWED_LINE, SBA_DESCRIPTION, SBA_FOLLOW_UP, SBA_STEPS } from "../../../data/banking/copy";
 import { SBA_CHOICES, SBA_QUESTIONS } from "../../../data/banking/sba-quick-check";
 import { SBA_PATH } from "../../../data/banking/tools";
@@ -77,6 +78,7 @@ const jsonLd = graphJsonLd([
     </div>
     <div class="bank-actions">
       <button class="bank-btn bank-btn--quiet" type="button" data-reset>Reset</button>
+      <button class="bank-btn bank-btn--quiet" type="button" data-next hidden>Next open question</button>
     </div>
     <p class="bank-summary" data-waiting>{MSG.sbaIncomplete}</p>
     <div class="bank-results" data-results hidden aria-live="polite">
@@ -101,6 +103,7 @@ const jsonLd = graphJsonLd([
     </ul>
   </section>
   <HowTo steps={SBA_STEPS} />
+  <TakeWithYou ids={["sba-7a-504", "loan-package-checklist", "personal-financial-statement"]} />
   <RelatedTools path={SBA_PATH} />
   <DisclaimerLine />
 </BankingShell>

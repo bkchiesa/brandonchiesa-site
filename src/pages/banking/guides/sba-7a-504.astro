@@ -42,6 +42,9 @@ const jsonLd = graphJsonLd([
         <a class="bank-btn" href={withBase(file.href)} target="_blank" rel="noopener">
           Preview PDF · {file.sizeLabel}
         </a>
+        <a class="bank-btn bank-btn--quiet" href={withBase(file.href)} download>
+          Download PDF · {file.sizeLabel}
+        </a>
       </p>
     )
   }
