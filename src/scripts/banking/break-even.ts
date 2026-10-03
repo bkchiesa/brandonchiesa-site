@@ -1,3 +1,4 @@
+import { BREAK_EVEN_EMPTY } from "../../data/banking/copy";
 import {
   MSG,
   breakEven,
@@ -6,7 +7,19 @@ import {
   formatUsd,
   readAmount,
 } from "../../lib/banking/calc";
-import { bindDebounced, clearErrors, clearInvalid, inputField, markStale, setText, showError } from "./dom";
+import {
+  bindDebounced,
+  clearErrors,
+  clearInvalid,
+  hidePrompt,
+  hideResults,
+  inputField,
+  isTouched,
+  setPrompt,
+  setText,
+  showError,
+  showResults,
+} from "./dom";
 
 const MONEY_MAX = 100_000_000;
 const PRICE_MAX = 10_000_000;
@@ -22,46 +35,53 @@ export function bindBreakEven(root: HTMLElement | null): void {
     const targetText = inputField(root, "target")?.value ?? "";
     const unitInput = inputField(root, "unit");
     const unitLabel = (unitInput?.value ?? "units").trim() || "units";
+    let firstMessage = "";
+    const fail = (name: string, message: string) => {
+      if (!firstMessage) firstMessage = message;
+      if (isTouched(root)) showError(root, name, message);
+    };
     if (unitLabel.length > 20) {
-      showError(root, "unit", "Use 20 characters or fewer.");
-      markStale(root, true);
+      fail("unit", "Use 20 characters or fewer.");
+      hideResults(root);
+      setPrompt(root, isTouched(root) ? firstMessage : BREAK_EVEN_EMPTY);
       return;
     }
-    const fixed = parseMoney(fixedText, true);
-    const price = parseMoney(priceText, false);
-    const variable = parseMoney(variableText, true);
-    const target = targetText.trim() === "" ? { ok: true as const, value: 0 } : parseMoney(targetText, true);
+    const fixed = parseMoney(fixedText, true, "Enter your monthly fixed costs.");
+    const price = parseMoney(priceText, false, MSG.price);
+    const variable = parseMoney(variableText, true, "Enter the direct cost of each sale.");
+    const target = targetText.trim() === "" ? { ok: true as const, value: 0 } : parseMoney(targetText, true, "Enter a profit goal of zero or more.");
     let blocked = false;
     if (!fixed.ok) {
-      showError(root, "fixed", fixed.message);
+      fail("fixed", fixed.message);
       blocked = true;
     } else if (fixed.value > MONEY_MAX) {
-      showError(root, "fixed", "Enter fixed costs of $100,000,000 or less.");
+      fail("fixed", "Enter fixed costs of $100,000,000 or less.");
       blocked = true;
     }
-    if (!price.ok || price.value <= 0) {
-      showError(root, "price", MSG.price);
+    if (!price.ok) {
+      fail("price", price.message);
       blocked = true;
     } else if (price.value > PRICE_MAX) {
-      showError(root, "price", "Enter a price of $10,000,000 or less.");
+      fail("price", "Enter a price of $10,000,000 or less.");
       blocked = true;
     }
     if (!variable.ok) {
-      showError(root, "variable", variable.message);
+      fail("variable", variable.message);
       blocked = true;
     } else if (variable.value > PRICE_MAX) {
-      showError(root, "variable", "Enter a cost of $10,000,000 or less.");
+      fail("variable", "Enter a cost of $10,000,000 or less.");
       blocked = true;
     }
     if (!target.ok) {
-      showError(root, "target", target.message);
+      fail("target", target.message);
       blocked = true;
     } else if (target.value > MONEY_MAX) {
-      showError(root, "target", "Enter a profit goal of $100,000,000 or less.");
+      fail("target", "Enter a profit goal of $100,000,000 or less.");
       blocked = true;
     }
     if (blocked || !fixed.ok || !price.ok || !variable.ok || !target.ok) {
-      markStale(root, true);
+      hideResults(root);
+      setPrompt(root, isTouched(root) ? firstMessage || BREAK_EVEN_EMPTY : BREAK_EVEN_EMPTY);
       return;
     }
     const math = breakEven({
@@ -71,14 +91,14 @@ export function bindBreakEven(root: HTMLElement | null): void {
       targetProfit: target.value,
     });
     if (!math.ok) {
-      showError(root, math.error === "price" ? "price" : "variable", math.error === "price" ? MSG.price : MSG.noMargin);
-      markStale(root, true);
+      const message = math.error === "price" ? MSG.price : MSG.noMargin;
+      if (isTouched(root)) showError(root, math.error === "price" ? "price" : "variable", message);
+      hideResults(root);
+      setPrompt(root, isTouched(root) ? message : BREAK_EVEN_EMPTY);
       return;
     }
-    const results = root.querySelector<HTMLElement>("[data-results]");
-    if (results) results.hidden = false;
-    root.dataset.hasResult = "true";
-    markStale(root, false);
+    hidePrompt(root);
+    showResults(root);
     setText(root, "units", `${math.beUnits} ${unitLabel}`);
     setText(root, "revenue", formatUsd(math.beRevenue));
     setText(root, "margin", formatUsd(math.cm));
@@ -108,10 +128,11 @@ export function bindBreakEven(root: HTMLElement | null): void {
 function parseMoney(
   text: string,
   allowZero: boolean,
+  emptyMessage: string,
 ): { ok: true; value: number } | { ok: false; message: string } {
-  if (text.trim() === "") return { ok: false, message: "Enter a number." };
+  if (text.trim() === "") return { ok: false, message: emptyMessage };
   const value = readAmount(text);
   if (value === null) return { ok: false, message: "Enter a number." };
-  if (value < 0) return { ok: false, message: MSG.negativeMoney };
+  if (value < 0 || (!allowZero && value === 0)) return { ok: false, message: value < 0 ? MSG.negativeMoney : emptyMessage };
   return { ok: true, value };
 }

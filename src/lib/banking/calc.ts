@@ -315,8 +315,13 @@ export interface DscrMath {
   maxDS125: number | null;
 }
 
-export function proposedAnnualFromLoan(principal: number, annualRatePct: number, n: number): number | null {
-  const loan = loanCalc({ principal, annualRatePct, n });
+export function proposedAnnualFromLoan(
+  principal: number,
+  annualRatePct: number,
+  n: number,
+  amortMonths?: number | null,
+): number | null {
+  const loan = loanCalc({ principal, annualRatePct, n, amortMonths });
   if (!loan.ok) return null;
   return round2(loan.payment * 12);
 }
@@ -461,7 +466,7 @@ export function breakEvenSummary(input: {
 }): string {
   const units = input.unitLabel.trim() || "units";
   const lines = [
-    `Each ${units} brings in ${formatUsd(input.result.cm)} after its direct costs. That is ${formatPercent(input.result.cmr)} of the price.`,
+    `After direct costs, ${formatUsd(input.result.cm)} is left from the price. That is ${formatPercent(input.result.cmr)} of the price.`,
     `To break even, you need about ${input.result.beUnits} ${units} a month, or about ${formatUsd(input.result.beRevenue)} in monthly sales.`,
   ];
   if (input.fixedMonthly === 0) lines.push(MSG.noFixed);

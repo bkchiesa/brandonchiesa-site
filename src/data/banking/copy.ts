@@ -99,6 +99,24 @@ export const SOURCES_STEPS = [
   "Check the Status line. If there is a gap, adjust the project or line up more funding before you apply.",
 ] as const;
 
+export const LOAN_EMPTY =
+  "Enter the loan amount, the rate your lender quoted, and the term. The payment, interest, and schedule show up here. This page does not supply a rate.";
+
+export const DSCR_EMPTY =
+  "Enter cash flow and the payments you want to check. Leave the new payment blank if you are only looking at loans you already have.";
+
+export const BREAK_EVEN_EMPTY =
+  "Enter monthly fixed costs, the price, and the direct cost of each sale. The break-even point shows up here.";
+
+export const RATE_HELP =
+  "Type the rate your lender quoted. If you do not have one yet, type a rate only as your own example. This page does not fill a rate in for you.";
+
+export const DSCR_CASH_BLANK =
+  "Cash flow is still blank, so this estimate uses $0. Enter your numbers above and it will update.";
+
+export const DSCR_FROM_LOAN =
+  "The proposed loan is filled in from your payment estimate. Cash flow is still blank, so this uses $0 until you enter it.";
+
 export const LOAN_FOLLOW_UP = [
   "Can your cash flow comfortably cover this payment each month?",
   "If there is a balloon, how will you pay it or refinance it when it comes due?",

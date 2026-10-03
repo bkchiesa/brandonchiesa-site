@@ -3,7 +3,8 @@ import DisclaimerLine from "../../../components/banking/DisclaimerLine.astro";
 import BankingShell from "../../../components/banking/BankingShell.astro";
 import HowTo from "../../../components/banking/HowTo.astro";
 import RelatedTools from "../../../components/banking/RelatedTools.astro";
-import { DSCR_DESCRIPTION, DSCR_FOLLOW_UP, DSCR_STEPS, REVIEWED_LINE } from "../../../data/banking/copy";
+import TakeWithYou from "../../../components/banking/TakeWithYou.astro";
+import { DSCR_DESCRIPTION, DSCR_EMPTY, DSCR_FOLLOW_UP, DSCR_STEPS, RATE_HELP, REVIEWED_LINE } from "../../../data/banking/copy";
 import { DSCR_PATH } from "../../../data/banking/tools";
 import { DSCR_FOOTNOTE } from "../../../lib/banking/calc";
 import { BANKING_CRUMB, HOME_CRUMB, breadcrumbJsonLd, calculatorJsonLd, graphJsonLd } from "../../../lib/banking/seo";
@@ -30,43 +31,43 @@ const jsonLd = graphJsonLd([
       <div class="bank-fields bank-fields--split">
         <p class="bank-field">
           <label for="dscr-ni">Net income</label>
-          <input id="dscr-ni" data-field="netIncome" type="text" inputmode="decimal" value="0" autocomplete="off" />
+          <input id="dscr-ni" data-field="netIncome" type="text" inputmode="decimal" value="" autocomplete="off" />
           <span class="bank-error" data-error="netIncome"></span>
         </p>
         <p class="bank-field">
           <label for="dscr-dep">Depreciation</label>
-          <input id="dscr-dep" data-field="depreciation" type="text" inputmode="decimal" value="0" autocomplete="off" />
+          <input id="dscr-dep" data-field="depreciation" type="text" inputmode="decimal" value="" autocomplete="off" />
           <span class="bank-error" data-error="depreciation"></span>
         </p>
         <p class="bank-field">
           <label for="dscr-amort">Amortization</label>
-          <input id="dscr-amort" data-field="amortization" type="text" inputmode="decimal" value="0" autocomplete="off" />
+          <input id="dscr-amort" data-field="amortization" type="text" inputmode="decimal" value="" autocomplete="off" />
           <span class="bank-error" data-error="amortization"></span>
         </p>
         <p class="bank-field">
           <label for="dscr-interest">Interest</label>
-          <input id="dscr-interest" data-field="interest" type="text" inputmode="decimal" value="0" autocomplete="off" />
+          <input id="dscr-interest" data-field="interest" type="text" inputmode="decimal" value="" autocomplete="off" />
           <span class="bank-help">Add back interest because it is already inside your loan payments. Only add back interest on debts you include in debt service.</span>
           <span class="bank-error" data-error="interest"></span>
         </p>
         <p class="bank-field">
           <label for="dscr-once">One-time expenses</label>
-          <input id="dscr-once" data-field="nonrecurring" type="text" inputmode="decimal" value="0" autocomplete="off" />
+          <input id="dscr-once" data-field="nonrecurring" type="text" inputmode="decimal" value="" autocomplete="off" />
           <span class="bank-error" data-error="nonrecurring"></span>
         </p>
         <p class="bank-field">
           <label for="dscr-excess">Excess owner compensation</label>
-          <input id="dscr-excess" data-field="excess" type="text" inputmode="decimal" value="0" autocomplete="off" />
+          <input id="dscr-excess" data-field="excess" type="text" inputmode="decimal" value="" autocomplete="off" />
           <span class="bank-error" data-error="excess"></span>
         </p>
         <p class="bank-field">
           <label for="dscr-draws">Owner draws</label>
-          <input id="dscr-draws" data-field="draws" type="text" inputmode="decimal" value="0" autocomplete="off" />
+          <input id="dscr-draws" data-field="draws" type="text" inputmode="decimal" value="" autocomplete="off" />
           <span class="bank-error" data-error="draws"></span>
         </p>
         <p class="bank-field">
           <label for="dscr-other">Other adjustment</label>
-          <input id="dscr-other" data-field="other" type="text" inputmode="decimal" value="0" autocomplete="off" />
+          <input id="dscr-other" data-field="other" type="text" inputmode="decimal" value="" autocomplete="off" />
           <span class="bank-error" data-error="other"></span>
         </p>
       </div>
@@ -74,51 +75,60 @@ const jsonLd = graphJsonLd([
     <div data-panel="direct" hidden>
       <p class="bank-field">
         <label for="dscr-cfads">Cash flow available for debt service</label>
-        <input id="dscr-cfads" data-field="cashFlow" type="text" inputmode="decimal" value="0" autocomplete="off" />
+        <input id="dscr-cfads" data-field="cashFlow" type="text" inputmode="decimal" value="" autocomplete="off" />
         <span class="bank-error" data-error="cashFlow"></span>
       </p>
     </div>
     <div class="bank-fields">
       <p class="bank-field">
         <label for="dscr-existing">Existing annual loan payments</label>
-        <input id="dscr-existing" data-field="existing" type="text" inputmode="decimal" value="0" autocomplete="off" />
+        <input id="dscr-existing" data-field="existing" type="text" inputmode="decimal" value="" autocomplete="off" />
         <span class="bank-help">If the new loan pays off an old one, leave the old payment out.</span>
         <span class="bank-error" data-error="existing"></span>
       </p>
       <p class="bank-field">
         <label for="dscr-proposed-mode">Proposed loan</label>
         <select id="dscr-proposed-mode" data-field="proposedMode">
-          <option value="loan" selected>Use loan calculator</option>
-          <option value="annual">Annual amount</option>
+          <option value="annual" selected>I know the yearly payment</option>
+          <option value="loan">Estimate a new loan</option>
         </select>
+        <span class="bank-help">Leave the yearly payment blank if there is no new loan.</span>
       </p>
     </div>
-    <div data-proposed="loan">
+    <div data-proposed="loan" hidden>
       <div class="bank-fields bank-fields--split">
         <p class="bank-field">
           <label for="dscr-principal">Proposed loan amount</label>
-          <input id="dscr-principal" data-field="loanPrincipal" type="text" inputmode="decimal" value="250000" autocomplete="off" />
+          <input id="dscr-principal" data-field="loanPrincipal" type="text" inputmode="decimal" value="" autocomplete="off" />
           <span class="bank-error" data-error="loanPrincipal"></span>
         </p>
         <p class="bank-field">
-          <label for="dscr-rate">Interest rate <span class="bank-example">(example only)</span></label>
-          <input id="dscr-rate" data-field="loanRate" type="text" inputmode="decimal" value="7.50" autocomplete="off" />
+          <label for="dscr-rate">Interest rate</label>
+          <input id="dscr-rate" data-field="loanRate" type="text" inputmode="decimal" value="" autocomplete="off" />
+          <span class="bank-help">{RATE_HELP}</span>
           <span class="bank-error" data-error="loanRate"></span>
         </p>
         <p class="bank-field">
           <label for="dscr-months">Term in months</label>
-          <input id="dscr-months" data-field="loanMonths" type="text" inputmode="numeric" value="120" autocomplete="off" />
+          <input id="dscr-months" data-field="loanMonths" type="text" inputmode="numeric" value="" autocomplete="off" />
           <span class="bank-error" data-error="loanMonths"></span>
+        </p>
+        <p class="bank-field">
+          <label for="dscr-loan-amort">Amortization in months <span class="bank-help-inline">(optional)</span></label>
+          <input id="dscr-loan-amort" data-field="loanAmort" type="text" inputmode="numeric" value="" placeholder="Blank means fully amortizing" autocomplete="off" />
+          <span class="bank-error" data-error="loanAmort"></span>
         </p>
       </div>
     </div>
-    <div data-proposed="annual" hidden>
+    <div data-proposed="annual">
       <p class="bank-field">
         <label for="dscr-annual">Proposed annual payments</label>
-        <input id="dscr-annual" data-field="proposedAnnual" type="text" inputmode="decimal" value="0" autocomplete="off" />
+        <input id="dscr-annual" data-field="proposedAnnual" type="text" inputmode="decimal" value="" autocomplete="off" />
+        <span class="bank-help">Leave this blank if you are only checking loans you already have.</span>
         <span class="bank-error" data-error="proposedAnnual"></span>
       </p>
     </div>
+    <p class="bank-callout" data-prompt>{DSCR_EMPTY}</p>
     <div class="bank-results" data-results hidden aria-live="polite">
       <dl class="bank-stats">
         <div>
@@ -157,6 +167,7 @@ const jsonLd = graphJsonLd([
     </ul>
   </section>
   <HowTo steps={DSCR_STEPS} />
+  <TakeWithYou ids={["dscr-worksheet", "cash-flow-projection"]} />
   <RelatedTools path={DSCR_PATH} />
   <DisclaimerLine />
 </BankingShell>

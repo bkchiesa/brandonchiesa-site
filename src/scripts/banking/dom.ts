@@ -50,20 +50,44 @@ export function clearInvalid(root: ParentNode): void {
   });
 }
 
-export function markStale(root: HTMLElement, stale: boolean): void {
+export function isTouched(root: HTMLElement): boolean {
+  return root.dataset.touched === "true";
+}
+
+export function setPrompt(root: ParentNode, text: string): void {
+  const prompt = root.querySelector<HTMLElement>("[data-prompt]");
+  if (!prompt) return;
+  prompt.hidden = false;
+  prompt.textContent = text;
+}
+
+export function hidePrompt(root: ParentNode): void {
+  const prompt = root.querySelector<HTMLElement>("[data-prompt]");
+  if (prompt) prompt.hidden = true;
+}
+
+export function hideResults(root: HTMLElement): void {
   const results = root.querySelector<HTMLElement>("[data-results]");
-  if (!results) return;
-  if (stale && root.dataset.hasResult === "true") {
-    results.classList.add("is-stale");
-    results.hidden = false;
-    return;
+  if (results) {
+    results.hidden = true;
+    results.classList.remove("is-stale");
   }
-  results.classList.remove("is-stale");
+  delete root.dataset.hasResult;
+}
+
+export function showResults(root: HTMLElement): void {
+  const results = root.querySelector<HTMLElement>("[data-results]");
+  if (results) {
+    results.hidden = false;
+    results.classList.remove("is-stale");
+  }
+  root.dataset.hasResult = "true";
 }
 
 export function bindDebounced(root: HTMLElement, render: () => void): void {
   let timer = 0;
   const schedule = () => {
+    root.dataset.touched = "true";
     window.clearTimeout(timer);
     timer = window.setTimeout(render, 150);
   };

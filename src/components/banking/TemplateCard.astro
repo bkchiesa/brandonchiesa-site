@@ -28,16 +28,25 @@ const { card, heading: Heading = "h3", description = card.description, steps } =
   }
   <div class="bank-file-row">
     {
-      card.files.map((file) => (
-        <a
-          class="bank-btn bank-btn--quiet"
-          href={withBase(file.href)}
-          {...file.open === "preview" ? { target: "_blank", rel: "noopener" } : { download: "" }}
-        >
-          {file.open === "preview" ? "Preview" : "Download"} {file.typeLabel}
-          <span class="bank-btn-size"> · {file.sizeLabel}</span>
-        </a>
-      ))
+      card.files.map((file) =>
+        file.open === "preview" ? (
+          <>
+            <a class="bank-btn bank-btn--quiet" href={withBase(file.href)} target="_blank" rel="noopener">
+              Preview {file.typeLabel}
+              <span class="bank-btn-size"> · {file.sizeLabel}</span>
+            </a>
+            <a class="bank-btn bank-btn--quiet" href={withBase(file.href)} download>
+              Download {file.typeLabel}
+              <span class="bank-btn-size"> · {file.sizeLabel}</span>
+            </a>
+          </>
+        ) : (
+          <a class="bank-btn bank-btn--quiet" href={withBase(file.href)} download>
+            Download {file.typeLabel}
+            <span class="bank-btn-size"> · {file.sizeLabel}</span>
+          </a>
+        ),
+      )
     }
-    </div>
+  </div>
 </article>

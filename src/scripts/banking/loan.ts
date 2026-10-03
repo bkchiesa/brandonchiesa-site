@@ -1,3 +1,4 @@
+import { LOAN_EMPTY } from "../../data/banking/copy";
 import {
   currentMonthValue,
   formatUsd,
@@ -10,7 +11,21 @@ import {
   type LoanScheduleRow,
   type TermUnit,
 } from "../../lib/banking/calc";
-import { bindDebounced, checkedValue, clearErrors, clearInvalid, downloadText, inputField, markStale, setText, showError } from "./dom";
+import {
+  bindDebounced,
+  checkedValue,
+  clearErrors,
+  clearInvalid,
+  downloadText,
+  hidePrompt,
+  hideResults,
+  inputField,
+  isTouched,
+  setPrompt,
+  setText,
+  showError,
+  showResults,
+} from "./dom";
 
 export function bindLoanCalculator(root: HTMLElement | null): void {
   if (!root) return;
@@ -58,8 +73,13 @@ export function bindLoanCalculator(root: HTMLElement | null): void {
       amortText: amortInput?.value ?? "",
     });
     if (!validated.ok) {
-      showError(root, validated.field, validated.message);
-      markStale(root, true);
+      hideResults(root);
+      if (isTouched(root)) {
+        showError(root, validated.field, validated.message);
+        setPrompt(root, validated.message);
+      } else {
+        setPrompt(root, LOAN_EMPTY);
+      }
       return;
     }
     const math = loanCalc({
@@ -70,13 +90,12 @@ export function bindLoanCalculator(root: HTMLElement | null): void {
       startDate: inputField(root, "start")?.value,
     });
     if (!math.ok) {
-      markStale(root, true);
+      hideResults(root);
+      setPrompt(root, LOAN_EMPTY);
       return;
     }
-    const results = root.querySelector<HTMLElement>("[data-results]");
-    if (results) results.hidden = false;
-    root.dataset.hasResult = "true";
-    markStale(root, false);
+    hidePrompt(root);
+    showResults(root);
     setText(root, "payment", formatUsd(math.payment));
     setText(root, "interest", formatUsd(math.totalInterest));
     setText(root, "total", formatUsd(math.totalPaid));
@@ -117,6 +136,7 @@ export function bindLoanCalculator(root: HTMLElement | null): void {
         rate: String(validated.annualRatePct),
         months: String(validated.n),
       });
+      if (validated.amortMonths) params.set("amort", String(validated.amortMonths));
       link.href = `${base}?${params.toString()}`;
     }
   };

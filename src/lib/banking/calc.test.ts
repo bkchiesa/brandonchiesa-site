@@ -130,6 +130,7 @@ describe("specs.md DSCR cases", () => {
     expect(cfads).toBe(210_000);
     const proposed = proposedAnnualFromLoan(250_000, 7.5, 120);
     expect(proposed).toBe(35610.48);
+    expect(proposedAnnualFromLoan(500_000, 7, 120, 240)).toBe(46517.88);
     const result = dscr({ cfads, existing: 90_000, proposed: proposed ?? 0 });
     expect(result).toMatchObject({
       tds: 125610.48,
@@ -244,7 +245,7 @@ describe("specs.md break-even cases", () => {
     expect(
       breakEvenSummary({ unitLabel: "units", targetProfit: 0, fixedMonthly: 20_000, result }),
     ).toBe(
-      "Each units brings in $50.00 after its direct costs. That is 58.82% of the price. To break even, you need about 400 units a month, or about $34,000.00 in monthly sales.",
+      "After direct costs, $50.00 is left from the price. That is 58.82% of the price. To break even, you need about 400 units a month, or about $34,000.00 in monthly sales.",
     );
   });
 

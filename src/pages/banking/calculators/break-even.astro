@@ -3,17 +3,13 @@ import DisclaimerLine from "../../../components/banking/DisclaimerLine.astro";
 import BankingShell from "../../../components/banking/BankingShell.astro";
 import HowTo from "../../../components/banking/HowTo.astro";
 import RelatedTools from "../../../components/banking/RelatedTools.astro";
-import { BREAK_EVEN_DESCRIPTION, BREAK_EVEN_FOLLOW_UP, BREAK_EVEN_STEPS, REVIEWED_LINE } from "../../../data/banking/copy";
+import TakeWithYou from "../../../components/banking/TakeWithYou.astro";
+import { BREAK_EVEN_DESCRIPTION, BREAK_EVEN_EMPTY, BREAK_EVEN_FOLLOW_UP, BREAK_EVEN_STEPS, REVIEWED_LINE } from "../../../data/banking/copy";
 import { BREAK_EVEN_PATH } from "../../../data/banking/tools";
-import { BREAK_EVEN_FOOTNOTE, breakEven, breakEvenMathText, breakEvenSummary, formatUsd } from "../../../lib/banking/calc";
+import { BREAK_EVEN_FOOTNOTE } from "../../../lib/banking/calc";
 import { BANKING_CRUMB, HOME_CRUMB, breadcrumbJsonLd, calculatorJsonLd, graphJsonLd } from "../../../lib/banking/seo";
 
 const title = "Break-even calculator";
-const math = breakEven({ fixedMonthly: 20000, price: 85, variableCost: 35 });
-const summary = math.ok ? breakEvenSummary({ unitLabel: "units", targetProfit: 0, fixedMonthly: 20000, result: math }) : "";
-const mathText = math.ok
-  ? breakEvenMathText({ fixedMonthly: 20000, price: 85, variableCost: 35, targetProfit: 0, result: math })
-  : "";
 const jsonLd = graphJsonLd([
   calculatorJsonLd({ name: title, path: BREAK_EVEN_PATH, description: BREAK_EVEN_DESCRIPTION }),
   breadcrumbJsonLd([HOME_CRUMB, BANKING_CRUMB, { name: title, path: BREAK_EVEN_PATH }]),
@@ -23,21 +19,21 @@ const jsonLd = graphJsonLd([
 <BankingShell title={title} description={BREAK_EVEN_DESCRIPTION} jsonLd={jsonLd} section="calculators">
   <h1 class="room-title">{title}</h1>
   <p class="lede">{BREAK_EVEN_DESCRIPTION}</p>
-  <div class="bank-tool" data-break-even data-has-result="true">
+  <div class="bank-tool" data-break-even>
     <div class="bank-fields bank-fields--split">
       <p class="bank-field">
         <label for="be-fixed">Monthly fixed costs</label>
-        <input id="be-fixed" data-field="fixed" type="text" inputmode="decimal" value="20000" autocomplete="off" />
+        <input id="be-fixed" data-field="fixed" type="text" inputmode="decimal" value="" autocomplete="off" />
         <span class="bank-error" data-error="fixed"></span>
       </p>
       <p class="bank-field">
         <label for="be-price">Price per sale</label>
-        <input id="be-price" data-field="price" type="text" inputmode="decimal" value="85" autocomplete="off" />
+        <input id="be-price" data-field="price" type="text" inputmode="decimal" value="" autocomplete="off" />
         <span class="bank-error" data-error="price"></span>
       </p>
       <p class="bank-field">
         <label for="be-variable">Direct cost per sale</label>
-        <input id="be-variable" data-field="variable" type="text" inputmode="decimal" value="35" autocomplete="off" />
+        <input id="be-variable" data-field="variable" type="text" inputmode="decimal" value="" autocomplete="off" />
         <span class="bank-error" data-error="variable"></span>
       </p>
       <p class="bank-field">
@@ -51,29 +47,30 @@ const jsonLd = graphJsonLd([
         <span class="bank-error" data-error="unit"></span>
       </p>
     </div>
-    <div class="bank-results" data-results aria-live="polite">
+    <p class="bank-callout" data-prompt>{BREAK_EVEN_EMPTY}</p>
+    <div class="bank-results" data-results hidden aria-live="polite">
       <dl class="bank-stats">
         <div>
           <dt>Break-even sales</dt>
-          <dd data-out="units">{math.ok ? `${math.beUnits} units` : ""}</dd>
+          <dd data-out="units"></dd>
         </div>
         <div>
           <dt>Break-even revenue</dt>
-          <dd data-out="revenue">{math.ok ? formatUsd(math.beRevenue) : ""}</dd>
+          <dd data-out="revenue"></dd>
         </div>
         <div>
           <dt>Left after direct costs</dt>
-          <dd data-out="margin">{math.ok ? formatUsd(math.cm) : ""}</dd>
+          <dd data-out="margin"></dd>
         </div>
         <div data-target-stat hidden>
           <dt>Sales for the profit goal</dt>
           <dd data-out="target"></dd>
         </div>
       </dl>
-      <p class="bank-summary" data-out="summary">{summary}</p>
+      <p class="bank-summary" data-out="summary"></p>
       <details class="bank-math" id="show-the-math">
         <summary>Show the math</summary>
-        <p data-out="math">{mathText}</p>
+        <p data-out="math"></p>
       </details>
       <p class="bank-note">{BREAK_EVEN_FOOTNOTE}</p>
       <p class="bank-reviewed">{REVIEWED_LINE}</p>
@@ -89,6 +86,7 @@ const jsonLd = graphJsonLd([
     </ul>
   </section>
   <HowTo steps={BREAK_EVEN_STEPS} />
+  <TakeWithYou ids={["cash-flow-projection"]} />
   <RelatedTools path={BREAK_EVEN_PATH} />
   <DisclaimerLine />
 </BankingShell>
