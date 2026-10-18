@@ -1,6 +1,6 @@
 // Village photos and the Valmozzola page.
-// Only <photos root>/<place>/web/* (Brandon's own web copies) and <place>/commons/* (Wikimedia Commons files with a
-// .license.txt sidecar) are ever published. Anything under a private/ folder is refused, and the build fails if a
+// Only <photos root>/<place>/web/* (Brandon's own web copies), <place>/records/* (record images Brandon provided) and
+// <place>/commons/* (Wikimedia Commons files with a .license.txt sidecar) are ever published. Anything under a private/ folder is refused, and the build fails if a
 // private path ever reaches the output. Files are resized and re-encoded with no EXIF (same method as the ship photos).
 import { spawnSync } from "node:child_process";
 import { existsSync, realpathSync, readFileSync, readdirSync, statSync } from "node:fs";
@@ -11,7 +11,7 @@ export const PRIVATE_RE = /(^|[\\/])private([\\/]|$)/i;
 export function assertNotPrivate(p, what = "path") {
   if (PRIVATE_RE.test(String(p))) throw new Error(`BUILD GUARD: refusing ${what} inside a private/ folder: ${path.basename(String(p))}`);
 }
-const ALLOWED = /[\\/]photos[\\/]([a-z0-9-]+)[\\/](web|commons)[\\/]([^\\/]+\.(?:jpe?g|png))$/i;
+const ALLOWED = /[\\/]photos[\\/]([a-z0-9-]+)[\\/](web|commons|records)[\\/]([^\\/]+\.(?:jpe?g|png))$/i;
 
 const RESIZE_PY = `import sys,json
 from PIL import Image, ImageOps
@@ -67,7 +67,7 @@ export function makeMediaLib({ repo, exclude = [], log = console.warn }) {
       if (done.has(abs)) return done.get(abs);
       const [, place, kind, name] = m;
       const slug = name.replace(/\.[^.]+$/, "").toLowerCase().replace(/[^a-z0-9-]+/g, "-");
-      const outBase = path.join(OUTDIR, place, (kind === "commons" ? "c-" : "") + slug);
+      const outBase = path.join(OUTDIR, place, (kind === "commons" ? "c-" : kind === "records" ? "r-" : "") + slug);
       assertNotPrivate(outBase, "media output");
       spawnSync("mkdir", ["-p", path.dirname(outBase)]);
       const r = spawnSync("python3", ["-c", RESIZE_PY, abs, outBase, "1400", "480"], { encoding: "utf8" });
@@ -125,8 +125,8 @@ export function parsePlaque(note) {
 export async function writeVillagePage({ repo, people, rawPeople, lib, plaque }) {
   const P = Object.fromEntries(people.map((p) => [p.id, p]));
   // captions for Brandon's photos: the researchers' titles from the tree's media entries
-  const titles = new Map();
-  for (const p of rawPeople) for (const m of p.media || []) if (m && m.file && m.title && !titles.has(path.basename(m.file))) titles.set(path.basename(m.file), m.title);
+  const titles = new Map(), trans = new Map();
+  for (const p of rawPeople) for (const m of p.media || []) if (m && m.file) { const b = path.basename(m.file); if (m.title && !titles.has(b)) titles.set(b, m.title); if (m.transcription && !trans.has(b)) trans.set(b, m.transcription); }
   const imgs = lib.all();
   const mine = (pl) => imgs.filter((x) => x.kind === "web" && x.place === pl).sort((a, b) => a.name.localeCompare(b.name));
   const commons = imgs.filter((x) => x.kind === "commons").sort((a, b) => ["san-siro", "branzone", "san-martino", "valmozzola"].indexOf(a.place) - ["san-siro", "branzone", "san-martino", "valmozzola"].indexOf(b.place) || a.name.localeCompare(b.name));
@@ -147,13 +147,27 @@ export async function writeVillagePage({ repo, people, rawPeople, lib, plaque })
   const emRows = em.map((p) => { const A = p.arr || {}; const vill = /san martino/i.test((p.b && p.b.p) || "") ? "San Martino" : /san siro/i.test((p.b && p.b.p) || "") ? "San Siro" : "Valmozzola";
     return `<li><a href="/roots/#p=${esc(p.id)}"><b>${esc(p.n)}</b></a> <span class="vm">${esc(p.yrs || "")}</span><br><span>Born ${esc(vill)}${A.y ? ` · arrived ${A.y}` : ""}${A.ship ? ` on ${esc(A.ship)}` : ""}${A.port ? ` at ${esc(A.port)}` : ""}</span> ${tag(A.r)}</li>`; }).join("");
 
+  const src = (t) => `<span class="vp-src">Source: ${t}</span>`;
+  // "Where they were born": Brandon's birthplace photo beside the birth act for the same village
+  const recs = imgs.filter((x) => x.kind === "records");
+  const recCredit = "Record image provided by Brandon Chiesa";
+  const rfig = (x, cls, alt) => { const cap = titles.get(x.name) || x.name; const tr = trans.get(x.name);
+    return `<figure class="vb-item ${cls}"><button type="button" class="vg-open" data-full="/roots/${esc(x.full)}" data-w="${x.w}" data-h="${x.h}" aria-label="Open: ${esc(cap)}"><img src="/roots/${esc(x.th)}" width="${x.tw}" height="${x.thh}" loading="lazy" alt="${esc(alt || cap)}"></button><figcaption><b>${esc(cap)}</b>${x.kind === "web" ? tag("family") : tag("proven")}<small class="vg-credit">${x.kind === "web" ? brandonCredit + "; the house identification is Brandon’s" : recCredit}</small>${tr ? `<p class="vb-tr">${esc(tr)}</p>` : ""}</figcaption></figure>`; };
+  const bornPair = (pl, pid, label, houseNo, actLabel) => {
+    const h = imgs.find((x) => x.kind === "web" && x.place === pl && /birthplace/.test(x.name)), a = recs.find((x) => x.place === pl && /^nati-/.test(x.name));
+    if (!h && !a) return "";
+    return `<div class="vb-pair"><h3>${who(P, pid, label)} · ${esc(houseNo)}</h3><div class="vb-row" data-lbg="born">${h ? rfig(h, "house") : ""}${a ? rfig(a, "act", "Birth act " + actLabel) : ""}</div></div>`; };
+  const bornHTML = [bornPair("san-siro", "joseph-chiesa-1886", "Giuseppe (Joseph) Chiesa", "San Siro no. 10, born 2 March 1886", "Nati 1886 no. 12"),
+    bornPair("san-martino", "marianna-ferretti-1885", "Marianna Ferretti", "San Martino no. 6, born May 1885", "Nati 1885 no. 34")].join("");
+  const marr = recs.filter((x) => /marriage/.test(x.name)).sort((a, b) => (/front/.test(a.name) ? 0 : 1) - (/front/.test(b.name) ? 0 : 1));
+  const marrHTML = marr.length ? `<div class="vb-marr"><h3>The marriage record, Manhattan 1915</h3><p>${who(P, "joseph-chiesa-1886", "Giuseppe Chiesa")} and ${who(P, "marianna-ferretti-1885", "Marianna Ferretti")}, both from Valmozzola, married in New York on <b>21 October 1915</b> at the church of Our Lady of Pompei, Manhattan ${tag("proven")}. ${src("NYC Certificate and Record of Marriage no. 24034")}</p><div class="vb-row" data-lbg="marr">${marr.map((x) => rfig(x, "act", titles.get(x.name))).join("")}</div></div>` : "";
+
   const pl = plaque;
   const plaqueImg = imgs.find((x) => /wwi-memorial-plaque/.test(x.name));
   const plaqueHTML = pl ? `<div class="vp-plaque">${plaqueImg ? `<button type="button" class="vg-open vp-plq-img" data-i="${siro.indexOf(plaqueImg)}" aria-label="Open the plaque photo"><img src="/roots/${esc(plaqueImg.th)}" width="${plaqueImg.tw}" height="${plaqueImg.thh}" loading="lazy" alt="WWI memorial plaque, San Siro, dated 1 March 1925"></button>` : ""}<div><p>A marble plaque dated <b>1 March 1925</b> hangs on the front wall of the San Siro parish church. It names three men: Cap. Magg. Domenico Chiesa and the soldiers Agostino Chiesa and Giacomo Ferrari. ${tag("proven")} <small>(Brandon’s photo of the plaque)</small></p>
     <p>All three appear in the <i>Albo d’oro</i>, Italy’s roll of the war dead ${tag("probable")} <small>(index entries)</small>:</p><ol class="vp-sold">${pl.items.map((s) => `<li>${esc(s.t)}${s.url ? ` <a href="${esc(s.url)}" target="_blank" rel="noopener nofollow">Albo d’oro ↗</a>` : ""}</li>`).join("")}</ol>
     <p class="vp-unc"><b>Uncertain:</b> their kinship to Brandon’s line is unproven; they were probably cousins ${tag("hypothesis")}. ${pl.tail ? esc(pl.tail) : ""}</p></div></div>` : "";
 
-  const src = (t) => `<span class="vp-src">Source: ${t}</span>`;
   const html = `<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow, noarchive"><meta name="googlebot" content="noindex, nofollow">
@@ -164,7 +178,7 @@ export async function writeVillagePage({ repo, people, rawPeople, lib, plaque })
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/roots/assets/style.css"></head>
 <body class="vpage">
-<header class="vp-top"><a class="vp-back" href="/roots/">‹ Back to the family tree</a><nav class="vp-nav" aria-label="On this page"><a href="#san-siro">San Siro</a><a href="#san-martino">San Martino</a><a href="#emigrants">Who left</a><a href="#memorial">War memorial</a><a href="#gallery">Photos</a></nav></header>
+<header class="vp-top"><a class="vp-back" href="/roots/">‹ Back to the family tree</a><nav class="vp-nav" aria-label="On this page"><a href="#san-siro">San Siro</a><a href="#san-martino">San Martino</a>${bornHTML ? `<a href="#born">Where they were born</a>` : ""}<a href="#emigrants">Who left</a><a href="#memorial">War memorial</a><a href="#gallery">Photos</a></nav></header>
 <main>
 <section class="vp-hero">${hero ? `<img src="/roots/${esc(hero.full)}" width="${hero.w}" height="${hero.h}" alt="The parish church of San Siro, Valmozzola">` : ""}<div class="vp-hero-t"><div class="eyebrow">Province of Parma, Italy</div><h1>Valmozzola</h1><p>San Siro and San Martino, the home villages of the Chiesa, Galli, Ferretti and Manfredi families, as the parish and civil records describe them, with photos from Brandon’s visit in June 2026.</p></div></section>
 <div class="vp-body">
@@ -182,16 +196,18 @@ export async function writeVillagePage({ repo, people, rawPeople, lib, plaque })
 <p>${who(P, "martina-galli-1859", "Martina Galli")} was born in San Martino in 1859 ${tag("proven")}, and her daughter ${who(P, "marianna-ferretti-1885", "Marianna Ferretti")} was born at San Martino no. 6 in 1885 ${tag("proven")}. Martina sailed in June 1906 with her daughter ${who(P, "veronica-ferretti-1886", "Veronica")}. Marianna followed in October 1910, travelling in a group from Valmozzola ${tag("probable")}. ${src("Nati 1859 atto 6; Nati 1885 atto 34; Ellis Island manifests")}</p>
 <p class="vp-unc"><b>Uncertain:</b> the brides Anastasia Conti and Veronica Bergenti (also read Borgonti) were not baptised in San Martino. They probably came from the neighbouring parish of Pieve di Gusaliggio ${tag("hypothesis")}, whose register has not yet been read.</p></section>
 
-<section id="emigrants" class="vp-sec"><h2>Who left for America</h2><p>The tree has ${em.length} people born in Valmozzola who emigrated to the United States. Each name opens their card, with the voyage and its evidence.</p><ul class="vp-em">${emRows}</ul></section>
+${bornHTML ? `<section id="born" class="vp-sec"><h2>Where they were born</h2><p>Brandon photographed the two houses in June 2026. Each one is shown beside the birth act that names the house. The identification of the buildings is Brandon’s ${tag("family")}; the house numbers come from the acts ${tag("proven")}.</p>${bornHTML}<p class="vp-unc"><b>Uncertain:</b> the acts give the 1880s house numbers (San Siro no. 10, San Martino no. 6). The photos cannot show whether today’s buildings carry the same numbers ${tag("hypothesis")}. Marianna’s birth day reads “cinque” (5 May 1885); an earlier reading of the same act, and her US papers, give 25 April, so the tree keeps both until it is settled.</p></section>` : ""}
+
+<section id="emigrants" class="vp-sec"><h2>Who left for America</h2><p>The tree has ${em.length} people born in Valmozzola who emigrated to the United States. Each name opens their card, with the voyage and its evidence.</p><ul class="vp-em">${emRows}</ul>${marrHTML ? `<div id="marriage">${marrHTML}</div>` : ""}</section>
 
 <section id="memorial" class="vp-sec"><h2>The war memorial at San Siro</h2>${plaqueHTML}</section>
 
-<section id="gallery" class="vp-sec"><h2>Photos</h2>
+<section id="gallery" class="vp-sec" data-lbg="gallery"><h2>Photos</h2>
 <h3>San Siro · Brandon’s photos</h3>${grid(siro)}
 <h3>San Martino · Brandon’s photos</h3>${grid(mart)}
 <h3>San Siro, San Martino and Gusaliggio on Wikimedia Commons</h3><p class="vp-note">Each one is shown with its author, licence and Commons file page. The CC BY-SA and CC BY images were resized for the web and are otherwise unchanged.</p>${grid(commons)}
 </section>
-<footer class="vp-foot"><p>Brandon’s photos © Brandon Chiesa, family-provided, used with permission. Commons images belong to their authors under the licences shown. <a href="/roots/">Back to the family tree</a></p></footer>
+<footer class="vp-foot"><p>Brandon’s photos © Brandon Chiesa, family-provided, used with permission. Record images provided by Brandon Chiesa. Commons images belong to their authors under the licences shown. <a href="/roots/">Back to the family tree</a></p></footer>
 </div></main>
 <div class="vlb" id="vlb" hidden role="dialog" aria-modal="true" aria-label="Photo viewer"><button class="vlb-x" aria-label="Close">×</button><button class="vlb-p" aria-label="Previous photo">‹</button><figure><img alt=""><figcaption></figcaption></figure><button class="vlb-n" aria-label="Next photo">›</button></div>
 <script src="/roots/assets/village.js" defer></script>
@@ -200,5 +216,5 @@ export async function writeVillagePage({ repo, people, rawPeople, lib, plaque })
   const dir = path.join(repo, "public/roots/valmozzola");
   await mkdir(dir, { recursive: true });
   await writeFile(path.join(dir, "index.html"), html);
-  return { photos: siro.length + mart.length, commons: commons.length, emigrants: em.length };
+  return { photos: siro.length + mart.length, commons: commons.length, emigrants: em.length, records: recs.length };
 }

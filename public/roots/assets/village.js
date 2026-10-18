@@ -1,7 +1,10 @@
-// Valmozzola page: accessible lightbox for the photo gallery (keyboard, swipe, prev/next)
+// Valmozzola page: accessible lightbox for the photo gallery, the birthplaces and the marriage record (keyboard, swipe, prev/next)
 (function () {
   const lb = document.getElementById("vlb"); if (!lb) return;
-  const items = [...document.querySelectorAll(".vg-grid .vg-open")];
+  // each group (birthplaces, marriage record, gallery) pages through its own photos
+  const all = [...document.querySelectorAll(".vg-open[data-full]")];
+  const grp = (b) => { const g = b.closest("[data-lbg]"); return g ? g.dataset.lbg : "gallery"; };
+  let items = all.filter((b) => grp(b) === "gallery");
   const img = lb.querySelector("img"), cap = lb.querySelector("figcaption");
   let cur = -1, last = null;
   function show(i) {
@@ -13,8 +16,8 @@
   }
   function open(i) { last = document.activeElement; lb.hidden = false; document.body.classList.add("vlb-on"); show(i); lb.querySelector(".vlb-x").focus(); }
   function close() { lb.hidden = true; document.body.classList.remove("vlb-on"); img.removeAttribute("src"); if (last) last.focus(); }
-  items.forEach((b, i) => b.addEventListener("click", () => open(i)));
-  document.querySelectorAll(".vp-plq-img").forEach((b) => b.addEventListener("click", () => { const k = items.findIndex((x) => x.dataset.full.includes("wwi-memorial-plaque")); open(k < 0 ? 0 : k); }));
+  all.forEach((b) => b.addEventListener("click", () => { const g = grp(b); items = all.filter((x) => grp(x) === g); open(items.indexOf(b)); }));
+  document.querySelectorAll(".vp-plq-img").forEach((b) => b.addEventListener("click", () => { items = all.filter((x) => grp(x) === "gallery"); const k = items.findIndex((x) => x.dataset.full.includes("wwi-memorial-plaque")); open(k < 0 ? 0 : k); }));
   lb.querySelector(".vlb-x").onclick = close;
   lb.querySelector(".vlb-p").onclick = () => show(cur - 1);
   lb.querySelector(".vlb-n").onclick = () => show(cur + 1);

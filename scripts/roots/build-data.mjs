@@ -316,7 +316,7 @@ function normalize(p, tree) {
   const by = yearOf(p.birth?.date);
   ev(by, "Born", [p.birth?.date, p.birth?.place].filter(isStr).join(" · "), st, true);
   if (p.baptism) ev(yearOf(p.baptism.date), "Baptised", [p.baptism.date, p.baptism.place].filter(isStr).join(" · "), ratingInText(p.baptism.source || ""));
-  if (p.marriage) ev(yearOf(p.marriage.date), "Married", [p.marriage.date, p.marriage.place].filter(isStr).join(" · "), ratingInText(p.marriage.source || ""));
+  if (p.marriage) ev(yearOf(p.marriage.date), "Married", [p.marriage.date, p.marriage.place].filter(isStr).join(" · "), normRating(p.marriage.rating) || ratingInText(p.marriage.source || ""));
   for (const f of facts) { const y = yearOf(f.t); if (y && y !== by && f.r !== "claim") ev(y, null, f.t, f.r); }
   for (const o of occs) ev(yearOf(o.y), "Occupation", [o.t, o.p].filter(isStr).join(" · "), o.r);
   for (const o of res) ev(yearOf(o.y), "Lived at", [o.p, o.t].filter(isStr).join(" · "), o.r);
@@ -481,7 +481,8 @@ async function mediaFor(p, tree, isLiving, warn) {
       if (loc && loc.excluded) continue;
       if (loc && !isLiving) {
         m.img = loc.th; m.full = loc.full; m.w = loc.w; m.h = loc.h; m.place = isStr(it.place) ? it.place : null;
-        if (loc.kind === "web") { m.credit = "Photo by Brandon Chiesa"; m.date = "June 2026"; m.r = "family"; m.lic = "Family photo, used with permission"; m.src = ""; if (m.note && /person is visible|approved use/i.test(m.note)) m.note = null; }
+        if (loc.kind === "records") { m.credit = "Record image provided by Brandon Chiesa"; m.rec = true; m.r = normRating(it.rating || it.status) || "proven"; m.lic = it.license || "Family copy, used with permission"; m.tr = it.transcription ? cleanText(it.transcription) : null; m.date = null; }
+        else if (loc.kind === "web") { m.credit = "Photo by Brandon Chiesa"; m.date = "June 2026"; m.r = "family"; m.lic = "Family photo, used with permission"; m.src = ""; if (m.note && /person is visible|approved use/i.test(m.note)) m.note = null; }
         else { m.credit = loc.author ? loc.author + " / Wikimedia Commons" : m.credit; m.lic = loc.lic || m.lic; m.url = loc.page || m.url; m.licUrl = loc.licUrl || null; m.src = ""; if (loc.cap) m.title = loc.cap; m.r = null; }
         if (/Albo d.oro/i.test(m.note || "")) m.plq = parsePlaque(m.note);
         out.push(m); continue;
@@ -613,7 +614,7 @@ async function main() {
   if (village) {
     const plq = village.people.flatMap((p) => p.md || []).find((m) => m.plq);
     const v = await writeVillagePage({ repo: REPO, ...village, lib: MEDIA_LIB, plaque: plq ? plq.plq : null });
-    summary.push(`valmozzola page: ${v.photos} family photos, ${v.commons} Commons images, ${v.emigrants} emigrants${MEDIA_LIB.held.length ? "; held back: " + MEDIA_LIB.held.join(", ") : ""}`);
+    summary.push(`valmozzola page: ${v.photos} family photos, ${v.commons} Commons images, ${v.emigrants} emigrants, ${v.records} record images${MEDIA_LIB.held.length ? "; held back: " + MEDIA_LIB.held.join(", ") : ""}`);
   }
   guardOutput(path.join(REPO, "public/roots"));
   console.log(summary.join("\n"));

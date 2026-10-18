@@ -528,5 +528,5 @@
   "isle of wight, virginia": "Isle of Wight County, Virginia",
   "surry, virginia": "Surry County, Virginia"
  },
- "media_exclude": []
+ "media_exclude": [{"file": "san-martino/web/06-old-stone-house.jpg", "reason": "same building as 07-marianna-birthplace-stone-house-san-martino.jpg (Brandon's birthplace photo, v10); held back so the house is not shown twice"}]
 }

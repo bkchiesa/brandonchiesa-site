@@ -503,3 +503,23 @@ body.vlb-on{overflow:hidden}
 .plqbox img{width:100%;height:auto;border-radius:6px;border:1px solid #d9c9a3}
 .plqbox ol{margin:6px 0;padding-left:18px}.plqbox li{margin-bottom:4px}
 .gallery .more{display:flex;align-items:center;justify-content:center;text-align:center;padding:10px;border:1px dashed #c9b68c;border-radius:10px;font-size:13px;font-weight:600;color:var(--olive,#5d6b3b);text-decoration:none;min-height:90px}
+/* v10: record images on cards, and "Where they were born" on the Valmozzola page */
+.recbox{display:grid;grid-template-columns:1fr;gap:10px}
+.recbox figure{margin:0;display:grid;grid-template-columns:120px 1fr;gap:10px;align-items:start;background:#fcf8ee;border:1px solid #e3d6b5;border-radius:10px;padding:8px}
+.recbox img{width:120px;height:150px;object-fit:cover;object-position:top;display:block;border-radius:6px;background:#efe5cc}
+.recbox figcaption{font-size:12px;line-height:1.4}
+.recbox .rtr{margin:5px 0 3px;color:#3d372b;font-size:12px}
+.recbox figcaption small{display:block;color:#857a62;margin-top:3px}
+.recbox .more{display:inline-block;font-size:13px;font-weight:600;color:var(--olive,#5d6b3b);text-decoration:none;margin-right:12px}
+.vb-pair{margin:18px 0 8px}.vb-pair h3,.vb-marr h3{margin:0 0 8px}
+.vb-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+.vb-item{margin:0;display:flex;flex-direction:column;background:#fffaf0;border:1px solid #e0d4b8;border-radius:12px;overflow:hidden}
+.vb-item .vg-open{display:block;padding:0;border:0;background:#efe5cc;cursor:zoom-in}
+.vb-item img{display:block;width:100%;height:340px;object-fit:cover}
+.vb-item.act img{object-fit:contain;background:#f6f1e4}
+.vb-item figcaption{padding:8px 10px 10px;font-size:12.5px;line-height:1.4}
+.vb-item figcaption b{display:block;font-weight:600;color:#2f2a20;margin-bottom:3px}
+.vb-item .vg-credit{display:block;color:#857a62;margin-top:3px}
+.vb-item .vb-tr{margin:6px 0 0;font-size:13px;line-height:1.5;font-weight:400;color:#3d372b;max-width:none}
+.vb-marr{margin-top:22px;border-top:1px solid #e0d4b8;padding-top:14px}
+@media (max-width:640px){.vb-row{grid-template-columns:1fr}.vb-item img{height:260px}.recbox figure{grid-template-columns:90px 1fr}.recbox img{width:90px;height:115px}}

@@ -714,6 +714,19 @@
   "kind": "town",
   "at": "2026-10-18"
  },
+ "greenlawn memorial park, newport news, virginia": {
+  "raw": "Greenlawn Memorial Park, Newport News, Virginia",
+  "q": "Greenlawn Memorial Park, Newport News, Virginia",
+  "status": "ok",
+  "lat": 36.80315,
+  "lon": -76.39273,
+  "prec": "exact",
+  "matched": "Greenlawn Memorial Park (near Newport News, Virginia)",
+  "osm": "way/47988234",
+  "display": "Greenlawn Memorial Park, Bowers Hill, Chesapeake, Virginia, United States",
+  "kind": "cemetery",
+  "at": "2026-10-18"
+ },
  "greensville county, virginia": {
   "raw": "Greensville Co., VA",
   "q": "Greensville County, Virginia",
@@ -1286,6 +1299,19 @@
   "kind": "county",
   "at": "2026-10-18"
  },
+ "our lady of pompei church, manhattan, new york city": {
+  "raw": "Our Lady of Pompei church, Manhattan, New York City",
+  "q": "Our Lady of Pompei church, Manhattan, New York City",
+  "status": "ok",
+  "lat": 40.75796,
+  "lon": -73.98553,
+  "prec": "broader",
+  "matched": "Manhattan, New York City",
+  "osm": "relation/8398124",
+  "display": "Manhattan, New York County, New York, United States",
+  "kind": "suburb",
+  "at": "2026-10-18"
+ },
  "palm coast, florida": {
   "raw": "Palm Coast, FL",
   "q": "Palm Coast, Florida",
@@ -1309,6 +1335,19 @@
   "matched": "New Kent County, Virginia",
   "osm": "relation/2534194",
   "display": "New Kent County, Virginia, United States",
+  "kind": "county",
+  "at": "2026-10-18"
+ },
+ "pasquotank county, north carolina": {
+  "raw": "Pasquotank County, North Carolina",
+  "q": "Pasquotank County, North Carolina",
+  "status": "ok",
+  "lat": 36.22808,
+  "lon": -76.21496,
+  "prec": "exact",
+  "matched": "Pasquotank County, North Carolina",
+  "osm": "relation/1242004",
+  "display": "Pasquotank County, North Carolina, United States",
   "kind": "county",
   "at": "2026-10-18"
  },

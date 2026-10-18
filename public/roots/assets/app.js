@@ -830,12 +830,15 @@ async function openPlaces(region) {
 function mediaHTML(p) {
   const md = p.md || []; if (!md.length) return "";
   const plq = md.find((m) => m.plq);
-  const placePh = md.filter((m) => m.img && m.full && !m.plq), photos = md.filter((m) => m.img && !m.full), other = md.filter((m) => !m.img);
+  const recs = md.filter((m) => m.rec && m.img && m.full);
+  const placePh = md.filter((m) => m.img && m.full && !m.plq && !m.rec), photos = md.filter((m) => m.img && !m.full), other = md.filter((m) => !m.img);
   const lic = (l) => String(l || "").replace(/\.?\s*(Link and credit only|Link only)[^.]*\.?/i, "").replace(/;?\s*do not (copy|re-?host)[^.;]*/i, "").trim();
   const credit = (m) => [m.credit ? "Credit: " + esc(m.credit) : "Credit not recorded", m.src && esc(m.src), m.date && esc(m.date), lic(m.lic) && esc(lic(m.lic))].filter(Boolean).join(" · ") + (m.note ? `<br>${esc(m.note)}` : "");
   let h = "";
   if (plq) { const q = plq.plq;
     h += `<div class="sec">War memorial, San Siro</div><div class="plqbox"><a href="${esc(BASE + plq.full)}" target="_blank" rel="noopener"><img loading="lazy" src="${esc(BASE + plq.img)}" alt="WWI memorial plaque, San Siro, 1925"></a><div><b>${esc(plq.title)}</b>${ratingTag(plq.r || "family")}<div style="margin-top:4px">Three soldiers from San Siro in the <i>Albo d’oro</i> of the war dead ${ratingTag("probable")}:</div><ol>${q.items.map((x) => `<li>${esc(x.t)}${x.url ? ` <a href="${esc(x.url)}" target="_blank" rel="noopener nofollow">Albo d’oro ↗</a>` : ""}</li>`).join("")}</ol><div>Kinship to this line is unproven; probably cousins ${ratingTag("hypothesis")}.${q.tail ? " " + esc(q.tail) : ""}</div><div class="cite">Photo by Brandon Chiesa, June 2026 · Albo d’oro vol. VIII (Emilia II), cadutigrandeguerra.it · ${vLink("Valmozzola page")}</div></div></div>`; }
+  if (recs.length) { const vs = recs.some((m) => /marriage/i.test(m.title || "")) ;
+    h += `<div class="sec">Record images</div><div class="recbox">${recs.map((m) => `<figure><a href="${esc(BASE + m.full)}" target="_blank" rel="noopener"><img loading="lazy" src="${esc(BASE + m.img)}" alt="${esc(m.title || "Record image")}"></a><figcaption><b>${esc(m.title || "Record image")}</b>${ratingTag(m.r)}${m.tr ? `<p class="rtr">${esc(m.tr)}</p>` : ""}<small>${esc(m.credit || "")}${m.src ? " · " + esc(m.src) : ""}</small></figcaption></figure>`).join("")}${isVill(recs.map((m) => m.place || "").join(" ")) ? `<a class="more" href="${VURL}#born">Where they were born, on the Valmozzola page ›</a>` : ""}${vs ? ` <a class="more" href="${VURL}#marriage">The marriage record ›</a>` : ""}</div>`; }
   if (!placePh.length && !photos.length && !other.length) return h;
   h += `<div class="sec">Photos &amp; articles</div>`;
   if (placePh.length) { const show = placePh.slice(0, 5);
