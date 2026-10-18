@@ -2,6 +2,7 @@
 import { existsSync } from "node:fs";
 import { join } from "node:path";
 import { ART, artUrl } from "../lib/art";
+import RootsGrow from "./RootsGrow.astro";
 import {
   rooms,
   ABOUT_PATH,
@@ -53,7 +54,13 @@ const plateUrl = hasPlate ? artUrl(plateRel) : "";
         {
           navItems.map((room) => (
             <li>
-              <a class="mist-label" href={withBase(room.path)} data-room={room.id}>
+              <a
+                class="mist-label"
+                href={withBase(room.path)}
+                data-room={room.id}
+                data-roots-grow={room.id === "roots" ? "" : undefined}
+              >
+                {room.id === "roots" && <RootsGrow />}
                 <span class="mist-name">{room.name}</span>
                 <span class="sr-only"> — {room.blurb}</span>
               </a>
