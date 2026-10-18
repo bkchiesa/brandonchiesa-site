@@ -71,6 +71,8 @@ function cleanText(s) {
   t = t.replace(/\s*\((?:saved|transcription|see)[^()]*?(?:\/workspace\/|fs-shots\/|\.txt)[^()]*\)/gi, "");
   t = t.replace(/;?\s*(?:transcription\s+)?fs-shots\/[\w./-]+(?:\s+Round\s+\w+)?/gi, "");
   t = t.replace(/\/workspace\/[\w./-]+/g, "[research file]");
+  // research screenshots ("(screenshots in [research file])", "(screenshots x.png and -zoom.png)") are working files
+  t = t.replace(/\s*\(screenshots?\b[^()]*\)/gi, "").replace(/;?\s*screenshots?\s+[\w-]+\.(?:png|jpe?g)(?:\s*(?:,|and)\s*[\w-]*\.(?:png|jpe?g))*/gi, "");
   // Aldo Chiesa's 1944 enlistment card was misread as "single, with dependents"; never publish that wording
   if (BANNED.test(t)) { BANNED_HITS.n++; t = t.replace(BANNED_CLAUSE, "").replace(/[;,:]\s*$/, ""); }
   t = t.replace(/\s{2,}/g, " ").replace(/\s+([,;.)])/g, "$1").replace(/\(\s*\)/g, "").trim();
@@ -164,15 +166,21 @@ function buildLivingMatchers(people, byId) {
       }
     }
   }
+  // a day number followed by a month ("Bruce 18 Oct") is a date, not an age; month names in any case
+  const MONTH_CI = "(?:" + ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"].map((m) => [...m].map((c) => `[${c.toUpperCase()}${c}]`).join("")).join("|") + ")";
   const agePats = [];
   // census-style mentions by given name and age ("daughters Carole J., 11, and Sandra G., 6") reveal birth years
   for (const p of living) {
     const g = nameTokens(p.name)[0];
-    if (g && g.length > 2 && /^[A-Z]/.test(g)) agePats.push(new RegExp("\\b" + g.replace(".", "\\.?") + "(?:\\s+[A-Z]\\.)?,?\\s+(?:\\(?[Aa]ged?\\s+)?\\d{1,2}\\b(?![\\d,]*\\s*(?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec))"));
+    if (g && g.length > 2 && /^[A-Z]/.test(g)) agePats.push(new RegExp("\\b" + g.replace(".", "\\.?") + "(?:\\s+[A-Z]\\.)?,?\\s+(?:\\(?[Aa]ged?\\s+)?\\d{1,2}\\b(?![\\d,]*\\s*" + MONTH_CI + ")"));
   }
   // only in records from 1930 on, when someone still living could appear as a child
   const modern = /\b(?:19[3-9]\d|20\d\d)\b/;
-  return (s) => pats.some((x) => x.re.test(s)) || (modern.test(s) && agePats.some((re) => re.test(s)));
+  // research access dates ("read 18 Oct 2026", "viewed read-only by …, 18 Oct 2026", "accessed 2026") are not record years;
+  // only 2020s years count as access dates, so "read 1935" on a stone still counts as a record year
+  const ACCESS = /\b(?:read|viewed|accessed|retrieved|checked|consulted|downloaded)\b(?:\s+read-only)?(?:\s+by\s+[^,;()\d]{1,40}?)?,?\s+(?:on\s+)?(?:\d{1,2}\s+[A-Za-z]{3,9}\.?\s+|[A-Za-z]{3,9}\.?\s+\d{1,2},?\s+)?20[2-9]\d\b/g;
+  const recent = (s) => modern.test(String(s).replace(ACCESS, " "));
+  return (s) => pats.some((x) => x.re.test(s)) || (recent(s) && agePats.some((re) => re.test(s)));
 }
 
 // ---------- normalize one person ----------

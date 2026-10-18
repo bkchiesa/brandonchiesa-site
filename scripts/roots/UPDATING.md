@@ -119,3 +119,18 @@ Edit `public/roots/assets/style.css` and `app.js`. These are plain files with no
   and census-age matches still move the item to the private block.
 - A death date such as "after Apr 1910 and before 19 Aug 1917" or "between 1738 and 1740" shows as 1910–1917 in the
   short years, instead of only the first year.
+
+### Living-name age check: dates and access dates (v13)
+
+The census-age check hides a public string when a living person's first name is followed by a number (an age) and the
+string mentions a year from 1930 on. Two false-match causes are fixed:
+
+- A number followed by a month name in any case ("Bruce, 22 Dec 1915", "Morris, 15 May 1926") is a date, not an age.
+  The month guard used to match lowercase month names only.
+- Research access dates in the 2020s ("index read 18 Oct 2026", "viewed read-only by …, 18 Oct 2026", "image read
+  17 Oct 2026") no longer count as record years. A 1930s–2010s year after "read" (e.g. a stone that "read 1935") still counts.
+- Text such as "(screenshots in [research file])" or "(screenshots x.png and -zoom.png)" is removed from published text.
+
+When the check changes, dump the private block before and after (`tools/privdump.mjs`, local only), and review every
+string that becomes public: it must not give a living person's age, birth date, address or other detail beyond the
+name. `tools/agescan.mjs` uses the same rules.
