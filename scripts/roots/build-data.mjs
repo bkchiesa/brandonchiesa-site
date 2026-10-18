@@ -98,6 +98,7 @@ function cleanText(s) {
   t = t.replace(/\bfamily-provided screenshots?\b/g, "record images");
   // Peter Samuel Burkett's second wife may be living: her name and marriage date are not published (18 Oct 2026)
   t = t.replace(/\bMarried Alice May Mann(?:\s+on)?\s+5 Sep 1981(?:;\s*she survived him)?\.?/g, "Remarried in 1981.");
+  t = t.replace(/\bRemarried(?:\s+on)?\s+5 Sep 1981(?:;\s*his second wife survived him)?\.?/g, "Remarried in 1981.");
   t = t.replace(/\b2nd marriage 5 Sep 1981 Madison VA\s*\(FS QV1S-W8Q1\)\.?/g, "Remarried in 1981.");
   // research screenshots ("(screenshots in [research file])", "(screenshots x.png and -zoom.png)") are working files
   t = t.replace(/\s*\(screenshots?\b[^()]*\)/gi, "").replace(/;?\s*screenshots?\s+[\w-]+\.(?:png|jpe?g)(?:\s*(?:,|and)\s*[\w-]*\.(?:png|jpe?g))*/gi, "");

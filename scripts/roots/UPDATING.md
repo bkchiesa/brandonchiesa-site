@@ -203,3 +203,19 @@ had matched a Hilton Village in West Virginia.
   The next build with the real password fixes it. Holly's tree stays on the 14:17:56 backup for the same reason: Roots 2's
   later edits change the encrypted block, including which person each opaque "living-N" id means.
 
+### v17: Fold3 service records (Brandon's tree); second-wife wording; three map pins
+
+- Brandon's tree is built from Roots' fold3csr round (`/workspace/douthat/tree-people.json` as of 14:44:34; backup
+  `tree-people.pre-fold3csr.json`). The new data: Confederate service records for W. L. Dishman, J. P. Dishman and
+  Peter T. Burkett (`peter-burkett-sib`), places at Tappahannock and Hanover Academy, New York leads (in notes only),
+  and "William Lewis" Dishman downgraded to probable. Holly's tree stays on the 14:17:56 backup.
+- Roots rewrote the second marriage as "Remarried 5 Sep 1981; his second wife survived him". `cleanText` publishes it as
+  "Remarried in 1981." The build guard (name, date, FamilySearch id) caught the date on the first build.
+- Hand pins in `places-overrides.json`:
+  - "General Hospital, Hanover Academy": near Taylorsville, Hanover Co., VA. The geocoder had matched a modern address near Ashland.
+  - "Red Sulphur Springs, Monroe Co., Va.": Monroe Co., in Virginia in 1863 and West Virginia now. The geocoder had matched Greensboro, NC.
+  - Tappahannock, Essex Co., VA geocoded correctly.
+  - Place notes in overrides are shown on the cards, so they are written for readers, not as geocoder notes.
+- Password rule unchanged: the deployed encrypted block was reused because a fresh build's hidden block matched it
+  apart from the 8 known "family-provided, Brandon" lines.
+

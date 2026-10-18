@@ -701,6 +701,19 @@
   "kind": "county",
   "at": "2026-10-18"
  },
+ "general hospital, hanover academy, hanover county, virginia": {
+  "raw": "General Hospital, Hanover Academy, Hanover County, Virginia",
+  "q": "General Hospital, Hanover Academy, Hanover County, Virginia",
+  "status": "ok",
+  "lat": 37.76514,
+  "lon": -77.45306,
+  "prec": "broader",
+  "matched": "Hanover Academy, Hanover County, Virginia",
+  "osm": "way/840718323",
+  "display": "Hanover Academy, Frances Road, Ashland, Hanover County, Virginia, 23005, United States",
+  "kind": "amenity",
+  "at": "2026-10-18"
+ },
  "gloucester, virginia": {
   "raw": "Gloucester, VA",
   "q": "Gloucester, Virginia",
@@ -831,19 +844,6 @@
   "kind": "city",
   "at": "2026-10-18"
  },
- "hanover county, virginia": {
-  "raw": "Hanover County, Virginia",
-  "q": "Hanover County, Virginia",
-  "status": "ok",
-  "lat": 37.74478,
-  "lon": -77.44642,
-  "prec": "exact",
-  "matched": "Hanover County, Virginia",
-  "osm": "relation/2534182",
-  "display": "Hanover County, Virginia, United States",
-  "kind": "county",
-  "at": "2026-10-18"
- },
  "hicksford district, greensville county, virginia": {
   "raw": "Hicksford District, Greensville Co., VA",
   "q": "Hicksford District, Greensville County, Virginia",
@@ -868,19 +868,6 @@
   "osm": "node/158249962",
   "display": "Hilton Village, Newport News, Virginia, 23605, United States",
   "kind": "suburb",
-  "at": "2026-10-18"
- },
- "hilton village, warwick county, virginia": {
-  "raw": "Hilton Village, Warwick Co., Virginia",
-  "q": "Hilton Village, Warwick County, Virginia",
-  "status": "ok",
-  "lat": 38.01511,
-  "lon": -80.90148,
-  "prec": "exact",
-  "matched": "Hilton Village (near Virginia)",
-  "osm": "node/154011466",
-  "display": "Hilton Village, Fayette County, West Virginia, United States",
-  "kind": "hamlet",
   "at": "2026-10-18"
  },
  "iroquois, wyoming county, west virginia": {
@@ -1494,6 +1481,19 @@
   "kind": "city",
   "at": "2026-10-18"
  },
+ "red sulphur springs, monroe county, virginia, confederate hospital": {
+  "raw": "Red Sulphur Springs, Monroe Co., Va., Confederate hospital",
+  "q": "Red Sulphur Springs, Monroe County, Virginia, Confederate hospital",
+  "status": "ok",
+  "lat": 36.07523,
+  "lon": -79.7886,
+  "prec": "broader",
+  "matched": "Confederate hospital",
+  "osm": "node/13308319420",
+  "display": "Confederate Hospital, Summit Avenue, Fisher Park, Greensboro, Guilford County, North Carolina, 27214, United States",
+  "kind": "historic",
+  "at": "2026-10-18"
+ },
  "richmond county, virginia": {
   "raw": "Richmond County, Virginia",
   "q": "Richmond County, Virginia",
@@ -1754,14 +1754,14 @@
   "kind": "county",
   "at": "2026-10-18"
  },
- "tappahannock": {
-  "raw": "Tappahannock",
-  "q": "Tappahannock",
+ "tappahannock, essex county, virginia": {
+  "raw": "Tappahannock, Essex County, Virginia",
+  "q": "Tappahannock, Essex County, Virginia",
   "status": "ok",
   "lat": 37.92832,
   "lon": -76.86004,
   "prec": "exact",
-  "matched": "Tappahannock",
+  "matched": "Tappahannock, Essex County, Virginia",
   "osm": "relation/207021",
   "display": "Tappahannock, Essex County, Virginia, United States",
   "kind": "town",

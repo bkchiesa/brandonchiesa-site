@@ -74,8 +74,24 @@
    "lon": -76.459,
    "approx": 1,
    "label": "Hilton Village, Newport News, Virginia",
-   "note": "Warwick County is now part of Newport News; the geocoder matched a Hilton Village in West Virginia",
+   "note": "Warwick County is now part of Newport News.",
    "source": "Hilton Village Historic District (NRHP), Newport News, Virginia"
+  },
+  "general hospital, hanover academy, hanover county, virginia": {
+   "lat": 37.827,
+   "lon": -77.459,
+   "approx": 1,
+   "label": "Hanover Academy (Confederate General Hospital), near Taylorsville, Hanover Co., Virginia",
+   "note": "The academy building stood on the Old Ridge Road near Taylorsville; it served as a Confederate general hospital.",
+   "source": "Hanover County Historic Resources Survey (DHR HN-042, 1990), education context; USGS GNIS Taylorsville"
+  },
+  "red sulphur springs, monroe county, virginia, confederate hospital": {
+   "lat": 37.5136,
+   "lon": -80.765,
+   "approx": 0,
+   "label": "Red Sulphur Springs, Monroe Co. (then Virginia, now West Virginia)",
+   "note": "The Red Sulphur Springs resort served as a Confederate hospital; Monroe County became part of West Virginia in 1863.",
+   "source": "Wikipedia, Red Sulphur Springs, West Virginia; WV Historic Commission marker (1969)"
   },
   "panama canal zone": {
    "lat": 9.1178,
