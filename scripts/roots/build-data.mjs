@@ -90,6 +90,12 @@ function cleanText(s) {
   t = t.replace(/\(Brandon(?:\s+Chiesa)?,\s*([^,()]*?\d{4})(?:,\s*relayed by [^)]*)?\)/g, "($1)");
   t = t.replace(/\b(viewed|read|seen)\s+via\s+screenshots?\b/g, "$1 as record images");
   t = t.replace(/\bBrandon(?:\s+Chiesa)?\s+(?:decided|identified|believes|thinks|says|said|notes|noted|reads|judged|picked|selected)\b/g, "The family record says");
+  // Roots' own neutralization (news1) wrote "the family chose …"; publish the same act-based wording as above
+  t = t.replace(/\b(?:Birth date decided [^:;.]*:\s*)?[Tt]he family chose the act date,\s*/g, "Date per the birth act (atto 34): ");
+  t = t.replace(/\b[Tt]he family chose\s+(\d{1,2}\s+\w+\s+\d{4})\s+from the act\b/g, "$1, per the birth act (atto 34)");
+  t = t.replace(/\(date chosen by the family[^)]*\)/g, "(date per the birth act, atto 34)");
+  t = t.replace(/\b([Tt])he family copy of\b/g, "$1he record image of");
+  t = t.replace(/\bfamily-provided screenshots?\b/g, "record images");
   // research screenshots ("(screenshots in [research file])", "(screenshots x.png and -zoom.png)") are working files
   t = t.replace(/\s*\(screenshots?\b[^()]*\)/gi, "").replace(/;?\s*screenshots?\s+[\w-]+\.(?:png|jpe?g)(?:\s*(?:,|and)\s*[\w-]*\.(?:png|jpe?g))*/gi, "");
   // Aldo Chiesa's 1944 enlistment card was misread as "single, with dependents"; never publish that wording
@@ -655,7 +661,7 @@ async function main() {
   // attribution guard: no public text may say what Brandon decided, chose, identified, recalled, read, confirmed or
   // reviewed (credits such as "Photo by Brandon Chiesa" are fine). The encrypted private block is not scanned.
   {
-    const ATTRIB = /\bBrandon(?:\s+Chiesa)?\s+(?:chose|decided|identified|recalls|recalled|remembers|read\s+(?:it|this)|confirmed|approved|verified|reviewed|vouched)\b|\b(?:confirmed|approved|verified|reviewed|vouched for)\s+by\s+Brandon\b|\bBrandon(?:’|')s\s+(?:copy|screenshots?|identification|decision|reading)\b|\bidentifications?\s+(?:is|are)\s+Brandon(?:’|')s\b|Confirmed by Brandon/;
+    const ATTRIB = /\bBrandon(?:\s+Chiesa)?\s+(?:chose|decided|identified|recalls|recalled|remembers|read\s+(?:it|this)|confirmed|approved|verified|reviewed|vouched)\b|\b(?:confirmed|approved|verified|reviewed|vouched for)\s+by\s+Brandon\b|\bBrandon(?:’|')s\s+(?:copy|screenshots?|identification|decision|reading)\b|\bidentifications?\s+(?:is|are)\s+Brandon(?:’|')s\b|Confirmed by Brandon|\b[Tt]he family chose\b|chosen by the family|family-provided screenshots?/;
     const files = [...["brandon", "holly"].map((k) => path.join(OUT, k + ".json")), path.join(REPO, "public/roots/valmozzola/index.html")];
     const hits = [];
     for (const f of files) {

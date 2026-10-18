@@ -162,7 +162,7 @@ Brandon asked (18 Oct 2026) that public text not say what he decided, chose, ide
 | "Read from Brandon's screenshots" / "viewed via screenshots" | "Read from record images" / "viewed as record images" |
 | "(Brandon, Oct 2026, relayed by Guido)" | "(Oct 2026)" |
 
-There is a fallback for any other "Brandon decided/identified/said …" wording. The Valmozzola page's fixed text was
+There is a fallback for any other "Brandon decided/identified/said …" wording. Roots' news1 round had already changed some of these lines to "the family chose …", "(date chosen by the family …)", "The family copy of …" and "family-provided screenshots". Those are published with the same wording as the table above. The Valmozzola page's fixed text was
 reworded in `village.mjs` in the same way. Photo and record-image credits ("Photo by Brandon Chiesa", "Record image
 provided by Brandon Chiesa", "Brandon's photos") are attributions and stay.
 
