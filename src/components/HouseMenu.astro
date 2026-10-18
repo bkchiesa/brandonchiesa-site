@@ -2,7 +2,6 @@
 import { existsSync } from "node:fs";
 import { join } from "node:path";
 import { ART, artUrl } from "../lib/art";
-import RootsButton from "./RootsButton.astro";
 import {
   rooms,
   ABOUT_PATH,
@@ -21,6 +20,11 @@ const plateRel = ART.v3.leatherPanel;
 const hasBrass = existsSync(join(publicDir, brassRel));
 const hasTile = existsSync(join(publicDir, tileRel));
 const hasPlate = existsSync(join(publicDir, plateRel));
+// Homepage nav: the rooms, plus Roots (the family-history site at /roots/, a static page outside the room system).
+const navItems = [
+  ...rooms.map(({ id, name, blurb, path }) => ({ id, name, blurb, path })),
+  { id: "roots", name: "Roots", blurb: "Family history", path: "roots/" },
+];
 const brassUrl = hasBrass ? artUrl(brassRel) : hasTile ? artUrl(tileRel) : "";
 const plateUrl = hasPlate ? artUrl(plateRel) : "";
 ---
@@ -47,7 +51,7 @@ const plateUrl = hasPlate ? artUrl(plateRel) : "";
     >
       <ul class="mist-list" role="list">
         {
-          rooms.map((room) => (
+          navItems.map((room) => (
             <li>
               <a class="mist-label" href={withBase(room.path)} data-room={room.id}>
                 <span class="mist-name">{room.name}</span>
@@ -61,12 +65,10 @@ const plateUrl = hasPlate ? artUrl(plateRel) : "";
 
     <div class="house-copy house-after">
       <p class="house-bio letter-plate">{SITE_BIO}</p>
-      <RootsButton place="copy" />
     </div>
 
     <div class="menu-foot menu-foot--sky house-after">
       <div class="menu-controls">
-        <RootsButton place="foot" />
         <button type="button" class="text-btn mono" data-reduce-motion aria-pressed="false">
           Reduce motion
         </button>
