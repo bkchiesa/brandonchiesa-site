@@ -624,7 +624,7 @@ function openPerson(id) {
       nodate);
     if (extras.length) h += `<div class="sec">More from the records</div><ul class="flist">${extras.map((f) => `<li>${esc(f.t)}${ratingTag(f.r)}${f.s ? `<div class="cite">${linkify(f.s)}</div>` : ""}</li>`).join("")}</ul>`;
     if (p.oc && p.oc.length) {
-      const isParent = (c) => /\b(son|daughter|child) of\b|\bparent|\bborn in\b|\bbirthplace|\bof (howick|harwich|stepney)\b/i.test(c.t);
+      const isParent = (c) => /^(son|daughter|child) of\b/i.test(c.t);
       const ord = p.oc.slice().sort((a, b) => (isParent(b) ? 1 : 0) - (isParent(a) ? 1 : 0));
       h += `<div class="sec">English origins (unproven)</div><div class="ocnote">${I.doc}<div><b>No primary record names his parents or his birthplace.</b> The claims below come from compiled genealogies and later writers. Each keeps its own rating; none of the parentages is proven.</div></div><ul class="flist oc">${ord.map((c) => `<li class="${c.r || ""}${c.x ? " contra" : ""}"><b>${esc(c.t)}</b>${ratingTag(c.r)}${c.x ? ` <span class="rt contra">Contradicted by the records</span>` : ""}${c.a ? `<div class="oca">${esc(c.a)}</div>` : ""}${c.s ? `<div class="cite">${linkify(c.s)}</div>` : ""}</li>`).join("")}</ul>`;
     }
