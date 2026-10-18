@@ -158,7 +158,15 @@ function buildLivingMatchers(people, byId) {
       }
     }
   }
-  return (s) => pats.some((x) => x.re.test(s));
+  const agePats = [];
+  // census-style mentions by given name and age ("daughters Carole J., 11, and Sandra G., 6") reveal birth years
+  for (const p of living) {
+    const g = nameTokens(p.name)[0];
+    if (g && g.length > 2 && /^[A-Z]/.test(g)) agePats.push(new RegExp("\\b" + g.replace(".", "\\.?") + "(?:\\s+[A-Z]\\.)?,?\\s+(?:\\(?[Aa]ged?\\s+)?\\d{1,2}\\b(?![\\d,]*\\s*(?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec))"));
+  }
+  // only in records from 1930 on, when someone still living could appear as a child
+  const modern = /\b(?:19[3-9]\d|20\d\d)\b/;
+  return (s) => pats.some((x) => x.re.test(s)) || (modern.test(s) && agePats.some((re) => re.test(s)));
 }
 
 // ---------- normalize one person ----------

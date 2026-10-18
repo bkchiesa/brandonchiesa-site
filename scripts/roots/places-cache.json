@@ -1403,6 +1403,19 @@
   "kind": "county",
   "at": "2026-10-18"
  },
+ "salisbury, north carolina": {
+  "raw": "Salisbury, North Carolina",
+  "q": "Salisbury, North Carolina",
+  "status": "ok",
+  "lat": 35.67097,
+  "lon": -80.47423,
+  "prec": "exact",
+  "matched": "Salisbury, North Carolina",
+  "osm": "relation/180312",
+  "display": "Salisbury, Rowan County, North Carolina, United States",
+  "kind": "city",
+  "at": "2026-10-18"
+ },
  "san francisco, california": {
   "raw": "San Francisco, California",
   "q": "San Francisco, California",
