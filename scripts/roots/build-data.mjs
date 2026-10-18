@@ -213,6 +213,17 @@ function linkMeta(p) {
   }
   return Object.keys(out).length ? out : null;
 }
+// origin_claims: hypothesized origins (parentage, birthplace, voyage), each with its own rating and assessment
+function originClaims(p) {
+  const arr = Array.isArray(p.origin_claims) ? p.origin_claims : [];
+  return arr.map((c) => {
+    if (isStr(c)) return { t: cleanText(c), r: normRating(c.match(/hypothesis|proven|probable|compiled|family claim/i)?.[0]) };
+    if (!c || typeof c !== "object" || !isStr(c.claim || c.text)) return null;
+    const a = isStr(c.assessment || c.notes || c.note) ? cleanText(c.assessment || c.notes || c.note) : null;
+    const x = /\bcontradict|\bruled out|\bimpossib|\bnot supported|\bdisproved|\bcannot be (him|the same)|\brefuted/i.test((a || "") + " " + (c.verdict || "") + " " + (c.status || ""));
+    return { t: cleanText(c.claim || c.text), r: normRating(c.confidence || c.rating), a, s: isStr(c.citation || c.source) ? cleanText(c.citation || c.source) : null, x: x || undefined };
+  }).filter(Boolean);
+}
 function normalize(p, tree) {
   const stRaw = p.status || "";
   const st = normRating(stRaw) || "probable";
@@ -269,6 +280,7 @@ function normalize(p, tree) {
     line: p.line_r8us || p.line_r7us || p.line_r10 || null,
     rel: relOf(p),
     her: heritageList(p),
+    oc: originClaims(p),
     border: String(p.display_border || "").toLowerCase() === "solid" ? "solid" : null,
     cfm: confirmedOf(p.confirmed_by_brandon),
     lk: linkMeta(p),
@@ -300,6 +312,7 @@ function splitPrivate(rec, namesLiving) {
   keep(null, "src", (x) => x.t);
   keep(null, "ev", (x) => x.t);
   keep(null, "md", (x) => JSON.stringify(x));
+  keep(null, "oc", (x) => x.t + " " + (x.a || "") + " " + (x.s || ""));
   // heritage notes: judge by the note itself; a citation that only names who relayed a family story is reworded
   if (Array.isArray(rec.her)) {
     const pub = [], pv = [];
