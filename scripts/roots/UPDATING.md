@@ -141,8 +141,37 @@ Brandon asked (18 Oct 2026) that the site never say he confirmed, approved, veri
 
 - `confirmed_by_brandon` (on a person or on a parent link) is no longer published: no chart badge, card pill, card
   note, family-row mark or encrypted note. The researchers' field can stay in the tree JSON; the build ignores it.
-- `display_border: "solid"` still draws the solid border. The legend reads "Solid border: proven link".
+- `display_border: "solid"` still draws the solid border. The legend read "Solid border: proven link" (changed in v15, below).
 - Published text drops "by Brandon (Chiesa)" after confirmed / approved / verified / reviewed / checked / viewed
   (e.g. "FamilySearch record viewed read-only, 18 Oct 2026"), and drops "Brandon confirmed/approved/verified …" clauses.
 - Credits for his own photos and record images ("Photo by Brandon Chiesa", "Record image provided by Brandon Chiesa")
   are attributions, not confirmations, and stay.
+
+### Neutral attribution wording; legend "key Jamestown line (probable)" (v15)
+
+Brandon asked (18 Oct 2026) that public text not say what he decided, chose, identified, recalled or read.
+`cleanText` in `build-data.mjs` rewrites these when it builds the site; the tree JSON is not changed:
+
+| Researchers' wording | Published as |
+| --- | --- |
+| "Brandon chose the act date, …" / "Brandon chose 5 May 1885 from the act" / "(Brandon chose this date …)" | "Date per the birth act (atto 34): …" / "5 May 1885, per the birth act (atto 34)" / "(date per the birth act, atto 34)" |
+| "Brandon's copy of Nati 1885 atto 34" | "the record image of Nati 1885 atto 34" |
+| "Brandon identified this as the birthplace" / "the house identification is Brandon's" | "Identified as the birthplace from the birth act's house number" |
+| "Brandon recalls b. …" | "Family recollection: b. …" |
+| "Brandon read it as possibly …" | "Possible reading: …" |
+| "Read from Brandon's screenshots" / "viewed via screenshots" | "Read from record images" / "viewed as record images" |
+| "(Brandon, Oct 2026, relayed by Guido)" | "(Oct 2026)" |
+
+There is a fallback for any other "Brandon decided/identified/said …" wording. The Valmozzola page's fixed text was
+reworded in `village.mjs` in the same way. Photo and record-image credits ("Photo by Brandon Chiesa", "Record image
+provided by Brandon Chiesa", "Brandon's photos") are attributions and stay.
+
+**Build guard:** after writing, the build scans the public JSON (not the encrypted block) and the Valmozzola page. It
+fails if any of these patterns, or "Confirmed by Brandon", is still there.
+
+**Legend and the eight solid-border cards (Brandon's decision, 18 Oct 2026):** the legend reads exactly "Solid border:
+key Jamestown line (probable)". Cards with a solid border, or a solid parent link (the Thomas Gray → Martha Judkins
+line, 8 cards), never show the word "proven". Their proven-rated items (Thomas Gray's and Martha Judkins's own rating,
+facts and timeline) read "Documented", with the same styling as Proven, and `unproven()` in `build-data.mjs` rewrites any
+"proven" in their text. Because "Documented" is a separate rating, the "Proven only" filter no longer highlights those two cards. Thomas Gray's "English origins (unproven)" heading now reads "English origins (unconfirmed)".
+

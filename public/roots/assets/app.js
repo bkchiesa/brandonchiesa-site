@@ -9,7 +9,7 @@ const $ = (s, el = document) => el.querySelector(s);
 const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const ic = (k, st) => (I[k] || "").replace('class="ico"', `class="ico"${st ? ` style="${st}"` : ""}`);
 const isMobile = () => matchMedia("(max-width: 760px)").matches;
-const RATING_LABEL = { proven: "Proven", probable: "Probable", compiled: "Compiled", hypothesis: "Hypothesis", family: "Family-provided", claim: "Family claim" };
+const RATING_LABEL = { proven: "Proven", documented: "Documented", probable: "Probable", compiled: "Compiled", hypothesis: "Hypothesis", family: "Family-provided", claim: "Family claim" };
 const WAR = {
   rev: { label: "Revolutionary War", short: "Rev. War", icon: "flag", cls: "rev" },
   "1812": { label: "War of 1812", short: "War of 1812", icon: "flag", cls: "" },
@@ -254,7 +254,7 @@ function render() {
 function searchBox(id) { return `<label>${I.search}<input id="${id}" type="search" placeholder="Search people & places…" autocomplete="off" aria-label="Search people and places"><span class="kbd">/</span></label><div class="results" id="${id}r" hidden></div>`; }
 function legendHTML() {
   return `<button class="x" aria-label="Close key">${I.close}</button>
-  <span><span class="sw direct"></span>Direct line</span><span><span class="sw"></span>Proven</span><span><span class="sw probable"></span>Probable / index</span><span><span class="sw compiled"></span>Compiled tree</span><span><span class="sw hypothesis"></span>Hypothesis</span><span><span class="sw family"></span>Family-provided</span><span><span class="sw claim"></span>Family claim</span><span><span class="sw bsolid"></span>Solid border: proven link</span><span><span class="sw living"></span>Living</span><span class="sep"></span>
+  <span><span class="sw direct"></span>Direct line</span><span><span class="sw"></span>Proven</span><span><span class="sw probable"></span>Probable / index</span><span><span class="sw compiled"></span>Compiled tree</span><span><span class="sw hypothesis"></span>Hypothesis</span><span><span class="sw family"></span>Family-provided</span><span><span class="sw claim"></span>Family claim</span><span><span class="sw bsolid"></span>Solid border: key Jamestown line (probable)</span><span><span class="sw living"></span>Living</span><span class="sep"></span>
   <span><span class="badge-i">${I.ship}</span>Immigrant</span>${D.people.some((p) => p.immC && !p.imm) ? `<span><span class="badge-i dashed">${I.ship}</span>Immigrant? compiled only</span>` : ""}<span><span class="badge-i">${I.star}</span>WWI / WWII</span><span><span class="badge-i cw">${I.swords}</span>Civil War</span><span><span class="badge-i rev">${I.flag}</span>Rev. War / 1812</span>${D.people.some((p) => p.jt) ? `<span><span class="badge-i jt">${I.crown}</span>Jamestown</span>` : ""}`;
 }
 function partnerId() { return P[FOCAL].sp.find((s) => LAYOUT && LAYOUT.pos[s]); }
@@ -340,7 +340,7 @@ function drawMini() {
   let s = `<svg viewBox="0 0 ${w} ${h}" height="${h}" id="minisvg">`;
   for (const [id, v] of Object.entries(LAYOUT.pos)) {
     const p = P[id], st = p.liv ? "living" : p.st;
-    const col = { proven: "#5d6b3b", probable: "#b0893c", compiled: "#9b9585", hypothesis: "#a8402f", family: "#2c3e5e", claim: "#6a4c7a", living: "#b8ab8a" }[st] || "#b0893c";
+    const col = { proven: "#5d6b3b", documented: "#5d6b3b", probable: "#b0893c", compiled: "#9b9585", hypothesis: "#a8402f", family: "#2c3e5e", claim: "#6a4c7a", living: "#b8ab8a" }[st] || "#b0893c";
     s += `<rect x="${((X(v.x) - CW / 2) * sx).toFixed(1)}" y="${(Y(v.g) * sy).toFixed(1)}" width="${Math.max(2, CW * sx).toFixed(1)}" height="${Math.max(2.5, CH * sy).toFixed(1)}" rx="1" fill="${col}" opacity="${DIRECT.has(id) ? 1 : 0.55}"/>`;
   }
   s += `<rect id="minivp" fill="rgba(30,45,71,.08)" stroke="#1e2d47" stroke-width="1.2" rx="2"/></svg>`;
@@ -532,7 +532,7 @@ function openFilterPanel(k) {
     for (const p of ppl) for (const c of (p.jtC && p.jtC.length ? p.jtC : ["Jamestown line"])) (chains[c] = chains[c] || []).push(p);
     const ordered = Object.entries(chains).sort((a, b) => b[1].length - a[1].length);
     body += `<div class="flt-sub">Descents from Jamestown-era settlers (1607–1624). Every person carries a rating, and a chain is only as strong as its weakest link.</div>`;
-    const O = ["proven", "family", "probable", "compiled", "claim", "hypothesis"];
+    const O = ["proven", "documented", "family", "probable", "compiled", "claim", "hypothesis"];
     for (const [c, list] of ordered) {
       list.sort((a, b) => (DIRECT.get(b.id) ?? -1) - (DIRECT.get(a.id) ?? -1) || by(a.id) - by(b.id));
       const stated = (c.match(/\((proven|probable|hypothesis|compiled)\)/i) || [])[1];
@@ -586,7 +586,7 @@ function openPerson(id) {
     <div class="eyebrow">${esc(relLabel(id))}${DIRECT.has(id) && DIRECT.get(id) > 0 ? " · direct line" : ""}${p.line ? " · " + esc(p.line) + " line" : ""}</div>
     <h2>${esc(p.n)}</h2>${p.rel && relLabel(id).toLowerCase() !== ((TREE === "holly" ? "holly’s " : "brandon’s ") + p.rel).toLowerCase() ? `<div class="relto">${TREE === "holly" ? "Holly’s" : "Brandon’s"} ${esc(p.rel)}</div>` : ""}${p.aka && p.aka.length && !locked ? `<div class="born">also ${esc(p.aka.join(", "))}</div>` : ""}
     <div class="yrs">${locked ? "Living · details are private" : esc([p.b && p.b.d, p.d && p.d.d].filter(Boolean).join(" – ") || p.yrs || "")}</div>
-    <div class="pills">${locked ? `<span class="status living">${ic("lock")}Living</span>` : `<span class="status ${p.st}">${p.st === "proven" ? ic("check") : ""}${RATING_LABEL[p.st] || esc(p.stRaw || "")}</span>`}
+    <div class="pills">${locked ? `<span class="status living">${ic("lock")}Living</span>` : `<span class="status ${p.st}">${p.st === "proven" || p.st === "documented" ? ic("check") : ""}${RATING_LABEL[p.st] || esc(p.stRaw || "")}</span>`}
     ${!locked && p.imm ? `<span class="pill2"><span class="badge-i">${I.ship}</span>Immigrant${immYear(p) ? " · " + immYear(p) : ""}</span>` : ""}
     ${!locked && !p.imm && p.immC ? `<span class="pill2 dashed"><span class="badge-i dashed">${I.ship}</span>Immigrant? compiled only</span>` : ""}
     ${!locked ? (p.wars || []).map((w) => `<span class="pill2"><span class="badge-i ${W_(w).cls}">${I[W_(w).icon]}</span>${W_(w).label}</span>`).join("") : ""}
@@ -642,7 +642,7 @@ function openPerson(id) {
     if (p.oc && p.oc.length) {
       const isParent = (c) => /^(son|daughter|child) of\b/i.test(c.t);
       const ord = p.oc.slice().sort((a, b) => (isParent(b) ? 1 : 0) - (isParent(a) ? 1 : 0));
-      h += `<div class="sec">English origins (unproven)</div><div class="ocnote">${I.doc}<div><b>No primary record names his parents or his birthplace.</b> The claims below come from compiled genealogies and later writers. Each keeps its own rating; none of the parentages is proven.</div></div><ul class="flist oc">${ord.map((c) => `<li class="${c.r || ""}${c.x ? " contra" : ""}"><b>${esc(c.t)}</b>${ratingTag(c.r)}${c.x ? ` <span class="rt contra">Contradicted by the records</span>` : ""}${c.a ? `<div class="oca">${esc(c.a)}</div>` : ""}${c.s ? `<div class="cite">${linkify(c.s)}</div>` : ""}</li>`).join("")}</ul>`;
+      h += `<div class="sec">English origins (unconfirmed)</div><div class="ocnote">${I.doc}<div><b>No primary record names his parents or his birthplace.</b> The claims below come from compiled genealogies and later writers. Each keeps its own rating; none of the parentages is proven.</div></div><ul class="flist oc">${ord.map((c) => `<li class="${c.r || ""}${c.x ? " contra" : ""}"><b>${esc(c.t)}</b>${ratingTag(c.r)}${c.x ? ` <span class="rt contra">Contradicted by the records</span>` : ""}${c.a ? `<div class="oca">${esc(c.a)}</div>` : ""}${c.s ? `<div class="cite">${linkify(c.s)}</div>` : ""}</li>`).join("")}</ul>`;
     }
     if (p.her && p.her.length) h += `<div class="sec">Heritage &amp; family stories</div><ul class="flist her">${p.her.map((f) => `<li class="${f.r || ""}">${esc(f.t)}${ratingTag(f.r)}${f.s ? `<div class="cite">${linkify(f.s)}</div>` : ""}</li>`).join("")}</ul>`;
     if (p.notes && p.notes.length) h += `<div class="sec">Research notes</div><ul class="flist">${p.notes.map((n) => `<li>${esc(n)}</li>`).join("")}</ul>`;

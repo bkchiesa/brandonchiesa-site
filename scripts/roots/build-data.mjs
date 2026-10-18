@@ -74,6 +74,22 @@ function cleanText(s) {
   // no public text says Brandon confirmed, approved, verified, reviewed or viewed something (Brandon's request, 18 Oct 2026)
   t = t.replace(/\b((?:confirmed|approved|verified|reviewed|checked|vouched for|viewed(?:\s+read-only)?))\s+by\s+Brandon(?:\s+[A-Z]\.)?(?:\s+Chiesa)?\b/g, "$1");
   t = t.replace(/\bBrandon(?:\s+Chiesa)?\s+(?:has\s+)?(?:confirmed|approved|verified|reviewed|vouched for)\b[^.;)]*[.;]?/g, "");
+  // attribution lines that say what Brandon decided, chose, identified, recalled or read are reworded neutrally
+  // (Brandon's request, 18 Oct 2026). Photo and record-image credits ("Photo by Brandon Chiesa") are kept.
+  t = t.replace(/\b(?:Birth date decided [^:;.]*:\s*)?Brandon(?:\s+Chiesa)?\s+chose the act date(?:,\s*|\s+on\s+[^.;)]*)?/g, (m) => (/,\s*$/.test(m) ? "Date per the birth act (atto 34): " : "The date follows the birth act (atto 34)"));
+  t = t.replace(/\bBrandon(?:\s+Chiesa)?\s+chose\s+(\d{1,2}\s+\w+\s+\d{4})\s+from the act\b/g, "$1, per the birth act (atto 34)");
+  t = t.replace(/\(Brandon(?:\s+Chiesa)?\s+chose this date[^)]*\)/g, "(date per the birth act, atto 34)");
+  t = t.replace(/\bBrandon(?:\s+Chiesa)?\s+chose\b/g, "Chosen:");
+  t = t.replace(/(^|[.!?]\s+)?\bBrandon(?:’|')s\s+copy\s+of\b/g, (m, lead) => (lead !== undefined ? lead + "The" : "the") + " record image of");
+  t = t.replace(/\bBrandon(?:\s+Chiesa)?\s+identified\s+(?:this|it)\s+as\s+the\s+birthplace\b/g, "Identified as the birthplace from the birth act’s house number");
+  t = t.replace(/;?\s*the\s+(?:house|building)s?\s+identifications?\s+(?:is|are)\s+Brandon(?:’|')s\b/g, "; identified as the birthplace from the birth act’s house number");
+  t = t.replace(/\bThe identification of the buildings is Brandon(?:’|')s\b/g, "The buildings are identified from the house numbers in the birth acts");
+  t = t.replace(/\bBrandon(?:\s+Chiesa)?\s+(?:recalls|recalled|remembers|remembered)\s*/g, "Family recollection: ");
+  t = t.replace(/\bBrandon(?:\s+Chiesa)?\s+read\s+(?:it|this|the name)\s+as\s+(?:possibly\s+)?/g, "Possible reading: ");
+  t = t.replace(/\b(?:[Rr]ead|[Tt]ranscribed)\s+from\s+Brandon(?:’|')s\s+screenshots?\b/g, (m) => (m[0] === "R" || m[0] === "T" ? "Read from record images" : "read from record images"));
+  t = t.replace(/\(Brandon(?:\s+Chiesa)?,\s*([^,()]*?\d{4})(?:,\s*relayed by [^)]*)?\)/g, "($1)");
+  t = t.replace(/\b(viewed|read|seen)\s+via\s+screenshots?\b/g, "$1 as record images");
+  t = t.replace(/\bBrandon(?:\s+Chiesa)?\s+(?:decided|identified|believes|thinks|says|said|notes|noted|reads|judged|picked|selected)\b/g, "The family record says");
   // research screenshots ("(screenshots in [research file])", "(screenshots x.png and -zoom.png)") are working files
   t = t.replace(/\s*\(screenshots?\b[^()]*\)/gi, "").replace(/;?\s*screenshots?\s+[\w-]+\.(?:png|jpe?g)(?:\s*(?:,|and)\s*[\w-]*\.(?:png|jpe?g))*/gi, "");
   // Aldo Chiesa's 1944 enlistment card was misread as "single, with dependents"; never publish that wording
@@ -411,6 +427,13 @@ function splitPrivate(rec, namesLiving) {
   return Object.keys(priv).length ? priv : null;
 }
 
+const RATE_KEYS = new Set(["st", "stRaw", "r", "rating", "status", "confidence"]);
+function unproven(o, k) {
+  if (typeof o === "string") return RATE_KEYS.has(k) && /^proven$/i.test(o) ? "documented" : o.replace(/\bPROVEN\b/g, "DOCUMENTED").replace(/\bProven\b/g, "Documented").replace(/\bproven\b/g, "documented");
+  if (Array.isArray(o)) return o.map((x) => unproven(x));
+  if (o && typeof o === "object") { const r = {}; for (const [kk, v] of Object.entries(o)) r[kk] = unproven(v, kk); return r; }
+  return o;
+}
 function deepClean(o) {
   if (typeof o === "string") return cleanText(o);
   if (Array.isArray(o)) return o.map(deepClean);
@@ -588,6 +611,9 @@ async function main() {
       // the war-memorial note is shown with its photo; do not repeat it under research notes
       const plq = (rec.md || []).find((m) => m.plq);
       if (plq && Array.isArray(rec.notes)) rec.notes = rec.notes.filter((n) => n.trim() !== (plq.note || "").trim());
+      // the solid-border key Jamestown line is rated probable as a chain; Brandon asked (18 Oct 2026) that the word
+      // "proven" not appear anywhere on these cards, so their proven-rated items read "Documented" instead
+      if (rec.border === "solid" || Object.values(rec.lk || {}).some((m) => m.b === "solid")) Object.assign(rec, unproven(rec));
       if (p._living) {
         // public: name and family links only
         pub.push({ id: rec.id, n: cleanText(p.name), sex: rec.sex, par: rec.par, sp: rec.sp, liv: true, ...(rec.rel ? { rel: relBase(rec.rel) } : {}) });
@@ -626,6 +652,21 @@ async function main() {
     summary.push(`valmozzola page: ${v.photos} family photos, ${v.commons} Commons images, ${v.emigrants} emigrants, ${v.records} record images${MEDIA_LIB.held.length ? "; held back: " + MEDIA_LIB.held.join(", ") : ""}`);
   }
   guardOutput(path.join(REPO, "public/roots"));
+  // attribution guard: no public text may say what Brandon decided, chose, identified, recalled, read, confirmed or
+  // reviewed (credits such as "Photo by Brandon Chiesa" are fine). The encrypted private block is not scanned.
+  {
+    const ATTRIB = /\bBrandon(?:\s+Chiesa)?\s+(?:chose|decided|identified|recalls|recalled|remembers|read\s+(?:it|this)|confirmed|approved|verified|reviewed|vouched)\b|\b(?:confirmed|approved|verified|reviewed|vouched for)\s+by\s+Brandon\b|\bBrandon(?:’|')s\s+(?:copy|screenshots?|identification|decision|reading)\b|\bidentifications?\s+(?:is|are)\s+Brandon(?:’|')s\b|Confirmed by Brandon/;
+    const files = [...["brandon", "holly"].map((k) => path.join(OUT, k + ".json")), path.join(REPO, "public/roots/valmozzola/index.html")];
+    const hits = [];
+    for (const f of files) {
+      if (!existsSync(f)) continue;
+      let txt = await readFile(f, "utf8");
+      if (f.endsWith(".json")) { const j = JSON.parse(txt); delete j.private; txt = JSON.stringify(j); }
+      const m = txt.match(new RegExp(ATTRIB.source, "g"));
+      if (m) hits.push(path.basename(f) + ": " + [...new Set(m)].join(" | "));
+    }
+    if (hits.length) throw new Error("BUILD GUARD: attribution wording naming Brandon in public output: " + hits.join("; "));
+  }
   console.log(summary.join("\n"));
   if (missing.size) console.log(`${missing.size} place(s) have no coordinates yet; run: node scripts/roots/geocode-places.mjs`);
   if (BANNED_HITS.n) console.log(`Removed the 'single with dependents' wording in ${BANNED_HITS.n} place(s).`);
