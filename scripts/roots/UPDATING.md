@@ -134,3 +134,15 @@ string mentions a year from 1930 on. Two false-match causes are fixed:
 When the check changes, dump the private block before and after (`tools/privdump.mjs`, local only), and review every
 string that becomes public: it must not give a living person's age, birth date, address or other detail beyond the
 name. `tools/agescan.mjs` uses the same rules.
+
+### No "Confirmed by Brandon" anywhere (v14)
+
+Brandon asked (18 Oct 2026) that the site never say he confirmed, approved, verified or reviewed anything.
+
+- `confirmed_by_brandon` (on a person or on a parent link) is no longer published: no chart badge, card pill, card
+  note, family-row mark or encrypted note. The researchers' field can stay in the tree JSON; the build ignores it.
+- `display_border: "solid"` still draws the solid border. The legend reads "Solid border: proven link".
+- Published text drops "by Brandon (Chiesa)" after confirmed / approved / verified / reviewed / checked / viewed
+  (e.g. "FamilySearch record viewed read-only, 18 Oct 2026"), and drops "Brandon confirmed/approved/verified …" clauses.
+- Credits for his own photos and record images ("Photo by Brandon Chiesa", "Record image provided by Brandon Chiesa")
+  are attributions, not confirmations, and stay.

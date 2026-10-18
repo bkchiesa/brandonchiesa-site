@@ -71,6 +71,9 @@ function cleanText(s) {
   t = t.replace(/\s*\((?:saved|transcription|see)[^()]*?(?:\/workspace\/|fs-shots\/|\.txt)[^()]*\)/gi, "");
   t = t.replace(/;?\s*(?:transcription\s+)?fs-shots\/[\w./-]+(?:\s+Round\s+\w+)?/gi, "");
   t = t.replace(/\/workspace\/[\w./-]+/g, "[research file]");
+  // no public text says Brandon confirmed, approved, verified, reviewed or viewed something (Brandon's request, 18 Oct 2026)
+  t = t.replace(/\b((?:confirmed|approved|verified|reviewed|checked|vouched for|viewed(?:\s+read-only)?))\s+by\s+Brandon(?:\s+[A-Z]\.)?(?:\s+Chiesa)?\b/g, "$1");
+  t = t.replace(/\bBrandon(?:\s+Chiesa)?\s+(?:has\s+)?(?:confirmed|approved|verified|reviewed|vouched for)\b[^.;)]*[.;]?/g, "");
   // research screenshots ("(screenshots in [research file])", "(screenshots x.png and -zoom.png)") are working files
   t = t.replace(/\s*\(screenshots?\b[^()]*\)/gi, "").replace(/;?\s*screenshots?\s+[\w-]+\.(?:png|jpe?g)(?:\s*(?:,|and)\s*[\w-]*\.(?:png|jpe?g))*/gi, "");
   // Aldo Chiesa's 1944 enlistment card was misread as "single, with dependents"; never publish that wording
@@ -202,21 +205,14 @@ function heritageList(p) {
   const tidy = (x) => String(x || "").replace(/\bRound \d+ (verdict|check|finding)s?\b/gi, (m, w) => "Research " + w.toLowerCase()).replace(/\s*\(Round \d+\)/gi, "").replace(/\b(in|from) the Round \d+ request\b/gi, "");
   return arr.map((h) => (typeof h === "string" ? { t: tidy(h), r: normRating(h.match(/family claim|hypothesis|proven|probable|compiled/i)?.[0]) } : h && (h.text || h.note || h.fact) ? { t: tidy(h.text || h.note || h.fact), r: normRating(h.confidence || h.rating), s: tidy(h.citation || h.source) || null } : null)).filter(Boolean);
 }
-// display_border: "solid" and confirmed_by_brandon {date, note}, per person and per parent link
-function confirmedOf(c) {
-  if (!c) return null;
-  if (c === true) return { date: null, note: null };
-  if (isStr(c)) return { date: null, note: cleanText(c) };
-  if (typeof c === "object") return { date: isStr(c.date) ? c.date : null, note: isStr(c.note) ? cleanText(c.note) : null };
-  return null;
-}
+// display_border: "solid", per person and per parent link. confirmed_by_brandon is NOT published (Brandon asked, 18 Oct 2026:
+// no "Confirmed by Brandon" badge, note or citation anywhere on the site); the solid border alone marks a proven link.
 function linkMeta(p) {
   const out = {};
   const put = (pid, o) => {
     if (!isStr(pid) || !o || typeof o !== "object") return;
     const m = {};
     if (String(o.display_border || "").toLowerCase() === "solid") m.b = "solid";
-    const c = confirmedOf(o.confirmed_by_brandon); if (c) m.c = c;
     if (Object.keys(m).length) out[pid] = m;
   };
   for (const key of ["confirmed_parent_links", "parent_links", "link_meta", "relationship_links"]) {
@@ -361,7 +357,6 @@ function normalize(p, tree) {
     her: heritageList(p),
     oc: originClaims(p),
     border: String(p.display_border || "").toLowerCase() === "solid" ? "solid" : null,
-    cfm: confirmedOf(p.confirmed_by_brandon),
     lk: linkMeta(p),
   };
 }

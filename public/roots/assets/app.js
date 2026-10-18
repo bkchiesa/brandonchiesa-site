@@ -46,8 +46,7 @@ function view_(id) { // person merged with private details when unlocked
       const m = Object.assign({}, p);
       for (const [k, v] of Object.entries(x.extra)) {
         if (k === "relx") { m.rel = v; continue; }
-        if (k === "cfmx") { m.cfm = Object.assign({}, m.cfm, { note: v }); continue; }
-        if (k === "lkx") { m.lk = Object.assign({}, m.lk); for (const [q, n] of Object.entries(v)) m.lk[q] = Object.assign({}, m.lk[q], { c: Object.assign({}, (m.lk[q] || {}).c, { note: n }) }); continue; }
+        if (k === "cfmx" || k === "lkx") continue; // confirmation notes are no longer shown
         if (k === "milsrc") { if (m.mil) m.mil = Object.assign({}, m.mil, { src: m.mil.src.concat(v) }); }
         else m[k] = (m[k] || []).concat(v);
       }
@@ -209,7 +208,6 @@ function badgesFor(p) {
   else if (p.immC) out.push(`<span class="badge-i dashed" title="Immigrant? compiled only">${I.ship}</span>`);
   for (const w of (p.wars || []).slice(0, 2)) { const W = WAR[w] || WAR.service; out.push(`<span class="badge-i ${W.cls}" title="${esc(W.label)}">${I[W.icon]}</span>`); }
   if (p.jt) out.push(`<span class="badge-i jt" title="Jamestown line">${I.crown}</span>`);
-  if (p.cfm) out.push(`<span class="badge-i cfm" title="Confirmed by Brandon">${I.check}</span>`);
   return out.join("");
 }
 
@@ -256,7 +254,7 @@ function render() {
 function searchBox(id) { return `<label>${I.search}<input id="${id}" type="search" placeholder="Search people & places…" autocomplete="off" aria-label="Search people and places"><span class="kbd">/</span></label><div class="results" id="${id}r" hidden></div>`; }
 function legendHTML() {
   return `<button class="x" aria-label="Close key">${I.close}</button>
-  <span><span class="sw direct"></span>Direct line</span><span><span class="sw"></span>Proven</span><span><span class="sw probable"></span>Probable / index</span><span><span class="sw compiled"></span>Compiled tree</span><span><span class="sw hypothesis"></span>Hypothesis</span><span><span class="sw family"></span>Family-provided</span><span><span class="sw claim"></span>Family claim</span><span><span class="sw bsolid"></span><span class="badge-i cfm sm">${I.check}</span>Confirmed by Brandon</span><span><span class="sw living"></span>Living</span><span class="sep"></span>
+  <span><span class="sw direct"></span>Direct line</span><span><span class="sw"></span>Proven</span><span><span class="sw probable"></span>Probable / index</span><span><span class="sw compiled"></span>Compiled tree</span><span><span class="sw hypothesis"></span>Hypothesis</span><span><span class="sw family"></span>Family-provided</span><span><span class="sw claim"></span>Family claim</span><span><span class="sw bsolid"></span>Solid border: proven link</span><span><span class="sw living"></span>Living</span><span class="sep"></span>
   <span><span class="badge-i">${I.ship}</span>Immigrant</span>${D.people.some((p) => p.immC && !p.imm) ? `<span><span class="badge-i dashed">${I.ship}</span>Immigrant? compiled only</span>` : ""}<span><span class="badge-i">${I.star}</span>WWI / WWII</span><span><span class="badge-i cw">${I.swords}</span>Civil War</span><span><span class="badge-i rev">${I.flag}</span>Rev. War / 1812</span>${D.people.some((p) => p.jt) ? `<span><span class="badge-i jt">${I.crown}</span>Jamestown</span>` : ""}`;
 }
 function partnerId() { return P[FOCAL].sp.find((s) => LAYOUT && LAYOUT.pos[s]); }
@@ -571,7 +569,7 @@ function bindSwipeClose(panel, kind) {
 // ---------- person card ----------
 function famRow(label, ids, lk) {
   ids = ids.filter((x) => P[x]); if (!ids.length) return "";
-  return `<div class="fr"><div class="k">${label}</div><div class="ns">${ids.map((id) => { const q = P[id], v = view_(id); const c = lk && lk[id] && lk[id].c; return `<button class="fp" data-open="${esc(id)}"><span class="av"></span><span class="n">${esc(q.n)}<small>${esc(q.liv ? (v.unlocked ? v.yrs || "Living" : "Living") : q.yrs || "")}${c ? " · ✓ link confirmed by Brandon" : ""}</small></span></button>`; }).join("")}</div></div>`;
+  return `<div class="fr"><div class="k">${label}</div><div class="ns">${ids.map((id) => { const q = P[id], v = view_(id); return `<button class="fp" data-open="${esc(id)}"><span class="av"></span><span class="n">${esc(q.n)}<small>${esc(q.liv ? (v.unlocked ? v.yrs || "Living" : "Living") : q.yrs || "")}</small></span></button>`; }).join("")}</div></div>`;
 }
 const ratingTag = (r) => (r ? ` <span class="rt ${r}">${RATING_LABEL[r] || r}</span>` : "");
 function linkify(s) { return esc(s).replace(/(https?:\/\/[^\s<;,)"]+[^\s<;,.)"])/g, '<a href="$1" target="_blank" rel="noopener nofollow">$1</a>'); }
@@ -589,15 +587,12 @@ function openPerson(id) {
     <h2>${esc(p.n)}</h2>${p.rel && relLabel(id).toLowerCase() !== ((TREE === "holly" ? "holly’s " : "brandon’s ") + p.rel).toLowerCase() ? `<div class="relto">${TREE === "holly" ? "Holly’s" : "Brandon’s"} ${esc(p.rel)}</div>` : ""}${p.aka && p.aka.length && !locked ? `<div class="born">also ${esc(p.aka.join(", "))}</div>` : ""}
     <div class="yrs">${locked ? "Living · details are private" : esc([p.b && p.b.d, p.d && p.d.d].filter(Boolean).join(" – ") || p.yrs || "")}</div>
     <div class="pills">${locked ? `<span class="status living">${ic("lock")}Living</span>` : `<span class="status ${p.st}">${p.st === "proven" ? ic("check") : ""}${RATING_LABEL[p.st] || esc(p.stRaw || "")}</span>`}
-    ${!locked && p.cfm ? `<span class="pill2 cfm"><span class="badge-i cfm">${I.check}</span>Confirmed by Brandon${p.cfm.date ? " · " + esc(p.cfm.date) : ""}</span>` : ""}
     ${!locked && p.imm ? `<span class="pill2"><span class="badge-i">${I.ship}</span>Immigrant${immYear(p) ? " · " + immYear(p) : ""}</span>` : ""}
     ${!locked && !p.imm && p.immC ? `<span class="pill2 dashed"><span class="badge-i dashed">${I.ship}</span>Immigrant? compiled only</span>` : ""}
     ${!locked ? (p.wars || []).map((w) => `<span class="pill2"><span class="badge-i ${W_(w).cls}">${I[W_(w).icon]}</span>${W_(w).label}</span>`).join("") : ""}
     ${p.jt ? `<span class="pill2"><span class="badge-i jt">${I.crown}</span>Jamestown line${p.jtR && !locked ? " · " + esc(p.jtR) : ""}</span>` : ""}
     ${!locked && p.occ && p.occ[0] ? `<span class="pill3" title="${esc(p.occ[0].t)}">${esc(String(p.occ[0].t).split(/[;(]/)[0].slice(0, 48))}</span>` : ""}</div>
   </div></div>`;
-  if (!locked && p.cfm && p.cfm.note) h += `<div class="cfmnote">${I.check}<div><b>Confirmed by Brandon${p.cfm.date ? ", " + esc(p.cfm.date) : ""}</b><p>${esc(p.cfm.note)}</p><small>The research rating above is unchanged; this records family confirmation.</small></div></div>`;
-  if (!locked && p.lk) { const cl = Object.entries(p.lk).filter(([q, m]) => m.c && P[q]); if (cl.length) h += cl.map(([q, m]) => `<div class="cfmnote">${I.check}<div><b>Link to ${esc(P[q].n)} confirmed by Brandon${m.c.date ? ", " + esc(m.c.date) : ""}</b>${m.c.note && !(p.cfm && p.cfm.note === m.c.note) ? `<p>${esc(m.c.note)}</p>` : ""}</div></div>`).join(""); }
   if (partner) h += `<p style="margin-top:14px"><a class="btn-lock" style="display:inline-flex;text-decoration:none" href="${BASE}${partner === "holly" ? "holly/" : ""}">${I.tree}Open ${partner === "holly" ? "Holly’s" : "Brandon’s"} family tree</a></p>`;
   if (locked) {
     h += `<div class="lockbox"><h4>${I.lock} Private: living relative</h4><p>To protect living family, the public site shows only names. Family members can unlock birth dates, places and notes with the family password.</p>${pwForm("pw-card")}</div>`;

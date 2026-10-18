@@ -1,4 +1,4 @@
-/* Roots · Living Tree design (from Brandon's approved mockups) */
+/* Roots · Living Tree design */
 :root{
   --paper:#f4ecd9; --paper2:#ebdfc3; --card:#fcf8ee; --ink:#2a2924; --ink2:#4a463c; --muted:#857c69;
   --navy:#1e2d47; --navy2:#2c3e5e; --olive:#5d6b3b; --olive-l:#8d9a63; --gold:#b0893c; --gold-l:#dcc58f; --gold-xl:#f1e4bf;
@@ -386,11 +386,6 @@ body:has(#layer .panel) .edge{display:none}
 
 .card.bsolid{border-style:solid!important;border-width:1.5px}
 .sw.bsolid{border-style:solid;border-color:var(--navy2);border-width:1.5px}
-.badge-i.cfm{background:#2f6b4f;color:#fff}
-.badge-i.cfm.sm{width:15px;height:15px;margin:0 4px 0 -2px;box-shadow:none}.badge-i.cfm.sm .ico{width:10px;height:10px}
-.pill2.cfm{background:#e8f2ec;color:#2f6b4f}
-.cfmnote{display:flex;gap:10px;align-items:flex-start;margin:12px 0 0;padding:10px 12px;border:1px solid #b9d6c5;background:#f1f8f4;border-radius:10px;color:#24543d;font-size:13px;line-height:1.4}
-.cfmnote>.ico{width:16px;height:16px;flex:none;margin-top:2px}.cfmnote p{margin:3px 0 0}.cfmnote small{display:block;margin-top:4px;color:#5d7a69}
 
 /* edge chips v2: compact, translucent, parked in the gap between generation rows */
 .edge{gap:5px;max-width:190px;padding:3px 10px 3px 8px;min-height:24px;background:rgba(252,248,238,.82);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);border-color:rgba(201,169,95,.75);box-shadow:0 4px 12px -8px rgba(60,40,10,.6);font-size:11px;opacity:.9;transition:opacity .15s,background .15s}
