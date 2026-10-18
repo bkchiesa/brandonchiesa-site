@@ -591,7 +591,7 @@ function openPerson(id) {
     h += `<div class="sec">Places</div><div class="mapbox wide" id="pmap"><svg viewBox="0 0 560 300" role="img" aria-label="Map of places in ${esc(p.n)}’s life"></svg><div class="mapcap" id="pmapcap">Loading map…</div></div><ol class="placelist" id="pmaplist"></ol>`;
     h += `<div class="cols"><div>${tl ? `<div class="sec">Life timeline</div><div class="tl">${tl}</div>` : ""}</div><div><div class="sec">Family</div>${fam || `<p class="flt-sub">No relatives recorded yet.</p>`}</div></div>`;
     if (p.mil && p.mil.lines.length) h += `<div class="sec">Military record</div><div class="milbox"><dl>${p.mil.lines.map(([k, v]) => `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join("")}</dl>${p.mil.src && p.mil.src.length ? `<div class="cite">Sources: ${p.mil.src.map(linkify).join("; ")}</div>` : ""}</div>`;
-    const nodate = (p.facts || []).filter((f) => !YR.test(f.t));
+    const nodate = (p.facts || []).filter((f) => !YR.test(f.t) || f.r === "claim");
     const extras = [].concat(
       (p.occ || []).map((o) => ({ t: `Occupation: ${o.t}${o.y ? " (" + o.y + ")" : ""}${o.p ? ", " + o.p : ""}`, r: o.r, s: o.s })),
       (p.res || []).filter((o) => !YR.test(o.y || "")).map((o) => ({ t: `Lived at ${o.p}${o.t ? ": " + o.t : ""}`, r: o.r, s: o.s })),

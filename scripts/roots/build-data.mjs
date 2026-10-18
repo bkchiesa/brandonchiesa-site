@@ -212,7 +212,7 @@ function normalize(p, tree) {
   ev(by, "Born", [p.birth?.date, p.birth?.place].filter(isStr).join(" · "), st, true);
   if (p.baptism) ev(yearOf(p.baptism.date), "Baptised", [p.baptism.date, p.baptism.place].filter(isStr).join(" · "), ratingInText(p.baptism.source || ""));
   if (p.marriage) ev(yearOf(p.marriage.date), "Married", [p.marriage.date, p.marriage.place].filter(isStr).join(" · "), ratingInText(p.marriage.source || ""));
-  for (const f of facts) { const y = yearOf(f.t); if (y && y !== by) ev(y, null, f.t, f.r); }
+  for (const f of facts) { const y = yearOf(f.t); if (y && y !== by && f.r !== "claim") ev(y, null, f.t, f.r); }
   for (const o of occs) ev(yearOf(o.y), "Occupation", [o.t, o.p].filter(isStr).join(" · "), o.r);
   for (const o of res) ev(yearOf(o.y), "Lived at", [o.p, o.t].filter(isStr).join(" · "), o.r);
   for (const o of news) ev(yearOf(o.y), "In the paper", `${o.paper ? o.paper + ": " : ""}${o.t || ""}`, o.r);
