@@ -111,3 +111,11 @@ Edit `public/roots/assets/style.css` and `app.js`. These are plain files with no
   facts, for the same reason.
 - Duplicates: add the file to `media_exclude` in places-overrides.json (06-old-stone-house is held back as the same
   building as 07-marianna-birthplace).
+
+### Citations naming Brandon, and death ranges (v11)
+
+- "FamilySearch record viewed read-only by Brandon Chiesa, <date>" in facts, sources, notes and events no longer counts as
+  naming a living relative (the check reads it as "the site owner"); the published text is unchanged. Other living-name
+  and census-age matches still move the item to the private block.
+- A death date such as "after Apr 1910 and before 19 Aug 1917" or "between 1738 and 1740" shows as 1910–1917 in the
+  short years, instead of only the first year.

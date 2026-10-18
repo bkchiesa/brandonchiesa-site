@@ -1637,6 +1637,19 @@
   "kind": "city",
   "at": "2026-10-18"
  },
+ "suffolk, nansemond county, virginia": {
+  "raw": "Suffolk, Nansemond Co., VA",
+  "q": "Suffolk, Nansemond County, Virginia",
+  "status": "ok",
+  "lat": 36.72813,
+  "lon": -76.58347,
+  "prec": "exact",
+  "matched": "Suffolk (near Nansemond County, Virginia)",
+  "osm": "relation/206528",
+  "display": "Suffolk, Virginia, United States",
+  "kind": "city",
+  "at": "2026-10-18"
+ },
  "suffolk, virginia": {
   "raw": "Suffolk, VA",
   "q": "Suffolk, Virginia",

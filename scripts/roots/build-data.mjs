@@ -83,6 +83,9 @@ function shortYears(p) {
   const by = yearOf(p.birth?.date), dy = yearOf(p.death?.date);
   const circ = (s) => (/\b(c\.|abt|about|circa|~|est)/i.test(String(s || "")) ? "c." : "");
   const bef = (s) => (/\bbefore|bef\.|by\b/i.test(String(s || "")) ? "bef. " : /\bafter|aft\./i.test(String(s || "")) ? "aft. " : "");
+  // a death range ("after Apr 1910 and before 19 Aug 1917") shows as 1910–1917, not "bef. 1910"
+  const rng = String(p.death?.date || "").match(/\b(?:after|aft\.|between)\b[^;]*?\b(1[5-9]\d\d|20[0-2]\d)\b[^;]*?\b(?:and|before|bef\.|-|–)\b[^;]*?\b(1[5-9]\d\d|20[0-2]\d)\b/i);
+  if (rng && +rng[2] > +rng[1]) return `${by ? circ(p.birth.date) + by + " – " : "d. "}${rng[1]}–${rng[2]}`;
   if (by && dy) return `${circ(p.birth.date)}${by} – ${bef(p.death.date)}${dy}`;
   if (by) return `b. ${circ(p.birth.date)}${by}`;
   if (dy) return `d. ${bef(p.death.date)}${dy}`;
@@ -370,15 +373,18 @@ function splitPrivate(rec, namesLiving) {
     for (const x of rec[key]) (namesLiving(getText(x)) ? pv : pub).push(x);
     rec[key] = pub; if (pv.length) priv[key] = pv;
   };
+  // Brandon (the site owner) is named in source citations ("viewed read-only by Brandon Chiesa"); that is not a
+  // mention of a living relative, so the same own-name exemption as media credits applies to facts, sources and events.
+  const own1 = (t) => String(t).replace(/\b(?:viewed|read|transcribed|checked|provided|photographed)(?:\s+read-only)?\s+by\s+Brandon(?:\s+[A-Z]\.)?\s+Chiesa\b/g, "viewed by the site owner");
   keep(null, "hl", (x) => x);
-  keep(null, "facts", (x) => x.t + " " + (x.s || ""));
+  keep(null, "facts", (x) => own1(x.t + " " + (x.s || "")));
   keep(null, "stories", (x) => (x.title || "") + " " + x.t + " " + (x.s || ""));
   keep(null, "occ", (x) => JSON.stringify(x));
   keep(null, "res", (x) => JSON.stringify(x));
   keep(null, "news", (x) => JSON.stringify(x));
-  keep(null, "notes", (x) => x);
-  keep(null, "src", (x) => x.t);
-  keep(null, "ev", (x) => x.t);
+  keep(null, "notes", (x) => own1(x));
+  keep(null, "src", (x) => own1(x.t));
+  keep(null, "ev", (x) => own1(x.t));
   const own0 = (t) => String(t).replace(/\bBrandon(?:\s+[A-Z]\.)?\s+Chiesa\b/g, "Brandon");
   keep(null, "md", (x) => own0(JSON.stringify(x)));
   for (const k of ["arr", "immC", "org", "ls"]) if (rec[k] && namesLiving(JSON.stringify(rec[k]))) { priv[k] = rec[k]; delete rec[k]; }
