@@ -95,6 +95,8 @@ function relLabel(id) {
     return `${who} ${g - 1}× great-${w}`;
   }
   for (const [a] of DIRECT) if (P[a].sp.includes(id)) return "Spouse of " + P[a].n;
+  // step-relation: a later (or earlier) husband or wife of someone who married into the family
+  if (!p.par.length) for (const s of p.sp) { const q = P[s]; if (q && q.sp.some((o) => o !== id && P[o] && P[o].par.length)) return "Step-relation · " + (p.sex === "F" ? "wife" : p.sex === "M" ? "husband" : "spouse") + " of " + q.n; }
   return "Relative";
 }
 
@@ -113,16 +115,22 @@ function layout() {
   const placed = new Set(), reserved = new Set();
   function descBlock(x, g) {
     const b = newBlock(); placed.add(x); addNode(b, x, 0, g);
-    let i = 1; for (const s of P[x].sp) if (P[s] && !placed.has(s) && !reserved.has(s)) { placed.add(s); addNode(b, s, i++, g); }
+    const at = new Map([[x, 0]]);
+    let i = 1; for (const s of P[x].sp) if (P[s] && !placed.has(s) && !reserved.has(s)) {
+      placed.add(s); at.set(s, i); addNode(b, s, i++, g);
+      // a spouse's other husband or wife (a step-relation) sits on the far side of that spouse
+      for (const s2 of P[s].sp) if (P[s2] && s2 !== x && !placed.has(s2) && !reserved.has(s2) && !P[s2].par.some((q) => placed.has(q))) { placed.add(s2); at.set(s2, i); addNode(b, s2, i++, g); }
+    }
     const unit = [...b.n.keys()];
     const kids = []; const seen = new Set();
     for (const u of unit) for (const k of kidsOf(u)) if (!placed.has(k) && !seen.has(k)) { seen.add(k); kids.push(k); }
+    const parentsIdx = unit.filter((u) => kidsOf(u).some((k) => seen.has(k))).map((u) => at.get(u)).filter((v) => v != null);
     kids.sort((a, c) => by(a) - by(c));
     const blocks = []; for (const k of kids) if (!placed.has(k)) blocks.push(descBlock(k, g - 1));
     if (blocks.length) {
       const kb = packRow(blocks, 1);
       const row = kids.map((k) => kb.n.get(k)).filter((v) => v && v.g === g - 1).map((v) => v.x);
-      const kc = (Math.min(...row) + Math.max(...row)) / 2, uc = (i - 1) / 2;
+      const kc = (Math.min(...row) + Math.max(...row)) / 2, uc = parentsIdx.length ? (Math.min(...parentsIdx) + Math.max(...parentsIdx)) / 2 : (i - 1) / 2;
       shiftB(kb, uc - kc);
       mergeB(b, kb);
     }
