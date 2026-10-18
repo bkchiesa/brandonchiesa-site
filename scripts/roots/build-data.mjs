@@ -96,6 +96,9 @@ function cleanText(s) {
   t = t.replace(/\(date chosen by the family[^)]*\)/g, "(date per the birth act, atto 34)");
   t = t.replace(/\b([Tt])he family copy of\b/g, "$1he record image of");
   t = t.replace(/\bfamily-provided screenshots?\b/g, "record images");
+  // Peter Samuel Burkett's second wife may be living: her name and marriage date are not published (18 Oct 2026)
+  t = t.replace(/\bMarried Alice May Mann(?:\s+on)?\s+5 Sep 1981(?:;\s*she survived him)?\.?/g, "Remarried in 1981.");
+  t = t.replace(/\b2nd marriage 5 Sep 1981 Madison VA\s*\(FS QV1S-W8Q1\)\.?/g, "Remarried in 1981.");
   // research screenshots ("(screenshots in [research file])", "(screenshots x.png and -zoom.png)") are working files
   t = t.replace(/\s*\(screenshots?\b[^()]*\)/gi, "").replace(/;?\s*screenshots?\s+[\w-]+\.(?:png|jpe?g)(?:\s*(?:,|and)\s*[\w-]*\.(?:png|jpe?g))*/gi, "");
   // Aldo Chiesa's 1944 enlistment card was misread as "single, with dependents"; never publish that wording
@@ -435,7 +438,7 @@ function splitPrivate(rec, namesLiving) {
 
 const RATE_KEYS = new Set(["st", "stRaw", "r", "rating", "status", "confidence"]);
 function unproven(o, k) {
-  if (typeof o === "string") return RATE_KEYS.has(k) && /^proven$/i.test(o) ? "documented" : o.replace(/\bPROVEN\b/g, "DOCUMENTED").replace(/\bProven\b/g, "Documented").replace(/\bproven\b/g, "documented");
+  if (typeof o === "string") return RATE_KEYS.has(k) && /^proven$/i.test(o) ? "probable" : o.replace(/\bPROVEN\b/g, "PROBABLE").replace(/\bProven\b/g, "Probable").replace(/\bproven\b/g, "probable");
   if (Array.isArray(o)) return o.map((x) => unproven(x));
   if (o && typeof o === "object") { const r = {}; for (const [kk, v] of Object.entries(o)) r[kk] = unproven(v, kk); return r; }
   return o;
@@ -618,7 +621,8 @@ async function main() {
       const plq = (rec.md || []).find((m) => m.plq);
       if (plq && Array.isArray(rec.notes)) rec.notes = rec.notes.filter((n) => n.trim() !== (plq.note || "").trim());
       // the solid-border key Jamestown line is rated probable as a chain; Brandon asked (18 Oct 2026) that the word
-      // "proven" not appear anywhere on these cards, so their proven-rated items read "Documented" instead
+      // "proven" not appear anywhere on these cards; Brandon rated the line probable (and Martha's identity is open after
+      // the 1839 Sussex register), so their proven-rated items show as Probable, with the normal Probable styling
       if (rec.border === "solid" || Object.values(rec.lk || {}).some((m) => m.b === "solid")) Object.assign(rec, unproven(rec));
       if (p._living) {
         // public: name and family links only
@@ -661,7 +665,7 @@ async function main() {
   // attribution guard: no public text may say what Brandon decided, chose, identified, recalled, read, confirmed or
   // reviewed (credits such as "Photo by Brandon Chiesa" are fine). The encrypted private block is not scanned.
   {
-    const ATTRIB = /\bBrandon(?:\s+Chiesa)?\s+(?:chose|decided|identified|recalls|recalled|remembers|read\s+(?:it|this)|confirmed|approved|verified|reviewed|vouched)\b|\b(?:confirmed|approved|verified|reviewed|vouched for)\s+by\s+Brandon\b|\bBrandon(?:’|')s\s+(?:copy|screenshots?|identification|decision|reading)\b|\bidentifications?\s+(?:is|are)\s+Brandon(?:’|')s\b|Confirmed by Brandon|\b[Tt]he family chose\b|chosen by the family|family-provided screenshots?/;
+    const ATTRIB = /\bBrandon(?:\s+Chiesa)?\s+(?:chose|decided|identified|recalls|recalled|remembers|read\s+(?:it|this)|confirmed|approved|verified|reviewed|vouched)\b|\b(?:confirmed|approved|verified|reviewed|vouched for)\s+by\s+Brandon\b|\bBrandon(?:’|')s\s+(?:copy|screenshots?|identification|decision|reading)\b|\bidentifications?\s+(?:is|are)\s+Brandon(?:’|')s\b|Confirmed by Brandon|\b[Tt]he family chose\b|chosen by the family|family-provided screenshots?|Alice May Mann|5 Sep 1981|QV1S-W8Q1/;
     const files = [...["brandon", "holly"].map((k) => path.join(OUT, k + ".json")), path.join(REPO, "public/roots/valmozzola/index.html")];
     const hits = [];
     for (const f of files) {

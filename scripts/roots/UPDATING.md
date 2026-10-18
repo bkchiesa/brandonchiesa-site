@@ -171,9 +171,8 @@ fails if any of these patterns, or "Confirmed by Brandon", is still there.
 
 **Legend and the eight solid-border cards (Brandon's decision, 18 Oct 2026):** the legend reads exactly "Solid border:
 key Jamestown line (probable)". Cards with a solid border, or a solid parent link (the Thomas Gray → Martha Judkins
-line, 8 cards), never show the word "proven". Their proven-rated items (Thomas Gray's and Martha Judkins's own rating,
-facts and timeline) read "Documented", with the same styling as Proven, and `unproven()` in `build-data.mjs` rewrites any
-"proven" in their text. Because "Documented" is a separate rating, the "Proven only" filter no longer highlights those two cards. Thomas Gray's "English origins (unproven)" heading now reads "English origins (unconfirmed)", and its note says "none of the parentages is established".
+line, 8 cards), never show the word "proven". v15 relabelled the proven-rated items as "Documented"; v16 replaced that,
+see below.
 
 ### Newspaper mentions get their own card section (v15)
 
@@ -185,4 +184,22 @@ transcribed (Roots' rule).
 
 Hand pin added in `places-overrides.json`: "Hilton Village, Warwick Co., Virginia" is in Newport News. The geocoder
 had matched a Hilton Village in West Virginia.
+
+### v16: the Gray–Judkins line reads Probable; a possibly living second wife is not named
+
+- **Probable, not Documented.** Brandon rated this line probable, and Martha Judkins's identity is open after the 1839
+  Sussex marriage register (which names the bride Martha W. Green). On the eight solid-border cards, `unproven()`
+  in `build-data.mjs` now turns every proven rating (the card's own rating, facts, timeline) into **Probable**, with
+  the normal Probable styling, and rewrites "proven" in their text as "probable". The "Documented" rating is gone from
+  `app.js` and `style.css`. The solid borders and the legend ("Solid border: key Jamestown line (probable)") stay.
+- **Alice May Mann.** Peter Samuel Burkett's second wife (married 5 Sep 1981) may be living. `cleanText` publishes
+  "Married Alice May Mann (on) 5 Sep 1981(; she survived him)" and "2nd marriage 5 Sep 1981 Madison VA (FS …)" as
+  "Remarried in 1981." The build guard fails if her name, that date or the FamilySearch id reaches public output.
+- **Password.** `ROOTS_PASSWORD` was not found in any file, environment or note on the box, and it should not be
+  saved in one. v15 and v16 were therefore built with a throwaway password, and the encrypted block already deployed
+  was kept byte for byte. Before reusing it, the build compared the new plaintext with the deployed one (both built
+  with the throwaway password); the deployed block is reused only when they match. One known difference remains: 8 living
+  people's hidden source lines still read "family-provided, Brandon, <date>" instead of "family-provided, <date>".
+  The next build with the real password fixes it. Holly's tree stays on the 14:17:56 backup for the same reason: Roots 2's
+  later edits change the encrypted block, including which person each opaque "living-N" id means.
 
