@@ -354,3 +354,32 @@ a{color:var(--olive)}
 .edge:hover{background:#f4ecd6}
 @media (max-width:760px){.edge{max-width:150px;font-size:11px;padding:6px 10px}.edge.l{left:8px}.edge.r{right:8px}}
 body:has(#layer .panel) .edge{display:none}
+/* places map v2 */
+.mapbox.wide{margin-top:4px}
+.mapbox.wide svg{width:100%;height:auto;display:block;border-radius:10px 10px 0 0;background:#dfe6e0}
+.mapbox .pin{cursor:pointer}
+.placelist{list-style:none;margin:10px 0 4px;padding:0;display:grid;gap:6px;font-size:12.5px;line-height:1.4;color:#3a3830}
+.placelist li{display:flex;gap:9px;align-items:flex-start;padding:4px 6px;border-radius:8px;transition:background .3s}
+.placelist li.hl{background:#f4ecd6}
+.placelist .num{flex:0 0 20px;height:20px;border-radius:50%;background:var(--c);color:#fff8e8;font:700 10px/20px Inter,sans-serif;text-align:center}
+.placelist .num.ap{background:#fff8e8;color:var(--c);border:1.5px dashed var(--c);line-height:17px}
+.placelist .num:empty{background:transparent;border:0}
+.placelist small{color:#857a62}
+.placelist .osm{font-size:11px;color:#8a6d2f;text-decoration:none;white-space:nowrap}
+.placelist .nomap{color:#6b6250}
+.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.gallery figure{margin:0;background:#fcf8ee;border:1px solid #e3d6b5;border-radius:10px;overflow:hidden}
+.gallery img{width:100%;height:150px;object-fit:cover;display:block;background:#efe5cc}
+.gallery figcaption{padding:7px 9px;font-size:12px;line-height:1.35}
+.gallery figcaption small{display:block;color:#857a62;margin-top:3px}
+.flist.media .mk{font-size:10px;text-transform:uppercase;letter-spacing:.6px;color:#a07c33}
+.regions{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 10px}
+.regions .chip.on{background:var(--navy);color:#f6efdc;border-color:var(--navy)}
+.fmapwho{margin-top:8px}
+
+.card.claim{border-style:dashed;border-color:#6a4c7a;border-width:2px}
+.sw.claim{border-style:dashed;border-color:#6a4c7a;border-width:2px}
+.status.claim{border:2px dashed #6a4c7a;color:#6a4c7a;background:#f3eef5}
+.rt.claim{border-style:dashed;border-color:#6a4c7a;color:#6a4c7a}
+.relto{font-family:var(--sans);font-size:12.5px;color:var(--muted);margin:2px 0 3px;line-height:1.3}
+.ruler.compact .g span{display:none}.ruler.compact .g b{font-size:15px}

@@ -1,0 +1,184 @@
+{
+ "_about": "Hand corrections for the Roots maps. 'people' fixes what the extractor read from a person's record (deceased people only: this file is public). 'queries' gives the geocoder a better search for a place. 'coords' pins a place by hand (always wins); give a source for each. approx: 1 = near the spot, 2 = an area (county, state, zone).",
+ "people": {
+  "betty-burkett-1924": {
+   "kind": {
+    "fort eustis, virginia": "worked"
+   }
+  },
+  "peter-samuel-burkett": {
+   "drop": [
+    "oak grove, virginia"
+   ],
+   "add": [
+    {
+     "k": "worked",
+     "raw": "Oak Grove UMC, Aylor, Madison Co., VA",
+     "note": "served as pastor"
+    }
+   ]
+  },
+  "frederick-judkins-1785": {
+   "drop": [
+    "norfolk, virginia",
+    "craney island, virginia",
+    "craney island, portsmouth, virginia"
+   ],
+   "add": [
+    {
+     "k": "served",
+     "raw": "Craney Island, Portsmouth, Virginia",
+     "y": 1813,
+     "note": "War of 1812 service, per widow's declaration"
+    },
+    {
+     "k": "served",
+     "raw": "Norfolk, Virginia",
+     "y": 1814,
+     "note": "War of 1812 service, per widow's declaration"
+    }
+   ]
+  },
+  "thomas-gray-1593": {
+   "add": [
+    {
+     "k": "lived",
+     "raw": "Jamestown Island, Virginia",
+     "y": 1625,
+     "note": "1624/5 muster, James Island"
+    }
+   ]
+  },
+  "sheppard-hicks-c1846": {
+   "drop": [
+    "camp distribution, virginia"
+   ],
+   "add": [
+    {
+     "k": "served",
+     "raw": "Yorktown, Virginia",
+     "y": 1863,
+     "note": "came into Union lines near Yorktown, Nov 1863"
+    }
+   ]
+  },
+  "john-alvin-eltringham-1924": {
+   "kind": {
+    "fort eustis, virginia": "worked"
+   }
+  }
+ },
+ "coords": {
+  "panama canal zone": {
+   "lat": 9.1178,
+   "lon": -79.7203,
+   "approx": 2,
+   "label": "Panama Canal Zone",
+   "source": "Wikipedia, Panama Canal Zone (zone centre)"
+  },
+  "metropolitan hospital, manhattan, new york city": {
+   "lat": 40.769,
+   "lon": -73.9439,
+   "approx": 0,
+   "note": "in 1946 Metropolitan Hospital was on Welfare Island (now Roosevelt Island); it moved to First Avenue in 1955",
+   "source": "Wikidata Q2887672 (The Octagon, Metropolitan Hospital's building); NYC Health + Hospitals history"
+  },
+  "saint raymonds cemetery, bronx, new york": {
+   "lat": 40.825,
+   "lon": -73.8339,
+   "approx": 0,
+   "source": "Wikidata Q7402126"
+  },
+  "pamunkey united methodist church cemetery, virginia": {
+   "lat": 37.5017,
+   "lon": -76.8973,
+   "approx": 0,
+   "label": "Pamunkey UMC Cemetery, New Kent Co., VA",
+   "source": "15700 Pamunkey Church Rd, Lanexa (UMData church 481096); OSM Pamunkey Church Road"
+  },
+  "pamunkey methodist church cemetery, virginia": {
+   "lat": 37.5017,
+   "lon": -76.8973,
+   "approx": 0,
+   "label": "Pamunkey Methodist Church Cemetery, New Kent Co., VA",
+   "source": "15700 Pamunkey Church Rd, Lanexa (UMData church 481096); OSM Pamunkey Church Road"
+  },
+  "camp ruffin, virginia": {
+   "lat": 36.9397,
+   "lon": -76.5866,
+   "approx": 1,
+   "note": "1861 Confederate camp near St. Luke's Church, Smithfield, Isle of Wight Co.",
+   "source": "HMDB marker 103839 (Historic St. Luke's Church); OSM St. Luke's Historic Church"
+  },
+  "s giacomo, branzone": {
+   "lat": 44.5502,
+   "lon": 9.8631,
+   "approx": 1,
+   "note": "parish of San Giacomo, Branzone (pinned at the village)",
+   "source": "OSM Branzone, Valmozzola"
+  },
+  "maple hill cemetery, bluefield": {
+   "lat": 37.2458,
+   "lon": -81.3014,
+   "approx": 0,
+   "label": "Maple Hill Cemetery, Bluefield, VA",
+   "source": "Find a Grave cemetery 51064 (Bluefield, Tazewell Co., VA)"
+  },
+  "maple hill cemetery, bluefield, virginia": {
+   "lat": 37.2458,
+   "lon": -81.3014,
+   "approx": 0,
+   "label": "Maple Hill Cemetery, Bluefield, VA",
+   "source": "Find a Grave cemetery 51064 (Bluefield, Tazewell Co., VA)"
+  },
+  "hicksford, greensville county, virginia": {
+   "lat": 36.6861,
+   "lon": -77.5428,
+   "approx": 1,
+   "note": "Hicksford, now part of Emporia",
+   "source": "Wikidata Q15223858 (Hicksford-Emporia Historic District)"
+  },
+  "hicksford, virginia": {
+   "lat": 36.6861,
+   "lon": -77.5428,
+   "approx": 1,
+   "note": "Hicksford, now part of Emporia",
+   "source": "Wikidata Q15223858 (Hicksford-Emporia Historic District)"
+  },
+  "graham, clearfork district, tazewell county, virginia": {
+   "lat": 37.2526,
+   "lon": -81.2713,
+   "approx": 1,
+   "note": "Graham was renamed Bluefield, Virginia, in 1924",
+   "source": "OSM Bluefield, Tazewell Co., VA"
+  },
+  "chaffins bluff, virginia": {
+   "lat": 37.4233,
+   "lon": -77.3978,
+   "approx": 0,
+   "source": "Wikidata Q5066801"
+  },
+  "south brunswick, brunswick county, virginia": {
+   "lat": 36.7789,
+   "lon": -77.86709,
+   "approx": 1,
+   "m": "the centre of Brunswick County",
+   "label": "South Brunswick, Brunswick Co., VA",
+   "source": "Brunswick County centre (OSM relation 2534167); the geocoder matched a street in South Hill"
+  }
+ },
+ "queries": {
+  "fort drewry, virginia": "Drewry's Bluff, Virginia",
+  "newsoms village, southampton county, virginia": "Newsoms, Southampton County, Virginia",
+  "oak grove united methodist church, aylor, madison county, virginia": "Oak Grove United Methodist Church, Madison County, Virginia",
+  "oak grove united methodist church cemetery, aylor, madison county, virginia": "Oak Grove United Methodist Church, Madison County, Virginia",
+  "oak grove united methodist church cemetery, aylor": "Oak Grove United Methodist Church, Madison County, Virginia",
+  "calvary, woodside": "Calvary Cemetery, Queens, New York",
+  "church of san siro, valmozzola": "San Siro, Valmozzola",
+  "fort sherman, panama canal zone": "Fort Sherman, Panama",
+  "emporia, greensville county, virginia": "Emporia, Virginia",
+  "franklin, southampton county, virginia": "Franklin, Virginia",
+  "isle of wight, virginia": "Isle of Wight County, Virginia",
+  "surry, virginia": "Surry County, Virginia"
+ }
+}

@@ -17,7 +17,44 @@ the page loads its JSON when it opens, so a data change never needs a site rebui
    ```
 
    You can point the script at other source files with `ROOTS_BRANDON_JSON`, `ROOTS_HOLLY_JSON` and `ROOTS_STORIES_DIR`.
-3. Commit `public/roots/data/brandon.json` and `holly.json`, then deploy as usual. Only these two files change.
+3. If the research added new places, geocode them first (step 2 then puts them on the maps). See "Maps and places" below.
+4. Commit `public/roots/data/brandon.json`, `holly.json` and `scripts/roots/places-cache.json`, then deploy as usual.
+
+## Maps and places
+
+Every birth, baptism, marriage, home, workplace, death, burial, arrival or departure port and military post found in the records gets a pin on the person's card map and on the tree-wide **Places** map.
+
+- **Geocode new places** (needs network; uses OpenStreetMap Nominatim at one request per second with an identifying User-Agent):
+
+  ```sh
+  node scripts/roots/geocode-places.mjs           # only places not already cached
+  node scripts/roots/geocode-places.mjs --retry   # also retry places that failed before
+  node scripts/roots/geocode-places.mjs --all     # redo everything (slow; rarely needed)
+  ```
+
+  Results go into `scripts/roots/places-cache.json`, which is committed, so places are never looked up twice and `build-data.mjs` itself never uses the network. Places that only living people have go into `places-cache-private.json`, which git ignores.
+- **Fix a wrong pin** in `scripts/roots/places-overrides.json`:
+  - `queries`: give a better search for a place key. For example, `"church of san siro": "San Siro, Valmozzola"`. Then run the geocoder with `--retry`, or delete that key from the cache and run it again.
+  - `coords`: pin a place by hand with `{"lat":…, "lon":…, "a":0|1|2, "m":"what it is", "n":"note shown on the card"}`. Here `a` means 0 = exact, 1 = approximate, 2 = area. Use this for places that no longer exist, such as a Civil War camp.
+  - `people`: per-person fixes for deceased people only. `drop` removes a misread place, `kind` changes what a place means (for example `worked` instead of `served`), and `add` adds a place the text describes but the reader can't find.
+  - The key is the place in lower case, with abbreviations spelled out. The geocoder prints the keys it looks up.
+- **Approximate and area pins** are drawn hollow. A state, county or country pin goes at its centre, and the place list on the card says so.
+- **Basemap:** `public/roots/assets/basemap.json` is built from public-domain Natural Earth data by `python3 scripts/roots/build-basemap.py <folder with the Natural Earth geojson>`. Rebuild it only to add a new detailed area, set in `DETAIL` in that script.
+
+## Photos and articles
+
+A person in the research JSON can carry `photos` (or `images`/`media`) and `articles` (or `clippings`, `newspaper_articles`, `links`). Each item can be a URL string or an object:
+
+```json
+{"title": "Aldo in uniform, 1944", "file": "/workspace/douthat/photos/aldo-1944.jpg", "credit": "Chiesa family collection", "source": "scan by Brandon", "date": "1944", "license": "family photo, used with permission"}
+{"title": "Obituary", "url": "https://…", "credit": "Daily Press (Newport News)", "date": "1979-10-26", "kind": "article"}
+```
+
+Cards show these in a **Photos & articles** section, with the credit, source, date and licence under each item. A local image (`file`/`path`) is copied into `public/roots/media/<tree>/`, but only for people who have died. Anything under a `private` folder is never copied. The build warns about any item that has no credit. Media for living people goes into the encrypted section.
+
+## Wording safety net
+
+`build-data.mjs` removes any sentence that describes someone as "single … with/had dependents". That wording was found to be wrong for Aldo Chiesa. The build prints a line whenever it removes one. "without dependents" is not affected.
 
 ## What the build script does to protect living relatives
 

@@ -18,6 +18,9 @@ import { readFile, writeFile, readdir, mkdir } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
 import { webcrypto as crypto } from "node:crypto";
+import { existsSync } from "node:fs";
+import { copyFile } from "node:fs/promises";
+import { treePlaces } from "./places-lib.mjs";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const REPO = path.resolve(HERE, "../..");
@@ -40,6 +43,7 @@ function normRating(s) {
   const t = String(s || "").toLowerCase();
   if (!t) return null;
   if (/hypoth/.test(t)) return "hypothesis";
+  if (/family claim|\bclaim/.test(t)) return "claim";
   if (/family/.test(t)) return "family";
   if (/compiled/.test(t)) return "compiled";
   if (/probable|index|transcri|likely/.test(t)) return "probable";
@@ -51,6 +55,9 @@ function ratingInText(s) {
   const m = String(s).match(/\b(PROVEN|PROBABLE|HYPOTHESIS|COMPILED|index entry only|index only|compiled)\b/);
   return m ? normRating(m[1]) : null;
 }
+const BANNED = /\bsingle\b[^.;]{0,40}?\b(?:with|had|has|having)\s+(?:\w+\s+)?dependents\b/i;
+const BANNED_CLAUSE = /(?:^|(?<=[.;]))[^.;]*\bsingle\b[^.;]{0,40}?\b(?:with|had|has|having)\s+(?:\w+\s+)?dependents\b[^.;]*[.;]?\s*/gi;
+const BANNED_HITS = { n: 0 };
 function cleanText(s) {
   if (typeof s !== "string") return s;
   let t = s;
@@ -62,6 +69,8 @@ function cleanText(s) {
   t = t.replace(/\s*\((?:saved|transcription|see)[^()]*?(?:\/workspace\/|fs-shots\/|\.txt)[^()]*\)/gi, "");
   t = t.replace(/;?\s*(?:transcription\s+)?fs-shots\/[\w./-]+(?:\s+Round\s+\w+)?/gi, "");
   t = t.replace(/\/workspace\/[\w./-]+/g, "[research file]");
+  // Aldo Chiesa's 1944 enlistment card was misread as "single, with dependents"; never publish that wording
+  if (BANNED.test(t)) { BANNED_HITS.n++; t = t.replace(BANNED_CLAUSE, "").replace(/[;,:]\s*$/, ""); }
   t = t.replace(/\s{2,}/g, " ").replace(/\s+([,;.)])/g, "$1").replace(/\(\s*\)/g, "").trim();
   return t;
 }
@@ -96,7 +105,11 @@ function warsOf(p, allText) {
     if (/korea/i.test(t)) wars.add("korea");
     if (/vietnam/i.test(t)) wars.add("vietnam");
   };
-  if (m && typeof m === "object") {
+  if (Array.isArray(m)) {
+    // list form: [{fact, rating, source}, ...]
+    const txt = m.map((x) => (typeof x === "string" ? x : (x && (x.fact || x.text)) || "")).join(" ");
+    if (txt.trim()) { add(txt); if (!wars.size) wars.add("service"); }
+  } else if (m && typeof m === "object") {
     const served = (m.branch || m.highest_rank || m.rank || m.unit || m.war) && !/civilian/i.test(m.side || "") && !/not online/i.test(m.status || "");
     const regOnly = !m.branch && !m.highest_rank && !m.unit && /registration only/i.test(JSON.stringify(m.sources || ""));
     if (served && !regOnly) {
@@ -161,6 +174,12 @@ function factList(p) {
   return out;
 }
 
+// heritage_notes: family traditions and the research verdicts on them, each with its own rating
+function heritageList(p) {
+  const arr = Array.isArray(p.heritage_notes) ? p.heritage_notes : [];
+  const tidy = (x) => String(x || "").replace(/\bRound \d+ (verdict|check|finding)s?\b/gi, (m, w) => "Research " + w.toLowerCase()).replace(/\s*\(Round \d+\)/gi, "").replace(/\b(in|from) the Round \d+ request\b/gi, "");
+  return arr.map((h) => (typeof h === "string" ? { t: tidy(h), r: normRating(h.match(/family claim|hypothesis|proven|probable|compiled/i)?.[0]) } : h && (h.text || h.note || h.fact) ? { t: tidy(h.text || h.note || h.fact), r: normRating(h.confidence || h.rating), s: tidy(h.citation || h.source) || null } : null)).filter(Boolean);
+}
 function normalize(p, tree) {
   const stRaw = p.status || "";
   const st = normRating(stRaw) || "probable";
@@ -173,7 +192,10 @@ function normalize(p, tree) {
   const news = (p.newspaper_mentions || []).map((o) => ({ paper: o.paper, y: o.date, t: o.text, r: normRating(o.confidence), s: o.citation }));
   const sources = (p.sources || []).filter(isStr).map((s) => ({ t: s, r: ratingInText(s) }));
   let mil = null;
-  if (p.military && typeof p.military === "object") {
+  if (Array.isArray(p.military)) {
+    const items = p.military.map((x) => (typeof x === "string" ? { t: x } : { t: x.fact || x.text || "", r: normRating(x.rating || x.confidence), s: x.source || x.citation || null })).filter((x) => x.t);
+    if (items.length) mil = { lines: items.map((x) => ["Service", x.t + (x.r && x.r !== "proven" ? ` (${x.r})` : "")]), src: items.map((x) => x.s).filter(isStr) };
+  } else if (p.military && typeof p.military === "object") {
     const m = p.military;
     const lines = [];
     const put = (k, v) => { if (v && (!Array.isArray(v) || v.length)) lines.push([k, Array.isArray(v) ? v.join("; ") : String(v)]); };
@@ -210,10 +232,18 @@ function normalize(p, tree) {
     hl: highlights, stories, facts, occ: occs, res, news, mil, notes, src: sources, ev: events,
     cod: p.cause_of_death || null, bur: p.burial && typeof p.burial === "object" ? p.burial : null,
     line: p.line_r8us || p.line_r7us || p.line_r10 || null,
+    rel: relOf(p),
+    her: heritageList(p),
   };
 }
 
 // strip text that names a living person out of a public record, returning the private remainder
+// relationship to the tree's focal person, as the researchers wrote it (e.g. "first cousin (child of aunt ...)")
+function relOf(p) {
+  const r = p.relationship_to_holly || p.relationship_to_brandon || p.relationship_to_focal || p.relationship || null;
+  return isStr(r) ? cleanText(r) : null;
+}
+const relBase = (r) => (r ? r.split(/\s*[(;]/)[0].trim() || null : null);
 function splitPrivate(rec, namesLiving) {
   const priv = {};
   const keep = (arr, key, getText) => {
@@ -231,6 +261,18 @@ function splitPrivate(rec, namesLiving) {
   keep(null, "notes", (x) => x);
   keep(null, "src", (x) => x.t);
   keep(null, "ev", (x) => x.t);
+  keep(null, "md", (x) => JSON.stringify(x));
+  // heritage notes: judge by the note itself; a citation that only names who relayed a family story is reworded
+  if (Array.isArray(rec.her)) {
+    const pub = [], pv = [];
+    for (const x of rec.her) {
+      if (namesLiving(x.t)) { pv.push(x); continue; }
+      if (x.s && namesLiving(x.s)) { if (x.r === "claim") pub.push({ ...x, s: "Family tradition, passed on by the family (oral; no record cited)" }); else pv.push(x); }
+      else pub.push(x);
+    }
+    rec.her = pub; if (pv.length) priv.her = pv;
+  }
+  if (rec.rel && rec.rel !== relBase(rec.rel) && namesLiving(rec.rel)) { priv.relx = rec.rel; rec.rel = relBase(rec.rel); }
   if (rec.mil) { const pv = rec.mil.src.filter(namesLiving); rec.mil.src = rec.mil.src.filter((s) => !namesLiving(s)); if (pv.length) priv.milsrc = pv; }
   return Object.keys(priv).length ? priv : null;
 }
@@ -240,6 +282,68 @@ function deepClean(o) {
   if (Array.isArray(o)) return o.map(deepClean);
   if (o && typeof o === "object") { const r = {}; for (const [k, v] of Object.entries(o)) r[k] = deepClean(v); return r; }
   return o;
+}
+
+// ---------- places (coordinates come from the committed cache; no network here) ----------
+const PLACE_DIR = HERE;
+async function loadPlaceCache() {
+  const rd = async (n) => (existsSync(path.join(PLACE_DIR, n)) ? JSON.parse(await readFile(path.join(PLACE_DIR, n), "utf8")) : {});
+  const ov = await rd("places-overrides.json");
+  return { ov, cache: { ...(await rd("places-cache-private.json")), ...(await rd("places-cache.json")) }, coords: ov.coords || {} };
+}
+const AREA_KINDS = new Set(["county", "state", "country", "region", "province"]);
+const KIND_ORDER = { born: 0, baptised: 1, married: 3, lived: 4, worked: 4, departed: 5, arrived: 6, served: 7, died: 8, buried: 9 };
+function placesFor(list, pc, missing) {
+  const pl = [], plx = [];
+  for (const x of list || []) {
+    const hand = pc.coords[x.key], g = pc.cache[x.key];
+    const lab = cleanText(x.raw);
+    if (hand) pl.push({ k: x.k, l: lab, y: x.y, lat: hand.lat, lon: hand.lon, a: hand.approx || 0, m: hand.m || (hand.approx === 2 ? "area" : null), n: x.note || hand.note || null });
+    else if (g && g.status === "ok") {
+      const area = AREA_KINDS.has(g.kind) || g.prec === "region";
+      pl.push({ k: x.k, l: lab, y: x.y, lat: g.lat, lon: g.lon, a: area ? 2 : g.prec === "exact" ? 0 : 1, m: area ? (g.kind === "county" ? "county" : g.kind === "country" ? "country" : "state") : g.prec === "exact" ? null : g.matched, n: x.note || null });
+    }
+    else { plx.push({ k: x.k, l: lab, y: x.y }); missing.add(x.key); }
+  }
+  pl.sort((a, b) => (a.y || 9999) - (b.y || 9999) || KIND_ORDER[a.k] - KIND_ORDER[b.k]);
+  return { pl, plx };
+}
+
+// ---------- photos, articles and links (optional fields the researchers may add) ----------
+// Accepts any of: photos, images, media, articles, clippings, newspaper_articles, links.
+// Each item may be a string (URL) or {title|caption, url|link, file|path|image, credit|photographer|courtesy,
+// source|citation, date, license, confidence|rating, type}. Local image files are copied into
+// public/roots/media/<tree>/ for deceased people only; living people's media stay private and file-less.
+const MEDIA_KEYS = ["photos", "images", "media", "articles", "clippings", "newspaper_articles", "links"];
+const IMG_EXT = /\.(jpe?g|png|webp|gif|avif)$/i;
+async function mediaFor(p, tree, isLiving, warn) {
+  const out = [];
+  let n = 0;
+  for (const key of MEDIA_KEYS) {
+    const arr = Array.isArray(p[key]) ? p[key] : p[key] ? [p[key]] : [];
+    for (const it0 of arr) {
+      const it = typeof it0 === "string" ? { url: it0 } : it0 || {};
+      const url = it.url || it.page_url || it.link || it.href || null;
+      const imgUrl = it.image_url || it.img_url || it.thumbnail || null;
+      const lic0 = String(it.license || it.licence || "");
+      // Thumbnails only where the source allows hotlinking (public domain / Wikimedia Commons / open licence).
+      // "Link and credit only" or "do not re-host" stays a link card. Nothing is ever re-hosted.
+      const mayHotlink = (/public domain|\bcc[- ]?(by|0|zero)\b|creative commons/i.test(lic0) || /upload\.wikimedia\.org/.test(imgUrl || "")) && !/link (and credit )?only|do not (copy|re-?host)/i.test(lic0);
+      const file = it.file || it.path || it.image || it.local || null;
+      let kind = it.type || it.kind || (/article|clipping/.test(key) ? "article" : /photo|image/.test(key) ? "photo" : key === "links" ? "link" : null);
+      if (!kind) kind = IMG_EXT.test(file || url || "") ? "photo" : "link";
+      const m = { kind, title: cleanText(it.title || it.caption || it.headline || it.description || ""), url: url && /^https?:\/\//.test(url) ? url : null,
+        credit: cleanText(it.credit || it.photographer || it.courtesy || it.copyright || it.author || ""), src: cleanText([it.source || it.citation || it.publication || it.paper || "", it.page ? "p. " + String(it.page).replace(/^p(age)?\.?\s*/i, "") : ""].filter(Boolean).join(", ")), note: it.note ? cleanText(it.note) : null,
+        date: it.date || it.year || null, lic: it.license || it.licence || null, r: normRating(it.confidence || it.rating || it.status), img: null };
+      if (file && /(^|\/)private\//.test(file)) { warn.push(`${p.id}: file in a private folder skipped`); continue; }
+      if (file) warn.push(`${p.id}: local file not published (the site links to sources and never re-hosts)`);
+      if (!isLiving && imgUrl && /^https:\/\//.test(imgUrl) && mayHotlink) m.img = imgUrl;
+      else if (!isLiving && url && IMG_EXT.test(url) && mayHotlink) m.img = url;
+      if (!m.credit) warn.push(`${p.id}: ${kind} "${(m.title || url || file || "").slice(0, 50)}" has no credit`);
+      if (m.url || m.img || m.title) out.push(m);
+    }
+  }
+  return out;
 }
 
 // ---------- tiny markdown ----------
@@ -295,6 +399,8 @@ async function main() {
   const salt = crypto.getRandomValues(new Uint8Array(16));
   const key = await deriveKey(password, salt);
   const stories = await loadStories();
+  const pc = await loadPlaceCache();
+  const missing = new Set(), warn = [];
   await mkdir(OUT, { recursive: true });
   const summary = [];
   for (const tree of TREES) {
@@ -307,12 +413,15 @@ async function main() {
       p._living = !!p.living || (by && by >= 1925 && !isStr(p.death?.date) && !isStr(p.death?.place));
     }
     const namesLiving = buildLivingMatchers(people, byId);
+    const perPlaces = treePlaces(people, pc.ov);
     const pub = [], priv = {};
     for (const p of people) {
       const rec = deepClean(normalize(p, tree));
+      Object.assign(rec, placesFor(perPlaces.get(p.id), pc, missing));
+      rec.md = await mediaFor(p, tree, p._living, warn);
       if (p._living) {
         // public: name and family links only
-        pub.push({ id: rec.id, n: cleanText(p.name), sex: rec.sex, par: rec.par, sp: rec.sp, liv: true });
+        pub.push({ id: rec.id, n: cleanText(p.name), sex: rec.sex, par: rec.par, sp: rec.sp, liv: true, ...(rec.rel ? { rel: relBase(rec.rel) } : {}) });
         const { id, n, par, sp, ...rest } = rec;
         priv[p.id] = { ...rest, full: true };
         continue;
@@ -342,5 +451,8 @@ async function main() {
     summary.push(`${tree.key}: ${pub.length} people (${pub.filter((p) => p.liv).length} living, ${Object.keys(priv).length} private records encrypted), ${data.stories.length} featured stories`);
   }
   console.log(summary.join("\n"));
+  if (missing.size) console.log(`${missing.size} place(s) have no coordinates yet; run: node scripts/roots/geocode-places.mjs`);
+  if (BANNED_HITS.n) console.log(`Removed the 'single with dependents' wording in ${BANNED_HITS.n} place(s).`);
+  if (warn.length) console.log("Media warnings:\n  " + [...new Set(warn)].join("\n  "));
 }
 main().catch((e) => { console.error(e); process.exit(1); });

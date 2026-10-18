@@ -144,3 +144,6 @@ vite.config.ts.timestamp-*
 
 # Astro
 .astro/
+
+# Roots: geocoded places that appear only in living relatives records (never commit)
+scripts/roots/places-cache-private.json

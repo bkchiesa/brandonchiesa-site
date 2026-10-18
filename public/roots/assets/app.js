@@ -9,7 +9,7 @@ const $ = (s, el = document) => el.querySelector(s);
 const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const ic = (k, st) => (I[k] || "").replace('class="ico"', `class="ico"${st ? ` style="${st}"` : ""}`);
 const isMobile = () => matchMedia("(max-width: 760px)").matches;
-const RATING_LABEL = { proven: "Proven", probable: "Probable", compiled: "Compiled", hypothesis: "Hypothesis", family: "Family-provided" };
+const RATING_LABEL = { proven: "Proven", probable: "Probable", compiled: "Compiled", hypothesis: "Hypothesis", family: "Family-provided", claim: "Family claim" };
 const WAR = {
   rev: { label: "Revolutionary War", short: "Rev. War", icon: "flag", cls: "rev" },
   "1812": { label: "War of 1812", short: "War of 1812", icon: "flag", cls: "" },
@@ -45,6 +45,7 @@ function view_(id) { // person merged with private details when unlocked
     if (x.extra) {
       const m = Object.assign({}, p);
       for (const [k, v] of Object.entries(x.extra)) {
+        if (k === "relx") { m.rel = v; continue; }
         if (k === "milsrc") { if (m.mil) m.mil = Object.assign({}, m.mil, { src: m.mil.src.concat(v) }); }
         else m[k] = (m[k] || []).concat(v);
       }
@@ -210,7 +211,7 @@ function render() {
   <header class="top">
     <a class="brand" href="${BASE}${TREE === "holly" ? "holly/" : ""}" aria-label="Roots home">${CREST}<div><h1>${title}</h1><div class="sub">${esc(D.subtitle || "")}</div></div></a>
     <div class="search" id="search">${searchBox("q")}</div>
-    <nav class="nav"><button class="on" data-nav="tree">Explore</button><button data-nav="stories">Stories</button><button data-nav="key">Key</button></nav>
+    <nav class="nav"><button class="on" data-nav="tree">Explore</button><button data-nav="stories">Stories</button><button data-nav="places">Places</button><button data-nav="key">Key</button></nav>
     <button class="btn-lock" id="lockBtn">${I.lock}<span class="lbl">Family sign-in</span></button>
   </header>
   <div class="tools" id="tools">
@@ -243,7 +244,7 @@ function render() {
 function searchBox(id) { return `<label>${I.search}<input id="${id}" type="search" placeholder="Search people & places…" autocomplete="off" aria-label="Search people and places"><span class="kbd">/</span></label><div class="results" id="${id}r" hidden></div>`; }
 function legendHTML() {
   return `<button class="x" aria-label="Close key">${I.close}</button>
-  <span><span class="sw direct"></span>Direct line</span><span><span class="sw"></span>Proven</span><span><span class="sw probable"></span>Probable / index</span><span><span class="sw compiled"></span>Compiled tree</span><span><span class="sw hypothesis"></span>Hypothesis</span><span><span class="sw family"></span>Family-provided</span><span><span class="sw living"></span>Living</span><span class="sep"></span>
+  <span><span class="sw direct"></span>Direct line</span><span><span class="sw"></span>Proven</span><span><span class="sw probable"></span>Probable / index</span><span><span class="sw compiled"></span>Compiled tree</span><span><span class="sw hypothesis"></span>Hypothesis</span><span><span class="sw family"></span>Family-provided</span><span><span class="sw claim"></span>Family claim</span><span><span class="sw living"></span>Living</span><span class="sep"></span>
   <span><span class="badge-i">${I.ship}</span>Immigrant</span><span><span class="badge-i">${I.star}</span>WWI / WWII</span><span><span class="badge-i cw">${I.swords}</span>Civil War</span><span><span class="badge-i rev">${I.flag}</span>Rev. War / 1812</span>${D.people.some((p) => p.jt) ? `<span><span class="badge-i jt">${I.crown}</span>Jamestown</span>` : ""}`;
 }
 function partnerId() { return P[FOCAL].sp.find((s) => LAYOUT && LAYOUT.pos[s]); }
@@ -274,7 +275,7 @@ function drawTree() {
     (groups[key] = groups[key] || { par, kids: [] }).kids.push(id);
   }
   const drawnMar = new Set();
-  const lineCls = (k) => { const p = P[k]; const st = p.liv ? "proven" : p.st; return st === "proven" || st === "family" ? "" : st; };
+  const lineCls = (k) => { const p = P[k]; const st = p.liv ? "proven" : p.st; return st === "proven" || st === "family" ? "" : st === "claim" ? "hypothesis" : st; };
   for (const { par, kids } of Object.values(groups)) {
     const pg = pos[par[0]].g, py = Y(pg) + CH / 2, ky = Y(pg - 1), barY = ky - 18;
     let mx;
@@ -318,7 +319,9 @@ function drawRuler() {
 }
 function positionRuler() {
   const el = $("#ruler"); if (!el) return;
-  for (const d of el.querySelectorAll(".g")) { const g = +d.dataset.g; d.style.top = (Y(g) * view.s + view.y + (CH * view.s) / 2 - 16) + "px"; }
+  const rowPx = Math.abs(Y(1) - Y(0)) * view.s, step = rowPx >= 30 ? 1 : Math.ceil(30 / Math.max(rowPx, 1));
+  el.classList.toggle("compact", rowPx < 40);
+  for (const d of el.querySelectorAll(".g")) { const g = +d.dataset.g; d.style.top = (Y(g) * view.s + view.y + (CH * view.s) / 2 - (rowPx < 40 ? 10 : 16)) + "px"; d.style.visibility = (g - LAYOUT.minG) % step ? "hidden" : ""; }
 }
 function roman(n) { const m = [[10, "X"], [9, "IX"], [5, "V"], [4, "IV"], [1, "I"]]; let s = ""; for (const [v, r] of m) while (n >= v) { s += r; n -= v; } return s; }
 function drawMini() {
@@ -327,7 +330,7 @@ function drawMini() {
   let s = `<svg viewBox="0 0 ${w} ${h}" height="${h}" id="minisvg">`;
   for (const [id, v] of Object.entries(LAYOUT.pos)) {
     const p = P[id], st = p.liv ? "living" : p.st;
-    const col = { proven: "#5d6b3b", probable: "#b0893c", compiled: "#9b9585", hypothesis: "#a8402f", family: "#2c3e5e", living: "#b8ab8a" }[st] || "#b0893c";
+    const col = { proven: "#5d6b3b", probable: "#b0893c", compiled: "#9b9585", hypothesis: "#a8402f", family: "#2c3e5e", claim: "#6a4c7a", living: "#b8ab8a" }[st] || "#b0893c";
     s += `<rect x="${((X(v.x) - CW / 2) * sx).toFixed(1)}" y="${(Y(v.g) * sy).toFixed(1)}" width="${Math.max(2, CW * sx).toFixed(1)}" height="${Math.max(2.5, CH * sy).toFixed(1)}" rx="1" fill="${col}" opacity="${DIRECT.has(id) ? 1 : 0.55}"/>`;
   }
   s += `<rect id="minivp" fill="rgba(30,45,71,.08)" stroke="#1e2d47" stroke-width="1.2" rx="2"/></svg>`;
@@ -502,7 +505,7 @@ function openFilterPanel(k) {
     for (const p of ppl) for (const c of (p.jtC && p.jtC.length ? p.jtC : ["Jamestown line"])) (chains[c] = chains[c] || []).push(p);
     const ordered = Object.entries(chains).sort((a, b) => b[1].length - a[1].length);
     body += `<div class="flt-sub">Descents from Jamestown-era settlers (1607–1624). Every person carries a rating, and a chain is only as strong as its weakest link.</div>`;
-    const O = ["proven", "family", "probable", "compiled", "hypothesis"];
+    const O = ["proven", "family", "probable", "compiled", "claim", "hypothesis"];
     for (const [c, list] of ordered) {
       list.sort((a, b) => (DIRECT.get(b.id) ?? -1) - (DIRECT.get(a.id) ?? -1) || by(a.id) - by(b.id));
       const stated = (c.match(/\((proven|probable|hypothesis|compiled)\)/i) || [])[1];
@@ -554,7 +557,7 @@ function openPerson(id) {
   const W_ = (w) => WAR[w] || WAR.service;
   let h = `<div class="hd"><div class="frame${p.liv ? " living" : ""}"><div class="in"></div></div><div class="who">
     <div class="eyebrow">${esc(relLabel(id))}${DIRECT.has(id) && DIRECT.get(id) > 0 ? " · direct line" : ""}${p.line ? " · " + esc(p.line) + " line" : ""}</div>
-    <h2>${esc(p.n)}</h2>${p.aka && p.aka.length && !locked ? `<div class="born">also ${esc(p.aka.join(", "))}</div>` : ""}
+    <h2>${esc(p.n)}</h2>${p.rel && relLabel(id).toLowerCase() !== ((TREE === "holly" ? "holly’s " : "brandon’s ") + p.rel).toLowerCase() ? `<div class="relto">${TREE === "holly" ? "Holly’s" : "Brandon’s"} ${esc(p.rel)}</div>` : ""}${p.aka && p.aka.length && !locked ? `<div class="born">also ${esc(p.aka.join(", "))}</div>` : ""}
     <div class="yrs">${locked ? "Living · details are private" : esc([p.b && p.b.d, p.d && p.d.d].filter(Boolean).join(" – ") || p.yrs || "")}</div>
     <div class="pills">${locked ? `<span class="status living">${ic("lock")}Living</span>` : `<span class="status ${p.st}">${p.st === "proven" ? ic("check") : ""}${RATING_LABEL[p.st] || esc(p.stRaw || "")}</span>`}
     ${!locked && p.imm ? `<span class="pill2"><span class="badge-i">${I.ship}</span>Immigrant${immYear(p) ? " · " + immYear(p) : ""}</span>` : ""}
@@ -584,7 +587,9 @@ function openPerson(id) {
       for (const s of stories) h += `<div class="quote">${s.title ? `<h5>${esc(s.title)}${ratingTag(s.r)}</h5>` : ""}${String(s.t).split("\n").map((x) => `<p>${esc(x)}</p>`).join("")}${s.s ? `<div class="cite">Source: ${linkify(s.s)}</div>` : ""}</div>`;
     }
     const tl = (p.ev || []).map((e) => `<div class="ev ${e.r || ""}${e.big ? " big" : ""}"><div class="y">${e.y}</div><span class="d"></span><div class="t">${e.k ? `<b>${esc(e.k)}</b> · ` : ""}${esc(e.t)}${e.r && e.r !== "proven" && !e.big ? ratingTag(e.r) : ""}</div></div>`).join("");
-    h += `<div class="cols"><div>${tl ? `<div class="sec">Life timeline</div><div class="tl">${tl}</div>` : ""}</div><div><div class="sec">Places</div><div class="mapbox" id="pmap"><svg viewBox="0 0 520 184"></svg><div class="mapcap" id="pmapcap">Loading map…</div></div><div class="sec">Family</div>${fam || `<p class="flt-sub">No relatives recorded yet.</p>`}</div></div>`;
+    h += mediaHTML(p);
+    h += `<div class="sec">Places</div><div class="mapbox wide" id="pmap"><svg viewBox="0 0 560 300" role="img" aria-label="Map of places in ${esc(p.n)}’s life"></svg><div class="mapcap" id="pmapcap">Loading map…</div></div><ol class="placelist" id="pmaplist"></ol>`;
+    h += `<div class="cols"><div>${tl ? `<div class="sec">Life timeline</div><div class="tl">${tl}</div>` : ""}</div><div><div class="sec">Family</div>${fam || `<p class="flt-sub">No relatives recorded yet.</p>`}</div></div>`;
     if (p.mil && p.mil.lines.length) h += `<div class="sec">Military record</div><div class="milbox"><dl>${p.mil.lines.map(([k, v]) => `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join("")}</dl>${p.mil.src && p.mil.src.length ? `<div class="cite">Sources: ${p.mil.src.map(linkify).join("; ")}</div>` : ""}</div>`;
     const nodate = (p.facts || []).filter((f) => !YR.test(f.t));
     const extras = [].concat(
@@ -593,6 +598,7 @@ function openPerson(id) {
       (p.news || []).map((o) => ({ t: `${o.paper || "Newspaper"}${o.y ? ", " + o.y : ""}: ${o.t}`, r: o.r, s: o.s })),
       nodate);
     if (extras.length) h += `<div class="sec">More from the records</div><ul class="flist">${extras.map((f) => `<li>${esc(f.t)}${ratingTag(f.r)}${f.s ? `<div class="cite">${linkify(f.s)}</div>` : ""}</li>`).join("")}</ul>`;
+    if (p.her && p.her.length) h += `<div class="sec">Heritage &amp; family stories</div><ul class="flist her">${p.her.map((f) => `<li class="${f.r || ""}">${esc(f.t)}${ratingTag(f.r)}${f.s ? `<div class="cite">${linkify(f.s)}</div>` : ""}</li>`).join("")}</ul>`;
     if (p.notes && p.notes.length) h += `<div class="sec">Research notes</div><ul class="flist">${p.notes.map((n) => `<li>${esc(n)}</li>`).join("")}</ul>`;
     if (p.src && p.src.length) {
       const items = p.src.map((s) => `<li class="${s.r || ""}">${I.doc}<span>${linkify(s.t)}${ratingTag(s.r)}</span></li>`);
@@ -608,58 +614,163 @@ function openPerson(id) {
 }
 
 // ---------- places map ----------
-const GAZ = [
-  [/san siro|branzone|valmozzola|san martino|mormorola|calosa/i, "Valmozzola", 44.57, 9.88], [/borgotaro|borgo val di taro/i, "Borgotaro", 44.49, 9.77], [/parma/i, "Parma", 44.80, 10.33], [/piacenza/i, "Piacenza", 45.05, 9.69], [/genoa|genova/i, "Genoa", 44.41, 8.93],
-  [/le havre|havre/i, "Le Havre", 49.49, 0.11], [/marseille/i, "Marseille", 43.3, 5.37], [/naples|napoli/i, "Naples", 40.85, 14.27],
-  [/bronx|st\.? raymond/i, "Bronx", 40.84, -73.87], [/brooklyn/i, "Brooklyn", 40.65, -73.95], [/queens|woodside|calvary cemetery/i, "Queens", 40.74, -73.9],
-  [/ellis island|manhattan|harlem|new york|nyc|\bn\.\s?y\b/i, "New York", 40.75, -73.98],
-  [/east haven|new haven|conn\b|connecticut/i, "New Haven, Conn.", 41.3, -72.9], [/new jersey|\bn\.\s?j\b|newark|hoboken|paterson/i, "New Jersey", 40.73, -74.17],
-  [/newport news|hampton roads|warwick co/i, "Newport News", 37.08, -76.47], [/hampton\b/i, "Hampton", 37.03, -76.35], [/norfolk|portsmouth|chesapeake/i, "Norfolk", 36.85, -76.29], [/suffolk|nansemond/i, "Suffolk", 36.73, -76.58],
-  [/jamestown|james city|james island|james citty|james iland/i, "Jamestown", 37.21, -76.78], [/williamsburg/i, "Williamsburg", 37.27, -76.71], [/surry/i, "Surry Co.", 37.12, -76.89], [/isle of wight/i, "Isle of Wight Co.", 36.9, -76.7],
-  [/southampton|drewryville|capron|newsoms|courtland|boykins|franklin, va/i, "Southampton Co.", 36.68, -77.1], [/sussex|waverly|wakefield|stony creek|albemarle parish/i, "Sussex Co.", 36.92, -77.26], [/greensville|emporia/i, "Greensville Co.", 36.68, -77.54],
-  [/brunswick|lawrenceville/i, "Brunswick Co.", 36.76, -77.85], [/mecklenburg/i, "Mecklenburg Co.", 36.68, -78.37], [/amelia/i, "Amelia Co.", 37.34, -77.98], [/farmville|prince edward/i, "Farmville", 37.3, -78.39], [/dinwiddie|petersburg/i, "Petersburg", 37.23, -77.4], [/richmond|henrico/i, "Richmond", 37.54, -77.43],
-  [/roanoke rapids|weldon|halifax co\.?,? n/i, "Roanoke Rapids, N.C.", 36.46, -77.65], [/northampton co|jackson, n|seaboard|garysburg|rich square/i, "Northampton Co., N.C.", 36.42, -77.4], [/edgecombe|tarboro/i, "Edgecombe Co., N.C.", 35.9, -77.6], [/hertford|bertie/i, "Hertford Co., N.C.", 36.36, -76.98],
-  [/essex|tappahannock|occupacia|cockleshell/i, "Essex Co.", 37.94, -76.94], [/king and queen|king & queen/i, "King & Queen Co.", 37.67, -76.88], [/caroline/i, "Caroline Co.", 38.03, -77.35], [/orange co|st\.? mark/i, "Orange Co.", 38.25, -78.0], [/culpeper/i, "Culpeper", 38.47, -77.99], [/amherst/i, "Amherst Co.", 37.58, -79.05], [/bedford/i, "Bedford", 37.33, -79.52], [/lynchburg|campbell co/i, "Lynchburg", 37.41, -79.14], [/martinsville|henry co/i, "Martinsville", 36.69, -79.87],
-  [/tazewell|jeffersonville|burkes garden|richlands/i, "Tazewell Co.", 37.11, -81.52], [/mercer|matoaka|princeton, w|bluefield|arista|iroquois/i, "Mercer Co., W.Va.", 37.4, -81.1], [/wyoming co|mullens|pineville/i, "Wyoming Co., W.Va.", 37.6, -81.55], [/mcdowell|welch/i, "McDowell Co., W.Va.", 37.38, -81.6], [/raleigh co|beckley/i, "Beckley, W.Va.", 37.78, -81.19],
-  [/russell co|abingdon|fincastle|montgomery co|wythe/i, "Southwest Virginia", 36.9, -81.8], [/spartanburg/i, "Spartanburg, S.C.", 34.95, -81.93], [/baltimore/i, "Baltimore", 39.29, -76.61], [/philadelphia/i, "Philadelphia", 39.95, -75.16], [/washington, d|district of columbia/i, "Washington, D.C.", 38.9, -77.04],
-  [/london/i, "London", 51.5, -0.12], [/england|britain/i, "England", 52.5, -1.5], [/scotland/i, "Scotland", 56.5, -4], [/ireland/i, "Ireland", 53.3, -7.7], [/germany|bavaria|palatinate/i, "Germany", 50.0, 8.5], [/france/i, "France", 46.6, 2.4],
-  [/west virginia|w\.\s?va\b/i, "West Virginia", 38.4, -80.8], [/north carolina|\bn\.\s?c\b/i, "North Carolina", 35.8, -78.8], [/virginia|\bva\b/i, "Virginia", 37.5, -78.6], [/italy|italia/i, "Italy", 44.6, 10.0],
-];
-const MP = { L0: -82, L1: 18, B0: 33, B1: 58, W: 520 };
-function proj(lat, lon) { const k = Math.cos(Math.PI / 4); const H = MP.W * (MP.B1 - MP.B0) / ((MP.L1 - MP.L0) * k); return [(lon - MP.L0) / (MP.L1 - MP.L0) * MP.W, (MP.B1 - lat) / (MP.B1 - MP.B0) * H]; }
-function geocode(s) { if (!s) return null; for (const [re, label, lat, lon] of GAZ) if (re.test(s)) return { label, lat, lon }; return null; }
-let MAPDATA = null;
-async function drawPersonMap(p) {
-  const stops = [];
-  const push = (place, y) => { const g = geocode(place); if (!g) return; const last = stops[stops.length - 1]; if (last && last.label === g.label) return; stops.push(Object.assign({ y }, g)); };
-  push(p.b && p.b.p, null);
-  for (const e of p.ev || []) if (e.k !== "Born" && e.k !== "Died" && e.k !== "Buried") push(e.t, e.y);
-  push(p.d && p.d.p, null);
-  if (p.bur && p.bur.place) push(p.bur.place, null);
-  if (!MAPDATA) { try { MAPDATA = await (await fetch(BASE + "assets/map.json")).json(); } catch { MAPDATA = { h: 184, d: "" }; } }
-  const box = $("#pmap"); if (!box || state.sel !== p.id) return;
-  const W = 520, H = MAPDATA.h || 184;
-  const inMap = stops.filter((s) => s.lon >= MP.L0 && s.lon <= MP.L1 && s.lat >= MP.B0 && s.lat <= MP.B1);
-  let vb = [0, 0, W, H];
-  if (inMap.length) {
-    const pts = inMap.map((s) => proj(s.lat, s.lon)); const xs = pts.map((q) => q[0]), ys = pts.map((q) => q[1]);
-    const x0 = Math.min(...xs), x1 = Math.max(...xs), y0 = Math.min(...ys), y1 = Math.max(...ys);
-    let w = Math.min(W, Math.max(x1 - x0, 50) * 1.6 + 40), h = w * (H / W);
-    if (y1 - y0 + 50 > h) { h = Math.min(H, y1 - y0 + 50); w = h * (W / H); }
-    const cx = (x0 + x1) / 2, cy = (y0 + y1) / 2;
-    vb = [Math.max(0, Math.min(W - w, cx - w / 2)), Math.max(0, Math.min(H - h, cy - h / 2)), w, h];
+// Pins come from the build (geocoded once and cached); the basemap is Natural Earth, loaded on first use.
+const PLACE_KIND = {
+  born: ["Born", "#5d6b3b"], baptised: ["Baptised", "#5d6b3b"], married: ["Married", "#b0893c"], lived: ["Lived", "#1e2d47"], worked: ["Worked", "#1e2d47"],
+  departed: ["Sailed from", "#8a5a2b"], arrived: ["Arrived", "#8a5a2b"], served: ["Military service", "#7a2f2f"], died: ["Died", "#2a2924"], buried: ["Buried", "#6b6250"],
+};
+let BASEMAP = null;
+async function loadBasemap() {
+  if (BASEMAP) return BASEMAP;
+  try { BASEMAP = await (await fetch(BASE + "assets/basemap.json")).json(); } catch { BASEMAP = { land: { scale: 100, rings: [] }, detail: { boxes: [], rings: [] }, borders: { rings: [] }, states: { rings: [] } }; }
+  const dec = (L) => { if (!L || !L.rings || L._d) return; const s = L.scale || 100; L._d = L.rings.map((r) => { const out = new Float32Array(r.length); let x = 0, y = 0; for (let i = 0; i < r.length; i += 2) { x += r[i]; y += r[i + 1]; out[i] = x / s; out[i + 1] = y / s; } return out; }); };
+  ["land", "detail", "borders", "states"].forEach((k) => dec(BASEMAP[k]));
+  return BASEMAP;
+}
+function mapPlaces(items) {
+  // merge pins at the same spot (e.g. born and baptised in the same hamlet)
+  const pins = [];
+  for (const s of items) {
+    const near = pins.find((q) => Math.abs(q.lat - s.lat) < 0.004 && Math.abs(q.lon - s.lon) < 0.004);
+    if (near) near.items.push(s); else pins.push({ lat: s.lat, lon: s.lon, items: [s] });
   }
-  const k = vb[2] / W;
-  let svg = `<rect x="-50" y="-50" width="${W + 100}" height="${H + 100}" fill="#efe5cc"/><path d="${MAPDATA.d}" fill="#dccaa0" stroke="#b49f73" stroke-width="${0.6 * k}"/>`;
-  const P2 = inMap.map((s) => proj(s.lat, s.lon));
-  for (let i = 1; i < P2.length; i++) { const [ax, ay] = P2[i - 1], [bx, by2] = P2[i]; const mx = (ax + bx) / 2, my = Math.min(ay, by2) - Math.hypot(bx - ax, by2 - ay) * 0.22; svg += `<path d="M${ax},${ay} Q${mx},${my} ${bx},${by2}" fill="none" stroke="${Math.abs(bx - ax) > 150 ? "#b0893c" : "#5d6b3b"}" stroke-width="${1.8 * k}" stroke-dasharray="${5 * k} ${4 * k}"/>`; }
-  const labs = [];
-  P2.forEach(([x, y], i) => { const s = inMap[i]; const dup = labs.some(([px, py]) => Math.abs(px - x) < 45 * k && Math.abs(py - y) < 12 * k); labs.push([x, y]);
-    svg += `<circle cx="${x}" cy="${y}" r="${4.2 * k}" fill="#a8402f" stroke="#fff8e8" stroke-width="${1.5 * k}"/>${dup ? "" : `<text x="${x + 7 * k}" y="${y + (i % 2 ? 13 : -6) * k}" font-family="Inter,sans-serif" font-size="${10 * k}" font-weight="600" fill="#2a2924" paint-order="stroke" stroke="#efe5cc" stroke-width="${2.5 * k}">${esc(s.label)}</text>`}`; });
-  if (vb[2] > 300) { const [ox, oy] = proj(41, -45); svg += `<text x="${ox}" y="${oy}" font-family="Cormorant Garamond,serif" font-style="italic" font-size="${13 * k}" fill="#8a7a55">Atlantic Ocean</text>`; }
-  const el = box.querySelector("svg"); el.setAttribute("viewBox", vb.map((v) => v.toFixed(1)).join(" ")); el.innerHTML = svg;
-  const outside = stops.filter((s) => !inMap.includes(s));
-  $("#pmapcap").innerHTML = stops.length ? stops.map((s) => `<b>${esc(s.label)}</b>${s.y ? " " + s.y : ""}`).join(" → ") + (outside.length ? " · some places fall outside this map" : "") : "No mapped places yet for this person.";
+  return pins;
+}
+// Render pins on the basemap into an <svg>. opts: {seq: chronological stops, bounds: [lon0, lat0, lon1, lat1], count: pin => label number, size: pin => radius}
+async function renderMap(svgEl, pins, opts = {}) {
+  const BM = await loadBasemap();
+  const W = 560, H = opts.H || 300;
+  let la0, la1, lo0, lo1, exactOnly;
+  if (opts.bounds) { [lo0, la0, lo1, la1] = opts.bounds; exactOnly = true; }
+  else {
+    // frame the specific places; a bare state or country pin should not drag the view across a continent
+    const framePins = pins.filter((q) => q.items.some((s) => s.a !== 2 || s.m === "county" || s.m === "area"));
+    const F = framePins.length ? framePins : pins;
+    la0 = Math.min(...F.map((q) => q.lat)); la1 = Math.max(...F.map((q) => q.lat)); lo0 = Math.min(...F.map((q) => q.lon)); lo1 = Math.max(...F.map((q) => q.lon));
+    exactOnly = F.every((q) => q.items.every((s) => s.a !== 2));
+  }
+  const minSpan = exactOnly ? 0.18 : 2.5;
+  const mid = (la0 + la1) / 2, k = Math.cos((mid * Math.PI) / 180);
+  let spanX = Math.max((lo1 - lo0) * k, minSpan), spanY = Math.max(la1 - la0, minSpan * 0.6);
+  if (!opts.bounds) { spanX *= 1.35; spanY *= 1.45; }
+  if (spanX / spanY < W / H) spanX = (spanY * W) / H; else spanY = (spanX * H) / W;
+  const cx = ((lo0 + lo1) / 2) * k, cy = (la0 + la1) / 2;
+  const sc = W / spanX;
+  const X_ = (lon) => (lon * k - (cx - spanX / 2)) * sc, Y_ = (lat) => ((cy + spanY / 2) - lat) * sc;
+  const vlo0 = cx / k - spanX / 2 / k, vlo1 = cx / k + spanX / 2 / k, vla0 = cy - spanY / 2, vla1 = cy + spanY / 2;
+  const useDetail = (BM.detail.boxes || []).some((b) => vlo0 >= b[0] && vlo1 <= b[2] && vla0 >= b[1] && vla1 <= b[3]);
+  const path = (rings, closed) => {
+    let d = "";
+    for (const r of rings || []) {
+      let rx0 = Infinity, rx1 = -Infinity, ry0 = Infinity, ry1 = -Infinity;
+      for (let i = 0; i < r.length; i += 2) { if (r[i] < rx0) rx0 = r[i]; if (r[i] > rx1) rx1 = r[i]; if (r[i + 1] < ry0) ry0 = r[i + 1]; if (r[i + 1] > ry1) ry1 = r[i + 1]; }
+      if (rx1 < vlo0 - 1 || rx0 > vlo1 + 1 || ry1 < vla0 - 1 || ry0 > vla1 + 1) continue;
+      for (let i = 0; i < r.length; i += 2) d += (i ? "L" : "M") + X_(r[i]).toFixed(1) + "," + Y_(r[i + 1]).toFixed(1);
+      if (closed) d += "Z";
+    }
+    return d;
+  };
+  let svg = `<rect width="${W}" height="${H}" fill="#dfe6e0"/>`;
+  svg += `<path d="${path((useDetail ? BM.detail : BM.land)._d, true)}" fill="#efe5cc" stroke="#b49f73" stroke-width=".7" fill-rule="evenodd"/>`;
+  svg += `<path d="${path(BM.states._d, false)}" fill="none" stroke="#c9b68c" stroke-width=".6" stroke-dasharray="3 2"/>`;
+  svg += `<path d="${path(BM.borders._d, false)}" fill="none" stroke="#a8916a" stroke-width=".9"/>`;
+  const seq = (opts.seq || []).filter((s) => s.a !== 2);
+  for (let i = 1; i < seq.length; i++) {
+    const a = seq[i - 1], b = seq[i]; if (a.lat === b.lat && a.lon === b.lon) continue;
+    const ax = X_(a.lon), ay = Y_(a.lat), bx = X_(b.lon), byy = Y_(b.lat); const mx = (ax + bx) / 2, my = Math.min(ay, byy) - Math.hypot(bx - ax, byy - ay) * 0.18;
+    svg += `<path d="M${ax.toFixed(1)},${ay.toFixed(1)} Q${mx.toFixed(1)},${my.toFixed(1)} ${bx.toFixed(1)},${byy.toFixed(1)}" fill="none" stroke="#8a7a55" stroke-width="1.2" stroke-dasharray="4 3" opacity=".7"/>`;
+  }
+  const drawn = [], placed = [], labs = [];
+  const order = pins.map((q, i) => i).sort((a, b) => (opts.size ? opts.size(pins[b]) - opts.size(pins[a]) : 0));
+  let pinSvg = "", labSvg = "";
+  for (const i of order) {
+    const q = pins[i]; const x = X_(q.lon), y = Y_(q.lat), s0 = q.items[0];
+    if (x < -10 || x > W + 10 || y < -10 || y > H + 10) continue;
+    const col = opts.color ? opts.color(q) : PLACE_KIND[s0.k] ? PLACE_KIND[s0.k][1] : "#a8402f";
+    const approx = q.items.every((s) => s.a);
+    const r = opts.size ? opts.size(q) : approx ? 8 : 9;
+    const num = opts.count ? opts.count(q, i) : i + 1;
+    drawn.push(i); placed.push({ i, q, x, y, r });
+    pinSvg += `<g class="pin" data-i="${i}"><circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r}" fill="${approx ? "#fff8e8" : col}" stroke="${col}" stroke-width="${approx ? 2 : 1.5}" ${approx ? 'stroke-dasharray="3 2"' : ""}/><text x="${x.toFixed(1)}" y="${(y + 3.6).toFixed(1)}" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" font-weight="700" fill="${approx ? col : "#fff8e8"}">${num}</text></g>`;
+  }
+  // labels: try right, left, above, below; skip a label that would sit on another pin or label
+  const hit = (a, b) => a[0] < b[2] && b[0] < a[2] && a[1] < b[3] && b[1] < a[3];
+  for (const { q, x, y, r } of placed) {
+    let name = (opts.label ? opts.label(q) : q.items[0].l).split(",")[0];
+    if (name.length > 26) name = name.slice(0, 24) + "…";
+    const w = name.length * 6.3 + 2, h = 12;
+    const cands = [[x + r + 3, y + 4, "start"], [x - r - 3, y + 4, "end"], [x, y - r - 4, "middle"], [x, y + r + 12, "middle"]];
+    for (const [lx, ly, anc] of cands) {
+      const x0 = anc === "start" ? lx : anc === "end" ? lx - w : lx - w / 2, box = [x0, ly - 10, x0 + w, ly + 2];
+      if (box[0] < 2 || box[2] > W - 2 || box[1] < 2 || box[3] > H - 22) continue;
+      if (labs.some((b) => hit(b, box)) || placed.some((o) => hit([o.x - o.r, o.y - o.r, o.x + o.r, o.y + o.r], box))) continue;
+      labs.push(box);
+      labSvg += `<text x="${lx.toFixed(1)}" y="${ly.toFixed(1)}" text-anchor="${anc}" font-family="Inter,sans-serif" font-size="11" font-weight="600" fill="#2a2924" paint-order="stroke" stroke="#efe5cc" stroke-width="3" pointer-events="none">${esc(name)}</text>`;
+      break;
+    }
+  }
+  svg += pinSvg + labSvg;
+  const scaleKm = spanX * 111.32, nice = [1, 2, 5, 10, 20, 50, 100, 200, 500, 1000, 2000].find((v) => v > scaleKm / 6) || 2000;
+  const barPx = (nice / scaleKm) * W;
+  svg += `<g font-family="Inter,sans-serif" font-size="9.5" fill="#6b6250"><rect x="12" y="${H - 18}" width="${barPx.toFixed(1)}" height="3" fill="#6b6250"/><text x="${(16 + barPx).toFixed(1)}" y="${H - 13}">${nice} km</text><text x="${W - 8}" y="${H - 8}" text-anchor="end" opacity=".8">Basemap: Natural Earth · places: OpenStreetMap</text></g>`;
+  svgEl.setAttribute("viewBox", `0 0 ${W} ${H}`); svgEl.innerHTML = svg;
+  if (opts.onPin) svgEl.querySelectorAll(".pin").forEach((g) => g.addEventListener("click", () => opts.onPin(+g.dataset.i)));
+  return drawn;
+}
+const osmLink = (s) => `https://www.openstreetmap.org/?mlat=${s.lat}&mlon=${s.lon}#map=${s.a === 2 ? 8 : s.a ? 12 : 15}/${s.lat}/${s.lon}`;
+function precNote(s) { return s.a === 2 ? ` <small>(${s.m === "area" ? "an area" : "the " + esc(s.m || "region")}: pinned at its centre)</small>` : s.a ? ` <small>(approximate: pinned at ${esc(s.m || "the nearest known place")})</small>` : ""; }
+async function drawPersonMap(p) {
+  const box = $("#pmap"); if (!box) return;
+  const pins = mapPlaces(p.pl || []);
+  const list = $("#pmaplist");
+  const nomap = (p.plx || []).length ? `<li class="nomap"><span class="num ap" style="--c:#8a7a55">?</span><span>Not yet on the map: ${esc(p.plx.map((x) => x.l).join(" · "))}</span></li>` : "";
+  if (!pins.length) { box.classList.add("empty"); box.querySelector("svg").style.display = "none"; $("#pmapcap").textContent = "No places recorded for this person yet."; if (list) list.innerHTML = nomap; return; }
+  await loadBasemap(); if (state.sel !== p.id) return;
+  await renderMap(box.querySelector("svg"), pins, { seq: p.pl, onPin: (i) => { const li = list && list.querySelector(`[data-pin="${i}"]`); if (li) { li.classList.add("hl"); li.scrollIntoView({ block: "nearest", behavior: "smooth" }); setTimeout(() => li.classList.remove("hl"), 1400); } } });
+  $("#pmapcap").textContent = pins.length === 1 ? "1 place" : `${pins.length} places, numbered in the order of the records`;
+  if (list) list.innerHTML = pins.map((q, i) => q.items.map((s, j) => { const K = PLACE_KIND[s.k] || [s.k, "#a8402f"];
+    return `<li data-pin="${j ? "" : i}"><span class="num${s.a ? " ap" : ""}" style="--c:${K[1]}">${j ? "" : i + 1}</span><span><b>${esc(K[0])}</b>${s.y ? " " + s.y : ""} · ${esc(s.l)}${precNote(s)}${s.n ? ` <small>· ${esc(s.n)}</small>` : ""} <a href="${osmLink(s)}" target="_blank" rel="noopener nofollow" class="osm">map ↗</a></span></li>`; }).join("")).join("") + nomap;
+}
+
+// ---------- family places (whole tree) ----------
+const REGIONS = {
+  brandon: [["All places", null], ["Valmozzola", [9.83, 44.53, 9.94, 44.6]], ["Parma & Liguria", [8.5, 44.0, 10.6, 45.0]], ["New York", [-74.15, 40.6, -73.75, 40.9]], ["Virginia & N.C.", [-83.8, 35.8, -75.6, 39.6]], ["Atlantic crossing", [-80, 34, 12, 52]]],
+  holly: [["All places", null], ["Southampton & Sussex", [-77.75, 36.5, -76.75, 37.15]], ["Jamestown & Surry", [-77.1, 36.8, -76.4, 37.4]], ["Virginia & N.C.", [-80.5, 35.7, -75.6, 38.6]], ["Panama Canal Zone", [-80.1, 8.85, -79.45, 9.45]]],
+};
+async function openPlaces(region) {
+  const all = [];
+  for (const p0 of D.people) { const p = view_(p0.id); if (!p || (p.liv && !p.unlocked)) continue; for (const s of p.pl || []) all.push(Object.assign({ pid: p.id }, s)); }
+  const pins = mapPlaces(all);
+  const regs = REGIONS[TREE] || REGIONS.brandon;
+  const cur = regs.find((r) => r[0] === region) || regs[0];
+  let h = `<div class="flt-h"><span class="bi">${I.pin || I.tree}</span><h3>Family places</h3></div><div class="flt-sub">Every birth, home, voyage, military post and grave in the records, ${pins.length} places in all. Larger pins mean more people. Tap a pin to see who was there.</div>
+    <div class="regions">${regs.map(([n]) => `<button class="chip${n === cur[0] ? " on" : ""}" data-region="${esc(n)}">${esc(n)}</button>`).join("")}</div>
+    <div class="mapbox wide" id="fmap"><svg viewBox="0 0 560 360"></svg><div class="mapcap" id="fmapcap">Loading map…</div></div><div id="fmapwho" class="fmapwho"></div>`;
+  openLayer("places", h, "wide"); setTab("places");
+  document.querySelectorAll("[data-region]").forEach((b) => b.addEventListener("click", () => openPlaces(b.dataset.region)));
+  const people = (q) => [...new Set(q.items.map((s) => s.pid))];
+  const drawn = await renderMap($("#fmap svg"), pins, { H: 360, bounds: cur[1] || undefined, count: (q) => people(q).length, size: (q) => Math.min(13, 6 + Math.sqrt(people(q).length) * 1.6), color: (q) => (q.items.some((s) => s.k === "served") ? PLACE_KIND.served[1] : q.items.some((s) => s.k === "arrived" || s.k === "departed") ? PLACE_KIND.arrived[1] : "#5d6b3b"),
+    label: (q) => q.items.slice().sort((a, b) => a.l.length - b.l.length)[0].l,
+    onPin: (i) => showWho(pins[i]) });
+  $("#fmapcap").textContent = `${drawn.length} of ${pins.length} places in this view · numbers show how many people`;
+  function showWho(q) {
+    const byP = new Map(); for (const s of q.items) { if (!byP.has(s.pid)) byP.set(s.pid, []); byP.get(s.pid).push(s); }
+    const name = q.items.slice().sort((a, b) => a.l.length - b.l.length)[0].l;
+    $("#fmapwho").innerHTML = `<div class="sec">${esc(name)}</div>` + [...byP].map(([pid, ss]) => personRow(P[pid], ss.map((s) => (PLACE_KIND[s.k] || [s.k])[0] + (s.y ? " " + s.y : "")).join(" · "), P[pid].st)).join("");
+    $("#fmapwho").scrollIntoView({ block: "nearest", behavior: "smooth" });
+  }
+}
+
+// ---------- photos and articles ----------
+function mediaHTML(p) {
+  const md = p.md || []; if (!md.length) return "";
+  const photos = md.filter((m) => m.img), other = md.filter((m) => !m.img);
+  const lic = (l) => String(l || "").replace(/\.?\s*(Link and credit only|Link only)[^.]*\.?/i, "").replace(/;?\s*do not (copy|re-?host)[^.;]*/i, "").trim();
+  const credit = (m) => [m.credit ? "Credit: " + esc(m.credit) : "Credit not recorded", m.src && esc(m.src), m.date && esc(m.date), lic(m.lic) && esc(lic(m.lic))].filter(Boolean).join(" · ") + (m.note ? `<br>${esc(m.note)}` : "");
+  let h = `<div class="sec">Photos &amp; articles</div>`;
+  if (photos.length) h += `<div class="gallery">${photos.map((m) => `<figure><a href="${esc(m.url || m.img)}" target="_blank" rel="noopener nofollow"><img loading="lazy" src="${esc(/^https?:/.test(m.img) ? m.img : BASE + m.img)}" alt="${esc(m.title || "Photo of " + p.n)}"></a><figcaption>${m.title ? `<b>${esc(m.title)}</b>` : ""}${ratingTag(m.r)}<small>${credit(m)}</small></figcaption></figure>`).join("")}</div>`;
+  if (other.length) h += `<ul class="flist media">${other.map((m) => `<li>${I.doc}<span>${m.url ? `<a href="${esc(m.url)}" target="_blank" rel="noopener nofollow">${esc(m.title || m.url)}</a>` : esc(m.title)}${m.kind && m.kind !== "link" ? ` <small class="mk">${esc(m.kind)}</small>` : ""}${ratingTag(m.r)}<div class="cite">${credit(m)}</div></span></li>`).join("")}</ul>`;
+  return h;
 }
 
 // ---------- stories ----------
@@ -667,6 +778,7 @@ function openStories() {
   const feats = D.stories || [];
   let h = `<div class="flt-h"><span class="bi">${I.book}</span><h3>Stories</h3></div><div class="flt-sub">Featured stories and short sketches drawn from the records. Each claim keeps its rating on the person’s card.</div>`;
   for (const s of feats) h += `<button class="stcard big" data-story="${esc(s.slug)}"><div class="k">${esc(s.kicker)}</div><h4>${esc(s.title)}</h4><p>${esc(s.summary)}</p></button>`;
+  h += `<button class="stcard big" id="placesCard"><div class="k">Map</div><h4>Family places</h4><p>Every birth, home, voyage, military post and grave in the records, on one map.</p></button>`;
   if (D.people.some((p) => p.jt)) h += `<button class="stcard big" id="jtStory"><div class="k">Lineage · 1607–1624</div><h4>The Jamestown line</h4><p>From Thomas Gray, an Ancient Planter on the 1624/25 muster at James Island, down to Holly, link by link, with every link rated.</p></button>`;
   const sk = D.people.filter((p) => !p.liv && ((p.hl && p.hl.length) || (p.stories && p.stories.length))).sort((a, b) => by(a.id) - by(b.id));
   h += `<div class="sec">From the records · ${sk.length} people</div>`;
@@ -676,6 +788,7 @@ function openStories() {
   openLayer("stories", h, "wide");
   setTab("stories");
   const j = $("#jtStory"); if (j) j.onclick = () => { closeLayer(); setFilter("jt"); };
+  const pc = $("#placesCard"); if (pc) pc.onclick = () => openPlaces();
 }
 function openStory(slug) {
   const s = (D.stories || []).find((x) => x.slug === slug); if (!s) return;
@@ -770,7 +883,7 @@ function bindSearch(inputId) {
 
 // ---------- UI bindings ----------
 function setTab(t) {
-  document.querySelectorAll(".tabbar button").forEach((b) => b.classList.toggle("on", b.dataset.tab === t));
+  document.querySelectorAll(".tabbar button").forEach((b) => b.classList.toggle("on", b.dataset.tab === (t === "places" ? "stories" : t)));
   document.querySelectorAll(".nav button").forEach((b) => b.classList.toggle("on", b.dataset.nav === (t === "key" || t === "lock" || t === "search" ? "tree" : t)));
 }
 function toggleKey() {
@@ -786,7 +899,7 @@ function bindUI() {
     if (z === "in") zoomAt(r.width / 2, r.height / 2, 1.25); else if (z === "out") zoomAt(r.width / 2, r.height / 2, 0.8); else if (z === "fit") fit(true); else home(true);
   });
   $("#lockBtn").addEventListener("click", openSignIn);
-  document.querySelectorAll(".nav button").forEach((b) => b.addEventListener("click", () => { const n = b.dataset.nav; if (n === "stories") openStories(); else if (n === "key") toggleKey(); else { closeLayer(); } }));
+  document.querySelectorAll(".nav button").forEach((b) => b.addEventListener("click", () => { const n = b.dataset.nav; if (n === "stories") openStories(); else if (n === "places") openPlaces(); else if (n === "key") toggleKey(); else { closeLayer(); } }));
   document.querySelectorAll(".tabbar button").forEach((b) => b.addEventListener("click", () => {
     const t = b.dataset.tab;
     if (t === "tree") { closeLayer(); $("#legend").classList.remove("show"); }
@@ -809,6 +922,7 @@ function handleHash() {
   if (h.startsWith("p=") && P[h.slice(2)]) openPerson(h.slice(2));
   else if (h.startsWith("story=")) openStory(h.slice(6));
   else if (h === "jamestown" && D.people.some((p) => p.jt)) setFilter("jt");
+  else if (h === "places" || h.startsWith("places=")) openPlaces(h.slice(7) || undefined);
 }
 
 // ---------- boot ----------
