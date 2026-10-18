@@ -167,7 +167,7 @@ function factList(p) {
   for (const [k, v] of Object.entries(p)) {
     if (!/^facts(_|$)/.test(k) || !Array.isArray(v)) continue;
     for (const f of v) {
-      if (typeof f === "string") out.push({ t: f, r: normRating(f.match(/\((proven|probable|hypothesis|compiled)/i)?.[1]) });
+      if (typeof f === "string") out.push({ t: f, r: normRating(f.match(/(?:\(|\brating:\s*)(proven|probable|hypothesis|compiled|family claim)/i)?.[1]) });
       else if (f && f.fact) out.push({ t: f.fact, r: normRating(f.rating || f.confidence), s: f.source || f.citation || null });
     }
   }
