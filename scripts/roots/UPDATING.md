@@ -173,5 +173,16 @@ fails if any of these patterns, or "Confirmed by Brandon", is still there.
 key Jamestown line (probable)". Cards with a solid border, or a solid parent link (the Thomas Gray → Martha Judkins
 line, 8 cards), never show the word "proven". Their proven-rated items (Thomas Gray's and Martha Judkins's own rating,
 facts and timeline) read "Documented", with the same styling as Proven, and `unproven()` in `build-data.mjs` rewrites any
-"proven" in their text. Because "Documented" is a separate rating, the "Proven only" filter no longer highlights those two cards. Thomas Gray's "English origins (unproven)" heading now reads "English origins (unconfirmed)".
+"proven" in their text. Because "Documented" is a separate rating, the "Proven only" filter no longer highlights those two cards. Thomas Gray's "English origins (unproven)" heading now reads "English origins (unconfirmed)", and its note says "none of the parentages is established".
+
+### Newspaper mentions get their own card section (v15)
+
+`newspaper_mentions` (paper, date, text, confidence, citation) used to be folded into "More from the records". They now
+have their own **In the newspapers** section on the card, with the paper and date in bold, the rating, and the
+citation. They also stay in the life timeline as "In the paper". Entries pass the same living-name filter as other
+text. A mention that names a living relative goes into the encrypted block. Obituary survivor lists are not
+transcribed (Roots' rule).
+
+Hand pin added in `places-overrides.json`: "Hilton Village, Warwick Co., Virginia" is in Newport News. The geocoder
+had matched a Hilton Village in West Virginia.
 

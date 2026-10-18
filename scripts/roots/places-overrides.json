@@ -69,6 +69,14 @@
   }
  },
  "coords": {
+  "hilton village, warwick county, virginia": {
+   "lat": 37.0335,
+   "lon": -76.459,
+   "approx": 1,
+   "label": "Hilton Village, Newport News, Virginia",
+   "note": "Warwick County is now part of Newport News; the geocoder matched a Hilton Village in West Virginia",
+   "source": "Hilton Village Historic District (NRHP), Newport News, Virginia"
+  },
   "panama canal zone": {
    "lat": 9.1178,
    "lon": -79.7203,

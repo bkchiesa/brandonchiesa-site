@@ -870,6 +870,19 @@
   "kind": "suburb",
   "at": "2026-10-18"
  },
+ "hilton village, warwick county, virginia": {
+  "raw": "Hilton Village, Warwick Co., Virginia",
+  "q": "Hilton Village, Warwick County, Virginia",
+  "status": "ok",
+  "lat": 38.01511,
+  "lon": -80.90148,
+  "prec": "exact",
+  "matched": "Hilton Village (near Virginia)",
+  "osm": "node/154011466",
+  "display": "Hilton Village, Fayette County, West Virginia, United States",
+  "kind": "hamlet",
+  "at": "2026-10-18"
+ },
  "iroquois, wyoming county, west virginia": {
   "raw": "Iroquois, Wyoming Co., WV",
   "q": "Iroquois, Wyoming County, West Virginia",
@@ -1286,6 +1299,19 @@
   "kind": "amenity",
   "at": "2026-10-18"
  },
+ "oak, new kent county, virginia": {
+  "raw": "Oak, New Kent County, Virginia",
+  "q": "Oak, New Kent County, Virginia",
+  "status": "ok",
+  "lat": 37.54737,
+  "lon": -76.90635,
+  "prec": "exact",
+  "matched": "Oak, New Kent County, Virginia",
+  "osm": "node/157544182",
+  "display": "White Oak Landing, New Kent County, Virginia, 23031, United States",
+  "kind": "hamlet",
+  "at": "2026-10-18"
+ },
  "orne, normandy, france": {
   "raw": "Orne, Normandy, France",
   "q": "Orne, Normandy, France",
@@ -1323,6 +1349,19 @@
   "osm": "relation/1216812",
   "display": "Palm Coast, Flagler County, Florida, United States",
   "kind": "city",
+  "at": "2026-10-18"
+ },
+ "pamunkey church": {
+  "raw": "Pamunkey church",
+  "q": "Pamunkey church",
+  "status": "ok",
+  "lat": 37.50201,
+  "lon": -76.89709,
+  "prec": "exact",
+  "matched": "Pamunkey church",
+  "osm": "way/788000446",
+  "display": "Pamunkey Church, 15700, Pamunkey Church Road, New Kent County, Virginia, 23089, United States",
+  "kind": "amenity",
   "at": "2026-10-18"
  },
  "pamunkey united methodist church cemetery, new kent county, virginia": {
@@ -1661,6 +1700,19 @@
   "osm": "relation/206528",
   "display": "Suffolk, Virginia, United States",
   "kind": "city",
+  "at": "2026-10-18"
+ },
+ "sunbury, gates county, north carolina": {
+  "raw": "Sunbury, Gates Co., North Carolina",
+  "q": "Sunbury, Gates County, North Carolina",
+  "status": "ok",
+  "lat": 36.44129,
+  "lon": -76.61054,
+  "prec": "exact",
+  "matched": "Sunbury, Gates County, North Carolina",
+  "osm": "node/158318633",
+  "display": "Sunbury, Gates County, North Carolina, 27979, United States",
+  "kind": "village",
   "at": "2026-10-18"
  },
  "surry county, virginia": {
