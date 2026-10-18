@@ -488,7 +488,7 @@ function applyFilter() {
 }
 function arrShort(A) { return A && A.date ? A.date.replace(/\s*[(;].*$/, "").trim() : null; }
 function immYear(p) {
-  if (p.arr && p.arr.y) return p.arr.y;
+  if (p.arr) return p.arr.y || null; // a structured arrival with no year stays undated
   const e = (p.ev || []).find((e) => /arriv|sail|landed|manifest|ellis/i.test(e.t)); if (e) return e.y;
   const t = (p.hl || []).concat((p.facts || []).map((f) => f.t)).join(" "); const m = t.match(/(?:arrived|landing|landed)[^.]*?\b(1[6-9]\d\d)\b/i); return m ? +m[1] : null;
 }
