@@ -224,6 +224,31 @@ function originClaims(p) {
     return { t: cleanText(c.claim || c.text), r: normRating(c.confidence || c.rating), a, s: isStr(c.citation || c.source) ? cleanText(c.citation || c.source) : null, x: x || undefined };
   }).filter(Boolean);
 }
+// arrival: {year, port, ship, from, date, note, rating, source}; null or empty fields are dropped
+function arrivalOf(p) {
+  const a = p.arrival;
+  if (!a || typeof a !== "object") return null;
+  // cleanText drops internal research-file references; tidy the punctuation they leave behind
+  const str = (v) => (isStr(v) && !/^(unknown|null|n\/a|none)$/i.test(v.trim()) ? cleanText(v).replace(/(?:[;,]\s*(?:see|and|also)?\s*)+$/i, "").replace(/[;,]\s*(?:see|and)\s*([.)])/gi, "$1").trim() || null : null);
+  // a null year stays null: "before 24 Apr 1704" is a latest date, not an arrival year
+  // a year written as text ("by spring 1616 ...") is a date phrase, not a year
+  const dateTxt = isStr(a.date) ? a.date : isStr(a.year) && !/^\d{4}$/.test(a.year.trim()) ? a.year : null;
+  const y = a.year != null && a.year !== "" && Number.isFinite(Number(a.year)) ? Number(a.year) : isStr(dateTxt) && !/^\s*(before|by|bef\.?)\b/i.test(dateTxt) ? yearOf(dateTxt) || null : null;
+  const out = { y, date: str(dateTxt), ship: str(a.ship), from: str(a.from), port: str(a.port), r: normRating(a.rating || a.confidence) || null, n: str(a.note || a.notes), s: str(a.source || a.citation) };
+  for (const k of Object.keys(out)) if (out[k] == null) delete out[k];
+  return Object.keys(out).length ? out : null;
+}
+// immigrant_claim / origin / line_stop: optional researcher notes, each {.., rating, source}
+const txtOf = (v) => (isStr(v) ? cleanText(v) : null);
+function claimOf(c) { if (!c) return null; if (isStr(c)) return { t: cleanText(c) }; if (typeof c !== "object") return null; const t = txtOf(c.claim || c.text || c.note); return t ? { t, r: normRating(c.rating || c.confidence) || null, s: txtOf(c.source || c.citation) } : null; }
+function originOf(o) { if (!o) return null; if (isStr(o)) return { p: cleanText(o) }; if (typeof o !== "object") return null; const pl = txtOf(o.place || o.from || o.text); return pl ? { p: pl, r: normRating(o.rating || o.confidence) || null, s: txtOf(o.source || o.citation) } : null; }
+function lineStopOf(l) {
+  if (!l) return null; if (isStr(l)) return { why: cleanText(l) }; if (typeof l !== "object") return null;
+  const e = txtOf(l.earliest_record);
+  const o = { why: txtOf(l.reason || l.note), lb: txtOf(l.likely_born), e: e && !/^see facts\b/i.test(e) ? e : null, r: normRating(l.rating || l.confidence) || null, s: txtOf(l.source || l.citation) };
+  for (const k of Object.keys(o)) if (o[k] == null) delete o[k];
+  return Object.keys(o).length ? o : null;
+}
 function normalize(p, tree) {
   const stRaw = p.status || "";
   const st = normRating(stRaw) || "probable";
@@ -262,6 +287,14 @@ function normalize(p, tree) {
   for (const o of occs) ev(yearOf(o.y), "Occupation", [o.t, o.p].filter(isStr).join(" · "), o.r);
   for (const o of res) ev(yearOf(o.y), "Lived at", [o.p, o.t].filter(isStr).join(" · "), o.r);
   for (const o of news) ev(yearOf(o.y), "In the paper", `${o.paper ? o.paper + ": " : ""}${o.t || ""}`, o.r);
+  const arr = arrivalOf(p);
+  const arrY = arr && (arr.y || yearOf(arr.date));
+  if (arr && arrY) {
+    const t = [arr.date && arr.date !== String(arr.y) ? arr.date : null, arr.ship ? "on " + arr.ship : null, arr.from ? "from " + arr.from : null, arr.port ? "at " + arr.port : null].filter(Boolean).join(" · ") || "Arrived";
+    // the structured arrival replaces free-text facts that tell the same crossing
+    for (let i = events.length - 1; i >= 0; i--) if (events[i].k === null && events[i].y === arrY && ARRIVAL.test(events[i].t)) events.splice(i, 1);
+    ev(arrY, arr.y ? "Arrived" : "Arrived by", t, arr.r, true);
+  }
   const dy = yearOf(p.death?.date);
   ev(dy, "Died", [p.death?.date, p.death?.place].filter(isStr).join(" · "), st, true);
   if (p.burial && typeof p.burial === "object") ev(yearOf(p.burial.date), "Buried", [p.burial.date, p.burial.place, p.burial.plot].filter(isStr).join(" · "), normRating(p.burial.status));
@@ -269,12 +302,13 @@ function normalize(p, tree) {
   const allText = JSON.stringify([facts, highlights, stories, notes, p.military || null, p.sources]);
   const born = [p.birth?.place].join(" ");
   const later = [p.death?.place, ...res.map((r) => r.p)].join(" ");
-  const imm = (FOREIGN.test(born) && (US_PLACE.test(later) || ARRIVAL.test(allText))) || (/naturaliz/i.test(allText) && !US_PLACE.test(born) && /petition|naturaliz/i.test(highlights.join(" ") + facts.map((f) => f.t).join(" ") + (p.notes || "")) && FOREIGN.test(allText + born));
+  const immGuess = (FOREIGN.test(born) && (US_PLACE.test(later) || ARRIVAL.test(allText))) || (/naturaliz/i.test(allText) && !US_PLACE.test(born) && /petition|naturaliz/i.test(highlights.join(" ") + facts.map((f) => f.t).join(" ") + (p.notes || "")) && FOREIGN.test(allText + born));
   return {
     id: p.id, n: p.name, sex: p.sex || "", st, stRaw, yrs: shortYears(p),
     b: { d: p.birth?.date || null, p: p.birth?.place || null }, d: { d: p.death?.date || null, p: p.death?.place || null },
     par: p.parents || [], sp: p.spouses || [], aka: Array.isArray(p.aka) ? p.aka : p.aka ? [p.aka] : [],
-    imm: !!imm, wars: warsOf(p, allText), jt: !!p.jamestown_branch, jtR: p.jamestown_chain_rating || null, jtC: p.jamestown_chains || [],
+    // trees whose researchers set the immigrant flag use it as given; older trees fall back to the text heuristic
+    imm: tree && tree.flagImm ? p.immigrant === true : !!immGuess, arr: arr || undefined, immC: p.immigrant === true ? undefined : claimOf(p.immigrant_claim) || undefined, org: originOf(p.origin) || undefined, ls: lineStopOf(p.line_stop) || undefined, wars: warsOf(p, allText), jt: !!p.jamestown_branch, jtR: p.jamestown_chain_rating || null, jtC: p.jamestown_chains || [],
     hl: highlights, stories, facts, occ: occs, res, news, mil, notes, src: sources, ev: events,
     cod: p.cause_of_death || null, bur: p.burial && typeof p.burial === "object" ? p.burial : null,
     line: p.line_r8us || p.line_r7us || p.line_r10 || null,
@@ -312,6 +346,7 @@ function splitPrivate(rec, namesLiving) {
   keep(null, "src", (x) => x.t);
   keep(null, "ev", (x) => x.t);
   keep(null, "md", (x) => JSON.stringify(x));
+  for (const k of ["arr", "immC", "org", "ls"]) if (rec[k] && namesLiving(JSON.stringify(rec[k]))) { priv[k] = rec[k]; delete rec[k]; }
   keep(null, "oc", (x) => x.t + " " + (x.a || "") + " " + (x.s || ""));
   // heritage notes: judge by the note itself; a citation that only names who relayed a family story is reworded
   if (Array.isArray(rec.her)) {
@@ -347,7 +382,7 @@ async function loadPlaceCache() {
   return { ov, cache: { ...(await rd("places-cache-private.json")), ...(await rd("places-cache.json")) }, coords: ov.coords || {} };
 }
 const AREA_KINDS = new Set(["county", "state", "country", "region", "province"]);
-const KIND_ORDER = { born: 0, baptised: 1, married: 3, lived: 4, worked: 4, departed: 5, arrived: 6, served: 7, died: 8, buried: 9 };
+const KIND_ORDER = { born: 0, baptised: 1, married: 3, lived: 4, worked: 4, departed: 5, emigrated: 5, arrived: 6, served: 7, died: 8, buried: 9 };
 // a hand note that only repeats the place name adds nothing; one that starts with it keeps the rest
 function handNote(note, lab) {
   if (!isStr(note)) return null;
@@ -482,6 +517,7 @@ async function main() {
       p._living = !!p.living || (by && by >= 1925 && !isStr(p.death?.date) && !isStr(p.death?.place));
     }
     const namesLiving = buildLivingMatchers(people, byId);
+    tree.flagImm = people.some((p) => typeof p.immigrant === "boolean" || (p.arrival && typeof p.arrival === "object"));
     const perPlaces = treePlaces(people, pc.ov);
     const pub = [], priv = {};
     for (const p of people) {

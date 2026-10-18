@@ -408,3 +408,22 @@ body:has(#layer .panel) .edge{display:none}
 .flist.oc .oca{margin-top:3px;font-size:13px;color:var(--ink)}
 .flist.oc li.contra b{text-decoration:line-through;text-decoration-color:rgba(168,64,47,.6)}
 .rt.contra{border:1px solid #a8402f;background:#a8402f;color:#fff}
+
+.arrbox{margin:4px 0 10px;padding:10px 12px;border:1px solid #d9c9a3;border-left:4px solid #8a5a2b;border-radius:10px;background:#fbf6ea}
+.arrbox.probable,.arrbox.compiled{border-left-style:dashed}
+.arrhd{display:flex;flex-wrap:wrap;align-items:center;gap:6px;color:var(--navy)}
+.arrhd .ico{width:16px;height:16px;color:#8a5a2b}
+.arrbox dl{display:grid;grid-template-columns:auto 1fr;gap:3px 12px;margin:8px 0 0;font-size:13px}
+.arrbox dl>div{display:contents}.arrbox dt{color:#7b6f55;font-size:11px;text-transform:uppercase;letter-spacing:.06em;padding-top:2px}.arrbox dd{margin:0}
+.arrbox .arrn{margin:8px 0 0;font-size:13px;line-height:1.45}
+
+.badge-i.dashed{background:transparent!important;color:#8a5a2b!important;border:1.5px dashed #8a5a2b;box-shadow:none}
+.pill2.dashed{border-style:dashed}
+.arrbox.dashed{border-style:dashed;border-left:4px dashed #8a5a2b;background:#fdfaf2}
+.arrbox.dashed .arrhd b{font-weight:500}
+.orgbox{margin:4px 0 10px;padding:9px 12px;border:1px dashed #c9b68c;border-radius:10px;background:#fdfaf2;font-size:14px}
+.orgbox.proven{border-style:solid}
+.lsbox{margin:12px 0;padding:10px 12px;border-radius:10px;background:#f1ece0;border:1px solid #d9cfb6;font-size:13px;line-height:1.45}
+.lsbox h5{display:flex;align-items:center;gap:6px;margin:0 0 4px;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#6b6250}
+.lsbox h5 .ico{width:14px;height:14px}
+.lsbox p{margin:3px 0}.lsbox p small{display:inline-block;min-width:96px;color:#7b6f55;font-size:11px;text-transform:uppercase;letter-spacing:.05em}

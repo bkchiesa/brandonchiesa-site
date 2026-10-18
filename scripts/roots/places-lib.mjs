@@ -89,6 +89,14 @@ export function extractPlaces(p, overrides = {}) {
   if (p.burial && typeof p.burial === "object") add("buried", [p.burial.cemetery, p.burial.place].filter(isStr).join(", ") || p.burial.place, yearOf(p.burial.date) || yearOf(p.death?.date));
   else if (isStr(p.burial)) add("buried", p.burial, yearOf(p.death?.date));
 
+  // structured arrival: the origin ("from") and the arrival port; when present it replaces the free-text scan below
+  const A = p.arrival && typeof p.arrival === "object" ? p.arrival : null;
+  if (A) {
+    const ay = A.year != null && A.year !== "" && Number.isFinite(Number(A.year)) ? Number(A.year) : yearOf(A.date);
+    const fromK = isStr(A.ship) || PORTS.test(cleanPlace(A.from || "").split(",")[0].trim()) ? "departed" : "emigrated";
+    if (isStr(A.from)) add(fromK, A.from, ay, null);
+    if (isStr(A.port)) add("arrived", A.port, ay, null);
+  }
   // free text: arrivals, departures and military posts
   const texts = [];
   for (const [k, v] of Object.entries(p)) if (/^(facts|highlights)/.test(k) && Array.isArray(v)) for (const f of v) texts.push(typeof f === "string" ? f : f?.fact || "");
@@ -99,15 +107,15 @@ export function extractPlaces(p, overrides = {}) {
   const isImm = (t) => /\b(manifest|passenger|immigra|emigra|ellis island|steerage|on the s\.?s\.?|aboard|steamship|naturaliz)\b/i.test(t) || /\barrived\b.*\bon\b.*\bfrom\b/i.test(t);
   for (const t of texts) {
     const y = yearOf(t);
-    if (/\barriv|\blanded\b/i.test(t) && isImm(t)) {
+    if (!A && /\barriv|\blanded\b/i.test(t) && isImm(t)) {
       for (const m of t.matchAll(ARRIVE_RE)) { let pl = m[1].replace(/\s+(on|from|in|at|aboard)$/, ""); if (PORTS.test(pl) || /new york/i.test(pl)) addOnce("arrived", /^new york/i.test(pl) && y && ((y >= 1892 && y <= 1896) || (y >= 1901 && y <= 1954)) ? "Ellis Island, New York" : pl, y, t); }
       for (const m of t.matchAll(FROM_RE)) if (PORTS.test(m[1])) addOnce("departed", PORT_NAMES[m[1].toLowerCase()] || m[1], y, null);
     }
-    if (/ellis island/i.test(t)) addOnce("arrived", "Ellis Island, New York", y, null);
+    if (!A && /ellis island/i.test(t)) addOnce("arrived", "Ellis Island, New York", y, null);
     if (MILTEXT.test(t)) milScan(t, y);
   }
   // sources: an Ellis Island manifest citation is evidence of the arrival port
-  for (const s of p.sources || []) if (isStr(s) && /ellis island|statueofliberty\.org/i.test(s) && /manifest|passenger|arriv/i.test(s)) addOnce("arrived", "Ellis Island, New York", yearOf(s), null);
+  if (!A) for (const s of p.sources || []) if (isStr(s) && /ellis island|statueofliberty\.org/i.test(s) && /manifest|passenger|arriv/i.test(s)) addOnce("arrived", "Ellis Island, New York", yearOf(s), null);
   for (const t of mil) milScan(t, yearOf(t));
   function milScan(t, y) {
     const near = (m) => t.slice(m.index, m.index + m[0].length + 50);

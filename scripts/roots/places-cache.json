@@ -974,6 +974,19 @@
   "kind": "cemetery",
   "at": "2026-10-18"
  },
+ "landisacq, orne, normandy, france": {
+  "raw": "Landisacq, Orne, Normandy, France",
+  "q": "Landisacq, Orne, Normandy, France",
+  "status": "ok",
+  "lat": 48.75648,
+  "lon": -0.64984,
+  "prec": "exact",
+  "matched": "Landisacq, Orne, Normandy, France",
+  "osm": "relation/1266328",
+  "display": "Landisacq, Argentan, Orne, Normandy, Metropolitan France, 61100, France",
+  "kind": "village",
+  "at": "2026-10-18"
+ },
  "lawrenceville, brunswick county, virginia": {
   "raw": "Lawrenceville, Brunswick Co., VA",
   "q": "Lawrenceville, Brunswick County, Virginia",

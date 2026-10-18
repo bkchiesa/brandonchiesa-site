@@ -206,6 +206,7 @@ const FILTERS = {
 function badgesFor(p) {
   const out = [];
   if (p.imm) out.push(`<span class="badge-i" title="Immigrant">${I.ship}</span>`);
+  else if (p.immC) out.push(`<span class="badge-i dashed" title="Immigrant? compiled only">${I.ship}</span>`);
   for (const w of (p.wars || []).slice(0, 2)) { const W = WAR[w] || WAR.service; out.push(`<span class="badge-i ${W.cls}" title="${esc(W.label)}">${I[W.icon]}</span>`); }
   if (p.jt) out.push(`<span class="badge-i jt" title="Jamestown line">${I.crown}</span>`);
   if (p.cfm) out.push(`<span class="badge-i cfm" title="Confirmed by Brandon">${I.check}</span>`);
@@ -256,7 +257,7 @@ function searchBox(id) { return `<label>${I.search}<input id="${id}" type="searc
 function legendHTML() {
   return `<button class="x" aria-label="Close key">${I.close}</button>
   <span><span class="sw direct"></span>Direct line</span><span><span class="sw"></span>Proven</span><span><span class="sw probable"></span>Probable / index</span><span><span class="sw compiled"></span>Compiled tree</span><span><span class="sw hypothesis"></span>Hypothesis</span><span><span class="sw family"></span>Family-provided</span><span><span class="sw claim"></span>Family claim</span><span><span class="sw bsolid"></span><span class="badge-i cfm sm">${I.check}</span>Confirmed by Brandon</span><span><span class="sw living"></span>Living</span><span class="sep"></span>
-  <span><span class="badge-i">${I.ship}</span>Immigrant</span><span><span class="badge-i">${I.star}</span>WWI / WWII</span><span><span class="badge-i cw">${I.swords}</span>Civil War</span><span><span class="badge-i rev">${I.flag}</span>Rev. War / 1812</span>${D.people.some((p) => p.jt) ? `<span><span class="badge-i jt">${I.crown}</span>Jamestown</span>` : ""}`;
+  <span><span class="badge-i">${I.ship}</span>Immigrant</span>${D.people.some((p) => p.immC && !p.imm) ? `<span><span class="badge-i dashed">${I.ship}</span>Immigrant? compiled only</span>` : ""}<span><span class="badge-i">${I.star}</span>WWI / WWII</span><span><span class="badge-i cw">${I.swords}</span>Civil War</span><span><span class="badge-i rev">${I.flag}</span>Rev. War / 1812</span>${D.people.some((p) => p.jt) ? `<span><span class="badge-i jt">${I.crown}</span>Jamestown</span>` : ""}`;
 }
 function partnerId() { return P[FOCAL].sp.find((s) => LAYOUT && LAYOUT.pos[s]); }
 function drawTree() {
@@ -478,14 +479,16 @@ function applyFilter() {
   }
   const tags = $("#tags"); let th = "";
   if (f && state.filter === "war") for (const id of hl) { const p = P[id], v = LAYOUT.pos[id]; const w = WAR[p.wars[0]] || WAR.service; th += `<div class="tag" style="left:${X(v.x)}px;top:${Y(v.g) + CH + 6}px">${I[w.icon]}${esc(w.short)}</div>`; }
-  if (f && state.filter === "imm") for (const id of hl) { const p = P[id], v = LAYOUT.pos[id]; const y = immYear(p); th += `<div class="tag" style="left:${X(v.x)}px;top:${Y(v.g) + CH + 6}px">${I.ship}${y ? "Arrived " + y : "Immigrant"}</div>`; }
+  if (f && state.filter === "imm") for (const id of hl) { const p = P[id], v = LAYOUT.pos[id]; const y = immYear(p); th += `<div class="tag" style="left:${X(v.x)}px;top:${Y(v.g) + CH + 6}px">${I.ship}${y ? "Arrived " + y : p.arr && arrShort(p.arr) ? "Arrived " + esc(arrShort(p.arr)) : "Immigrant"}</div>`; }
   if (tags) tags.innerHTML = th;
   for (const c of document.querySelectorAll(".chip[data-f]")) c.classList.toggle("on", c.dataset.f === state.filter);
   const t = $("#toast");
   if (t) t.innerHTML = f ? `<div class="toast">${ic("filter", "color:#dcc58f")}<span><b>${f.label}</b> · ${hl.size} highlighted${state.filter === "proven" ? "" : ", the rest dimmed"}</span><button id="clearF">Clear</button></div>` : "";
   const cf = $("#clearF"); if (cf) cf.onclick = () => setFilter(null);
 }
+function arrShort(A) { return A && A.date ? A.date.replace(/\s*[(;].*$/, "").trim() : null; }
 function immYear(p) {
+  if (p.arr && p.arr.y) return p.arr.y;
   const e = (p.ev || []).find((e) => /arriv|sail|landed|manifest|ellis/i.test(e.t)); if (e) return e.y;
   const t = (p.hl || []).concat((p.facts || []).map((f) => f.t)).join(" "); const m = t.match(/(?:arrived|landing|landed)[^.]*?\b(1[6-9]\d\d)\b/i); return m ? +m[1] : null;
 }
@@ -584,6 +587,7 @@ function openPerson(id) {
     <div class="pills">${locked ? `<span class="status living">${ic("lock")}Living</span>` : `<span class="status ${p.st}">${p.st === "proven" ? ic("check") : ""}${RATING_LABEL[p.st] || esc(p.stRaw || "")}</span>`}
     ${!locked && p.cfm ? `<span class="pill2 cfm"><span class="badge-i cfm">${I.check}</span>Confirmed by Brandon${p.cfm.date ? " · " + esc(p.cfm.date) : ""}</span>` : ""}
     ${!locked && p.imm ? `<span class="pill2"><span class="badge-i">${I.ship}</span>Immigrant${immYear(p) ? " · " + immYear(p) : ""}</span>` : ""}
+    ${!locked && !p.imm && p.immC ? `<span class="pill2 dashed"><span class="badge-i dashed">${I.ship}</span>Immigrant? compiled only</span>` : ""}
     ${!locked ? (p.wars || []).map((w) => `<span class="pill2"><span class="badge-i ${W_(w).cls}">${I[W_(w).icon]}</span>${W_(w).label}</span>`).join("") : ""}
     ${p.jt ? `<span class="pill2"><span class="badge-i jt">${I.crown}</span>Jamestown line${p.jtR && !locked ? " · " + esc(p.jtR) : ""}</span>` : ""}
     ${!locked && p.occ && p.occ[0] ? `<span class="pill3" title="${esc(p.occ[0].t)}">${esc(String(p.occ[0].t).split(/[;(]/)[0].slice(0, 48))}</span>` : ""}</div>
@@ -597,7 +601,8 @@ function openPerson(id) {
   } else {
     const facts = [];
     if (p.b && (p.b.d || p.b.p)) facts.push(["BORN", p.b.d, p.b.p]);
-    const arr = p.imm && (p.ev || []).find((e) => /arriv|landed|sail/i.test(e.t));
+    const arr = p.arr ? null : p.imm && (p.ev || []).find((e) => /arriv|landed|sail/i.test(e.t));
+    if (p.arr) facts.push(["ARRIVED", p.arr.y ? String(p.arr.y) : arrShort(p.arr) || "Date unknown", [p.arr.ship, p.arr.port].filter(Boolean).join(" · ")]);
     if (arr) facts.push(["ARRIVED", String(arr.y), arr.t.length > 80 ? arr.t.slice(0, 78) + "…" : arr.t]);
     if (p.d && (p.d.d || p.d.p)) facts.push(["DIED", p.d.d, p.d.p]);
     if (p.bur && (p.bur.place || p.bur.date)) facts.push(["BURIED", p.bur.date, [p.bur.place, p.bur.plot].filter(Boolean).join(", ")]);
@@ -611,6 +616,15 @@ function openPerson(id) {
       for (const s of featured) h += `<button class="stcard big" data-story="${esc(s.slug)}"><div class="k">${esc(s.kicker)}</div><h4>${esc(s.title)}</h4><p>${esc(s.summary)}</p><p style="margin-top:6px;font-weight:600;color:var(--olive)">Read the story ›</p></button>`;
       for (const s of stories) h += `<div class="quote">${s.title ? `<h5>${esc(s.title)}${ratingTag(s.r)}</h5>` : ""}${String(s.t).split("\n").map((x) => `<p>${esc(x)}</p>`).join("")}${s.s ? `<div class="cite">Source: ${linkify(s.s)}</div>` : ""}</div>`;
     }
+    if (p.arr) {
+      const A = p.arr, row = (k, v) => (v ? `<div><dt>${k}</dt><dd>${esc(v)}</dd></div>` : "");
+      h += `<div class="sec">Arrival</div><div class="arrbox ${A.r || ""}"><div class="arrhd">${I.ship}<b>${A.y ? "Arrived " + A.y : arrShort(A) ? "Arrived " + esc(arrShort(A)) : "Arrival year unknown"}${A.port ? " · " + esc(A.port) : ""}</b>${ratingTag(A.r)}</div>
+        <dl>${row("Date", A.date)}${row("Ship", A.ship)}${row("From", A.from)}${row("Port", A.port)}</dl>
+        ${A.n ? `<p class="arrn">${esc(A.n)}</p>` : ""}${A.s ? `<div class="cite">Source: ${linkify(A.s)}</div>` : ""}</div>`;
+    }
+    if (p.immC) h += `<div class="sec">Immigrant? (compiled only)</div><div class="arrbox dashed"><div class="arrhd"><span class="badge-i dashed">${I.ship}</span><b>${esc(p.immC.t)}</b>${ratingTag(p.immC.r)}</div>${p.immC.s ? `<div class="cite">Source: ${linkify(p.immC.s)}</div>` : ""}</div>`;
+    if (p.org) h += `<div class="sec">Origin</div><div class="orgbox ${p.org.r || ""}"><b>${esc(p.org.p)}</b>${ratingTag(p.org.r)}${p.org.s ? `<div class="cite">Source: ${linkify(p.org.s)}</div>` : ""}</div>`;
+    if (p.ls) h += `<div class="lsbox"><h5>${ic("doc")}Where this line stops${ratingTag(p.ls.r)}</h5>${p.ls.why ? `<p>${esc(p.ls.why)}</p>` : ""}${p.ls.lb ? `<p><small>Likely born</small> ${esc(p.ls.lb)}</p>` : ""}${p.ls.e ? `<p><small>Earliest record</small> ${esc(p.ls.e)}</p>` : ""}${p.ls.s ? `<div class="cite">Source: ${linkify(p.ls.s)}</div>` : ""}</div>`;
     const tl = (p.ev || []).map((e) => `<div class="ev ${e.r || ""}${e.big ? " big" : ""}"><div class="y">${e.y}</div><span class="d"></span><div class="t">${e.k ? `<b>${esc(e.k)}</b> · ` : ""}${esc(e.t)}${e.r && e.r !== "proven" && !e.big ? ratingTag(e.r) : ""}</div></div>`).join("");
     h += mediaHTML(p);
     h += `<div class="sec">Places</div><div class="mapbox wide" id="pmap"><svg viewBox="0 0 560 300" role="img" aria-label="Map of places in ${esc(p.n)}’s life"></svg><div class="mapcap" id="pmapcap">Loading map…</div></div><ol class="placelist" id="pmaplist"></ol>`;
@@ -647,7 +661,7 @@ function openPerson(id) {
 // Pins come from the build (geocoded once and cached); the basemap is Natural Earth, loaded on first use.
 const PLACE_KIND = {
   born: ["Born", "#5d6b3b"], baptised: ["Baptised", "#5d6b3b"], married: ["Married", "#b0893c"], lived: ["Lived", "#1e2d47"], worked: ["Worked", "#1e2d47"],
-  departed: ["Sailed from", "#8a5a2b"], arrived: ["Arrived", "#8a5a2b"], served: ["Military service", "#7a2f2f"], died: ["Died", "#2a2924"], buried: ["Buried", "#6b6250"],
+  departed: ["Sailed from", "#8a5a2b"], emigrated: ["Came from", "#8a5a2b"], arrived: ["Arrived", "#8a5a2b"], served: ["Military service", "#7a2f2f"], died: ["Died", "#2a2924"], buried: ["Buried", "#6b6250"],
 };
 let BASEMAP = null;
 async function loadBasemap() {
@@ -710,6 +724,12 @@ async function renderMap(svgEl, pins, opts = {}) {
     const ax = X_(a.lon), ay = Y_(a.lat), bx = X_(b.lon), byy = Y_(b.lat); const mx = (ax + bx) / 2, my = Math.min(ay, byy) - Math.hypot(bx - ax, byy - ay) * 0.18;
     svg += `<path d="M${ax.toFixed(1)},${ay.toFixed(1)} Q${mx.toFixed(1)},${my.toFixed(1)} ${bx.toFixed(1)},${byy.toFixed(1)}" fill="none" stroke="#8a7a55" stroke-width="1.2" stroke-dasharray="4 3" opacity=".7"/>`;
   }
+  if (opts.voyage) {
+    const [a, b] = opts.voyage, ax = X_(a.lon), ay = Y_(a.lat), bx = X_(b.lon), byy = Y_(b.lat), dd = Math.hypot(bx - ax, byy - ay);
+    if (dd > 4) { const mx = (ax + bx) / 2, my = Math.min(ay, byy) - dd * 0.22;
+      svg += `<path class="voyage" d="M${ax.toFixed(1)},${ay.toFixed(1)} Q${mx.toFixed(1)},${my.toFixed(1)} ${bx.toFixed(1)},${byy.toFixed(1)}" fill="none" stroke="#8a5a2b" stroke-width="2" opacity=".85" marker-end="url(#vy-arr)"/>`;
+      svg = `<defs><marker id="vy-arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="#8a5a2b"/></marker></defs>` + svg; }
+  }
   const drawn = [], placed = [], labs = [];
   const order = pins.map((q, i) => i).sort((a, b) => (opts.size ? opts.size(pins[b]) - opts.size(pins[a]) : 0));
   let pinSvg = "", labSvg = "";
@@ -761,7 +781,8 @@ async function drawPersonMap(p) {
   const nomap = (p.plx || []).length ? `<li class="nomap"><span class="num ap" style="--c:#8a7a55">?</span><span>Not yet on the map: ${esc(p.plx.map((x) => x.l).join(" · "))}</span></li>` : "";
   if (!pins.length) { box.classList.add("empty"); box.querySelector("svg").style.display = "none"; $("#pmapcap").textContent = "No places recorded for this person yet."; if (list) list.innerHTML = nomap; return; }
   await loadBasemap(); if (state.sel !== p.id) return;
-  await renderMap(box.querySelector("svg"), pins, { seq: p.pl, onPin: (i) => { const li = list && list.querySelector(`[data-pin="${i}"]`); if (li) { li.classList.add("hl"); li.scrollIntoView({ block: "nearest", behavior: "smooth" }); setTimeout(() => li.classList.remove("hl"), 1400); } } });
+  const vf = (p.pl || []).find((s) => s.k === "departed" || s.k === "emigrated"), vt = (p.pl || []).find((s) => s.k === "arrived");
+  await renderMap(box.querySelector("svg"), pins, { seq: p.pl, voyage: p.arr && vf && vt ? [vf, vt] : null, onPin: (i) => { const li = list && list.querySelector(`[data-pin="${i}"]`); if (li) { li.classList.add("hl"); li.scrollIntoView({ block: "nearest", behavior: "smooth" }); setTimeout(() => li.classList.remove("hl"), 1400); } } });
   $("#pmapcap").textContent = pins.length === 1 ? "1 place" : `${pins.length} places, numbered in the order of the records`;
   if (list) list.innerHTML = pins.map((q, i) => q.items.map((s, j) => { const K = PLACE_KIND[s.k] || [s.k, "#a8402f"];
     return `<li data-pin="${j ? "" : i}"><span class="num${s.a ? " ap" : ""}" style="--c:${K[1]}">${j ? "" : i + 1}</span><span><b>${esc(K[0])}</b>${s.y ? " " + s.y : ""} · ${esc(s.l)}${precNote(s)}${s.n ? ` <small>· ${esc(s.n)}</small>` : ""} <a href="${osmLink(s)}" target="_blank" rel="noopener nofollow" class="osm">map ↗</a></span></li>`; }).join("")).join("") + nomap;
@@ -784,7 +805,7 @@ async function openPlaces(region) {
   openLayer("places", h, "wide"); setTab("places");
   document.querySelectorAll("[data-region]").forEach((b) => b.addEventListener("click", () => openPlaces(b.dataset.region)));
   const people = (q) => [...new Set(q.items.map((s) => s.pid))];
-  const drawn = await renderMap($("#fmap svg"), pins, { H: 360, bounds: cur[1] || undefined, count: (q) => people(q).length, size: (q) => Math.min(13, 6 + Math.sqrt(people(q).length) * 1.6), color: (q) => (q.items.some((s) => s.k === "served") ? PLACE_KIND.served[1] : q.items.some((s) => s.k === "arrived" || s.k === "departed") ? PLACE_KIND.arrived[1] : "#5d6b3b"),
+  const drawn = await renderMap($("#fmap svg"), pins, { H: 360, bounds: cur[1] || undefined, count: (q) => people(q).length, size: (q) => Math.min(13, 6 + Math.sqrt(people(q).length) * 1.6), color: (q) => (q.items.some((s) => s.k === "served") ? PLACE_KIND.served[1] : q.items.some((s) => s.k === "arrived" || s.k === "departed" || s.k === "emigrated") ? PLACE_KIND.arrived[1] : "#5d6b3b"),
     label: (q) => q.items.slice().sort((a, b) => a.l.length - b.l.length)[0].l,
     onPin: (i) => showWho(pins[i]) });
   $("#fmapcap").textContent = `${drawn.length} of ${pins.length} places in this view · numbers show how many people`;
