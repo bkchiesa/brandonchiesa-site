@@ -97,6 +97,7 @@ async function main() {
     const people = JSON.parse(await readFile(f, "utf8"));
     const per = treePlaces(people, ov);
     for (const p of people) for (const x of per.get(p.id)) {
+      if (Number.isFinite(x.lat) && Number.isFinite(x.lon)) continue; // coordinates given in the record
       const isPub = !living(p);
       const cur = need.get(x.key);
       if (!cur) need.set(x.key, { raw: x.raw, isPub }); else if (isPub) cur.isPub = true;

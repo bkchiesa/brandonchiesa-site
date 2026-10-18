@@ -56,7 +56,7 @@ export function extractPlaces(p, overrides = {}) {
   const out = [];
   const home = regionOf([p.birth?.place, p.death?.place].join(" "));
   const fullPlaces = [p.birth?.place, p.death?.place, p.baptism?.place, ...(p.residences || []).map((r) => r.place)].filter(isStr).map(cleanPlace).filter((x) => x.includes(","));
-  const add = (k, raw, y, ctx) => {
+  const add = (k, raw, y, ctx, extra) => {
     if (!isStr(raw)) return;
     let c = cleanPlace(raw);
     if (c.length < 3 || /^(unknown|not stated|none|n\/a)$/i.test(c) || /\b(before|after|died|between)\b/i.test(c)) return;
@@ -67,14 +67,20 @@ export function extractPlaces(p, overrides = {}) {
     const isRegion = REGION_NAMES.test(c);
     if (ctx === undefined && !isRegion && !c.includes(",")) { const full = fullPlaces.find((f) => f.toLowerCase().startsWith(c.toLowerCase() + ",")); if (full) c = full; else if (home && !new RegExp(home, "i").test(c)) c += ", " + home; }
     if (ctx !== undefined && ctx !== null && !isRegion && !c.includes(",")) { const city = CITY_HINTS.find(([re]) => re.test(c)); const r = (city && city[1]) || regionOf(ctx) || home; if (r && !new RegExp(r, "i").test(c)) c += ", " + r; }
-    out.push({ k, raw: c, y: y || null });
+    out.push({ k, raw: c, y: y || null, ...(extra || {}) });
   };
   // death place strings sometimes carry the burial too: "Woodside, Queens (buried Calvary Cemetery ...)"
   const splitBur = (s) => { const m = String(s || "").match(/^(.*?)[,;(\s]*\bburied\s+(?:in\s+|at\s+)?(.+)$/i); return m ? [m[1], m[2]] : [s, null]; };
   add("born", p.birth?.place, yearOf(p.birth?.date));
   if (p.baptism && typeof p.baptism === "object") add("baptised", p.baptism.place, yearOf(p.baptism.date));
   if (p.marriage && typeof p.marriage === "object") add("married", p.marriage.place, yearOf(p.marriage.date));
-  for (const r of p.residences || []) add("lived", r.place, yearOf(r.date));
+  // residences may carry their own coordinates ({place, lat, lon, when, rating, source}); those are used as given
+  for (const r of p.residences || []) {
+    if (!r || typeof r !== "object") continue;
+    const lat = Number(r.lat), lon = Number(r.lon);
+    const given = r.lat != null && r.lon != null && Number.isFinite(lat) && Number.isFinite(lon) && Math.abs(lat) <= 90 && Math.abs(lon) <= 180 ? { lat, lon } : null;
+    add("lived", r.place, yearOf(r.date || r.when || r.year), undefined, given ? { ...given, note: isStr(r.when) && !yearOf(r.when) ? r.when : undefined } : isStr(r.when) && !yearOf(r.when) ? { note: r.when } : undefined);
+  }
   for (const o of p.occupations || []) add("worked", o.place, yearOf(o.date));
   if (isStr(p.residence_at_death)) add("lived", p.residence_at_death, yearOf(p.death?.date));
   const [dp, bp] = splitBur(p.death?.place);

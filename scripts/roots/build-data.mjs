@@ -188,7 +188,8 @@ function normalize(p, tree) {
   const stories = (p.stories || []).map((s) => ({ title: s.title, t: s.text, r: normRating(s.confidence), s: s.citation }));
   const occs = (p.occupations || []).map((o) => ({ t: o.occupation, y: o.date, p: o.place, r: normRating(o.confidence), s: o.citation }));
   if (isStr(p.occupation)) occs.push({ t: p.occupation, r: null });
-  const res = (p.residences || []).map((o) => ({ p: o.place, y: o.date, t: o.detail, r: normRating(o.confidence), s: o.citation }));
+  const famSrc = (x) => (isStr(x) ? x.replace(/Family knowledge\s*\([^)]*\)/gi, "Family knowledge") : x);
+  const res = (p.residences || []).filter((o) => o && typeof o === "object").map((o) => ({ p: o.place, y: o.date || o.when || o.year || null, t: o.detail || o.note, r: normRating(o.confidence || o.rating), s: famSrc(o.citation || o.source) }));
   const news = (p.newspaper_mentions || []).map((o) => ({ paper: o.paper, y: o.date, t: o.text, r: normRating(o.confidence), s: o.citation }));
   const sources = (p.sources || []).filter(isStr).map((s) => ({ t: s, r: ratingInText(s) }));
   let mil = null;
@@ -298,14 +299,18 @@ function placesFor(list, pc, missing) {
   for (const x of list || []) {
     const hand = pc.coords[x.key], g = pc.cache[x.key];
     const lab = cleanText(x.raw);
-    if (hand) pl.push({ k: x.k, l: lab, y: x.y, lat: hand.lat, lon: hand.lon, a: hand.approx || 0, m: hand.m || (hand.approx === 2 ? "area" : null), n: x.note || hand.note || null });
+    if (Number.isFinite(x.lat) && Number.isFinite(x.lon)) pl.push({ k: x.k, l: lab, y: x.y, lat: x.lat, lon: x.lon, a: 0, m: null, n: x.note || null });
+    else if (hand) pl.push({ k: x.k, l: lab, y: x.y, lat: hand.lat, lon: hand.lon, a: hand.approx || 0, m: hand.m || (hand.approx === 2 ? "area" : null), n: x.note || hand.note || null });
     else if (g && g.status === "ok") {
       const area = AREA_KINDS.has(g.kind) || g.prec === "region";
       pl.push({ k: x.k, l: lab, y: x.y, lat: g.lat, lon: g.lon, a: area ? 2 : g.prec === "exact" ? 0 : 1, m: area ? (g.kind === "county" ? "county" : g.kind === "country" ? "country" : "state") : g.prec === "exact" ? null : g.matched, n: x.note || null });
     }
     else { plx.push({ k: x.k, l: lab, y: x.y }); missing.add(x.key); }
   }
-  pl.sort((a, b) => (a.y || 9999) - (b.y || 9999) || KIND_ORDER[a.k] - KIND_ORDER[b.k]);
+  // undated homes sit between the first and last dated places rather than after the burial
+  const ys = pl.map((x) => x.y).filter(Boolean), mid = ys.length ? (Math.min(...ys) + Math.max(...ys)) / 2 : 9999;
+  const yk = (x) => x.y || (x.k === "lived" || x.k === "worked" ? mid : x.k === "born" ? -1 : 9999);
+  pl.sort((a, b) => yk(a) - yk(b) || KIND_ORDER[a.k] - KIND_ORDER[b.k]);
   return { pl, plx };
 }
 
