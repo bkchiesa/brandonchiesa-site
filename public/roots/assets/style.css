@@ -427,3 +427,17 @@ body:has(#layer .panel) .edge{display:none}
 .lsbox h5{display:flex;align-items:center;gap:6px;margin:0 0 4px;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#6b6250}
 .lsbox h5 .ico{width:14px;height:14px}
 .lsbox p{margin:3px 0}.lsbox p small{display:inline-block;min-width:96px;color:#7b6f55;font-size:11px;text-transform:uppercase;letter-spacing:.05em}
+
+.shipph{margin:10px 0 6px}
+.shipph img{display:block;width:100%;height:auto;border-radius:8px;border:1px solid #d9c9a3;background:#eee6d3}
+.shipph figcaption{margin-top:5px;font-size:11.5px;line-height:1.4;color:#6b6250}
+.shipph .lic{display:inline-block;margin-left:2px;padding:0 6px;border-radius:999px;background:#ece3cd;color:#5a4a2a;font-size:10.5px}
+.shipph small{color:#8a7d60}
+.shipnone{display:flex;gap:8px;align-items:flex-start;margin:10px 0 4px;padding:8px 10px;border:1px dashed #c9b68c;border-radius:8px;font-size:12.5px;color:#6b6250}
+.shipnone .ico{width:16px;height:16px;flex:none;color:#8a5a2b;margin-top:2px}
+.passage{margin:8px 0 0;padding-top:8px;border-top:1px dashed #d9c9a3;display:grid;gap:6px;font-size:13px}
+.passage .pv{display:grid;grid-template-columns:110px 1fr;gap:8px}
+.passage .pv>small{color:#7b6f55;font-size:11px;text-transform:uppercase;letter-spacing:.06em;padding-top:2px}
+.passage .cite{display:block;margin-top:2px}
+.rt.est{border:1px solid #8a5a2b;background:#8a5a2b;color:#fff}
+@media (max-width:600px){.passage .pv{grid-template-columns:1fr;gap:1px}}

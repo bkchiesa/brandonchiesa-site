@@ -20,6 +20,7 @@ import path from "node:path";
 import { webcrypto as crypto } from "node:crypto";
 import { existsSync } from "node:fs";
 import { copyFile } from "node:fs/promises";
+import { spawnSync } from "node:child_process";
 import { treePlaces } from "./places-lib.mjs";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
@@ -225,16 +226,48 @@ function originClaims(p) {
   }).filter(Boolean);
 }
 // arrival: {year, port, ship, from, date, note, rating, source}; null or empty fields are dropped
-function arrivalOf(p) {
+// Ship photos: only public-domain / CC0 local files are copied, resized and re-encoded into public/roots/media/ships/.
+const SHIP_DIR = path.join(REPO, "public/roots/media/ships");
+const PD_RE = /\b(public domain|PD-|CC0)\b/i;
+const shipDone = new Map();
+function shipPhoto(ph, tree) {
+  if (!ph || typeof ph !== "object" || !isStr(ph.local_file) || !PD_RE.test(String(ph.license || ""))) return null;
+  const base = path.dirname(tree.file), src = path.resolve(base, ph.local_file);
+  if (!src.startsWith(base + path.sep) || !existsSync(src)) return null;
+  const slug = path.basename(src).replace(/\.[^.]+$/, "").toLowerCase().replace(/[^a-z0-9-]+/g, "-");
+  if (!shipDone.has(slug)) {
+    const r = spawnSync("python3", ["-c", `import sys,json
+from PIL import Image, ImageOps
+src,out=sys.argv[1],sys.argv[2]
+im=ImageOps.exif_transpose(Image.open(src)).convert("RGB")
+def save(w,fn,q):
+    c=im.copy(); c.thumbnail((w,w*2)); c.save(fn,"JPEG",quality=q,optimize=True,progressive=True); return c.size
+a=save(960,out+".jpg",78); b=save(240,out+"-th.jpg",72)
+print(json.dumps({"w":a[0],"h":a[1]}))`, src, path.join(SHIP_DIR, slug)], { encoding: "utf8" });
+    if (r.status !== 0) { console.warn("ship photo failed:", path.basename(src)); shipDone.set(slug, null); }
+    else shipDone.set(slug, JSON.parse(r.stdout.trim().split("\n").pop()));
+  }
+  const dim = shipDone.get(slug); if (!dim) return null;
+  const t = (v) => (isStr(v) ? cleanText(v) : null);
+  return { src: `media/ships/${slug}.jpg`, th: `media/ships/${slug}-th.jpg`, w: dim.w, h: dim.h, cr: t(ph.credit), lic: t(ph.license), pg: isStr(ph.source_page) ? ph.source_page : null, n: t(ph.note) };
+}
+function arrivalOf(p, tree) {
   const a = p.arrival;
   if (!a || typeof a !== "object") return null;
   // cleanText drops internal research-file references; tidy the punctuation they leave behind
-  const str = (v) => (isStr(v) && !/^(unknown|null|n\/a|none)$/i.test(v.trim()) ? cleanText(v).replace(/(?:[;,]\s*(?:see|and|also)?\s*)+$/i, "").replace(/[;,]\s*(?:see|and)\s*([.)])/gi, "$1").trim() || null : null);
+  const str = (v) => (isStr(v) && !/^(unknown|null|n\/a|none)$/i.test(v.trim()) ? cleanText(v.replace(/\s*\(?\b(?:see|copy|copies)\b:?\s*(?:fs-shots|ship-photos)\/[^\s)]*\)?\.?/gi, "").replace(/\s*\b(?:copy|copies):\s*(?=[.;)]|$)/gi, "")).replace(/(?:[;,]\s*(?:see|and|also)?\s*)+$/i, "").replace(/[;,]\s*(?:see|and)\s*([.)])/gi, "$1").trim() || null : null);
   // a null year stays null: "before 24 Apr 1704" is a latest date, not an arrival year
   // a year written as text ("by spring 1616 ...") is a date phrase, not a year
   const dateTxt = isStr(a.date) ? a.date : isStr(a.year) && !/^\d{4}$/.test(a.year.trim()) ? a.year : null;
   const y = a.year != null && a.year !== "" && Number.isFinite(Number(a.year)) ? Number(a.year) : isStr(dateTxt) && !/^\s*(before|by|bef\.?)\b/i.test(dateTxt) ? yearOf(dateTxt) || null : null;
   const out = { y, date: str(dateTxt), ship: str(a.ship), from: str(a.from), port: str(a.port), r: normRating(a.rating || a.confidence) || null, n: str(a.note || a.notes), s: str(a.source || a.citation) };
+  // passage details: {value, rating, source}; a fare given as "estimate: ..." is flagged as an estimate
+  const vrs = (o) => { if (!o) return null; if (isStr(o)) o = { value: o }; if (typeof o !== "object" || !str(o.value)) return null; return { v: str(o.value), r: normRating(o.rating || o.confidence) || null, s: str(o.source || o.citation) }; };
+  out.cls = vrs(a.class || a.passenger_class);
+  const fare = vrs(a.fare);
+  if (fare) { const est = /^\s*(estimate|est\.|approx|roughly|about|c\.)/i.test(fare.v) || (fare.r && fare.r !== "proven"); fare.v = fare.v.replace(/^\s*estimate\s*[:\-]\s*/i, ""); fare.v = fare.v.charAt(0).toUpperCase() + fare.v.slice(1); if (est) fare.est = true; }
+  out.fare = fare; out.fareN = str(a.fare_note);
+  if (isStr(a.ship) && !/^\s*$/.test(a.ship)) { out.ph = !p._living ? shipPhoto(a.ship_photo, tree) : null; out.phN = str(a.ship_photo_note) || (a.ship_photo && !out.ph ? "Ship photo not shown." : null); }
   for (const k of Object.keys(out)) if (out[k] == null) delete out[k];
   return Object.keys(out).length ? out : null;
 }
@@ -287,7 +320,7 @@ function normalize(p, tree) {
   for (const o of occs) ev(yearOf(o.y), "Occupation", [o.t, o.p].filter(isStr).join(" · "), o.r);
   for (const o of res) ev(yearOf(o.y), "Lived at", [o.p, o.t].filter(isStr).join(" · "), o.r);
   for (const o of news) ev(yearOf(o.y), "In the paper", `${o.paper ? o.paper + ": " : ""}${o.t || ""}`, o.r);
-  const arr = arrivalOf(p);
+  const arr = arrivalOf(p, tree);
   const arrY = arr && (arr.y || yearOf(arr.date));
   if (arr && arrY) {
     const t = [arr.date && arr.date !== String(arr.y) ? arr.date : null, arr.ship ? "on " + arr.ship : null, arr.from ? "from " + arr.from : null, arr.port ? "at " + arr.port : null].filter(Boolean).join(" · ") || "Arrived";
@@ -517,6 +550,7 @@ async function main() {
       p._living = !!p.living || (by && by >= 1925 && !isStr(p.death?.date) && !isStr(p.death?.place));
     }
     const namesLiving = buildLivingMatchers(people, byId);
+    await mkdir(SHIP_DIR, { recursive: true });
     tree.flagImm = people.some((p) => typeof p.immigrant === "boolean" || (p.arrival && typeof p.arrival === "object"));
     const perPlaces = treePlaces(people, pc.ov);
     const pub = [], priv = {};
