@@ -383,3 +383,21 @@ body:has(#layer .panel) .edge{display:none}
 .rt.claim{border-style:dashed;border-color:#6a4c7a;color:#6a4c7a}
 .relto{font-family:var(--sans);font-size:12.5px;color:var(--muted);margin:2px 0 3px;line-height:1.3}
 .ruler.compact .g span{display:none}.ruler.compact .g b{font-size:15px}
+
+.card.bsolid{border-style:solid!important;border-width:1.5px}
+.sw.bsolid{border-style:solid;border-color:var(--navy2);border-width:1.5px}
+.badge-i.cfm{background:#2f6b4f;color:#fff}
+.badge-i.cfm.sm{width:15px;height:15px;margin:0 4px 0 -2px;box-shadow:none}.badge-i.cfm.sm .ico{width:10px;height:10px}
+.pill2.cfm{background:#e8f2ec;color:#2f6b4f}
+.cfmnote{display:flex;gap:10px;align-items:flex-start;margin:12px 0 0;padding:10px 12px;border:1px solid #b9d6c5;background:#f1f8f4;border-radius:10px;color:#24543d;font-size:13px;line-height:1.4}
+.cfmnote>.ico{width:16px;height:16px;flex:none;margin-top:2px}.cfmnote p{margin:3px 0 0}.cfmnote small{display:block;margin-top:4px;color:#5d7a69}
+
+/* edge chips v2: compact, translucent, parked in the gap between generation rows */
+.edge{gap:5px;max-width:190px;padding:3px 10px 3px 8px;min-height:24px;background:rgba(252,248,238,.82);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);border-color:rgba(201,169,95,.75);box-shadow:0 4px 12px -8px rgba(60,40,10,.6);font-size:11px;opacity:.9;transition:opacity .15s,background .15s}
+.edge span{flex-direction:row;align-items:baseline;gap:5px}
+.edge small{font-size:8.5px;letter-spacing:.6px}
+.edge em{font-style:normal;overflow:hidden;text-overflow:ellipsis}
+.edge:hover,.edge:focus-visible{opacity:1;background:#fcf8ee}
+.edge.tight{opacity:.75}
+.edge.l{left:80px}.edge.r{right:70px}
+@media (max-width:760px){.edge{max-width:132px;font-size:10.5px;padding:2px 8px 2px 6px;min-height:22px}.edge em{max-width:84px}.edge.l{left:6px}.edge.r{right:6px}}

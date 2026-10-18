@@ -93,7 +93,7 @@ export function extractPlaces(p, overrides = {}) {
   const texts = [];
   for (const [k, v] of Object.entries(p)) if (/^(facts|highlights)/.test(k) && Array.isArray(v)) for (const f of v) texts.push(typeof f === "string" ? f : f?.fact || "");
   for (const s of p.stories || []) texts.push(s.text || "");
-  const mil = Array.isArray(p.military) ? p.military.map((x) => (typeof x === "string" ? x : x && (x.fact || x.text))).filter(isStr) : p.military && typeof p.military === "object" ? [p.military.unit, p.military.campaigns, p.military.service_dates, p.military.service, p.military.notes].flat().filter(isStr) : [];
+  const mil = isStr(p.military) ? [p.military] : Array.isArray(p.military) ? p.military.map((x) => (typeof x === "string" ? x : x && (x.fact || x.text))).filter(isStr) : p.military && typeof p.military === "object" ? [p.military.unit, p.military.campaigns, p.military.service_dates, p.military.service, p.military.notes].flat().filter(isStr) : [];
   const seen = new Set();
   const addOnce = (k, raw, y, ctx) => { const key = k + "|" + placeKey(raw); if (seen.has(key)) return; seen.add(key); add(k, raw, y, ctx); };
   const isImm = (t) => /\b(manifest|passenger|immigra|emigra|ellis island|steerage|on the s\.?s\.?|aboard|steamship|naturaliz)\b/i.test(t) || /\barrived\b.*\bon\b.*\bfrom\b/i.test(t);

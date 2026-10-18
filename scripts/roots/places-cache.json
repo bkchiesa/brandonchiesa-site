@@ -298,6 +298,32 @@
   "kind": "village",
   "at": "2026-10-18"
  },
+ "caroline county, virginia": {
+  "raw": "Caroline County, Virginia",
+  "q": "Caroline County, Virginia",
+  "status": "ok",
+  "lat": 38.03203,
+  "lon": -77.36236,
+  "prec": "exact",
+  "matched": "Caroline County, Virginia",
+  "osm": "relation/2534169",
+  "display": "Caroline County, Virginia, United States",
+  "kind": "county",
+  "at": "2026-10-18"
+ },
+ "chaffins bluff": {
+  "raw": "Chaffin's Bluff",
+  "q": "Chaffin's Bluff",
+  "status": "ok",
+  "lat": 37.42434,
+  "lon": -77.39354,
+  "prec": "exact",
+  "matched": "Chaffin's Bluff",
+  "osm": "way/20299578",
+  "display": "Chaffin's Bluff Lane, Henrico County, Virginia, 23231, United States",
+  "kind": "road",
+  "at": "2026-10-18"
+ },
  "charlotte county, virginia": {
   "raw": "Charlotte Co., VA",
   "q": "Charlotte County, Virginia",
@@ -335,6 +361,19 @@
   "osm": "relation/197273",
   "display": "Chattanooga, Hamilton County, East Tennessee, Tennessee, United States",
   "kind": "city",
+  "at": "2026-10-18"
+ },
+ "chowan county, north carolina": {
+  "raw": "Chowan County, North Carolina",
+  "q": "Chowan County, North Carolina",
+  "status": "ok",
+  "lat": 36.07689,
+  "lon": -76.62964,
+  "prec": "exact",
+  "matched": "Chowan County, North Carolina",
+  "osm": "relation/1242006",
+  "display": "Chowan County, North Carolina, United States",
+  "kind": "county",
   "at": "2026-10-18"
  },
  "church of san siro, valmozzola": {
@@ -571,17 +610,17 @@
   "kind": "military",
   "at": "2026-10-18"
  },
- "fort monroe, virginia": {
-  "raw": "Fort Monroe, Virginia",
-  "q": "Fort Monroe, Virginia",
+ "fort monroe": {
+  "raw": "Fort Monroe",
+  "q": "Fort Monroe",
   "status": "ok",
   "lat": 37.00429,
   "lon": -76.3069,
   "prec": "exact",
-  "matched": "Fort Monroe, Virginia",
+  "matched": "Fort Monroe",
   "osm": "way/51064272",
   "display": "Fort Monroe, Ruckman Road, Fort Monroe, Hampton, Virginia, 23651, United States",
-  "kind": "tourism",
+  "kind": "historic",
   "at": "2026-10-18"
  },
  "fort sherman, panama": {
@@ -634,6 +673,19 @@
   "osm": "relation/3864687",
   "display": "Franklin, Virginia, 23851, United States",
   "kind": "town",
+  "at": "2026-10-18"
+ },
+ "fredericksburg, virginia": {
+  "raw": "Fredericksburg, Virginia",
+  "q": "Fredericksburg, Virginia",
+  "status": "ok",
+  "lat": 38.30012,
+  "lon": -77.45715,
+  "prec": "exact",
+  "matched": "Fredericksburg, Virginia",
+  "osm": "relation/1633328",
+  "display": "Fredericksburg, Virginia, United States",
+  "kind": "city",
   "at": "2026-10-18"
  },
  "gates county, north carolina": {
@@ -766,6 +818,19 @@
   "kind": "city",
   "at": "2026-10-18"
  },
+ "hanover county, virginia": {
+  "raw": "Hanover County, Virginia",
+  "q": "Hanover County, Virginia",
+  "status": "ok",
+  "lat": 37.74478,
+  "lon": -77.44642,
+  "prec": "exact",
+  "matched": "Hanover County, Virginia",
+  "osm": "relation/2534182",
+  "display": "Hanover County, Virginia, United States",
+  "kind": "county",
+  "at": "2026-10-18"
+ },
  "hicksford district, greensville county, virginia": {
   "raw": "Hicksford District, Greensville Co., VA",
   "q": "Hicksford District, Greensville County, Virginia",
@@ -790,32 +855,6 @@
   "osm": "node/158249962",
   "display": "Hilton Village, Newport News, Virginia, 23605, United States",
   "kind": "suburb",
-  "at": "2026-10-18"
- },
- "hunters mill, gates county, north carolina": {
-  "raw": "Hunters Mill, Gates Co., NC",
-  "q": "Hunters Mill, Gates County, North Carolina",
-  "status": "ok",
-  "lat": 36.44125,
-  "lon": -76.69441,
-  "prec": "broader",
-  "matched": "Gates County, North Carolina",
-  "osm": "relation/1242003",
-  "display": "Gates County, North Carolina, United States",
-  "kind": "county",
-  "at": "2026-10-18"
- },
- "indian woods, southampton county, virginia": {
-  "raw": "Indian Woods, Southampton Co., VA",
-  "q": "Indian Woods, Southampton County, Virginia",
-  "status": "ok",
-  "lat": 36.715,
-  "lon": -77.11764,
-  "prec": "exact",
-  "matched": "Indian Woods, Southampton County, Virginia",
-  "osm": "way/20514876",
-  "display": "Indian Woods Trail, Vincent Grove, Southampton County, Virginia, 23837, United States",
-  "kind": "road",
   "at": "2026-10-18"
  },
  "iroquois, wyoming county, west virginia": {
@@ -1026,19 +1065,6 @@
   "kind": "county",
   "at": "2026-10-18"
  },
- "mormorola di gusaliggio, valmozzola": {
-  "raw": "Mormorola di Gusaliggio, Valmozzola",
-  "q": "Mormorola di Gusaliggio, Valmozzola",
-  "status": "ok",
-  "lat": 44.57314,
-  "lon": 9.86906,
-  "prec": "exact",
-  "matched": "Mormorola di Gusaliggio (near Valmozzola)",
-  "osm": "way/652989143",
-  "display": "Rocca di Gusaliggio, Provinciale del Mozzola, Valmozzola località Case Lamini, Mormorola, Valmozzola, Parma, Emilia-Romagna, 43050, Italy",
-  "kind": "building",
-  "at": "2026-10-18"
- },
  "nemours, mercer county, west virginia": {
   "raw": "Nemours, Mercer Co., WV",
   "q": "Nemours, Mercer County, West Virginia",
@@ -1234,6 +1260,19 @@
   "kind": "amenity",
   "at": "2026-10-18"
  },
+ "orne, normandy, france": {
+  "raw": "Orne, Normandy, France",
+  "q": "Orne, Normandy, France",
+  "status": "ok",
+  "lat": 48.57589,
+  "lon": 0.04488,
+  "prec": "exact",
+  "matched": "Orne, Normandy, France",
+  "osm": "relation/7419",
+  "display": "Orne, Normandy, Metropolitan France, France",
+  "kind": "county",
+  "at": "2026-10-18"
+ },
  "palm coast, florida": {
   "raw": "Palm Coast, FL",
   "q": "Palm Coast, Florida",
@@ -1245,6 +1284,19 @@
   "osm": "relation/1216812",
   "display": "Palm Coast, Flagler County, Florida, United States",
   "kind": "city",
+  "at": "2026-10-18"
+ },
+ "pamunkey united methodist church cemetery, new kent county, virginia": {
+  "raw": "Pamunkey United Methodist Church Cemetery, New Kent County, Virginia",
+  "q": "Pamunkey United Methodist Church Cemetery, New Kent County, Virginia",
+  "status": "ok",
+  "lat": 37.49747,
+  "lon": -76.99905,
+  "prec": "broader",
+  "matched": "New Kent County, Virginia",
+  "osm": "relation/2534194",
+  "display": "New Kent County, Virginia, United States",
+  "kind": "county",
   "at": "2026-10-18"
  },
  "pendleton, northampton county, north carolina": {
@@ -1351,6 +1403,19 @@
   "kind": "city",
   "at": "2026-10-18"
  },
+ "richmond county, virginia": {
+  "raw": "Richmond County, Virginia",
+  "q": "Richmond County, Virginia",
+  "status": "ok",
+  "lat": 37.94761,
+  "lon": -76.71619,
+  "prec": "exact",
+  "matched": "Richmond County, Virginia",
+  "osm": "relation/2534202",
+  "display": "Richmond County, Virginia, United States",
+  "kind": "county",
+  "at": "2026-10-18"
+ },
  "richmond, virginia": {
   "raw": "Richmond, Virginia",
   "q": "Richmond, Virginia",
@@ -1362,19 +1427,6 @@
   "osm": "relation/3864712",
   "display": "Richmond, Virginia, United States",
   "kind": "city",
-  "at": "2026-10-18"
- },
- "riverside hospital, newport news, virginia": {
-  "raw": "Riverside Hospital, Newport News, VA",
-  "q": "Riverside Hospital, Newport News, Virginia",
-  "status": "ok",
-  "lat": 37.06343,
-  "lon": -76.48272,
-  "prec": "exact",
-  "matched": "Riverside Hospital, Newport News, Virginia",
-  "osm": "way/298161573",
-  "display": "Riverside Regional Medical Center, 500, J Clyde Morris Boulevard, Beaconsdale, Newport News, Virginia, 23601, United States",
-  "kind": "amenity",
   "at": "2026-10-18"
  },
  "roanoke rapids, halifax county, north carolina": {
@@ -1585,6 +1637,19 @@
   "kind": "county",
   "at": "2026-10-18"
  },
+ "tappahannock": {
+  "raw": "Tappahannock",
+  "q": "Tappahannock",
+  "status": "ok",
+  "lat": 37.92832,
+  "lon": -76.86004,
+  "prec": "exact",
+  "matched": "Tappahannock",
+  "osm": "relation/207021",
+  "display": "Tappahannock, Essex County, Virginia, United States",
+  "kind": "town",
+  "at": "2026-10-18"
+ },
  "taylors, south carolina": {
   "raw": "Taylors, SC",
   "q": "Taylors, South Carolina",
@@ -1650,17 +1715,17 @@
   "kind": "town",
   "at": "2026-10-18"
  },
- "township 3, chowan county, north carolina": {
-  "raw": "Township 3, Chowan Co., NC",
-  "q": "Township 3, Chowan County, North Carolina",
+ "tinchebray, orne, normandy, france": {
+  "raw": "Tinchebray, Orne, Normandy, France",
+  "q": "Tinchebray, Orne, Normandy, France",
   "status": "ok",
-  "lat": 36.07689,
-  "lon": -76.62964,
-  "prec": "broader",
-  "matched": "Chowan County, North Carolina",
-  "osm": "relation/1242006",
-  "display": "Chowan County, North Carolina, United States",
-  "kind": "county",
+  "lat": 48.76363,
+  "lon": -0.7329,
+  "prec": "exact",
+  "matched": "Tinchebray, Orne, Normandy, France",
+  "osm": "relation/1265648",
+  "display": "Tinchebray, Tinchebray-Bocage, Argentan, Orne, Normandy, Metropolitan France, 61800, France",
+  "kind": "village",
   "at": "2026-10-18"
  },
  "twin falls, idaho": {
@@ -1739,6 +1804,19 @@
   "osm": "relation/162068",
   "display": "West Virginia, United States",
   "kind": "state",
+  "at": "2026-10-18"
+ },
+ "westmoreland county, virginia": {
+  "raw": "Westmoreland County, Virginia",
+  "q": "Westmoreland County, Virginia",
+  "status": "ok",
+  "lat": 38.11532,
+  "lon": -76.75674,
+  "prec": "exact",
+  "matched": "Westmoreland County, Virginia",
+  "osm": "relation/3070666",
+  "display": "Westmoreland County, Virginia, United States",
+  "kind": "county",
   "at": "2026-10-18"
  },
  "wittens fort, virginia": {

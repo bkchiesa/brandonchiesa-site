@@ -105,7 +105,8 @@ function warsOf(p, allText) {
     if (/korea/i.test(t)) wars.add("korea");
     if (/vietnam/i.test(t)) wars.add("vietnam");
   };
-  if (Array.isArray(m)) {
+  if (isStr(m)) { add(m); if (!wars.size) wars.add("service"); }
+  else if (Array.isArray(m)) {
     // list form: [{fact, rating, source}, ...]
     const txt = m.map((x) => (typeof x === "string" ? x : (x && (x.fact || x.text)) || "")).join(" ");
     if (txt.trim()) { add(txt); if (!wars.size) wars.add("service"); }
@@ -188,6 +189,30 @@ function heritageList(p) {
   const tidy = (x) => String(x || "").replace(/\bRound \d+ (verdict|check|finding)s?\b/gi, (m, w) => "Research " + w.toLowerCase()).replace(/\s*\(Round \d+\)/gi, "").replace(/\b(in|from) the Round \d+ request\b/gi, "");
   return arr.map((h) => (typeof h === "string" ? { t: tidy(h), r: normRating(h.match(/family claim|hypothesis|proven|probable|compiled/i)?.[0]) } : h && (h.text || h.note || h.fact) ? { t: tidy(h.text || h.note || h.fact), r: normRating(h.confidence || h.rating), s: tidy(h.citation || h.source) || null } : null)).filter(Boolean);
 }
+// display_border: "solid" and confirmed_by_brandon {date, note}, per person and per parent link
+function confirmedOf(c) {
+  if (!c) return null;
+  if (c === true) return { date: null, note: null };
+  if (isStr(c)) return { date: null, note: cleanText(c) };
+  if (typeof c === "object") return { date: isStr(c.date) ? c.date : null, note: isStr(c.note) ? cleanText(c.note) : null };
+  return null;
+}
+function linkMeta(p) {
+  const out = {};
+  const put = (pid, o) => {
+    if (!isStr(pid) || !o || typeof o !== "object") return;
+    const m = {};
+    if (String(o.display_border || "").toLowerCase() === "solid") m.b = "solid";
+    const c = confirmedOf(o.confirmed_by_brandon); if (c) m.c = c;
+    if (Object.keys(m).length) out[pid] = m;
+  };
+  for (const key of ["confirmed_parent_links", "parent_links", "link_meta", "relationship_links"]) {
+    const v = p[key];
+    if (Array.isArray(v)) for (const o of v) put(o && (o.parent || o.id || o.to || o.person), o);
+    else if (v && typeof v === "object") for (const [pid, o] of Object.entries(v)) put(pid, o);
+  }
+  return Object.keys(out).length ? out : null;
+}
 function normalize(p, tree) {
   const stRaw = p.status || "";
   const st = normRating(stRaw) || "probable";
@@ -201,7 +226,8 @@ function normalize(p, tree) {
   const news = (p.newspaper_mentions || []).map((o) => ({ paper: o.paper, y: o.date, t: o.text, r: normRating(o.confidence), s: o.citation }));
   const sources = (p.sources || []).filter(isStr).map((s) => ({ t: s, r: ratingInText(s) }));
   let mil = null;
-  if (Array.isArray(p.military)) {
+  if (isStr(p.military)) mil = { lines: [["Service", p.military]], src: [] };
+  else if (Array.isArray(p.military)) {
     const items = p.military.map((x) => (typeof x === "string" ? { t: x } : { t: x.fact || x.text || "", r: normRating(x.rating || x.confidence), s: x.source || x.citation || null })).filter((x) => x.t);
     if (items.length) mil = { lines: items.map((x) => ["Service", x.t + (x.r && x.r !== "proven" ? ` (${x.r})` : "")]), src: items.map((x) => x.s).filter(isStr) };
   } else if (p.military && typeof p.military === "object") {
@@ -243,6 +269,9 @@ function normalize(p, tree) {
     line: p.line_r8us || p.line_r7us || p.line_r10 || null,
     rel: relOf(p),
     her: heritageList(p),
+    border: String(p.display_border || "").toLowerCase() === "solid" ? "solid" : null,
+    cfm: confirmedOf(p.confirmed_by_brandon),
+    lk: linkMeta(p),
   };
 }
 
@@ -281,6 +310,10 @@ function splitPrivate(rec, namesLiving) {
     }
     rec.her = pub; if (pv.length) priv.her = pv;
   }
+  // the confirmer's own name is the point of the badge, so it does not count as naming a living relative
+  const own = (t) => String(t).replace(/\bBrandon(?:\s+[A-Z]\.)?\s+Chiesa\b/g, "Brandon");
+  if (rec.cfm && rec.cfm.note && namesLiving(own(rec.cfm.note))) { priv.cfmx = rec.cfm.note; rec.cfm = { ...rec.cfm, note: null }; }
+  if (rec.lk) for (const [q, m] of Object.entries(rec.lk)) if (m.c && m.c.note && namesLiving(own(m.c.note))) { (priv.lkx = priv.lkx || {})[q] = m.c.note; m.c = { ...m.c, note: null }; }
   if (rec.rel && rec.rel !== relBase(rec.rel) && namesLiving(rec.rel)) { priv.relx = rec.rel; rec.rel = relBase(rec.rel); }
   if (rec.mil) { const pv = rec.mil.src.filter(namesLiving); rec.mil.src = rec.mil.src.filter((s) => !namesLiving(s)); if (pv.length) priv.milsrc = pv; }
   return Object.keys(priv).length ? priv : null;
@@ -302,13 +335,23 @@ async function loadPlaceCache() {
 }
 const AREA_KINDS = new Set(["county", "state", "country", "region", "province"]);
 const KIND_ORDER = { born: 0, baptised: 1, married: 3, lived: 4, worked: 4, departed: 5, arrived: 6, served: 7, died: 8, buried: 9 };
+// a hand note that only repeats the place name adds nothing; one that starts with it keeps the rest
+function handNote(note, lab) {
+  if (!isStr(note)) return null;
+  const n = note.trim(), base = String(lab || "").split(",")[0].trim().toLowerCase();
+  if (!base || !n.toLowerCase().startsWith(base)) return n;
+  let rest = n.slice(base.length).replace(/^[^(A-Za-z]*?(?:county|co\.)?,?\s*(?:virginia|va\.?)?\s*/i, "").trim();
+  rest = rest.replace(/^\(([^)]*)\)/, "$1").replace(/^[,;\s]+/, "").trim();
+  if (rest && String(lab).toLowerCase().replace(/\bco\.(?=,|\s|$)/g, "county").includes(rest.toLowerCase())) return null;
+  return rest.length > 3 ? rest[0].toUpperCase() + rest.slice(1) : null;
+}
 function placesFor(list, pc, missing) {
   const pl = [], plx = [];
   for (const x of list || []) {
     const hand = pc.coords[x.key], g = pc.cache[x.key];
     const lab = cleanText(x.raw);
     if (Number.isFinite(x.lat) && Number.isFinite(x.lon)) pl.push({ k: x.k, l: lab, y: x.y, lat: x.lat, lon: x.lon, a: 0, m: null, n: x.note || null });
-    else if (hand) pl.push({ k: x.k, l: lab, y: x.y, lat: hand.lat, lon: hand.lon, a: hand.approx || 0, m: hand.m || (hand.approx === 2 ? "area" : null), n: x.note || hand.note || null });
+    else if (hand) pl.push({ k: x.k, l: lab, y: x.y, lat: hand.lat, lon: hand.lon, a: hand.approx || 0, m: hand.m || (hand.approx === 2 ? "area" : null), n: x.note || handNote(hand.note, lab) });
     else if (g && g.status === "ok") {
       const area = AREA_KINDS.has(g.kind) || g.prec === "region";
       pl.push({ k: x.k, l: lab, y: x.y, lat: g.lat, lon: g.lon, a: area ? 2 : g.prec === "exact" ? 0 : 1, m: area ? (g.kind === "county" ? "county" : g.kind === "country" ? "country" : "state") : g.prec === "exact" ? null : g.matched, n: x.note || null });
