@@ -14,7 +14,7 @@
 // that names them) is encrypted with AES-GCM using a key derived from
 // ROOTS_PASSWORD via PBKDF2-SHA256. The password itself is never written out.
 
-import { readFile, writeFile, readdir, mkdir } from "node:fs/promises";
+import { readFile, writeFile, readdir, mkdir, rm } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
 import { webcrypto as crypto } from "node:crypto";
@@ -22,6 +22,7 @@ import { existsSync } from "node:fs";
 import { copyFile } from "node:fs/promises";
 import { spawnSync } from "node:child_process";
 import { treePlaces } from "./places-lib.mjs";
+import { makeMediaLib, assertNotPrivate, guardOutput, writeVillagePage, parsePlaque } from "./village.mjs";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const REPO = path.resolve(HERE, "../..");
@@ -378,7 +379,8 @@ function splitPrivate(rec, namesLiving) {
   keep(null, "notes", (x) => x);
   keep(null, "src", (x) => x.t);
   keep(null, "ev", (x) => x.t);
-  keep(null, "md", (x) => JSON.stringify(x));
+  const own0 = (t) => String(t).replace(/\bBrandon(?:\s+[A-Z]\.)?\s+Chiesa\b/g, "Brandon");
+  keep(null, "md", (x) => own0(JSON.stringify(x)));
   for (const k of ["arr", "immC", "org", "ls"]) if (rec[k] && namesLiving(JSON.stringify(rec[k]))) { priv[k] = rec[k]; delete rec[k]; }
   keep(null, "oc", (x) => x.t + " " + (x.a || "") + " " + (x.s || ""));
   // heritage notes: judge by the note itself; a citation that only names who relayed a family story is reworded
@@ -453,6 +455,7 @@ function placesFor(list, pc, missing) {
 // public/roots/media/<tree>/ for deceased people only; living people's media stay private and file-less.
 const MEDIA_KEYS = ["photos", "images", "media", "articles", "clippings", "newspaper_articles", "links"];
 const IMG_EXT = /\.(jpe?g|png|webp|gif|avif)$/i;
+let MEDIA_LIB = null;
 async function mediaFor(p, tree, isLiving, warn) {
   const out = [];
   let n = 0;
@@ -472,8 +475,19 @@ async function mediaFor(p, tree, isLiving, warn) {
       const m = { kind, title: cleanText(it.title || it.caption || it.headline || it.description || ""), url: url && /^https?:\/\//.test(url) ? url : null,
         credit: cleanText(it.credit || it.photographer || it.courtesy || it.copyright || it.author || ""), src: cleanText([it.source || it.citation || it.publication || it.paper || "", it.page ? "p. " + String(it.page).replace(/^p(age)?\.?\s*/i, "") : ""].filter(Boolean).join(", ")), note: it.note ? cleanText(it.note) : null,
         date: it.date || it.year || null, lic: it.license || it.licence || null, r: normRating(it.confidence || it.rating || it.status), img: null };
-      if (file && /(^|\/)private\//.test(file)) { warn.push(`${p.id}: file in a private folder skipped`); continue; }
-      if (file) warn.push(`${p.id}: local file not published (the site links to sources and never re-hosts)`);
+      if (file && /(^|\/)private\//i.test(file)) { warn.push(`${p.id}: file in a private folder skipped`); continue; }
+      // village photos: only photos/<place>/web (Brandon's) and photos/<place>/commons (with licence sidecars)
+      const loc = file && MEDIA_LIB ? MEDIA_LIB.publish(file) : null;
+      if (loc && loc.excluded) continue;
+      if (loc && !isLiving) {
+        m.img = loc.th; m.full = loc.full; m.w = loc.w; m.h = loc.h; m.place = isStr(it.place) ? it.place : null;
+        if (loc.kind === "web") { m.credit = "Photo by Brandon Chiesa"; m.date = "June 2026"; m.r = "family"; m.lic = "Family photo, used with permission"; m.src = ""; if (m.note && /person is visible|approved use/i.test(m.note)) m.note = null; }
+        else { m.credit = loc.author ? loc.author + " / Wikimedia Commons" : m.credit; m.lic = loc.lic || m.lic; m.url = loc.page || m.url; m.licUrl = loc.licUrl || null; m.src = ""; if (loc.cap) m.title = loc.cap; m.r = null; }
+        if (/Albo d.oro/i.test(m.note || "")) m.plq = parsePlaque(m.note);
+        out.push(m); continue;
+      }
+      if (loc && isLiving) continue;
+      if (file) warn.push(`${p.id}: local file not published (only photos/*/web and photos/*/commons are)`);
       if (!isLiving && imgUrl && /^https:\/\//.test(imgUrl) && mayHotlink) m.img = imgUrl;
       else if (!isLiving && url && IMG_EXT.test(url) && mayHotlink) m.img = url;
       if (!m.credit) warn.push(`${p.id}: ${kind} "${(m.title || url || file || "").slice(0, 50)}" has no credit`);
@@ -537,6 +551,9 @@ async function main() {
   const key = await deriveKey(password, salt);
   const stories = await loadStories();
   const pc = await loadPlaceCache();
+  MEDIA_LIB = makeMediaLib({ repo: REPO, exclude: (pc.ov && pc.ov.media_exclude) || [], log: (m) => console.warn(m) });
+  await rm(MEDIA_LIB.OUTDIR, { recursive: true, force: true }); // no stale or newly excluded photos survive a rebuild
+  let village = null;
   const missing = new Set(), warn = [];
   await mkdir(OUT, { recursive: true });
   const summary = [];
@@ -558,6 +575,9 @@ async function main() {
       const rec = deepClean(normalize(p, tree));
       Object.assign(rec, placesFor(perPlaces.get(p.id), pc, missing));
       rec.md = await mediaFor(p, tree, p._living, warn);
+      // the war-memorial note is shown with its photo; do not repeat it under research notes
+      const plq = (rec.md || []).find((m) => m.plq);
+      if (plq && Array.isArray(rec.notes)) rec.notes = rec.notes.filter((n) => n.trim() !== (plq.note || "").trim());
       if (p._living) {
         // public: name and family links only
         pub.push({ id: rec.id, n: cleanText(p.name), sex: rec.sex, par: rec.par, sp: rec.sp, liv: true, ...(rec.rel ? { rel: relBase(rec.rel) } : {}) });
@@ -587,8 +607,15 @@ async function main() {
     });
     data.private = enc;
     await writeFile(path.join(OUT, tree.key + ".json"), JSON.stringify(data));
+    if (tree.key === "brandon") village = { people: pub, rawPeople: people.filter((p) => !p._living) };
     summary.push(`${tree.key}: ${pub.length} people (${pub.filter((p) => p.liv).length} living, ${Object.keys(priv).length} private records encrypted), ${data.stories.length} featured stories`);
   }
+  if (village) {
+    const plq = village.people.flatMap((p) => p.md || []).find((m) => m.plq);
+    const v = await writeVillagePage({ repo: REPO, ...village, lib: MEDIA_LIB, plaque: plq ? plq.plq : null });
+    summary.push(`valmozzola page: ${v.photos} family photos, ${v.commons} Commons images, ${v.emigrants} emigrants${MEDIA_LIB.held.length ? "; held back: " + MEDIA_LIB.held.join(", ") : ""}`);
+  }
+  guardOutput(path.join(REPO, "public/roots"));
   console.log(summary.join("\n"));
   if (missing.size) console.log(`${missing.size} place(s) have no coordinates yet; run: node scripts/roots/geocode-places.mjs`);
   if (BANNED_HITS.n) console.log(`Removed the 'single with dependents' wording in ${BANNED_HITS.n} place(s).`);

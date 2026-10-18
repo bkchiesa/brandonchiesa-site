@@ -486,6 +486,10 @@ function applyFilter() {
   if (t) t.innerHTML = f ? `<div class="toast">${ic("filter", "color:#dcc58f")}<span><b>${f.label}</b> · ${hl.size} highlighted${state.filter === "proven" ? "" : ", the rest dimmed"}</span><button id="clearF">Clear</button></div>` : "";
   const cf = $("#clearF"); if (cf) cf.onclick = () => setFilter(null);
 }
+// the Valmozzola page (San Siro and San Martino), linked from village places and immigrant origins
+const VURL = BASE + "valmozzola/";
+const isVill = (t) => TREE === "brandon" && /valmozzola|san siro|san martino|branzone|gusaliggio/i.test(String(t || ""));
+const vLink = (label) => `<a class="vlink" href="${VURL}">${esc(label || "Valmozzola page")} ›</a>`;
 function arrShort(A) { return A && A.date ? A.date.replace(/\s*[(;].*$/, "").trim() : null; }
 function immYear(p) {
   if (p.arr) return p.arr.y || null; // a structured arrival with no year stays undated
@@ -607,6 +611,7 @@ function openPerson(id) {
     if (p.d && (p.d.d || p.d.p)) facts.push(["DIED", p.d.d, p.d.p]);
     if (p.bur && (p.bur.place || p.bur.date)) facts.push(["BURIED", p.bur.date, [p.bur.place, p.bur.plot].filter(Boolean).join(", ")]);
     if (facts.length) h += `<div class="facts">${facts.map(([k, a, b]) => `<div><small>${k}</small><b>${esc(a || "—")}</b>${b ? `<span>${esc(b)}</span>` : ""}</div>`).join("")}</div>`;
+    if (p.b && isVill(p.b.p)) h += `<div class="flt-sub" style="margin:6px 0 0">${vLink("Born in Valmozzola: the village, its records and photos")}</div>`;
     if (p.unlocked) h += `<div class="privnote">${ic("lock")}Unlocked with the family password. Not visible on the public site.</div>`;
     if (p.cod) h += `<div class="flt-sub" style="margin-top:10px">Cause of death: ${esc(p.cod)}</div>`;
     const stories = (p.hl && p.hl.length ? [{ title: "From the records", t: p.hl.join("\n") }] : []).concat(p.stories || []);
@@ -622,7 +627,7 @@ function openPerson(id) {
         ${A.ph ? `<figure class="shipph"><a href="${esc(BASE + A.ph.src)}" target="_blank" rel="noopener"><img src="${esc(BASE + A.ph.src)}" width="${A.ph.w}" height="${A.ph.h}" loading="lazy" alt="${esc(A.ship || "Ship")}"></a><figcaption>${esc(A.ph.cr || "")}${A.ph.lic ? ` <span class="lic">${esc(A.ph.lic)}</span>` : ""}${A.ph.pg ? ` <a href="${esc(A.ph.pg)}" target="_blank" rel="noopener nofollow">file page ↗</a>` : ""}${A.ph.n ? `<br><small>${esc(A.ph.n)}</small>` : ""}</figcaption></figure>` : A.phN ? `<p class="shipnone">${I.ship}<span><b>No ship photo.</b> ${esc(A.phN)}</span></p>` : ""}
         <dl>${row("Date", A.date)}${row("Ship", A.ship)}${row("From", A.from)}${row("Port", A.port)}</dl>
         ${A.cls || A.fare || A.fareN ? `<div class="passage">${A.cls ? `<div class="pv"><small>Class</small><span><b>${esc(A.cls.v)}</b>${ratingTag(A.cls.r)}${A.cls.s ? `<span class="cite">${linkify(A.cls.s)}</span>` : ""}</span></div>` : ""}${A.fare ? `<div class="pv"><small>Fare${A.fare.est ? " (estimate)" : ""}</small><span>${A.fare.est ? `<span class="rt est">Estimate</span> ` : ""}<b>${esc(A.fare.v)}</b>${ratingTag(A.fare.r)}${A.fare.s ? `<span class="cite">${linkify(A.fare.s)}</span>` : ""}</span></div>` : ""}${!A.fare && A.fareN ? `<div class="pv"><small>Fare</small><span><b>Not known.</b> ${esc(A.fareN)}</span></div>` : ""}${A.fare && A.fareN ? `<div class="pv"><small></small><span><small>${esc(A.fareN)}</small></span></div>` : ""}</div>` : ""}
-        ${A.n ? `<p class="arrn">${esc(A.n)}</p>` : ""}${A.s ? `<div class="cite">Source: ${linkify(A.s)}</div>` : ""}</div>`;
+        ${A.n ? `<p class="arrn">${esc(A.n)}${isVill(A.n) ? " " + vLink("About Valmozzola") : ""}</p>` : isVill(p.b && p.b.p) ? `<p class="arrn">Origin: ${esc(p.b.p)} ${vLink("About Valmozzola")}</p>` : ""}${A.s ? `<div class="cite">Source: ${linkify(A.s)}</div>` : ""}</div>`;
     }
     if (p.immC) h += `<div class="sec">Immigrant? (compiled only)</div><div class="arrbox dashed"><div class="arrhd"><span class="badge-i dashed">${I.ship}</span><b>${esc(p.immC.t)}</b>${ratingTag(p.immC.r)}</div>${p.immC.s ? `<div class="cite">Source: ${linkify(p.immC.s)}</div>` : ""}</div>`;
     if (p.org) h += `<div class="sec">Origin</div><div class="orgbox ${p.org.r || ""}"><b>${esc(p.org.p)}</b>${ratingTag(p.org.r)}${p.org.s ? `<div class="cite">Source: ${linkify(p.org.s)}</div>` : ""}</div>`;
@@ -789,7 +794,7 @@ async function drawPersonMap(p) {
   await renderMap(box.querySelector("svg"), pins, { seq: p.pl, voyage: p.arr && vf && vt ? [vf, vt] : null, voyagePh: p.arr && p.arr.ph ? { th: p.arr.ph.th, ship: p.arr.ship } : null, onPin: (i) => { const li = list && list.querySelector(`[data-pin="${i}"]`); if (li) { li.classList.add("hl"); li.scrollIntoView({ block: "nearest", behavior: "smooth" }); setTimeout(() => li.classList.remove("hl"), 1400); } } });
   $("#pmapcap").textContent = pins.length === 1 ? "1 place" : `${pins.length} places, numbered in the order of the records`;
   if (list) list.innerHTML = pins.map((q, i) => q.items.map((s, j) => { const K = PLACE_KIND[s.k] || [s.k, "#a8402f"];
-    return `<li data-pin="${j ? "" : i}"><span class="num${s.a ? " ap" : ""}" style="--c:${K[1]}">${j ? "" : i + 1}</span><span><b>${esc(K[0])}</b>${s.y ? " " + s.y : ""} · ${esc(s.l)}${precNote(s)}${s.n ? ` <small>· ${esc(s.n)}</small>` : ""} <a href="${osmLink(s)}" target="_blank" rel="noopener nofollow" class="osm">map ↗</a></span></li>`; }).join("")).join("") + nomap;
+    return `<li data-pin="${j ? "" : i}"><span class="num${s.a ? " ap" : ""}" style="--c:${K[1]}">${j ? "" : i + 1}</span><span><b>${esc(K[0])}</b>${s.y ? " " + s.y : ""} · ${esc(s.l)}${precNote(s)}${s.n ? ` <small>· ${esc(s.n)}</small>` : ""} <a href="${osmLink(s)}" target="_blank" rel="noopener nofollow" class="osm">map ↗</a>${isVill(s.l) ? " " + vLink("Valmozzola page") : ""}</span></li>`; }).join("")).join("") + nomap;
 }
 
 // ---------- family places (whole tree) ----------
@@ -803,7 +808,7 @@ async function openPlaces(region) {
   const pins = mapPlaces(all);
   const regs = REGIONS[TREE] || REGIONS.brandon;
   const cur = regs.find((r) => r[0] === region) || regs[0];
-  let h = `<div class="flt-h"><span class="bi">${I.pin || I.tree}</span><h3>Family places</h3></div><div class="flt-sub">Every birth, home, voyage, military post and grave in the records, ${pins.length} places in all. Larger pins mean more people. Tap a pin to see who was there.</div>
+  let h = `<div class="flt-h"><span class="bi">${I.pin || I.tree}</span><h3>Family places</h3></div><div class="flt-sub">Every birth, home, voyage, military post and grave in the records, ${pins.length} places in all. Larger pins mean more people. Tap a pin to see who was there.${TREE === "brandon" ? ` ${vLink("Valmozzola: San Siro and San Martino")}` : ""}</div>
     <div class="regions">${regs.map(([n]) => `<button class="chip${n === cur[0] ? " on" : ""}" data-region="${esc(n)}">${esc(n)}</button>`).join("")}</div>
     <div class="mapbox wide" id="fmap"><svg viewBox="0 0 560 360"></svg><div class="mapcap" id="fmapcap">Loading map…</div></div><div id="fmapwho" class="fmapwho"></div>`;
   openLayer("places", h, "wide"); setTab("places");
@@ -816,7 +821,7 @@ async function openPlaces(region) {
   function showWho(q) {
     const byP = new Map(); for (const s of q.items) { if (!byP.has(s.pid)) byP.set(s.pid, []); byP.get(s.pid).push(s); }
     const name = q.items.slice().sort((a, b) => a.l.length - b.l.length)[0].l;
-    $("#fmapwho").innerHTML = `<div class="sec">${esc(name)}</div>` + [...byP].map(([pid, ss]) => personRow(P[pid], ss.map((s) => (PLACE_KIND[s.k] || [s.k])[0] + (s.y ? " " + s.y : "")).join(" · "), P[pid].st)).join("");
+    $("#fmapwho").innerHTML = `<div class="sec">${esc(name)}</div>${isVill(q.items.map((s) => s.l).join(" ")) ? `<div class="flt-sub" style="margin:-4px 0 8px">${vLink("History and photos of the village")}</div>` : ""}` + [...byP].map(([pid, ss]) => personRow(P[pid], ss.map((s) => (PLACE_KIND[s.k] || [s.k])[0] + (s.y ? " " + s.y : "")).join(" · "), P[pid].st)).join("");
     $("#fmapwho").scrollIntoView({ block: "nearest", behavior: "smooth" });
   }
 }
@@ -824,10 +829,17 @@ async function openPlaces(region) {
 // ---------- photos and articles ----------
 function mediaHTML(p) {
   const md = p.md || []; if (!md.length) return "";
-  const photos = md.filter((m) => m.img), other = md.filter((m) => !m.img);
+  const plq = md.find((m) => m.plq);
+  const placePh = md.filter((m) => m.img && m.full && !m.plq), photos = md.filter((m) => m.img && !m.full), other = md.filter((m) => !m.img);
   const lic = (l) => String(l || "").replace(/\.?\s*(Link and credit only|Link only)[^.]*\.?/i, "").replace(/;?\s*do not (copy|re-?host)[^.;]*/i, "").trim();
   const credit = (m) => [m.credit ? "Credit: " + esc(m.credit) : "Credit not recorded", m.src && esc(m.src), m.date && esc(m.date), lic(m.lic) && esc(lic(m.lic))].filter(Boolean).join(" · ") + (m.note ? `<br>${esc(m.note)}` : "");
-  let h = `<div class="sec">Photos &amp; articles</div>`;
+  let h = "";
+  if (plq) { const q = plq.plq;
+    h += `<div class="sec">War memorial, San Siro</div><div class="plqbox"><a href="${esc(BASE + plq.full)}" target="_blank" rel="noopener"><img loading="lazy" src="${esc(BASE + plq.img)}" alt="WWI memorial plaque, San Siro, 1925"></a><div><b>${esc(plq.title)}</b>${ratingTag(plq.r || "family")}<div style="margin-top:4px">Three soldiers from San Siro in the <i>Albo d’oro</i> of the war dead ${ratingTag("probable")}:</div><ol>${q.items.map((x) => `<li>${esc(x.t)}${x.url ? ` <a href="${esc(x.url)}" target="_blank" rel="noopener nofollow">Albo d’oro ↗</a>` : ""}</li>`).join("")}</ol><div>Kinship to this line is unproven; probably cousins ${ratingTag("hypothesis")}.${q.tail ? " " + esc(q.tail) : ""}</div><div class="cite">Photo by Brandon Chiesa, June 2026 · Albo d’oro vol. VIII (Emilia II), cadutigrandeguerra.it · ${vLink("Valmozzola page")}</div></div></div>`; }
+  if (!placePh.length && !photos.length && !other.length) return h;
+  h += `<div class="sec">Photos &amp; articles</div>`;
+  if (placePh.length) { const show = placePh.slice(0, 5);
+    h += `<div class="gallery">${show.map((m) => `<figure><a href="${esc(BASE + m.full)}" target="_blank" rel="noopener"><img loading="lazy" src="${esc(BASE + m.img)}" alt="${esc(m.title || "Village photo")}"></a><figcaption>${m.title ? `<b>${esc(m.title)}</b>` : ""}${ratingTag(m.r)}<small>${esc(m.credit || "")}${m.date ? " · " + esc(m.date) : ""}${m.lic ? " · " + (m.licUrl ? `<a href="${esc(m.licUrl)}" target="_blank" rel="noopener license">${esc(m.lic)}</a>` : esc(m.lic)) : ""}${m.url ? ` · <a href="${esc(m.url)}" target="_blank" rel="noopener nofollow">source page ↗</a>` : ""}</small></figcaption></figure>`).join("")}${isVill(placePh.map((m) => m.place || m.title).join(" ")) ? `<a class="more" href="${VURL}#gallery">${placePh.length > show.length ? `See all ${placePh.length} photos` : "More photos"} on the Valmozzola page ›</a>` : ""}</div>`; }
   if (photos.length) h += `<div class="gallery">${photos.map((m) => `<figure><a href="${esc(m.url || m.img)}" target="_blank" rel="noopener nofollow"><img loading="lazy" src="${esc(/^https?:/.test(m.img) ? m.img : BASE + m.img)}" alt="${esc(m.title || "Photo of " + p.n)}"></a><figcaption>${m.title ? `<b>${esc(m.title)}</b>` : ""}${ratingTag(m.r)}<small>${credit(m)}</small></figcaption></figure>`).join("")}</div>`;
   if (other.length) h += `<ul class="flist media">${other.map((m) => `<li>${I.doc}<span>${m.url ? `<a href="${esc(m.url)}" target="_blank" rel="noopener nofollow">${esc(m.title || m.url)}</a>` : esc(m.title)}${m.kind && m.kind !== "link" ? ` <small class="mk">${esc(m.kind)}</small>` : ""}${ratingTag(m.r)}<div class="cite">${credit(m)}</div></span></li>`).join("")}</ul>`;
   return h;

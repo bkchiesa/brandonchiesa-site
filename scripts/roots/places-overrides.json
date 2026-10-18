@@ -527,5 +527,11 @@
   "franklin, southampton county, virginia": "Franklin, Virginia",
   "isle of wight, virginia": "Isle of Wight County, Virginia",
   "surry, virginia": "Surry County, Virginia"
- }
+ },
+ "media_exclude": [
+  {
+   "file": "photos/san-martino/web/01-church-facade-bell-tower-sala-parrocchiale.jpg",
+   "reason": "Shows a young woman from behind. Held back until Brandon confirms it directly (18 Oct 2026)."
+  }
+ ]
 }
