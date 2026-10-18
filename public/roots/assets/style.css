@@ -353,3 +353,4 @@ a{color:var(--olive)}
 .edge.l{left:92px}.edge.r{right:76px}
 .edge:hover{background:#f4ecd6}
 @media (max-width:760px){.edge{max-width:150px;font-size:11px;padding:6px 10px}.edge.l{left:8px}.edge.r{right:8px}}
+body:has(#layer .panel) .edge{display:none}
