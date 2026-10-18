@@ -219,3 +219,21 @@ had matched a Hilton Village in West Virginia.
 - Password rule unchanged: the deployed encrypted block was reused because a fresh build's hidden block matched it
   apart from the 8 known "family-provided, Brandon" lines.
 
+### Going live (18 Oct 2026, Brandon's go-ahead)
+
+- **Production path.** brandonchiesa.com is served by GitHub Pages. The `Deploy to GitHub Pages` workflow runs on pushes
+  to `cursor/video-shell-v3`; `main` holds only the initial commit. Roots went live by fast-forwarding
+  `cursor/video-shell-v3` to this branch. `public/roots/` is copied unchanged into `dist/roots/`.
+- **What went live.** The v17 tree output that was on the preview: Brandon's tree from fold3csr, Holly's from the 14:17:56
+  backup. The encrypted blocks are the ones already deployed; nothing was rebuilt. `public/_headers` applies only on
+  Cloudflare. On GitHub Pages, the `<meta name="robots" content="noindex, nofollow, noarchive">` in each Roots page keeps
+  it out of search engines.
+- **Homepage button.** `src/components/RootsButton.astro` is used twice in `HouseMenu.astro`. On roomy screens it sits
+  under the bio. On phones and short screens (max-width 699px or max-height 760px) it sits beside "Reduce motion", because
+  there the bio fills the space above the footer; CSS shows exactly one of the two. The roots are an absolutely positioned
+  SVG behind neighbouring content. Each path uses `pathLength="1"` and animates `stroke-dashoffset` from 1 to 0: about
+  0.6–0.9 s to grow, 0.45 s to retract. Hover (pointer devices) and keyboard focus grow them. On touch, a tap grows them
+  and the link is followed after 0.75 s. With reduced motion (the OS setting or the site's toggle) there is no drawing:
+  the roots appear at once at 60% opacity, and a tap follows the link immediately. The site CSS caps `svg` at
+  `max-width: 100%`, so the overlay sets `max-width: none`.
+

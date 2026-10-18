@@ -1,0 +1,160 @@
+---
+import { withBase } from "../lib/site";
+
+interface Props {
+  /** "copy": under the bio (roomy screens); "foot": beside Reduce motion (phones and short screens). */
+  place?: "copy" | "foot";
+}
+const { place = "copy" } = Astro.props;
+// Homepage "Roots" button. On hover, keyboard focus or tap, SVG roots draw outward from the button's edges
+// (stroke-dashoffset) and retract when the pointer leaves. The SVG is absolutely positioned and ignores the
+// pointer, so it never changes layout. Reduced motion (OS setting or the site's toggle): no drawing; on hover the
+// roots appear at once, faintly, and a tap goes straight to the page.
+const main = [
+  "M130 100 C128 112 120 120 112 128 S96 142 84 150",
+  "M158 100 C159 114 156 126 160 138 S166 150 162 156",
+  "M188 100 C192 112 202 120 212 128 S230 140 244 148",
+  "M90 86 C80 90 70 96 60 106 S40 118 26 122",
+  "M226 84 C238 90 250 96 262 108 S282 120 292 118",
+];
+const branch = [
+  "M120 121 C112 124 104 124 96 130",
+  "M157 126 C150 132 146 138 140 146",
+  "M204 122 C212 120 220 122 230 120",
+  "M112 128 C110 136 108 142 110 150",
+  "M60 106 C56 114 50 120 44 132",
+  "M262 108 C266 116 272 122 276 132",
+  "M90 68 C78 64 66 66 56 60 S40 50 30 52",
+  "M226 66 C238 62 250 58 260 50 S276 42 288 44",
+];
+const tendril = [
+  "M120 56 C118 46 110 40 104 30 S98 18 100 10",
+  "M196 56 C198 44 208 38 214 28 S220 16 216 8",
+  "M74 97 C70 102 64 104 58 102",
+  "M246 96 C252 100 258 100 264 98",
+];
+---
+
+<a class:list={["roots-btn", `roots-btn--${place}`]} href={withBase("roots/")} data-roots-btn>
+  <svg class="roots-svg" viewBox="0 0 316 156" aria-hidden="true" focusable="false">
+    <g class="roots-main">{main.map((d, i) => <path d={d} pathLength="1" style={`--i:${i}`} />)}</g>
+    <g class="roots-branch">{branch.map((d, i) => <path d={d} pathLength="1" style={`--i:${i}`} />)}</g>
+    <g class="roots-tendril">{tendril.map((d, i) => <path d={d} pathLength="1" style={`--i:${i}`} />)}</g>
+  </svg>
+  <span class="roots-label">Roots</span>
+  <span class="sr-only"> — family history</span>
+</a>
+
+<style>
+  .roots-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 8.5rem;
+    height: 2.75rem;
+    margin-top: 0.85rem;
+    border: 1px solid rgba(196, 154, 108, 0.75);
+    border-radius: 999px;
+    background: rgba(28, 16, 12, 0.5);
+    color: rgba(243, 238, 228, 0.95);
+    font-family: var(--font-serif);
+    font-size: 1.35rem;
+    letter-spacing: 0.08em;
+    text-decoration: none;
+    text-shadow: 0 1px 3px rgba(20, 24, 18, 0.5);
+    box-shadow: 0 4px 14px rgba(20, 12, 6, 0.25);
+    pointer-events: auto;
+    -webkit-tap-highlight-color: transparent;
+    transition: border-color 0.4s ease, background-color 0.4s ease;
+  }
+  .roots-label { position: relative; z-index: 1; }
+  .roots-btn--foot { display: none; margin-top: 0; }
+  /* phones and short screens: the bio fills the space above the footer, so the button sits beside Reduce motion */
+  @media (max-width: 699px), (max-height: 760px) {
+    .roots-btn--copy { display: none; }
+    .roots-btn--foot { display: inline-flex; }
+  }
+  .roots-svg {
+    position: absolute;
+    /* the button sits at x 90-226, y 56-100 of the 316 x 156 drawing */
+    /* 1 drawing unit = 1px at 16px/rem, the same scale as the 8.5rem x 2.75rem button */
+    left: -5.625rem;
+    top: -3.5rem;
+    width: 19.75rem;
+    height: 9.75rem;
+    max-width: none; /* the site caps svg at 100% of its box */
+    max-height: none;
+    overflow: visible;
+    pointer-events: none;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    filter: drop-shadow(0 1px 1px rgba(20, 12, 6, 0.55));
+    /* behind neighbouring text and buttons (and the bio panel), so nothing becomes hard to read */
+    z-index: -1;
+  }
+  /* beside Reduce motion and above the footer line the space is tighter */
+  .roots-btn--foot .roots-svg { transform: scale(0.82); transform-origin: 50% 50%; }
+  .roots-svg path {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    /* retract: tendrils and branches first, then the main roots */
+    transition: stroke-dashoffset 0.45s cubic-bezier(0.4, 0, 0.6, 1);
+  }
+  .roots-main path { stroke: #c49a6c; stroke-width: 2.4; transition-delay: 0.12s; }
+  .roots-branch path { stroke: #a57a4c; stroke-width: 1.5; transition-delay: 0.04s; }
+  .roots-tendril path { stroke: #d8c49a; stroke-width: 1.2; transition-delay: 0s; }
+
+  /* grow: main roots first, then branches and tendrils, about 0.9 s in all */
+  .roots-btn.is-growing .roots-svg path,
+  .roots-btn:focus-visible .roots-svg path {
+    stroke-dashoffset: 0;
+    transition: stroke-dashoffset 0.6s cubic-bezier(0.25, 0.6, 0.3, 1);
+  }
+  .roots-btn.is-growing .roots-main path,
+  .roots-btn:focus-visible .roots-main path { transition-delay: calc(var(--i) * 0.03s); }
+  .roots-btn.is-growing .roots-branch path,
+  .roots-btn:focus-visible .roots-branch path { transition-delay: calc(0.22s + var(--i) * 0.02s); }
+  .roots-btn.is-growing .roots-tendril path,
+  .roots-btn:focus-visible .roots-tendril path { transition-delay: calc(0.3s + var(--i) * 0.03s); }
+  .roots-btn:focus-visible { outline: 2px solid #d8c49a; outline-offset: 3px; }
+
+  @media (hover: hover) {
+    .roots-btn:hover { border-color: rgba(216, 196, 154, 0.95); background: rgba(28, 16, 12, 0.62); }
+    .roots-btn:hover .roots-svg path { stroke-dashoffset: 0; transition: stroke-dashoffset 0.6s cubic-bezier(0.25, 0.6, 0.3, 1); }
+    .roots-btn:hover .roots-main path { transition-delay: calc(var(--i) * 0.03s); }
+    .roots-btn:hover .roots-branch path { transition-delay: calc(0.22s + var(--i) * 0.02s); }
+    .roots-btn:hover .roots-tendril path { transition-delay: calc(0.3s + var(--i) * 0.03s); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :global(html:not([data-reduce-motion="false"])) .roots-svg path { transition: none !important; }
+    :global(html:not([data-reduce-motion="false"])) .roots-svg { opacity: 0.6; }
+  }
+  :global(html[data-reduce-motion="true"]) .roots-svg path { transition: none !important; }
+  :global(html[data-reduce-motion="true"]) .roots-svg { opacity: 0.6; }
+</style>
+
+<script>
+  // Touch has no hover: a tap grows the roots, then follows the link once they have drawn.
+  const reduced = () =>
+    document.documentElement.dataset.reduceMotion === "true" ||
+    (document.documentElement.dataset.reduceMotion !== "false" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+  document.querySelectorAll<HTMLAnchorElement>("[data-roots-btn]").forEach((btn) => {
+    let touch = false;
+    btn.addEventListener("pointerdown", (e) => { touch = e.pointerType === "touch" || e.pointerType === "pen"; });
+    btn.addEventListener("click", (e) => {
+      if (!touch || reduced() || e.metaKey || e.ctrlKey || e.shiftKey) return;
+      e.preventDefault();
+      btn.classList.add("is-growing");
+      window.setTimeout(() => { window.location.href = btn.href; }, 750);
+    });
+    btn.addEventListener("pointerleave", () => { if (!touch) btn.classList.remove("is-growing"); });
+  });
+  // coming back with the browser's back button should not leave the roots drawn
+  window.addEventListener("pageshow", () => {
+    document.querySelectorAll("[data-roots-btn]").forEach((b) => b.classList.remove("is-growing"));
+  });
+</script>

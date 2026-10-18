@@ -2,6 +2,7 @@
 import { existsSync } from "node:fs";
 import { join } from "node:path";
 import { ART, artUrl } from "../lib/art";
+import RootsButton from "./RootsButton.astro";
 import {
   rooms,
   ABOUT_PATH,
@@ -60,10 +61,12 @@ const plateUrl = hasPlate ? artUrl(plateRel) : "";
 
     <div class="house-copy house-after">
       <p class="house-bio letter-plate">{SITE_BIO}</p>
+      <RootsButton place="copy" />
     </div>
 
     <div class="menu-foot menu-foot--sky house-after">
       <div class="menu-controls">
+        <RootsButton place="foot" />
         <button type="button" class="text-btn mono" data-reduce-motion aria-pressed="false">
           Reduce motion
         </button>
