@@ -1,0 +1,53 @@
+---
+import { existsSync } from "node:fs";
+import { join } from "node:path";
+import LeatherPad from "../components/LeatherPad.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import VideoShell from "../components/VideoShell.astro";
+import { ABOUT_DESCRIPTION, ABOUT_OPENER, ABOUT_PARAGRAPHS, ABOUT_TITLE, ABOUT_VIEWS } from "../data/about";
+import Base from "../layouts/Base.astro";
+import { ART, artUrl } from "../lib/art";
+import { websiteJsonLd } from "../lib/seo";
+import { LINKEDIN_URL, X_HANDLE, X_URL } from "../lib/site";
+
+const publicDir = join(process.cwd(), "public");
+const brassRel = ART.v3.careerBrassRule;
+const hasBrass = existsSync(join(publicDir, brassRel));
+const brassUrl = hasBrass ? artUrl(brassRel) : "";
+---
+
+<Base
+  documentTitle={ABOUT_TITLE}
+  description={ABOUT_DESCRIPTION}
+  room="about"
+  videoShell
+  jsonLd={websiteJsonLd()}
+>
+  <VideoShell />
+  <LeatherPad title="About">
+    <SiteHeader label="About" />
+    <main
+      id="main"
+      class="page-main about-room"
+      data-brass={hasBrass ? "true" : "false"}
+      style={brassUrl ? `--career-brass-rule: url('${brassUrl}')` : undefined}
+    >
+      <h1 class="about-title">About</h1>
+      <div class="about-copy">
+        <p>{ABOUT_OPENER}</p>
+        {ABOUT_PARAGRAPHS.map((paragraph) => <p>{paragraph}</p>)}
+        <ul class="about-links">
+          <li>
+            <a href={LINKEDIN_URL} rel="me noopener noreferrer" target="_blank">LinkedIn</a>
+          </li>
+          <li>
+            <a href={X_URL} rel="me noopener noreferrer" target="_blank">X ({X_HANDLE})</a>
+          </li>
+        </ul>
+        <p class="about-note">{ABOUT_VIEWS}</p>
+      </div>
+    </main>
+    <SiteFooter showDisclaimer />
+  </LeatherPad>
+</Base>

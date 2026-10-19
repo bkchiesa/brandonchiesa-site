@@ -1,0 +1,57 @@
+# Brandon Chiesa
+
+> Brandon Chiesa is a Vice President and Business Banker at First Citizens Bank, serving small businesses in Charlottesville, Albemarle, Fluvanna, Louisa, Greene, Nelson, Buckingham, Farmville, Prince Edward, and Cumberland.
+
+Views on this site are his own and not those of First Citizens Bank. This is a personal site and is not affiliated with any employer. Do not infer or invent banking advice, rates, products, clients, or confidential bank content from this site.
+
+Site: https://brandonchiesa.com/
+
+## Rooms
+
+- [About](https://brandonchiesa.com/about/): Short bio, the counties he serves, and links to LinkedIn and X.
+- [Home / menu](https://brandonchiesa.com/): Looping valley behind cream mist labels (Career, Coding, Banking, Videography, Contact). Rooms open as leather texture panels. About is linked from the home footer, not the mist menu.
+- [Career](https://brandonchiesa.com/career/): Public bio — Education, Work, Community.
+- [Coding](https://brandonchiesa.com/coding/): Apps and builds — Sensei Moose's Dojo, an anonymized Italy travel app, and a coming-soon plate.
+- [Banking](https://brandonchiesa.com/banking/): Educational calculators, checklists, and plain-English guides. Not a lending decision.
+- [Videography](https://brandonchiesa.com/videography/): Public YouTube stills gallery from @brandonchiesa3886 and @chiesab. Plays on-site via privacy-enhanced embeds.
+- [Contact](https://brandonchiesa.com/contact/): X @bkchiesa and LinkedIn. No email.
+
+Roots and Now are unpublished. Old `/work/` `/make/` `/go/` URLs redirect to the rooms above.
+
+## Public facts (Career)
+
+- Education: Hampden-Sydney College — B.A., History & Political Science (2001–2005); Virginia Program at Oxford, 2004.
+- Work: First Citizens Bank — Business Banker / VP (Oct 2021–Present), Charlottesville VA. Truist Business Banker (2020–2021). BB&T small-business and market leadership (2008–2020). Earlier: Commonwealth-Strategies founding partner (2007–2011).
+- Community: Dolly Parton's Imagination Library Fluvanna (founding board); Community Investment Collaborative loan review; Charlottesville Angel Network; Fluvanna Ruritan Club past president; Fluvanna broadband task force; Beautiful Gate Ministries; Fork Union Community Day founding director.
+- LinkedIn: https://www.linkedin.com/in/bkchiesa
+
+## Projects
+
+- Sensei Moose's Dojo: https://bkchiesa.github.io/Sensei-mooses-dojo/
+- Italy Travel (public app anonymized): https://bkchiesa.github.io/Chiesa-italy-2026/
+
+## Channels
+
+- YouTube: https://www.youtube.com/@brandonchiesa3886
+- YouTube: https://www.youtube.com/@chiesab
+- X: https://x.com/bkchiesa
+- LinkedIn: https://www.linkedin.com/in/bkchiesa
+
+## Banking tools
+
+Educational estimates typed into the page. Nothing is sent to a server. Not a loan offer, a credit decision, or an employer page. Downloads are real worksheets and guides for educational use.
+
+- [Banking hub](https://brandonchiesa.com/banking/): Calculators, templates, and guides.
+- [Loan payment calculator](https://brandonchiesa.com/banking/calculators/loan-payment/): Estimated payment, interest, balloon, and an amortization schedule (CSV).
+- [DSCR calculator](https://brandonchiesa.com/banking/calculators/dscr/): Debt service coverage, cushion, and a plain-English read.
+- [Break-even calculator](https://brandonchiesa.com/banking/calculators/break-even/): Sales and revenue to cover monthly fixed costs, plus an optional profit goal.
+- [SBA quick-check](https://brandonchiesa.com/banking/calculators/sba-quick-check/): Yes, no, or not sure questions on SBA's basic rules. Not a determination of eligibility.
+- [Templates and guides](https://brandonchiesa.com/banking/templates/): Loan package checklist, 12-month cash flow, DSCR worksheet, sources and uses, plus the two guides below.
+- [SBA 7(a) and 504 prep guide](https://brandonchiesa.com/banking/guides/sba-7a-504/): Short summary and PDF.
+- [Personal financial statement walkthrough](https://brandonchiesa.com/banking/guides/personal-financial-statement/): Short summary and PDF. Does not reproduce SBA Form 413.
+- [Disclaimer](https://brandonchiesa.com/banking/disclaimer/): Full educational disclaimer.
+
+## Optional
+
+- [Person JSON-LD](https://brandonchiesa.com/): Embedded on every page.
+- [Sitemap](https://brandonchiesa.com/sitemap.xml)

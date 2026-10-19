@@ -1,0 +1,28 @@
+---
+import { bankingCards } from "../../lib/banking/downloads";
+import TemplateCard from "./TemplateCard.astro";
+
+interface Props {
+  ids: readonly string[];
+}
+
+const { ids } = Astro.props;
+const byId = new Map(bankingCards().map((card) => [card.id, card]));
+const cards = ids.flatMap((id) => {
+  const card = byId.get(id);
+  return card ? [card] : [];
+});
+---
+
+{
+  cards.length > 0 && (
+    <section class="bank-block">
+      <h2 class="bank-section-title">Worksheets to use with this</h2>
+      <div class="bank-stack">
+        {cards.map((card) => (
+          <TemplateCard card={card} />
+        ))}
+      </div>
+    </section>
+  )
+}

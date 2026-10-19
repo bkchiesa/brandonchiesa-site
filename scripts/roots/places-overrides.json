@@ -1,0 +1,556 @@
+{
+ "_about": "Hand corrections for the Roots maps. 'people' fixes what the extractor read from a person's record (deceased people only: this file is public). 'queries' gives the geocoder a better search for a place. 'coords' pins a place by hand (always wins); give a source for each. approx: 1 = near the spot, 2 = an area (county, state, zone).",
+ "people": {
+  "betty-burkett-1924": {
+   "kind": {
+    "fort eustis, virginia": "worked"
+   }
+  },
+  "peter-samuel-burkett": {
+   "drop": [
+    "oak grove, virginia"
+   ],
+   "add": [
+    {
+     "k": "worked",
+     "raw": "Oak Grove UMC, Aylor, Madison Co., VA",
+     "note": "served as pastor"
+    }
+   ]
+  },
+  "frederick-judkins-1785": {
+   "drop": [
+    "norfolk, virginia",
+    "craney island, virginia",
+    "craney island, portsmouth, virginia"
+   ],
+   "add": [
+    {
+     "k": "served",
+     "raw": "Craney Island, Portsmouth, Virginia",
+     "y": 1813,
+     "note": "War of 1812 service, per widow's declaration"
+    },
+    {
+     "k": "served",
+     "raw": "Norfolk, Virginia",
+     "y": 1814,
+     "note": "War of 1812 service, per widow's declaration"
+    }
+   ]
+  },
+  "thomas-gray-1593": {
+   "add": [
+    {
+     "k": "lived",
+     "raw": "Jamestown Island, Virginia",
+     "y": 1625,
+     "note": "1624/5 muster, James Island"
+    }
+   ]
+  },
+  "sheppard-hicks-c1846": {
+   "drop": [
+    "camp distribution, virginia"
+   ],
+   "add": [
+    {
+     "k": "served",
+     "raw": "Yorktown, Virginia",
+     "y": 1863,
+     "note": "came into Union lines near Yorktown, Nov 1863"
+    }
+   ]
+  },
+  "john-alvin-eltringham-1924": {
+   "kind": {
+    "fort eustis, virginia": "worked"
+   }
+  }
+ },
+ "coords": {
+  "hilton village, warwick county, virginia": {
+   "lat": 37.0335,
+   "lon": -76.459,
+   "approx": 1,
+   "label": "Hilton Village, Newport News, Virginia",
+   "note": "Warwick County is now part of Newport News.",
+   "source": "Hilton Village Historic District (NRHP), Newport News, Virginia"
+  },
+  "general hospital, hanover academy, hanover county, virginia": {
+   "lat": 37.827,
+   "lon": -77.459,
+   "approx": 1,
+   "label": "Hanover Academy (Confederate General Hospital), near Taylorsville, Hanover Co., Virginia",
+   "note": "The academy building stood on the Old Ridge Road near Taylorsville; it served as a Confederate general hospital.",
+   "source": "Hanover County Historic Resources Survey (DHR HN-042, 1990), education context; USGS GNIS Taylorsville"
+  },
+  "red sulphur springs, monroe county, virginia, confederate hospital": {
+   "lat": 37.5136,
+   "lon": -80.765,
+   "approx": 0,
+   "label": "Red Sulphur Springs, Monroe Co. (then Virginia, now West Virginia)",
+   "note": "The Red Sulphur Springs resort served as a Confederate hospital; Monroe County became part of West Virginia in 1863.",
+   "source": "Wikipedia, Red Sulphur Springs, West Virginia; WV Historic Commission marker (1969)"
+  },
+  "panama canal zone": {
+   "lat": 9.1178,
+   "lon": -79.7203,
+   "approx": 2,
+   "label": "Panama Canal Zone",
+   "source": "Wikipedia, Panama Canal Zone (zone centre)"
+  },
+  "metropolitan hospital, manhattan, new york city": {
+   "lat": 40.769,
+   "lon": -73.9439,
+   "approx": 0,
+   "note": "in 1946 Metropolitan Hospital was on Welfare Island (now Roosevelt Island); it moved to First Avenue in 1955",
+   "source": "Wikidata Q2887672 (The Octagon, Metropolitan Hospital's building); NYC Health + Hospitals history"
+  },
+  "saint raymonds cemetery, bronx, new york": {
+   "lat": 40.825,
+   "lon": -73.8339,
+   "approx": 0,
+   "source": "Wikidata Q7402126"
+  },
+  "pamunkey united methodist church cemetery, virginia": {
+   "lat": 37.5017,
+   "lon": -76.8973,
+   "approx": 0,
+   "label": "Pamunkey UMC Cemetery, New Kent Co., VA",
+   "source": "15700 Pamunkey Church Rd, Lanexa (UMData church 481096); OSM Pamunkey Church Road"
+  },
+  "pamunkey methodist church cemetery, virginia": {
+   "lat": 37.5017,
+   "lon": -76.8973,
+   "approx": 0,
+   "label": "Pamunkey Methodist Church Cemetery, New Kent Co., VA",
+   "source": "15700 Pamunkey Church Rd, Lanexa (UMData church 481096); OSM Pamunkey Church Road"
+  },
+  "camp ruffin, virginia": {
+   "lat": 36.9397,
+   "lon": -76.5866,
+   "approx": 1,
+   "note": "1861 Confederate camp near St. Luke's Church, Smithfield, Isle of Wight Co.",
+   "source": "HMDB marker 103839 (Historic St. Luke's Church); OSM St. Luke's Historic Church"
+  },
+  "s giacomo, branzone": {
+   "lat": 44.5502,
+   "lon": 9.8631,
+   "approx": 1,
+   "note": "parish of San Giacomo, Branzone (pinned at the village)",
+   "source": "OSM Branzone, Valmozzola"
+  },
+  "maple hill cemetery, bluefield": {
+   "lat": 37.2458,
+   "lon": -81.3014,
+   "approx": 0,
+   "label": "Maple Hill Cemetery, Bluefield, VA",
+   "source": "Find a Grave cemetery 51064 (Bluefield, Tazewell Co., VA)"
+  },
+  "maple hill cemetery, bluefield, virginia": {
+   "lat": 37.2458,
+   "lon": -81.3014,
+   "approx": 0,
+   "label": "Maple Hill Cemetery, Bluefield, VA",
+   "source": "Find a Grave cemetery 51064 (Bluefield, Tazewell Co., VA)"
+  },
+  "hicksford, greensville county, virginia": {
+   "lat": 36.6861,
+   "lon": -77.5428,
+   "approx": 1,
+   "note": "Hicksford, now part of Emporia",
+   "source": "Wikidata Q15223858 (Hicksford-Emporia Historic District)"
+  },
+  "hicksford, virginia": {
+   "lat": 36.6861,
+   "lon": -77.5428,
+   "approx": 1,
+   "note": "Hicksford, now part of Emporia",
+   "source": "Wikidata Q15223858 (Hicksford-Emporia Historic District)"
+  },
+  "graham, clearfork district, tazewell county, virginia": {
+   "lat": 37.2526,
+   "lon": -81.2713,
+   "approx": 1,
+   "note": "Graham was renamed Bluefield, Virginia, in 1924",
+   "source": "OSM Bluefield, Tazewell Co., VA"
+  },
+  "chaffins bluff, virginia": {
+   "lat": 37.4233,
+   "lon": -77.3978,
+   "approx": 0,
+   "source": "Wikidata Q5066801"
+  },
+  "south brunswick, brunswick county, virginia": {
+   "lat": 36.7789,
+   "lon": -77.86709,
+   "approx": 1,
+   "m": "the centre of Brunswick County",
+   "label": "South Brunswick, Brunswick Co., VA",
+   "source": "Brunswick County centre (OSM relation 2534167); the geocoder matched a street in South Hill"
+  },
+  "essex county, virginia": {
+   "lat": 37.9364,
+   "lon": -76.9337,
+   "approx": 2,
+   "m": "the centre of Essex County",
+   "label": "Essex County, VA",
+   "source": "US Census Bureau 2024 Gazetteer (2024_Gaz_counties_national), internal point of Essex County, VA",
+   "note": "Essex County, Virginia (Middle Peninsula, county seat Tappahannock), not Essex in MA, NJ, NY or VT"
+  },
+  "essex, virginia": {
+   "lat": 37.9364,
+   "lon": -76.9337,
+   "approx": 2,
+   "m": "the centre of Essex County",
+   "label": "Essex County, VA",
+   "source": "US Census Bureau 2024 Gazetteer (2024_Gaz_counties_national), internal point of Essex County, VA",
+   "note": "Essex County, Virginia (Middle Peninsula, county seat Tappahannock), not Essex in MA, NJ, NY or VT"
+  },
+  "king and queen county, virginia": {
+   "lat": 37.7178,
+   "lon": -76.9056,
+   "approx": 2,
+   "m": "the centre of King and Queen County",
+   "label": "King and Queen County, VA",
+   "source": "US Census Bureau 2024 Gazetteer (2024_Gaz_counties_national), internal point of King and Queen County, VA"
+  },
+  "king & queen county, virginia": {
+   "lat": 37.7178,
+   "lon": -76.9056,
+   "approx": 2,
+   "m": "the centre of King and Queen County",
+   "label": "King and Queen County, VA",
+   "source": "US Census Bureau 2024 Gazetteer (2024_Gaz_counties_national), internal point of King and Queen County, VA"
+  },
+  "new kent, virginia": {
+   "lat": 37.5102,
+   "lon": -76.9993,
+   "approx": 2,
+   "m": "the centre of New Kent County",
+   "label": "New Kent County, VA",
+   "source": "US Census Bureau 2024 Gazetteer (2024_Gaz_counties_national), internal point of New Kent County, VA"
+  },
+  "gates, north carolina": {
+   "lat": 36.4421,
+   "lon": -76.7024,
+   "approx": 2,
+   "m": "the centre of Gates County",
+   "label": "Gates County, NC",
+   "source": "US Census Bureau 2024 Gazetteer (2024_Gaz_counties_national), internal point of Gates County, NC"
+  },
+  "smith county, virginia": {
+   "lat": 36.8423,
+   "lon": -81.5398,
+   "approx": 2,
+   "m": "the centre of Smyth County",
+   "label": "Smyth County, VA",
+   "source": "US Census Bureau 2024 Gazetteer (2024_Gaz_counties_national), internal point of Smyth County, VA",
+   "note": "Smyth County, Virginia (often spelled 'Smith' in early records), not Smith County, Tennessee"
+  },
+  "botetourt county, virginia": {
+   "lat": 37.5655,
+   "lon": -79.7975,
+   "approx": 2,
+   "m": "the centre of Botetourt County",
+   "label": "Botetourt County, VA",
+   "source": "US Census Bureau 2024 Gazetteer (2024_Gaz_counties_national), internal point of Botetourt County, VA"
+  },
+  "montgomery county, virginia": {
+   "lat": 37.1755,
+   "lon": -80.3878,
+   "approx": 2,
+   "m": "the centre of Montgomery County",
+   "label": "Montgomery County, VA",
+   "source": "US Census Bureau 2024 Gazetteer (2024_Gaz_counties_national), internal point of Montgomery County, VA",
+   "note": "Montgomery County, Virginia; its 18th-century bounds also took in later Wythe, Pulaski and part of Tazewell"
+  },
+  "wythe county, virginia": {
+   "lat": 36.8999,
+   "lon": -81.083,
+   "approx": 2,
+   "m": "the centre of Wythe County",
+   "label": "Wythe County, VA",
+   "source": "US Census Bureau 2024 Gazetteer (2024_Gaz_counties_national), internal point of Wythe County, VA"
+  },
+  "washington county, virginia": {
+   "lat": 36.7478,
+   "lon": -81.9503,
+   "approx": 2,
+   "m": "the centre of Washington County",
+   "label": "Washington County, VA",
+   "source": "US Census Bureau 2024 Gazetteer (2024_Gaz_counties_national), internal point of Washington County, VA",
+   "note": "Washington County, Virginia (Abingdon)"
+  },
+  "orange county, virginia": {
+   "lat": 38.2493,
+   "lon": -78.0111,
+   "approx": 2,
+   "m": "the centre of Orange County",
+   "label": "Orange County, VA",
+   "source": "US Census Bureau 2024 Gazetteer (2024_Gaz_counties_national), internal point of Orange County, VA"
+  },
+  "mercer county, west virginia": {
+   "lat": 37.4034,
+   "lon": -81.1065,
+   "approx": 2,
+   "m": "the centre of Mercer County",
+   "label": "Mercer County, WV",
+   "source": "US Census Bureau 2024 Gazetteer (2024_Gaz_counties_national), internal point of Mercer County, WV"
+  },
+  "mercer county, virginia": {
+   "lat": 37.4034,
+   "lon": -81.1065,
+   "approx": 2,
+   "m": "the centre of Mercer County",
+   "label": "Mercer County, WV",
+   "source": "US Census Bureau 2024 Gazetteer (2024_Gaz_counties_national), internal point of Mercer County, WV",
+   "note": "Mercer County was part of Virginia until West Virginia statehood in 1863"
+  },
+  "wyoming county, west virginia": {
+   "lat": 37.6037,
+   "lon": -81.549,
+   "approx": 2,
+   "m": "the centre of Wyoming County",
+   "label": "Wyoming County, WV",
+   "source": "US Census Bureau 2024 Gazetteer (2024_Gaz_counties_national), internal point of Wyoming County, WV"
+  },
+  "warwick county, virginia": {
+   "lat": 37.0761,
+   "lon": -76.522,
+   "approx": 2,
+   "m": "Warwick County (now Newport News)",
+   "label": "Warwick County (now Newport News), VA",
+   "source": "US Census Bureau 2024 Gazetteer (2024_Gaz_counties_national), internal point of Newport News city, VA",
+   "note": "Warwick County, Virginia (city of Warwick 1952-58) merged into Newport News in 1958; pinned at the centre of Newport News, not Warwick, Rhode Island"
+  },
+  "warwick, virginia": {
+   "lat": 37.0761,
+   "lon": -76.522,
+   "approx": 2,
+   "m": "Warwick County (now Newport News)",
+   "label": "Warwick County (now Newport News), VA",
+   "source": "US Census Bureau 2024 Gazetteer (2024_Gaz_counties_national), internal point of Newport News city, VA",
+   "note": "Warwick County, Virginia (city of Warwick 1952-58) merged into Newport News in 1958; pinned at the centre of Newport News, not Warwick, Rhode Island"
+  },
+  "city of warwick, virginia": {
+   "lat": 37.0761,
+   "lon": -76.522,
+   "approx": 2,
+   "m": "Warwick County (now Newport News)",
+   "label": "Warwick County (now Newport News), VA",
+   "source": "US Census Bureau 2024 Gazetteer (2024_Gaz_counties_national), internal point of Newport News city, VA",
+   "note": "Warwick County, Virginia (city of Warwick 1952-58) merged into Newport News in 1958; pinned at the centre of Newport News, not Warwick, Rhode Island"
+  },
+  "elizabeth city county, virginia": {
+   "lat": 37.048,
+   "lon": -76.2973,
+   "approx": 2,
+   "m": "Elizabeth City County (now Hampton)",
+   "label": "Elizabeth City County (now Hampton), VA",
+   "source": "US Census Bureau 2024 Gazetteer (2024_Gaz_counties_national), internal point of Hampton city, VA",
+   "note": "Elizabeth City County, Virginia merged into Hampton in 1952; not Elizabeth City, North Carolina"
+  },
+  "nansemond county, virginia": {
+   "lat": 36.6972,
+   "lon": -76.6348,
+   "approx": 2,
+   "m": "Nansemond County (now Suffolk)",
+   "label": "Nansemond County (now Suffolk), VA",
+   "source": "US Census Bureau 2024 Gazetteer (2024_Gaz_counties_national), internal point of Suffolk city, VA",
+   "note": "Nansemond County became the city of Nansemond in 1972 and merged into Suffolk in 1974"
+  },
+  "nansemond, virginia": {
+   "lat": 36.6972,
+   "lon": -76.6348,
+   "approx": 2,
+   "m": "Nansemond County (now Suffolk)",
+   "label": "Nansemond County (now Suffolk), VA",
+   "source": "US Census Bureau 2024 Gazetteer (2024_Gaz_counties_national), internal point of Suffolk city, VA",
+   "note": "Nansemond County became the city of Nansemond in 1972 and merged into Suffolk in 1974"
+  },
+  "princess anne county, virginia": {
+   "lat": 36.7795,
+   "lon": -76.0291,
+   "approx": 2,
+   "m": "Princess Anne County (now Virginia Beach)",
+   "label": "Princess Anne County (now Virginia Beach), VA",
+   "source": "US Census Bureau 2024 Gazetteer (2024_Gaz_counties_national), internal point of Virginia Beach city, VA",
+   "note": "Princess Anne County merged with Virginia Beach in 1963"
+  },
+  "norfolk county, virginia": {
+   "lat": 36.6794,
+   "lon": -76.3018,
+   "approx": 2,
+   "m": "Norfolk County (now Chesapeake)",
+   "label": "Norfolk County (now Chesapeake), VA",
+   "source": "US Census Bureau 2024 Gazetteer (2024_Gaz_counties_national), internal point of Chesapeake city, VA",
+   "note": "Norfolk County, Virginia merged with South Norfolk to form Chesapeake in 1963; not Norfolk County, Massachusetts"
+  },
+  "hunters mill, gates county, north carolina": {
+   "lat": 36.405,
+   "lon": -76.5828,
+   "approx": 2,
+   "m": "Hunters Mill Township, Gates Co.",
+   "label": "Hunters Mill Township, Gates Co., NC",
+   "source": "US Census Bureau 2023 cartographic boundary file cb_2023_37_cousub_500k, centroid of Hunters Mill township, Gates County, NC (Nominatim has no Hunters Mill)"
+  },
+  "hunters mill twp, gates county, north carolina": {
+   "lat": 36.405,
+   "lon": -76.5828,
+   "approx": 2,
+   "m": "Hunters Mill Township, Gates Co.",
+   "label": "Hunters Mill Township, Gates Co., NC",
+   "source": "US Census Bureau 2023 cartographic boundary file cb_2023_37_cousub_500k, centroid of Hunters Mill township, Gates County, NC (Nominatim has no Hunters Mill)"
+  },
+  "hunters mill township, gates county, north carolina": {
+   "lat": 36.405,
+   "lon": -76.5828,
+   "approx": 2,
+   "m": "Hunters Mill Township, Gates Co.",
+   "label": "Hunters Mill Township, Gates Co., NC",
+   "source": "US Census Bureau 2023 cartographic boundary file cb_2023_37_cousub_500k, centroid of Hunters Mill township, Gates County, NC (Nominatim has no Hunters Mill)"
+  },
+  "township 3, chowan county, north carolina": {
+   "lat": 36.2854,
+   "lon": -76.6263,
+   "approx": 2,
+   "m": "Township 3 (Upper), Chowan Co.",
+   "label": "Township 3 (Upper), Chowan Co., NC",
+   "source": "US Census Bureau 2023 cartographic boundary file cb_2023_37_cousub_500k, centroid of 'Township 3, Upper', Chowan County, NC"
+  },
+  "occupacia, essex county, virginia": {
+   "lat": 38.0404,
+   "lon": -77.0175,
+   "approx": 1,
+   "label": "Occupacia, Essex Co., VA",
+   "note": "Occupacia, Essex County, Virginia",
+   "source": "OpenStreetMap Nominatim, hamlet Occupacia, Essex County, VA 22509; checked inside Essex County against Census cb_2023_us_county_500k"
+  },
+  "occupacia, virginia": {
+   "lat": 38.0404,
+   "lon": -77.0175,
+   "approx": 1,
+   "label": "Occupacia, Essex Co., VA",
+   "note": "Occupacia, Essex County, Virginia",
+   "source": "OpenStreetMap Nominatim, hamlet Occupacia, Essex County, VA 22509; checked inside Essex County against Census cb_2023_us_county_500k"
+  },
+  "occupacia twp, essex county, virginia": {
+   "lat": 38.0404,
+   "lon": -77.0175,
+   "approx": 2,
+   "m": "Occupacia district, Essex Co. (pinned at Occupacia)",
+   "label": "Occupacia district, Essex Co., VA",
+   "note": "historic Occupacia magisterial district/township of Essex County; pinned at the hamlet of Occupacia",
+   "source": "OpenStreetMap Nominatim, hamlet Occupacia, Essex County, VA 22509"
+  },
+  "occupacia township, essex county, virginia": {
+   "lat": 38.0404,
+   "lon": -77.0175,
+   "approx": 2,
+   "m": "Occupacia district, Essex Co. (pinned at Occupacia)",
+   "label": "Occupacia district, Essex Co., VA",
+   "note": "historic Occupacia magisterial district/township of Essex County; pinned at the hamlet of Occupacia",
+   "source": "OpenStreetMap Nominatim, hamlet Occupacia, Essex County, VA 22509"
+  },
+  "occupacia magisterial district, essex county, virginia": {
+   "lat": 38.0404,
+   "lon": -77.0175,
+   "approx": 2,
+   "m": "Occupacia district, Essex Co. (pinned at Occupacia)",
+   "label": "Occupacia district, Essex Co., VA",
+   "note": "historic Occupacia magisterial district/township of Essex County; pinned at the hamlet of Occupacia",
+   "source": "OpenStreetMap Nominatim, hamlet Occupacia, Essex County, VA 22509"
+  },
+  "occupacia district, essex county, virginia": {
+   "lat": 38.0404,
+   "lon": -77.0175,
+   "approx": 2,
+   "m": "Occupacia district, Essex Co. (pinned at Occupacia)",
+   "label": "Occupacia district, Essex Co., VA",
+   "note": "historic Occupacia magisterial district/township of Essex County; pinned at the hamlet of Occupacia",
+   "source": "OpenStreetMap Nominatim, hamlet Occupacia, Essex County, VA 22509"
+  },
+  "lloyds, essex county, virginia": {
+   "lat": 38.001,
+   "lon": -77.015,
+   "approx": 1,
+   "label": "Lloyds, Essex Co., VA",
+   "source": "OpenStreetMap Nominatim, hamlet Lloyds, Essex County, VA 22438"
+  },
+  "mormorola di gusaliggio, valmozzola": {
+   "lat": 44.5685,
+   "lon": 9.8833,
+   "approx": 1,
+   "label": "Mormorola (parish of Gusaliggio), Valmozzola",
+   "note": "Mormorola, in the parish of Gusaliggio, Valmozzola (Parma)",
+   "source": "OpenStreetMap Nominatim, village Mormorola, Valmozzola, Parma; the geocoder had matched the Rocca di Gusaliggio castle about 1.2 km away"
+  },
+  "mariano, valmozzola": {
+   "lat": 44.5809,
+   "lon": 9.8288,
+   "approx": 1,
+   "label": "Mariano, Valmozzola",
+   "source": "OpenStreetMap Nominatim, hamlet Mariano, Valmozzola, Parma, Emilia-Romagna"
+  },
+  "mariano, valmozzola, parma": {
+   "lat": 44.5809,
+   "lon": 9.8288,
+   "approx": 1,
+   "label": "Mariano, Valmozzola",
+   "source": "OpenStreetMap Nominatim, hamlet Mariano, Valmozzola, Parma, Emilia-Romagna"
+  },
+  "mariano, valmozzola, italy": {
+   "lat": 44.5809,
+   "lon": 9.8288,
+   "approx": 1,
+   "label": "Mariano, Valmozzola",
+   "source": "OpenStreetMap Nominatim, hamlet Mariano, Valmozzola, Parma, Emilia-Romagna"
+  },
+  "gusaliggio, valmozzola": {
+   "lat": 44.58,
+   "lon": 9.8688,
+   "approx": 1,
+   "label": "Pieve di Gusaliggio, Valmozzola",
+   "source": "OpenStreetMap Nominatim, hamlet Pieve di Gusaliggio, Valmozzola, Parma"
+  },
+  "pieve di gusaliggio, valmozzola": {
+   "lat": 44.58,
+   "lon": 9.8688,
+   "approx": 1,
+   "label": "Pieve di Gusaliggio, Valmozzola",
+   "source": "OpenStreetMap Nominatim, hamlet Pieve di Gusaliggio, Valmozzola, Parma"
+  },
+  "pieve di gusaliggio": {
+   "lat": 44.58,
+   "lon": 9.8688,
+   "approx": 1,
+   "label": "Pieve di Gusaliggio, Valmozzola",
+   "source": "OpenStreetMap Nominatim, hamlet Pieve di Gusaliggio, Valmozzola, Parma"
+  },
+  "indian woods, southampton county, virginia": {
+   "lat": 36.715,
+   "lon": -77.11764,
+   "approx": 1,
+   "label": "Indian Woods section, Southampton Co., VA",
+   "note": "the Indian Woods section of Southampton County; exact spot not known",
+   "source": "OpenStreetMap Nominatim, Indian Woods Trail, Southampton County (the geocoder matched the road, so this is approximate)"
+  }
+ },
+ "queries": {
+  "fort drewry, virginia": "Drewry's Bluff, Virginia",
+  "newsoms village, southampton county, virginia": "Newsoms, Southampton County, Virginia",
+  "oak grove united methodist church, aylor, madison county, virginia": "Oak Grove United Methodist Church, Madison County, Virginia",
+  "oak grove united methodist church cemetery, aylor, madison county, virginia": "Oak Grove United Methodist Church, Madison County, Virginia",
+  "oak grove united methodist church cemetery, aylor": "Oak Grove United Methodist Church, Madison County, Virginia",
+  "calvary, woodside": "Calvary Cemetery, Queens, New York",
+  "church of san siro, valmozzola": "San Siro, Valmozzola",
+  "fort sherman, panama canal zone": "Fort Sherman, Panama",
+  "emporia, greensville county, virginia": "Emporia, Virginia",
+  "franklin, southampton county, virginia": "Franklin, Virginia",
+  "isle of wight, virginia": "Isle of Wight County, Virginia",
+  "surry, virginia": "Surry County, Virginia"
+ },
+ "media_exclude": [{"file": "san-martino/web/06-old-stone-house.jpg", "reason": "same building as 07-marianna-birthplace-stone-house-san-martino.jpg (Brandon's birthplace photo, v10); held back so the house is not shown twice"}]
+}

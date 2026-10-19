@@ -1,0 +1,97 @@
+---
+import "../styles/global.css";
+import "../styles/shell.css";
+import { personJsonLd } from "../lib/seo";
+import { SITE_CANONICAL, SITE_DESCRIPTION, SITE_DISCLAIMER, SITE_NAME, SITE_TAGLINE, X_HANDLE, withBase } from "../lib/site";
+
+interface Props {
+  title?: string;
+  /** Full title tag. Skips the existing site-name suffix. */
+  documentTitle?: string;
+  description?: string;
+  room?: string;
+  house?: boolean;
+  videoShell?: boolean;
+  /** Extra JSON-LD graph. Person schema stays on every page. */
+  jsonLd?: Record<string, unknown>;
+}
+
+const {
+  title,
+  documentTitle,
+  description = SITE_DESCRIPTION,
+  room,
+  house = false,
+  videoShell = false,
+  jsonLd,
+} = Astro.props;
+const extraJsonLd = jsonLd ? JSON.stringify(jsonLd).replace(/</g, "\\u003c") : "";
+const pageTitle = documentTitle
+  ? documentTitle
+  : title
+    ? `${title} — ${SITE_NAME}`
+    : `${SITE_NAME} — ${SITE_TAGLINE}`;
+const canonical = new URL(Astro.url.pathname, SITE_CANONICAL).href;
+const ogImage = new URL(withBase("og.png"), SITE_CANONICAL).href;
+const personJson = JSON.stringify(personJsonLd()).replace(/</g, "\\u003c");
+---
+
+<!doctype html>
+<html lang="en" data-shell="ready" data-banner="in">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="author" content={SITE_NAME} />
+    <meta name="theme-color" content={videoShell ? "#3d4a38" : "#0b1a2b"} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href={withBase("favicon.svg")} type="image/svg+xml" />
+    <link rel="apple-touch-icon" href={withBase("favicon.svg")} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={SITE_NAME} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:alt" content={SITE_NAME} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content={X_HANDLE} />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:url" content={canonical} />
+    <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content={SITE_NAME} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=PT+Serif:wght@400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <script type="application/ld+json" set:html={personJson} />
+    {extraJsonLd && <script type="application/ld+json" set:html={extraJsonLd} />}
+  </head>
+  <body
+    class:list={[videoShell && "has-video-shell"]}
+    data-room={room}
+    data-house={house ? "true" : undefined}
+  >
+    <a class="skip-link" href="#main">Skip to content</a>
+    <slot />
+    <script is:inline>
+      (function () {
+        var key = "bc-reduce-motion";
+        var stored = localStorage.getItem(key);
+        var osReduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        if (stored === "1" || (stored !== "0" && osReduce)) {
+          document.documentElement.dataset.reduceMotion = "true";
+        }
+        document.documentElement.dataset.shell = "ready";
+        document.documentElement.dataset.banner = "in";
+      })();
+    </script>
+    <p class="sr-only">{SITE_DISCLAIMER}</p>
+  </body>
+</html>
