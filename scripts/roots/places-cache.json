@@ -1377,6 +1377,19 @@
   "kind": "county",
   "at": "2026-10-18"
  },
+ "pedro, essex county, virginia": {
+  "raw": "Pedro, Essex Co., Virginia",
+  "q": "Pedro, Essex County, Virginia",
+  "status": "ok",
+  "lat": 38.05865,
+  "lon": -77.09929,
+  "prec": "exact",
+  "matched": "Pedro, Essex County, Virginia",
+  "osm": "way/19979779",
+  "display": "Pedro Pitts Road, Farmers Fork, Essex County, Virginia, 22436, United States",
+  "kind": "tertiary",
+  "at": "2026-10-24"
+ },
  "pendleton, northampton county, north carolina": {
   "raw": "Pendleton, Northampton Co., NC",
   "q": "Pendleton, Northampton County, North Carolina",
@@ -1870,6 +1883,19 @@
   "display": "Valmozzola, Parma, Emilia-Romagna, 43050, Italy",
   "kind": "municipality",
   "at": "2026-10-18"
+ },
+ "vauters church cemetery, loretto, essex county, virginia": {
+  "raw": "Vauter's Church Cemetery, Loretto, Essex Co., Virginia",
+  "q": "Vauter's Church Cemetery, Loretto, Essex County, Virginia",
+  "status": "ok",
+  "lat": 38.07624,
+  "lon": -77.05053,
+  "prec": "broader",
+  "matched": "Loretto, Essex County, Virginia",
+  "osm": "node/158334419",
+  "display": "Loretto, Essex County, Virginia, 22509, United States",
+  "kind": "hamlet",
+  "at": "2026-10-24"
  },
  "virginia": {
   "raw": "Virginia",
