@@ -701,6 +701,19 @@
   "kind": "city",
   "at": "2026-10-18"
  },
+ "gate of heaven cemetery, new york": {
+  "raw": "Gate of Heaven Cemetery, New York",
+  "q": "Gate of Heaven Cemetery, New York",
+  "status": "ok",
+  "lat": 41.08809,
+  "lon": -73.79539,
+  "prec": "exact",
+  "matched": "Gate of Heaven Cemetery, New York",
+  "osm": "way/115079067",
+  "display": "Gate of Heaven Cemetery, Hawthorne, Town of Mount Pleasant, Westchester County, New York, United States",
+  "kind": "cemetery",
+  "at": "2026-10-24"
+ },
  "gates county, north carolina": {
   "raw": "Gates Co., NC",
   "q": "Gates County, North Carolina",
@@ -713,6 +726,19 @@
   "display": "Gates County, North Carolina, United States",
   "kind": "county",
   "at": "2026-10-18"
+ },
+ "georgetown university hospital, washington, dc": {
+  "raw": "Georgetown University Hospital, Washington, D.C",
+  "q": "Georgetown University Hospital, Washington, D.C",
+  "status": "ok",
+  "lat": 38.91122,
+  "lon": -77.07533,
+  "prec": "exact",
+  "matched": "Georgetown University Hospital, Washington, D.C",
+  "osm": "way/464217042",
+  "display": "MedStar Georgetown University Hospital, 3800, Reservoir Road Northwest, Georgetown, Ward 2, Washington, District of Columbia, 20007, United States",
+  "kind": "amenity",
+  "at": "2026-10-24"
  },
  "gloucester, virginia": {
   "raw": "Gloucester, VA",
