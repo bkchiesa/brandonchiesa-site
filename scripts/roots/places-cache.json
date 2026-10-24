@@ -1,4 +1,17 @@
 {
+ "78 e 111th street, manhattan, new york": {
+  "raw": "78 E 111th St, Manhattan, New York",
+  "q": "78 E 111th Street, Manhattan, New York",
+  "status": "ok",
+  "lat": 40.79628,
+  "lon": -73.94616,
+  "prec": "exact",
+  "matched": "78 E 111th Street, Manhattan, New York",
+  "osm": "way/1288211581",
+  "display": "78, East 111th Street, East Harlem, Manhattan Community Board 11, Manhattan, New York County, New York, 10029, United States",
+  "kind": "place",
+  "at": "2026-10-24"
+ },
  "78 east 111th street, manhattan": {
   "raw": "78 E. 111th St., Manhattan",
   "q": "78 East 111th Street, Manhattan",
@@ -701,19 +714,6 @@
   "kind": "county",
   "at": "2026-10-18"
  },
- "general hospital, hanover academy, hanover county, virginia": {
-  "raw": "General Hospital, Hanover Academy, Hanover County, Virginia",
-  "q": "General Hospital, Hanover Academy, Hanover County, Virginia",
-  "status": "ok",
-  "lat": 37.76514,
-  "lon": -77.45306,
-  "prec": "broader",
-  "matched": "Hanover Academy, Hanover County, Virginia",
-  "osm": "way/840718323",
-  "display": "Hanover Academy, Frances Road, Ashland, Hanover County, Virginia, 23005, United States",
-  "kind": "amenity",
-  "at": "2026-10-18"
- },
  "gloucester, virginia": {
   "raw": "Gloucester, VA",
   "q": "Gloucester, Virginia",
@@ -1403,6 +1403,19 @@
   "kind": "cemetery",
   "at": "2026-10-18"
  },
+ "peninsula memorial park, newport news, virginia": {
+  "raw": "Peninsula Memorial Park, Newport News, Virginia",
+  "q": "Peninsula Memorial Park, Newport News, Virginia",
+  "status": "ok",
+  "lat": 37.09344,
+  "lon": -76.5002,
+  "prec": "exact",
+  "matched": "Peninsula Memorial Park, Newport News, Virginia",
+  "osm": "way/51085307",
+  "display": "Peninsula Memorial Park Cemetery, Oyster Point, Newport News, Virginia, United States",
+  "kind": "cemetery",
+  "at": "2026-10-24"
+ },
  "peninsula memorial park, virginia": {
   "raw": "Peninsula Memorial Park, Virginia",
   "q": "Peninsula Memorial Park, Virginia",
@@ -1479,19 +1492,6 @@
   "osm": "relation/206673",
   "display": "Portsmouth, Virginia, United States",
   "kind": "city",
-  "at": "2026-10-18"
- },
- "red sulphur springs, monroe county, virginia, confederate hospital": {
-  "raw": "Red Sulphur Springs, Monroe Co., Va., Confederate hospital",
-  "q": "Red Sulphur Springs, Monroe County, Virginia, Confederate hospital",
-  "status": "ok",
-  "lat": 36.07523,
-  "lon": -79.7886,
-  "prec": "broader",
-  "matched": "Confederate hospital",
-  "osm": "node/13308319420",
-  "display": "Confederate Hospital, Summit Avenue, Fisher Park, Greensboro, Guilford County, North Carolina, 27214, United States",
-  "kind": "historic",
   "at": "2026-10-18"
  },
  "richmond county, virginia": {
@@ -1896,6 +1896,19 @@
   "display": "Virginia Beach, Virginia, United States",
   "kind": "city",
   "at": "2026-10-18"
+ },
+ "welch, browns creek district, mcdowell county, west virginia": {
+  "raw": "Welch, Browns Creek District, McDowell Co., West Virginia",
+  "q": "Welch, Browns Creek District, McDowell County, West Virginia",
+  "status": "ok",
+  "lat": 37.43289,
+  "lon": -81.58444,
+  "prec": "exact",
+  "matched": "Welch (near McDowell County, West Virginia)",
+  "osm": "relation/240088",
+  "display": "Welch, McDowell County, West Virginia, United States",
+  "kind": "town",
+  "at": "2026-10-24"
  },
  "west graham, tazewell county, virginia": {
   "raw": "West Graham, Tazewell Co., VA",
