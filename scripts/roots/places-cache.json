@@ -948,6 +948,19 @@
   "kind": "state",
   "at": "2026-10-18"
  },
+ "fairhope, belle vernon, pennsylvania": {
+  "raw": "Fairhope, Belle Vernon, Pennsylvania",
+  "q": "Fairhope, Belle Vernon, Pennsylvania",
+  "status": "ok",
+  "lat": 40.11368,
+  "lon": -79.83977,
+  "prec": "exact",
+  "matched": "Fairhope (near Belle Vernon, Pennsylvania)",
+  "osm": "node/158288624",
+  "display": "Fairhope, Washington Township, Fayette County, Pennsylvania, 15412, United States",
+  "kind": "village",
+  "at": "2026-10-30"
+ },
  "falls mills, tazewell county, virginia": {
   "raw": "Falls Mills, Tazewell Co., VA",
   "q": "Falls Mills, Tazewell County, Virginia",
@@ -1741,6 +1754,19 @@
   "kind": "residential",
   "at": "2026-10-30"
  },
+ "mon valley hospital, pennsylvania": {
+  "raw": "Mon Valley Hospital, Pennsylvania",
+  "q": "Mon Valley Hospital, Pennsylvania",
+  "status": "ok",
+  "lat": 40.18139,
+  "lon": -79.91138,
+  "prec": "exact",
+  "matched": "Mon Valley Hospital, Pennsylvania",
+  "osm": "way/324504870",
+  "display": "Penn Highlands Mon Valley, 1163, Country Club Road, Wickerham Manor, Monongahela, Washington County, Pennsylvania, 15063, United States",
+  "kind": "amenity",
+  "at": "2026-10-30"
+ },
  "montgomery county, maryland": {
   "raw": "Montgomery County, MD",
   "q": "Montgomery County, Maryland",
@@ -2053,6 +2079,19 @@
   "kind": "county",
   "at": "2026-10-18"
  },
+ "parents house, san siro, valmozzola, parma, italy": {
+  "raw": "parents' house, San Siro, Valmozzola, Parma, Italy",
+  "q": "parents' house, San Siro, Valmozzola, Parma, Italy",
+  "status": "ok",
+  "lat": 44.56603,
+  "lon": 9.87583,
+  "prec": "broader",
+  "matched": "San Siro, Valmozzola, Parma, Italy",
+  "osm": "node/2042633879",
+  "display": "San Siro Costa, Mormorola, Valmozzola, Parma, Emilia-Romagna, 43050, Italy",
+  "kind": "hamlet",
+  "at": "2026-10-30"
+ },
  "pasquotank county, north carolina": {
   "raw": "Pasquotank County, North Carolina",
   "q": "Pasquotank County, North Carolina",
@@ -2130,6 +2169,19 @@
   "display": "Peninsula Memorial Park Cemetery, Oyster Point, Newport News, Virginia, United States",
   "kind": "cemetery",
   "at": "2026-10-18"
+ },
+ "penn hills, allegheny county, pennsylvania": {
+  "raw": "Penn Hills, Allegheny County, Pennsylvania",
+  "q": "Penn Hills, Allegheny County, Pennsylvania",
+  "status": "ok",
+  "lat": 40.47294,
+  "lon": -79.81767,
+  "prec": "exact",
+  "matched": "Penn Hills, Allegheny County, Pennsylvania",
+  "osm": "relation/187510",
+  "display": "Penn Hills, Allegheny County, Pennsylvania, United States",
+  "kind": "town",
+  "at": "2026-10-30"
  },
  "pennsylvania": {
   "raw": "Pennsylvania",
@@ -2326,6 +2378,19 @@
   "kind": "city",
   "at": "2026-10-30"
  },
+ "rostraver township, westmoreland county, pennsylvania": {
+  "raw": "Rostraver Township, Westmoreland County, Pennsylvania",
+  "q": "Rostraver Township, Westmoreland County, Pennsylvania",
+  "status": "ok",
+  "lat": 40.17759,
+  "lon": -79.809,
+  "prec": "exact",
+  "matched": "Rostraver Township, Westmoreland County, Pennsylvania",
+  "osm": "relation/8536164",
+  "display": "Rostraver Township, Westmoreland County, Pennsylvania, United States",
+  "kind": "city",
+  "at": "2026-10-30"
+ },
  "ruckersville, virginia": {
   "raw": "Ruckersville, Virginia",
   "q": "Ruckersville, Virginia",
@@ -2492,6 +2557,19 @@
   "matched": "Somerset, Kentucky",
   "osm": "relation/130829",
   "display": "Somerset, Pulaski County, Kentucky, United States",
+  "kind": "town",
+  "at": "2026-10-30"
+ },
+ "south hills, pennsylvania": {
+  "raw": "South Hills, Pennsylvania",
+  "q": "South Hills, Pennsylvania",
+  "status": "ok",
+  "lat": 40.3765,
+  "lon": -80.0508,
+  "prec": "broader",
+  "matched": "South Hills (south of Pittsburgh), Allegheny County, Pennsylvania",
+  "osm": "relation/188058",
+  "display": "Mt. Lebanon (South Hills), Allegheny County, Pennsylvania, United States",
   "kind": "town",
   "at": "2026-10-30"
  },
