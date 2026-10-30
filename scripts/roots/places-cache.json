@@ -38,6 +38,19 @@
   "kind": "place",
   "at": "2026-10-18"
  },
+ "abbs valley, tazewell county, virginia": {
+  "raw": "Abbs Valley, Tazewell County, Virginia",
+  "q": "Abbs Valley, Tazewell County, Virginia",
+  "status": "ok",
+  "lat": 37.244,
+  "lon": -81.45233,
+  "prec": "exact",
+  "matched": "Abbs Valley, Tazewell County, Virginia",
+  "osm": "node/154160032",
+  "display": "Abbs Valley, Tazewell County, Virginia, United States",
+  "kind": "village",
+  "at": "2026-10-30"
+ },
  "aiken, aiken county, south carolina": {
   "raw": "Aiken, Aiken Co., SC",
   "q": "Aiken, Aiken County, South Carolina",
@@ -88,6 +101,19 @@
   "osm": "relation/206637",
   "display": "Alexandria, Virginia, United States",
   "kind": "city",
+  "at": "2026-10-30"
+ },
+ "allegheny county, pennsylvania": {
+  "raw": "Allegheny County, Pennsylvania",
+  "q": "Allegheny County, Pennsylvania",
+  "status": "ok",
+  "lat": 40.45972,
+  "lon": -79.97604,
+  "prec": "exact",
+  "matched": "Allegheny County, Pennsylvania",
+  "osm": "relation/2563472",
+  "display": "Allegheny County, Pennsylvania, United States",
+  "kind": "county",
   "at": "2026-10-30"
  },
  "amelia county, virginia": {
@@ -220,6 +246,19 @@
   "kind": "hamlet",
   "at": "2026-10-18"
  },
+ "banksville, pittsburgh, allegheny, pennsylvania": {
+  "raw": "Banksville, Pittsburgh, Allegheny, Pennsylvania",
+  "q": "Banksville, Pittsburgh, Allegheny, Pennsylvania",
+  "status": "ok",
+  "lat": 40.41069,
+  "lon": -80.03864,
+  "prec": "exact",
+  "matched": "Banksville, Pittsburgh, Allegheny, Pennsylvania",
+  "osm": "relation/6897589",
+  "display": "Banksville, Pittsburgh, Allegheny County, Pennsylvania, United States",
+  "kind": "neighbourhood",
+  "at": "2026-10-30"
+ },
  "banksville, pittsburgh, pennsylvania": {
   "raw": "Banksville, Pittsburgh, Pennsylvania",
   "q": "Banksville, Pittsburgh, Pennsylvania",
@@ -231,6 +270,19 @@
   "osm": "relation/6897589",
   "display": "Banksville, Pittsburgh, Allegheny County, Pennsylvania, United States",
   "kind": "neighbourhood",
+  "at": "2026-10-30"
+ },
+ "beauvale, nottinghamshire, england": {
+  "raw": "Beauvale, Nottinghamshire, England",
+  "q": "Beauvale, Nottinghamshire, England",
+  "status": "ok",
+  "lat": 53.03534,
+  "lon": -1.22508,
+  "prec": "exact",
+  "matched": "Beauvale, Nottinghamshire, England",
+  "osm": "node/11869531762",
+  "display": "Beauvale, Hucknall, Ashfield, Nottinghamshire, East Midlands, England, NG15 6PH, United Kingdom",
+  "kind": "suburb",
   "at": "2026-10-30"
  },
  "bedford county, virginia": {
@@ -246,6 +298,19 @@
   "kind": "county",
   "at": "2026-10-18"
  },
+ "belle vernon, fayette, pennsylvania": {
+  "raw": "Belle Vernon, Fayette, Pennsylvania",
+  "q": "Belle Vernon, Fayette, Pennsylvania",
+  "status": "ok",
+  "lat": 40.12507,
+  "lon": -79.86644,
+  "prec": "exact",
+  "matched": "Belle Vernon, Fayette, Pennsylvania",
+  "osm": "relation/187263",
+  "display": "Belle Vernon, Fayette County, Pennsylvania, United States",
+  "kind": "village",
+  "at": "2026-10-30"
+ },
  "bergenfield, new jersey": {
   "raw": "Bergenfield, NJ",
   "q": "Bergenfield, New Jersey",
@@ -258,6 +323,45 @@
   "display": "Bergenfield, Bergen County, New Jersey, 07621, United States",
   "kind": "town",
   "at": "2026-10-18"
+ },
+ "bethel park, allegheny, pennsylvania": {
+  "raw": "Bethel Park, Allegheny, Pennsylvania",
+  "q": "Bethel Park, Allegheny, Pennsylvania",
+  "status": "ok",
+  "lat": 40.32757,
+  "lon": -80.0395,
+  "prec": "exact",
+  "matched": "Bethel Park, Allegheny, Pennsylvania",
+  "osm": "relation/187413",
+  "display": "Bethel Park, Allegheny County, Pennsylvania, 15102, United States",
+  "kind": "town",
+  "at": "2026-10-30"
+ },
+ "blofield, norfolk, england": {
+  "raw": "Blofield, Norfolk, England",
+  "q": "Blofield, Norfolk, England",
+  "status": "ok",
+  "lat": 52.63439,
+  "lon": 1.44654,
+  "prec": "exact",
+  "matched": "Blofield, Norfolk, England",
+  "osm": "relation/933692",
+  "display": "Blofield, Broadland, Norfolk, England, United Kingdom",
+  "kind": "village",
+  "at": "2026-10-30"
+ },
+ "bluefield, virginia": {
+  "raw": "Bluefield, Virginia",
+  "q": "Bluefield, Virginia",
+  "status": "ok",
+  "lat": 37.25261,
+  "lon": -81.27134,
+  "prec": "exact",
+  "matched": "Bluefield, Virginia",
+  "osm": "relation/206936",
+  "display": "Bluefield, Tazewell County, Virginia, 24605, United States",
+  "kind": "town",
+  "at": "2026-10-30"
  },
  "bowling green, caroline county, virginia": {
   "raw": "Bowling Green, Caroline County, Virginia",
@@ -311,6 +415,19 @@
   "kind": "hamlet",
   "at": "2026-10-18"
  },
+ "bridgeville, allegheny, pennsylvania": {
+  "raw": "Bridgeville, Allegheny, Pennsylvania",
+  "q": "Bridgeville, Allegheny, Pennsylvania",
+  "status": "ok",
+  "lat": 40.35618,
+  "lon": -80.11006,
+  "prec": "exact",
+  "matched": "Bridgeville, Allegheny, Pennsylvania",
+  "osm": "relation/187421",
+  "display": "Bridgeville, Allegheny County, Pennsylvania, United States",
+  "kind": "village",
+  "at": "2026-10-30"
+ },
  "brunswick county, virginia": {
   "raw": "Brunswick Co., VA",
   "q": "Brunswick County, Virginia",
@@ -336,6 +453,58 @@
   "display": "Brunswick County, Virginia, United States",
   "kind": "county",
   "at": "2026-10-18"
+ },
+ "bulger, smith twp, washington, pennsylvania": {
+  "raw": "Bulger, Smith Twp, Washington, Pennsylvania",
+  "q": "Bulger, Smith Twp, Washington, Pennsylvania",
+  "status": "ok",
+  "lat": 40.3784,
+  "lon": -80.32784,
+  "prec": "exact",
+  "matched": "Bulger, Smith Twp, Washington, Pennsylvania",
+  "osm": "node/154183083",
+  "display": "Bulger, Smith Township, Washington County, Pennsylvania, 15019, United States",
+  "kind": "hamlet",
+  "at": "2026-10-30"
+ },
+ "burkes garden, tazewell county, virginia": {
+  "raw": "Burkes Garden, Tazewell County, Virginia",
+  "q": "Burkes Garden, Tazewell County, Virginia",
+  "status": "ok",
+  "lat": 37.0984,
+  "lon": -81.34178,
+  "prec": "exact",
+  "matched": "Burkes Garden, Tazewell County, Virginia",
+  "osm": "node/356585013",
+  "display": "Burkes Garden Rural Historic District, Burke's Garden, Tazewell County, Virginia, United States",
+  "kind": "park",
+  "at": "2026-10-30"
+ },
+ "california": {
+  "raw": "California",
+  "q": "California",
+  "status": "ok",
+  "lat": 36.70146,
+  "lon": -118.756,
+  "prec": "exact",
+  "matched": "California",
+  "osm": "relation/165475",
+  "display": "California, United States",
+  "kind": "state",
+  "at": "2026-10-30"
+ },
+ "callaway, franklin county, virginia": {
+  "raw": "Callaway, Franklin County, Virginia",
+  "q": "Callaway, Franklin County, Virginia",
+  "status": "ok",
+  "lat": 37.01153,
+  "lon": -80.04948,
+  "prec": "exact",
+  "matched": "Callaway, Franklin County, Virginia",
+  "osm": "node/154303350",
+  "display": "Callaway, Franklin County, Virginia, 24067, United States",
+  "kind": "hamlet",
+  "at": "2026-10-30"
  },
  "calvary cemetery, woodside, queens, new york": {
   "raw": "Calvary Cemetery, Woodside, Queens, NY",
@@ -374,6 +543,19 @@
   "osm": "relation/224042",
   "display": "Virginia, United States",
   "kind": "state",
+  "at": "2026-10-30"
+ },
+ "canonsburg, washington, pennsylvania": {
+  "raw": "Canonsburg, Washington, Pennsylvania",
+  "q": "Canonsburg, Washington, Pennsylvania",
+  "status": "ok",
+  "lat": 40.25882,
+  "lon": -80.18672,
+  "prec": "exact",
+  "matched": "Canonsburg, Washington, Pennsylvania",
+  "osm": "relation/187253",
+  "display": "Canonsburg, Washington County, Pennsylvania, United States",
+  "kind": "town",
   "at": "2026-10-30"
  },
  "capron, southampton county, virginia": {
@@ -610,6 +792,32 @@
   "kind": "county",
   "at": "2026-10-30"
  },
+ "dormont, allegheny, pennsylvania": {
+  "raw": "Dormont, Allegheny, Pennsylvania",
+  "q": "Dormont, Allegheny, Pennsylvania",
+  "status": "ok",
+  "lat": 40.39411,
+  "lon": -80.03729,
+  "prec": "exact",
+  "matched": "Dormont, Allegheny, Pennsylvania",
+  "osm": "relation/187436",
+  "display": "Dormont, Allegheny County, Pennsylvania, 15216, United States",
+  "kind": "town",
+  "at": "2026-10-30"
+ },
+ "douglas county, oregon": {
+  "raw": "Douglas County, Oregon",
+  "q": "Douglas County, Oregon",
+  "status": "ok",
+  "lat": 43.19221,
+  "lon": -123.1136,
+  "prec": "exact",
+  "matched": "Douglas County, Oregon",
+  "osm": "relation/1837112",
+  "display": "Douglas County, Oregon, United States",
+  "kind": "county",
+  "at": "2026-10-30"
+ },
  "drewryville, southampton county, virginia": {
   "raw": "Drewryville, Southampton Co., VA",
   "q": "Drewryville, Southampton County, Virginia",
@@ -648,6 +856,19 @@
   "display": "Dublin, Pulaski County, Virginia, United States",
   "kind": "town",
   "at": "2026-10-18"
+ },
+ "edenton, chowan county, north carolina": {
+  "raw": "Edenton, Chowan County, North Carolina",
+  "q": "Edenton, Chowan County, North Carolina",
+  "status": "ok",
+  "lat": 36.05794,
+  "lon": -76.60772,
+  "prec": "exact",
+  "matched": "Edenton, Chowan County, North Carolina",
+  "osm": "relation/179910",
+  "display": "Edenton, Chowan County, North Carolina, 27932, United States",
+  "kind": "city",
+  "at": "2026-10-30"
  },
  "edgecombe county, north carolina": {
   "raw": "Edgecombe Co., NC",
@@ -857,6 +1078,19 @@
   "kind": "city",
   "at": "2026-10-18"
  },
+ "freethorpe, norfolk, england": {
+  "raw": "Freethorpe, Norfolk, England",
+  "q": "Freethorpe, Norfolk, England",
+  "status": "ok",
+  "lat": 52.589,
+  "lon": 1.58165,
+  "prec": "exact",
+  "matched": "Freethorpe, Norfolk, England",
+  "osm": "relation/933675",
+  "display": "Freethorpe, Broadland, Norfolk, England, United Kingdom",
+  "kind": "suburb",
+  "at": "2026-10-30"
+ },
  "gate of heaven cemetery, new york": {
   "raw": "Gate of Heaven Cemetery, New York",
   "q": "Gate of Heaven Cemetery, New York",
@@ -935,6 +1169,32 @@
   "kind": "cemetery",
   "at": "2026-10-18"
  },
+ "greensburg, pennsylvania": {
+  "raw": "Greensburg, Pennsylvania",
+  "q": "Greensburg, Pennsylvania",
+  "status": "ok",
+  "lat": 40.30245,
+  "lon": -79.54433,
+  "prec": "exact",
+  "matched": "Greensburg, Pennsylvania",
+  "osm": "relation/188355",
+  "display": "Greensburg, Westmoreland County, Pennsylvania, 15601, United States",
+  "kind": "city",
+  "at": "2026-10-30"
+ },
+ "greensburg, westmoreland, pennsylvania": {
+  "raw": "Greensburg, Westmoreland, Pennsylvania",
+  "q": "Greensburg, Westmoreland, Pennsylvania",
+  "status": "ok",
+  "lat": 40.30245,
+  "lon": -79.54433,
+  "prec": "exact",
+  "matched": "Greensburg, Westmoreland, Pennsylvania",
+  "osm": "relation/188355",
+  "display": "Greensburg, Westmoreland County, Pennsylvania, 15601, United States",
+  "kind": "city",
+  "at": "2026-10-30"
+ },
  "greensville county, virginia": {
   "raw": "Greensville Co., VA",
   "q": "Greensville County, Virginia",
@@ -999,6 +1259,19 @@
   "display": "Halifax County, North Carolina, United States",
   "kind": "county",
   "at": "2026-10-18"
+ },
+ "halifax, yorkshire, england": {
+  "raw": "Halifax, Yorkshire, England",
+  "q": "Halifax, Yorkshire, England",
+  "status": "ok",
+  "lat": 53.72292,
+  "lon": -1.86049,
+  "prec": "exact",
+  "matched": "Halifax, Yorkshire, England",
+  "osm": "node/26703086",
+  "display": "Halifax, Calderdale, West Yorkshire, England, HX1 1TH, United Kingdom",
+  "kind": "town",
+  "at": "2026-10-30"
  },
  "hampton national cemetery, virginia": {
   "raw": "Hampton National Cemetery, Virginia",
@@ -1065,6 +1338,19 @@
   "kind": "amenity",
   "at": "2026-10-30"
  },
+ "hibbard, madison, idaho": {
+  "raw": "Hibbard, Madison, Idaho",
+  "q": "Hibbard, Madison, Idaho",
+  "status": "ok",
+  "lat": 43.85519,
+  "lon": -111.83858,
+  "prec": "exact",
+  "matched": "Hibbard, Madison, Idaho",
+  "osm": "node/150957055",
+  "display": "Hibbard, Madison County, Idaho, 83460, United States",
+  "kind": "locality",
+  "at": "2026-10-30"
+ },
  "hicksford district, greensville county, virginia": {
   "raw": "Hicksford District, Greensville Co., VA",
   "q": "Hicksford District, Greensville County, Virginia",
@@ -1091,6 +1377,19 @@
   "kind": "suburb",
   "at": "2026-10-18"
  },
+ "home near courtland, southampton county, virginia": {
+  "raw": "home near Courtland, Southampton Co., VA",
+  "q": "home near Courtland, Southampton County, Virginia",
+  "status": "ok",
+  "lat": 36.69594,
+  "lon": -77.1586,
+  "prec": "broader",
+  "matched": "Southampton County, Virginia",
+  "osm": "relation/2534205",
+  "display": "Southampton County, Virginia, United States",
+  "kind": "county",
+  "at": "2026-10-30"
+ },
  "home, emporia, virginia": {
   "raw": "home, Emporia, VA",
   "q": "home, Emporia, Virginia",
@@ -1102,6 +1401,19 @@
   "osm": "node/158614556",
   "display": "Halifax Manor Mobile Home Park, Emporia, Virginia, 23847, United States",
   "kind": "neighbourhood",
+  "at": "2026-10-30"
+ },
+ "home, sebrell, southampton county, virginia": {
+  "raw": "home, Sebrell, Southampton Co., VA",
+  "q": "home, Sebrell, Southampton County, Virginia",
+  "status": "ok",
+  "lat": 36.78376,
+  "lon": -77.12747,
+  "prec": "broader",
+  "matched": "Sebrell, Southampton County, Virginia",
+  "osm": "node/158283304",
+  "display": "Sebrell, Southampton County, Virginia, United States",
+  "kind": "hamlet",
   "at": "2026-10-30"
  },
  "hustle, essex county, virginia": {
@@ -1247,6 +1559,32 @@
   "kind": "cemetery",
   "at": "2026-10-18"
  },
+ "lakeview hospital, suffolk, virginia": {
+  "raw": "Lakeview Hospital, Suffolk, VA",
+  "q": "Lakeview Hospital, Suffolk, Virginia",
+  "status": "ok",
+  "lat": 36.72813,
+  "lon": -76.58347,
+  "prec": "broader",
+  "matched": "Suffolk, Virginia",
+  "osm": "relation/206528",
+  "display": "Suffolk, Virginia, United States",
+  "kind": "city",
+  "at": "2026-10-30"
+ },
+ "lambeth, london, england": {
+  "raw": "Lambeth, London, England",
+  "q": "Lambeth, London, England",
+  "status": "ok",
+  "lat": 51.49521,
+  "lon": -0.11634,
+  "prec": "exact",
+  "matched": "Lambeth, London, England",
+  "osm": "node/27553719",
+  "display": "Lambeth, London Borough of Lambeth, Greater London, England, SE1 7JW, United Kingdom",
+  "kind": "suburb",
+  "at": "2026-10-30"
+ },
  "landisacq, orne, normandy, france": {
   "raw": "Landisacq, Orne, Normandy, France",
   "q": "Landisacq, Orne, Normandy, France",
@@ -1363,6 +1701,19 @@
   "display": "Maryland, United States",
   "kind": "state",
   "at": "2026-10-18"
+ },
+ "mcmurray, peters twp, washington, pennsylvania": {
+  "raw": "McMurray, Peters Twp, Washington, Pennsylvania",
+  "q": "McMurray, Peters Twp, Washington, Pennsylvania",
+  "status": "ok",
+  "lat": 40.279,
+  "lon": -80.08386,
+  "prec": "exact",
+  "matched": "McMurray, Peters Twp, Washington, Pennsylvania",
+  "osm": "node/154024031",
+  "display": "McMurray, Peters Township, Washington County, Pennsylvania, 15367, United States",
+  "kind": "village",
+  "at": "2026-10-30"
  },
  "medical city, denton, tx": {
   "raw": "Medical City, Denton, TX",
@@ -1611,6 +1962,19 @@
   "kind": "hamlet",
   "at": "2026-10-18"
  },
+ "orange county, california": {
+  "raw": "Orange County, California",
+  "q": "Orange County, California",
+  "status": "ok",
+  "lat": 33.75063,
+  "lon": -117.87223,
+  "prec": "exact",
+  "matched": "Orange County, California",
+  "osm": "relation/396466",
+  "display": "Orange County, California, United States",
+  "kind": "county",
+  "at": "2026-10-30"
+ },
  "orange county, north carolina": {
   "raw": "Orange County, North Carolina",
   "q": "Orange County, North Carolina",
@@ -1819,6 +2183,19 @@
   "kind": "city",
   "at": "2026-10-18"
  },
+ "pittsburgh, allegheny, pennsylvania": {
+  "raw": "Pittsburgh, Allegheny, Pennsylvania",
+  "q": "Pittsburgh, Allegheny, Pennsylvania",
+  "status": "ok",
+  "lat": 40.4407,
+  "lon": -80.00257,
+  "prec": "exact",
+  "matched": "Pittsburgh, Allegheny, Pennsylvania",
+  "osm": "relation/188553",
+  "display": "Pittsburgh, Allegheny County, Pennsylvania, United States",
+  "kind": "city",
+  "at": "2026-10-30"
+ },
  "pittsburgh, pa": {
   "raw": "Pittsburgh, Pa",
   "q": "Pittsburgh, Pa",
@@ -1857,6 +2234,19 @@
   "display": "Portsmouth, Virginia, United States",
   "kind": "city",
   "at": "2026-10-18"
+ },
+ "postwick, norfolk, england": {
+  "raw": "Postwick, Norfolk, England",
+  "q": "Postwick, Norfolk, England",
+  "status": "ok",
+  "lat": 52.61946,
+  "lon": 1.39078,
+  "prec": "exact",
+  "matched": "Postwick, Norfolk, England",
+  "osm": "node/3934048186",
+  "display": "Postwick, Broadland, Norfolk, England, NR13 5HJ, United Kingdom",
+  "kind": "village",
+  "at": "2026-10-30"
  },
  "raiford memorial hospital, franklin, virginia": {
   "raw": "Raiford Memorial Hospital, Franklin, VA",
@@ -1973,6 +2363,19 @@
   "osm": "way/45199200",
   "display": "Saint Mary's Hospital, 5801, Bremo Road, Richmond, Henrico County, Virginia, 23226, United States",
   "kind": "amenity",
+  "at": "2026-10-30"
+ },
+ "saint vincents hospital, norfolk, virginia": {
+  "raw": "St. Vincent's Hospital, Norfolk, VA",
+  "q": "Saint Vincent's Hospital, Norfolk, Virginia",
+  "status": "ok",
+  "lat": 36.84937,
+  "lon": -76.28995,
+  "prec": "broader",
+  "matched": "Norfolk, Virginia",
+  "osm": "relation/206672",
+  "display": "Norfolk, Virginia, United States",
+  "kind": "city",
   "at": "2026-10-30"
  },
  "salisbury, north carolina": {
@@ -2183,6 +2586,19 @@
   "kind": "city",
   "at": "2026-10-18"
  },
+ "sunbeam, southampton county, virginia": {
+  "raw": "Sunbeam, Southampton Co., VA",
+  "q": "Sunbeam, Southampton County, Virginia",
+  "status": "ok",
+  "lat": 36.58765,
+  "lon": -77.02774,
+  "prec": "exact",
+  "matched": "Sunbeam, Southampton County, Virginia",
+  "osm": "node/158562761",
+  "display": "Sunbeam, Southampton County, Virginia, United States",
+  "kind": "hamlet",
+  "at": "2026-10-30"
+ },
  "sunbury, gates county, north carolina": {
   "raw": "Sunbury, Gates Co., North Carolina",
   "q": "Sunbury, Gates County, North Carolina",
@@ -2195,6 +2611,19 @@
   "display": "Sunbury, Gates County, North Carolina, 27979, United States",
   "kind": "village",
   "at": "2026-10-18"
+ },
+ "surrey, england": {
+  "raw": "Surrey, England",
+  "q": "Surrey, England",
+  "status": "ok",
+  "lat": 51.27153,
+  "lon": -0.34145,
+  "prec": "exact",
+  "matched": "Surrey, England",
+  "osm": "relation/57582",
+  "display": "Surrey, England, United Kingdom",
+  "kind": "county",
+  "at": "2026-10-30"
  },
  "surry county, virginia": {
   "raw": "Surry Co., VA",
@@ -2313,6 +2742,32 @@
   "kind": "town",
   "at": "2026-10-18"
  },
+ "thompson valley, tazewell county, virginia": {
+  "raw": "Thompson Valley, Tazewell County, Virginia",
+  "q": "Thompson Valley, Tazewell County, Virginia",
+  "status": "ok",
+  "lat": 37.07845,
+  "lon": -81.54761,
+  "prec": "exact",
+  "matched": "Thompson Valley, Tazewell County, Virginia",
+  "osm": "node/154338072",
+  "display": "Thompson Valley, Tazewell County, Virginia, 24651, United States",
+  "kind": "hamlet",
+  "at": "2026-10-30"
+ },
+ "thorpe st andrew, norfolk, england": {
+  "raw": "Thorpe St Andrew, Norfolk, England",
+  "q": "Thorpe St Andrew, Norfolk, England",
+  "status": "ok",
+  "lat": 52.6365,
+  "lon": 1.3495,
+  "prec": "exact",
+  "matched": "Thorpe St Andrew, Norfolk, England",
+  "osm": "relation/932086",
+  "display": "Thorpe St Andrew, Broadland, Norfolk, England, United Kingdom",
+  "kind": "suburb",
+  "at": "2026-10-30"
+ },
  "tinchebray, orne, normandy, france": {
   "raw": "Tinchebray, Orne, Normandy, France",
   "q": "Tinchebray, Orne, Normandy, France",
@@ -2417,6 +2872,19 @@
   "kind": "city",
   "at": "2026-10-18"
  },
+ "wandsworth, surrey, england": {
+  "raw": "Wandsworth, Surrey, England",
+  "q": "Wandsworth, Surrey, England",
+  "status": "ok",
+  "lat": 51.45703,
+  "lon": -0.19326,
+  "prec": "exact",
+  "matched": "Wandsworth (near Surrey, England)",
+  "osm": "node/21315206",
+  "display": "Wandsworth, London Borough of Wandsworth, Greater London, England, SW18 1UJ, United Kingdom",
+  "kind": "suburb",
+  "at": "2026-10-30"
+ },
  "warwick swamp baptist church cemetery, hobbsville, chowan county, north carolina": {
   "raw": "Warwick Swamp Baptist Church Cemetery, Hobbsville, Chowan County, NC",
   "q": "Warwick Swamp Baptist Church Cemetery, Hobbsville, Chowan County, North Carolina",
@@ -2428,19 +2896,6 @@
   "osm": "relation/1242006",
   "display": "Chowan County, North Carolina, United States",
   "kind": "county",
-  "at": "2026-10-30"
- },
- "washington township, fayette county, pennsylvania": {
-  "raw": "Washington Township, Fayette County, Pennsylvania",
-  "q": "Washington Township, Fayette County, Pennsylvania",
-  "status": "ok",
-  "lat": 40.10191,
-  "lon": -79.81323,
-  "prec": "exact",
-  "matched": "Washington Township, Fayette County, Pennsylvania",
-  "osm": "relation/8693340",
-  "display": "Washington Township, Fayette County, Pennsylvania, United States",
-  "kind": "city",
   "at": "2026-10-30"
  },
  "washington, dc": {
@@ -2468,6 +2923,19 @@
   "display": "Welch, McDowell County, West Virginia, United States",
   "kind": "town",
   "at": "2026-10-24"
+ },
+ "welch, mcdowell county, west virginia": {
+  "raw": "Welch, McDowell County, West Virginia",
+  "q": "Welch, McDowell County, West Virginia",
+  "status": "ok",
+  "lat": 37.43289,
+  "lon": -81.58444,
+  "prec": "exact",
+  "matched": "Welch, McDowell County, West Virginia",
+  "osm": "relation/240088",
+  "display": "Welch, McDowell County, West Virginia, United States",
+  "kind": "town",
+  "at": "2026-10-30"
  },
  "west graham, tazewell county, virginia": {
   "raw": "West Graham, Tazewell Co., VA",
@@ -2507,6 +2975,19 @@
   "display": "Westmoreland County, Virginia, United States",
   "kind": "county",
   "at": "2026-10-18"
+ },
+ "wexford, pine twp, allegheny, pennsylvania": {
+  "raw": "Wexford, Pine Twp, Allegheny, Pennsylvania",
+  "q": "Wexford, Pine Twp, Allegheny, Pennsylvania",
+  "status": "ok",
+  "lat": 40.62646,
+  "lon": -80.05589,
+  "prec": "exact",
+  "matched": "Wexford, Pine Twp, Allegheny, Pennsylvania",
+  "osm": "node/154103541",
+  "display": "Wexford, Pine Township, Allegheny County, Pennsylvania, 15090, United States",
+  "kind": "town",
+  "at": "2026-10-30"
  },
  "williamsburg, virginia": {
   "raw": "Williamsburg, VA",
