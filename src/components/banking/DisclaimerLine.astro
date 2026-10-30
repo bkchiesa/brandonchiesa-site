@@ -1,0 +1,10 @@
+---
+import { SHORT_DISCLAIMER } from "../../data/banking/copy";
+import { DISCLAIMER_PATH } from "../../data/banking/tools";
+import { withBase } from "../../lib/site";
+---
+
+<p class="bank-disclaimer">
+  {SHORT_DISCLAIMER}
+  <a href={withBase(DISCLAIMER_PATH)}>Read the full disclaimer.</a>
+</p>

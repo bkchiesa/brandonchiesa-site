@@ -1,0 +1,61 @@
+---
+import BankingShell from "../../components/banking/BankingShell.astro";
+import DisclaimerLine from "../../components/banking/DisclaimerLine.astro";
+import TemplateCard from "../../components/banking/TemplateCard.astro";
+import {
+  CASH_FLOW_DESCRIPTION,
+  CASH_FLOW_STEPS,
+  CHECKLIST_DESCRIPTION,
+  CHECKLIST_STEPS,
+  DSCR_SHEET_DESCRIPTION,
+  DSCR_SHEET_STEPS,
+  PFS_DESCRIPTION,
+  PFS_STEPS,
+  SBA_GUIDE_DESCRIPTION,
+  SBA_GUIDE_STEPS,
+  SOURCES_DESCRIPTION,
+  SOURCES_STEPS,
+  TEMPLATES_PAGE_DESCRIPTION,
+} from "../../data/banking/copy";
+import { TEMPLATES_PATH } from "../../data/banking/tools";
+import { bankingCards } from "../../lib/banking/downloads";
+import { BANKING_CRUMB, HOME_CRUMB, breadcrumbJsonLd, collectionJsonLd, graphJsonLd } from "../../lib/banking/seo";
+
+const title = "Templates and guides";
+const cards = bankingCards();
+const details: Record<string, { description: string; steps: readonly string[] }> = {
+  "loan-package-checklist": { description: CHECKLIST_DESCRIPTION, steps: CHECKLIST_STEPS },
+  "cash-flow-projection": { description: CASH_FLOW_DESCRIPTION, steps: CASH_FLOW_STEPS },
+  "sba-7a-504": { description: SBA_GUIDE_DESCRIPTION, steps: SBA_GUIDE_STEPS },
+  "dscr-worksheet": { description: DSCR_SHEET_DESCRIPTION, steps: DSCR_SHEET_STEPS },
+  "personal-financial-statement": { description: PFS_DESCRIPTION, steps: PFS_STEPS },
+  "sources-and-uses": { description: SOURCES_DESCRIPTION, steps: SOURCES_STEPS },
+};
+const jsonLd = graphJsonLd([
+  collectionJsonLd({
+    name: title,
+    path: TEMPLATES_PATH,
+    description: TEMPLATES_PAGE_DESCRIPTION,
+    items: cards.map((card) => ({ name: card.title, path: card.page ?? `${TEMPLATES_PATH}#${card.id}` })),
+  }),
+  breadcrumbJsonLd([HOME_CRUMB, BANKING_CRUMB, { name: title, path: TEMPLATES_PATH }]),
+]);
+---
+
+<BankingShell title={title} description={TEMPLATES_PAGE_DESCRIPTION} jsonLd={jsonLd} section="templates">
+  <h1 class="room-title">{title}</h1>
+  <p class="lede">{TEMPLATES_PAGE_DESCRIPTION}</p>
+  <div class="bank-stack">
+    {
+      cards.map((card) => (
+        <TemplateCard
+          card={card}
+          heading="h2"
+          description={details[card.id]?.description}
+          steps={details[card.id]?.steps}
+        />
+      ))
+    }
+  </div>
+  <DisclaimerLine />
+</BankingShell>
