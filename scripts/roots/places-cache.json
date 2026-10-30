@@ -51,6 +51,19 @@
   "kind": "city",
   "at": "2026-10-18"
  },
+ "aiken, south carolina": {
+  "raw": "Aiken, SC",
+  "q": "Aiken, South Carolina",
+  "status": "ok",
+  "lat": 33.56162,
+  "lon": -81.72246,
+  "prec": "exact",
+  "matched": "Aiken, South Carolina",
+  "osm": "relation/193854",
+  "display": "Aiken, Aiken County, South Carolina, United States",
+  "kind": "city",
+  "at": "2026-10-30"
+ },
  "albemarle parish, surry county, virginia": {
   "raw": "Albemarle Parish, Surry Co., VA",
   "q": "Albemarle Parish, Surry County, Virginia",
@@ -63,6 +76,19 @@
   "display": "Surry County, Virginia, United States",
   "kind": "county",
   "at": "2026-10-18"
+ },
+ "alexandria, virginia": {
+  "raw": "Alexandria, Virginia",
+  "q": "Alexandria, Virginia",
+  "status": "ok",
+  "lat": 38.80511,
+  "lon": -77.04702,
+  "prec": "exact",
+  "matched": "Alexandria, Virginia",
+  "osm": "relation/206637",
+  "display": "Alexandria, Virginia, United States",
+  "kind": "city",
+  "at": "2026-10-30"
  },
  "amelia county, virginia": {
   "raw": "Amelia Co., VA",
@@ -155,6 +181,19 @@
   "kind": "city",
   "at": "2026-10-18"
  },
+ "baldwin, pennsylvania": {
+  "raw": "Baldwin, Pennsylvania",
+  "q": "Baldwin, Pennsylvania",
+  "status": "ok",
+  "lat": 40.33813,
+  "lon": -79.97894,
+  "prec": "exact",
+  "matched": "Baldwin, Pennsylvania",
+  "osm": "relation/188214",
+  "display": "Baldwin, Allegheny County, Pennsylvania, 15236, United States",
+  "kind": "town",
+  "at": "2026-10-30"
+ },
  "baltimore, maryland": {
   "raw": "Baltimore, MD",
   "q": "Baltimore, Maryland",
@@ -219,6 +258,19 @@
   "display": "Bergenfield, Bergen County, New Jersey, 07621, United States",
   "kind": "town",
   "at": "2026-10-18"
+ },
+ "bowling green, caroline county, virginia": {
+  "raw": "Bowling Green, Caroline County, Virginia",
+  "q": "Bowling Green, Caroline County, Virginia",
+  "status": "ok",
+  "lat": 38.04985,
+  "lon": -77.347,
+  "prec": "exact",
+  "matched": "Bowling Green, Caroline County, Virginia",
+  "osm": "relation/206906",
+  "display": "Bowling Green, Caroline County, Virginia, United States",
+  "kind": "town",
+  "at": "2026-10-30"
  },
  "boykins, southampton county, virginia": {
   "raw": "Boykins, Southampton Co., VA",
@@ -454,6 +506,45 @@
   "kind": "city",
   "at": "2026-10-18"
  },
+ "corbin, caroline county, virginia": {
+  "raw": "Corbin, Caroline County, Virginia",
+  "q": "Corbin, Caroline County, Virginia",
+  "status": "ok",
+  "lat": 38.19957,
+  "lon": -77.38887,
+  "prec": "exact",
+  "matched": "Corbin, Caroline County, Virginia",
+  "osm": "node/157614532",
+  "display": "Corbin, Caroline County, Virginia, 22446, United States",
+  "kind": "hamlet",
+  "at": "2026-10-30"
+ },
+ "courtland, southampton county, virginia": {
+  "raw": "Courtland, Southampton Co., VA",
+  "q": "Courtland, Southampton County, Virginia",
+  "status": "ok",
+  "lat": 36.71626,
+  "lon": -77.06802,
+  "prec": "exact",
+  "matched": "Courtland, Southampton County, Virginia",
+  "osm": "relation/206921",
+  "display": "Courtland, Southampton County, Virginia, United States",
+  "kind": "village",
+  "at": "2026-10-30"
+ },
+ "courtland, virginia": {
+  "raw": "Courtland, VA",
+  "q": "Courtland, Virginia",
+  "status": "ok",
+  "lat": 36.71626,
+  "lon": -77.06802,
+  "prec": "exact",
+  "matched": "Courtland, Virginia",
+  "osm": "relation/206921",
+  "display": "Courtland, Southampton County, Virginia, 23837, United States",
+  "kind": "village",
+  "at": "2026-10-30"
+ },
  "craney island, portsmouth, virginia": {
   "raw": "Craney Island, Portsmouth, Virginia",
   "q": "Craney Island, Portsmouth, Virginia",
@@ -492,6 +583,32 @@
   "display": "Culpeper County, Virginia, United States",
   "kind": "county",
   "at": "2026-10-18"
+ },
+ "davidson county, north carolina": {
+  "raw": "Davidson County, North Carolina",
+  "q": "Davidson County, North Carolina",
+  "status": "ok",
+  "lat": 35.79024,
+  "lon": -80.21151,
+  "prec": "exact",
+  "matched": "Davidson County, North Carolina",
+  "osm": "relation/2528693",
+  "display": "Davidson County, North Carolina, United States",
+  "kind": "county",
+  "at": "2026-10-30"
+ },
+ "dinwiddie county, virginia": {
+  "raw": "Dinwiddie County, Virginia",
+  "q": "Dinwiddie County, Virginia",
+  "status": "ok",
+  "lat": 37.07128,
+  "lon": -77.64807,
+  "prec": "exact",
+  "matched": "Dinwiddie County, Virginia",
+  "osm": "relation/2534175",
+  "display": "Dinwiddie County, Virginia, United States",
+  "kind": "county",
+  "at": "2026-10-30"
  },
  "drewryville, southampton county, virginia": {
   "raw": "Drewryville, Southampton Co., VA",
@@ -583,6 +700,19 @@
   "display": "Emporia, Virginia, 23847, United States",
   "kind": "town",
   "at": "2026-10-18"
+ },
+ "en route to raiford memorial hospital, franklin, virginia": {
+  "raw": "en route to Raiford Memorial Hospital, Franklin, VA",
+  "q": "en route to Raiford Memorial Hospital, Franklin, Virginia",
+  "status": "ok",
+  "lat": 36.67765,
+  "lon": -76.92246,
+  "prec": "broader",
+  "matched": "Franklin, Virginia",
+  "osm": "relation/3864687",
+  "display": "Franklin, Virginia, 23851, United States",
+  "kind": "town",
+  "at": "2026-10-30"
  },
  "england": {
   "raw": "England",
@@ -779,6 +909,19 @@
   "kind": "town",
   "at": "2026-10-18"
  },
+ "greenlawn cemetery, caroline county": {
+  "raw": "Greenlawn Cemetery, Caroline County",
+  "q": "Greenlawn Cemetery, Caroline County",
+  "status": "ok",
+  "lat": 34.35932,
+  "lon": -80.07686,
+  "prec": "exact",
+  "matched": "Greenlawn Cemetery, Caroline County",
+  "osm": "way/426062318",
+  "display": "Greenlawn Cemetery, Glen Acres, Hartsville, Darlington County, South Carolina, United States",
+  "kind": "cemetery",
+  "at": "2026-10-30"
+ },
  "greenlawn memorial park, newport news, virginia": {
   "raw": "Greenlawn Memorial Park, Newport News, Virginia",
   "q": "Greenlawn Memorial Park, Newport News, Virginia",
@@ -896,6 +1039,32 @@
   "kind": "city",
   "at": "2026-10-18"
  },
+ "henrico county, virginia": {
+  "raw": "Henrico County, Virginia",
+  "q": "Henrico County, Virginia",
+  "status": "ok",
+  "lat": 37.51312,
+  "lon": -77.34651,
+  "prec": "exact",
+  "matched": "Henrico County, Virginia",
+  "osm": "relation/3070728",
+  "display": "Henrico County, Virginia, United States",
+  "kind": "county",
+  "at": "2026-10-30"
+ },
+ "henrico doctors hospital, richmond, virginia": {
+  "raw": "Henrico Doctors' Hospital, Richmond, Virginia",
+  "q": "Henrico Doctors' Hospital, Richmond, Virginia",
+  "status": "ok",
+  "lat": 37.6033,
+  "lon": -77.54148,
+  "prec": "exact",
+  "matched": "Henrico Doctors' Hospital, Richmond, Virginia",
+  "osm": "way/45907100",
+  "display": "Henrico Doctors' Hospital, 1602, Skipwith Road, Ridge, Richmond, Henrico County, Virginia, 23229, United States",
+  "kind": "amenity",
+  "at": "2026-10-30"
+ },
  "hicksford district, greensville county, virginia": {
   "raw": "Hicksford District, Greensville Co., VA",
   "q": "Hicksford District, Greensville County, Virginia",
@@ -921,6 +1090,32 @@
   "display": "Hilton Village, Newport News, Virginia, 23605, United States",
   "kind": "suburb",
   "at": "2026-10-18"
+ },
+ "home, emporia, virginia": {
+  "raw": "home, Emporia, VA",
+  "q": "home, Emporia, Virginia",
+  "status": "ok",
+  "lat": 36.67709,
+  "lon": -77.54776,
+  "prec": "exact",
+  "matched": "home, Emporia, Virginia",
+  "osm": "node/158614556",
+  "display": "Halifax Manor Mobile Home Park, Emporia, Virginia, 23847, United States",
+  "kind": "neighbourhood",
+  "at": "2026-10-30"
+ },
+ "hustle, essex county, virginia": {
+  "raw": "Hustle, Essex County, Virginia",
+  "q": "Hustle, Essex County, Virginia",
+  "status": "ok",
+  "lat": 38.04263,
+  "lon": -77.06942,
+  "prec": "exact",
+  "matched": "Hustle, Essex County, Virginia",
+  "osm": "node/158586679",
+  "display": "Hustle, Essex County, Virginia, 22476, United States",
+  "kind": "hamlet",
+  "at": "2026-10-30"
  },
  "iroquois, wyoming county, west virginia": {
   "raw": "Iroquois, Wyoming Co., WV",
@@ -1026,6 +1221,19 @@
   "kind": "hamlet",
   "at": "2026-10-18"
  },
+ "king george county, virginia": {
+  "raw": "King George County, Virginia",
+  "q": "King George County, Virginia",
+  "status": "ok",
+  "lat": 38.27863,
+  "lon": -77.17536,
+  "prec": "exact",
+  "matched": "King George County, Virginia",
+  "osm": "relation/1149988",
+  "display": "King George County, Virginia, United States",
+  "kind": "county",
+  "at": "2026-10-30"
+ },
  "lake view cemetery, cleveland": {
   "raw": "Lake View Cemetery, Cleveland",
   "q": "Lake View Cemetery, Cleveland",
@@ -1091,6 +1299,19 @@
   "kind": "village",
   "at": "2026-10-30"
  },
+ "louise obici hospital, suffolk, virginia": {
+  "raw": "Louise Obici Hospital, Suffolk, VA",
+  "q": "Louise Obici Hospital, Suffolk, Virginia",
+  "status": "ok",
+  "lat": 36.72813,
+  "lon": -76.58347,
+  "prec": "broader",
+  "matched": "Suffolk, Virginia",
+  "osm": "relation/206528",
+  "display": "Suffolk, Virginia, United States",
+  "kind": "city",
+  "at": "2026-10-30"
+ },
  "lynchburg, virginia": {
   "raw": "Lynchburg, Va",
   "q": "Lynchburg, Virginia",
@@ -1142,6 +1363,19 @@
   "display": "Maryland, United States",
   "kind": "state",
   "at": "2026-10-18"
+ },
+ "medical city, denton, tx": {
+  "raw": "Medical City, Denton, TX",
+  "q": "Medical City, Denton, TX",
+  "status": "ok",
+  "lat": 33.17669,
+  "lon": -97.09114,
+  "prec": "exact",
+  "matched": "Medical City, Denton, TX",
+  "osm": "way/569148795",
+  "display": "Medical City Denton, 3535, South Interstate 35E, Denton, Denton County, Texas, 76210, United States",
+  "kind": "amenity",
+  "at": "2026-10-30"
  },
  "middle street, franklin, virginia": {
   "raw": "Middle Street, Franklin, VA",
@@ -1533,6 +1767,19 @@
   "kind": "cemetery",
   "at": "2026-10-18"
  },
+ "pennsylvania": {
+  "raw": "Pennsylvania",
+  "q": "Pennsylvania",
+  "status": "ok",
+  "lat": 40.96999,
+  "lon": -77.72788,
+  "prec": "exact",
+  "matched": "Pennsylvania",
+  "osm": "relation/162109",
+  "display": "Pennsylvania, United States",
+  "kind": "state",
+  "at": "2026-10-30"
+ },
  "petersburg, virginia": {
   "raw": "Petersburg, VA",
   "q": "Petersburg, Virginia",
@@ -1585,6 +1832,19 @@
   "kind": "city",
   "at": "2026-10-18"
  },
+ "pittsburgh, pennsylvania": {
+  "raw": "Pittsburgh, Pennsylvania",
+  "q": "Pittsburgh, Pennsylvania",
+  "status": "ok",
+  "lat": 40.4407,
+  "lon": -80.00257,
+  "prec": "exact",
+  "matched": "Pittsburgh, Pennsylvania",
+  "osm": "relation/188553",
+  "display": "Pittsburgh, Allegheny County, Pennsylvania, United States",
+  "kind": "city",
+  "at": "2026-10-30"
+ },
  "portsmouth, virginia": {
   "raw": "Portsmouth, VA",
   "q": "Portsmouth, Virginia",
@@ -1597,6 +1857,19 @@
   "display": "Portsmouth, Virginia, United States",
   "kind": "city",
   "at": "2026-10-18"
+ },
+ "raiford memorial hospital, franklin, virginia": {
+  "raw": "Raiford Memorial Hospital, Franklin, VA",
+  "q": "Raiford Memorial Hospital, Franklin, Virginia",
+  "status": "ok",
+  "lat": 36.67765,
+  "lon": -76.92246,
+  "prec": "broader",
+  "matched": "Franklin, Virginia",
+  "osm": "relation/3864687",
+  "display": "Franklin, Virginia, 23851, United States",
+  "kind": "town",
+  "at": "2026-10-30"
  },
  "richmond county, virginia": {
   "raw": "Richmond County, Virginia",
@@ -1650,6 +1923,19 @@
   "kind": "city",
   "at": "2026-10-30"
  },
+ "rockville, montgomery county, maryland": {
+  "raw": "Rockville, Montgomery County, Maryland",
+  "q": "Rockville, Montgomery County, Maryland",
+  "status": "ok",
+  "lat": 39.0818,
+  "lon": -77.15168,
+  "prec": "exact",
+  "matched": "Rockville, Montgomery County, Maryland",
+  "osm": "relation/133700",
+  "display": "Rockville, Montgomery County, Maryland, United States",
+  "kind": "city",
+  "at": "2026-10-30"
+ },
  "ruckersville, virginia": {
   "raw": "Ruckersville, Virginia",
   "q": "Ruckersville, Virginia",
@@ -1675,6 +1961,19 @@
   "display": "Orange County, Virginia, United States",
   "kind": "county",
   "at": "2026-10-18"
+ },
+ "saint marys hospital, richmond, virginia": {
+  "raw": "St. Mary's Hospital, Richmond, Virginia",
+  "q": "Saint Mary's Hospital, Richmond, Virginia",
+  "status": "ok",
+  "lat": 37.58396,
+  "lon": -77.51291,
+  "prec": "exact",
+  "matched": "Saint Mary's Hospital, Richmond, Virginia",
+  "osm": "way/45199200",
+  "display": "Saint Mary's Hospital, 5801, Bremo Road, Richmond, Henrico County, Virginia, 23226, United States",
+  "kind": "amenity",
+  "at": "2026-10-30"
  },
  "salisbury, north carolina": {
   "raw": "Salisbury, North Carolina",
@@ -1831,6 +2130,32 @@
   "display": "Spartanburg, Spartanburg County, South Carolina, United States",
   "kind": "city",
   "at": "2026-10-18"
+ },
+ "spotsylvania county / fredericksburg, virginia": {
+  "raw": "Spotsylvania County / Fredericksburg, Virginia",
+  "q": "Spotsylvania County / Fredericksburg, Virginia",
+  "status": "ok",
+  "lat": 38.28223,
+  "lon": -77.49436,
+  "prec": "exact",
+  "matched": "Spotsylvania County / Fredericksburg, Virginia",
+  "osm": "way/855190624",
+  "display": "Virginia Central Railway Trail, Fredericksburg, Spotsylvania County, Virginia, 22401, United States",
+  "kind": "road",
+  "at": "2026-10-30"
+ },
+ "spotsylvania county, virginia": {
+  "raw": "Spotsylvania County, Virginia",
+  "q": "Spotsylvania County, Virginia",
+  "status": "ok",
+  "lat": 38.18809,
+  "lon": -77.67418,
+  "prec": "exact",
+  "matched": "Spotsylvania County, Virginia",
+  "osm": "relation/1633331",
+  "display": "Spotsylvania County, Virginia, United States",
+  "kind": "county",
+  "at": "2026-10-30"
  },
  "suffolk, nansemond county, virginia": {
   "raw": "Suffolk, Nansemond Co., VA",
@@ -2014,6 +2339,19 @@
   "kind": "city",
   "at": "2026-10-18"
  },
+ "union, hertford county, north carolina": {
+  "raw": "Union, Hertford Co., NC",
+  "q": "Union, Hertford County, North Carolina",
+  "status": "ok",
+  "lat": 36.33377,
+  "lon": -77.02413,
+  "prec": "exact",
+  "matched": "Union, Hertford County, North Carolina",
+  "osm": "node/158599403",
+  "display": "Union, Hertford County, North Carolina, United States",
+  "kind": "hamlet",
+  "at": "2026-10-30"
+ },
  "valmozzola, italy": {
   "raw": "Valmozzola, Italy",
   "q": "Valmozzola, Italy",
@@ -2105,6 +2443,19 @@
   "kind": "city",
   "at": "2026-10-30"
  },
+ "washington, dc": {
+  "raw": "Washington, D.C",
+  "q": "Washington, D.C",
+  "status": "ok",
+  "lat": 38.8951,
+  "lon": -77.03638,
+  "prec": "exact",
+  "matched": "Washington, D.C",
+  "osm": "relation/5396194",
+  "display": "Washington, District of Columbia, United States",
+  "kind": "city",
+  "at": "2026-10-30"
+ },
  "welch, browns creek district, mcdowell county, west virginia": {
   "raw": "Welch, Browns Creek District, McDowell Co., West Virginia",
   "q": "Welch, Browns Creek District, McDowell County, West Virginia",
@@ -2156,6 +2507,19 @@
   "display": "Westmoreland County, Virginia, United States",
   "kind": "county",
   "at": "2026-10-18"
+ },
+ "williamsburg, virginia": {
+  "raw": "Williamsburg, VA",
+  "q": "Williamsburg, Virginia",
+  "status": "ok",
+  "lat": 37.27125,
+  "lon": -76.70003,
+  "prec": "exact",
+  "matched": "Williamsburg, Virginia",
+  "osm": "relation/206807",
+  "display": "Williamsburg, Virginia, United States",
+  "kind": "city",
+  "at": "2026-10-30"
  },
  "wilmington, north carolina": {
   "raw": "Wilmington, North Carolina",
