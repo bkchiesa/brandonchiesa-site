@@ -181,6 +181,19 @@
   "kind": "hamlet",
   "at": "2026-10-18"
  },
+ "banksville, pittsburgh, pennsylvania": {
+  "raw": "Banksville, Pittsburgh, Pennsylvania",
+  "q": "Banksville, Pittsburgh, Pennsylvania",
+  "status": "ok",
+  "lat": 40.41069,
+  "lon": -80.03864,
+  "prec": "exact",
+  "matched": "Banksville, Pittsburgh, Pennsylvania",
+  "osm": "relation/6897589",
+  "display": "Banksville, Pittsburgh, Allegheny County, Pennsylvania, United States",
+  "kind": "neighbourhood",
+  "at": "2026-10-30"
+ },
  "bedford county, virginia": {
   "raw": "Bedford Co., Virginia",
   "q": "Bedford County, Virginia",
@@ -297,6 +310,19 @@
   "display": "Calvary Cemetery, Queens, Queens County, New York, United States",
   "kind": "cemetery",
   "at": "2026-10-18"
+ },
+ "camp manufacturing company, virginia": {
+  "raw": "Camp Manufacturing Company, Virginia",
+  "q": "Camp Manufacturing Company, Virginia",
+  "status": "ok",
+  "lat": 37.12322,
+  "lon": -78.49277,
+  "prec": "region",
+  "matched": "Virginia",
+  "osm": "relation/224042",
+  "display": "Virginia, United States",
+  "kind": "state",
+  "at": "2026-10-30"
  },
  "capron, southampton county, virginia": {
   "raw": "Capron, Southampton Co., VA",
@@ -1052,6 +1078,19 @@
   "kind": "city",
   "at": "2026-10-18"
  },
+ "littleton, north carolina": {
+  "raw": "Littleton, NC",
+  "q": "Littleton, North Carolina",
+  "status": "ok",
+  "lat": 36.43489,
+  "lon": -77.91196,
+  "prec": "exact",
+  "matched": "Littleton, North Carolina",
+  "osm": "relation/180201",
+  "display": "Littleton, Halifax County, North Carolina, United States",
+  "kind": "village",
+  "at": "2026-10-30"
+ },
  "lynchburg, virginia": {
   "raw": "Lynchburg, Va",
   "q": "Lynchburg, Virginia",
@@ -1103,6 +1142,19 @@
   "display": "Maryland, United States",
   "kind": "state",
   "at": "2026-10-18"
+ },
+ "middle street, franklin, virginia": {
+  "raw": "Middle Street, Franklin, VA",
+  "q": "Middle Street, Franklin, Virginia",
+  "status": "ok",
+  "lat": 36.67952,
+  "lon": -76.92308,
+  "prec": "exact",
+  "matched": "Middle Street, Franklin, Virginia",
+  "osm": "way/6031590",
+  "display": "Middle Street, Franklin, Virginia, 23851, United States",
+  "kind": "residential",
+  "at": "2026-10-30"
  },
  "montgomery county, maryland": {
   "raw": "Montgomery County, MD",
@@ -1324,6 +1376,19 @@
   "display": "White Oak Landing, New Kent County, Virginia, 23031, United States",
   "kind": "hamlet",
   "at": "2026-10-18"
+ },
+ "orange county, north carolina": {
+  "raw": "Orange County, North Carolina",
+  "q": "Orange County, North Carolina",
+  "status": "ok",
+  "lat": 36.06051,
+  "lon": -79.11727,
+  "prec": "exact",
+  "matched": "Orange County, North Carolina",
+  "osm": "relation/2528730",
+  "display": "Orange County, North Carolina, United States",
+  "kind": "county",
+  "at": "2026-10-30"
  },
  "orne, normandy, france": {
   "raw": "Orne, Normandy, France",
@@ -1572,6 +1637,32 @@
   "kind": "city",
   "at": "2026-10-18"
  },
+ "roanoke, virginia": {
+  "raw": "Roanoke, Virginia",
+  "q": "Roanoke, Virginia",
+  "status": "ok",
+  "lat": 37.27097,
+  "lon": -79.94143,
+  "prec": "exact",
+  "matched": "Roanoke, Virginia",
+  "osm": "relation/206561",
+  "display": "Roanoke, Virginia, United States",
+  "kind": "city",
+  "at": "2026-10-30"
+ },
+ "ruckersville, virginia": {
+  "raw": "Ruckersville, Virginia",
+  "q": "Ruckersville, Virginia",
+  "status": "ok",
+  "lat": 38.23319,
+  "lon": -78.36917,
+  "prec": "exact",
+  "matched": "Ruckersville, Virginia",
+  "osm": "node/158484427",
+  "display": "Ruckersville, Greene County, Virginia, 22968, United States",
+  "kind": "village",
+  "at": "2026-10-30"
+ },
  "saint marks parish, orange county, virginia": {
   "raw": "St. Mark's Parish, Orange Co., Virginia",
   "q": "Saint Mark's Parish, Orange County, Virginia",
@@ -1650,6 +1741,19 @@
   "kind": "hamlet",
   "at": "2026-10-18"
  },
+ "san siro, valmozzola, parma, italy": {
+  "raw": "San Siro, Valmozzola, Parma, Italy",
+  "q": "San Siro, Valmozzola, Parma, Italy",
+  "status": "ok",
+  "lat": 44.56472,
+  "lon": 9.87875,
+  "prec": "exact",
+  "matched": "San Siro, Valmozzola, Parma, Italy",
+  "osm": "node/2039705868",
+  "display": "San Siro Chiesa, Mormorola, Valmozzola, Parma, Emilia-Romagna, 43050, Italy",
+  "kind": "hamlet",
+  "at": "2026-10-30"
+ },
  "sebrell, southampton county, virginia": {
   "raw": "Sebrell, Southampton Co., VA",
   "q": "Sebrell, Southampton County, Virginia",
@@ -1675,6 +1779,19 @@
   "display": "Smyth County, Virginia, United States",
   "kind": "county",
   "at": "2026-10-18"
+ },
+ "somerset, kentucky": {
+  "raw": "Somerset, Kentucky",
+  "q": "Somerset, Kentucky",
+  "status": "ok",
+  "lat": 37.09202,
+  "lon": -84.60411,
+  "prec": "exact",
+  "matched": "Somerset, Kentucky",
+  "osm": "relation/130829",
+  "display": "Somerset, Pulaski County, Kentucky, United States",
+  "kind": "town",
+  "at": "2026-10-30"
  },
  "southampton county, virginia": {
   "raw": "Southampton Co., VA",
@@ -1910,6 +2027,19 @@
   "kind": "municipality",
   "at": "2026-10-18"
  },
+ "vaulters church cemetery, essex county, virginia": {
+  "raw": "Vaulters Church cemetery, Essex County, Virginia",
+  "q": "Vaulters Church cemetery, Essex County, Virginia",
+  "status": "ok",
+  "lat": 37.91406,
+  "lon": -76.93264,
+  "prec": "broader",
+  "matched": "Essex County, Virginia",
+  "osm": "relation/2534176",
+  "display": "Essex County, Virginia, United States",
+  "kind": "county",
+  "at": "2026-10-30"
+ },
  "vauters church cemetery, loretto, essex county, virginia": {
   "raw": "Vauter's Church Cemetery, Loretto, Essex Co., Virginia",
   "q": "Vauter's Church Cemetery, Loretto, Essex County, Virginia",
@@ -1948,6 +2078,32 @@
   "display": "Virginia Beach, Virginia, United States",
   "kind": "city",
   "at": "2026-10-18"
+ },
+ "warwick swamp baptist church cemetery, hobbsville, chowan county, north carolina": {
+  "raw": "Warwick Swamp Baptist Church Cemetery, Hobbsville, Chowan County, NC",
+  "q": "Warwick Swamp Baptist Church Cemetery, Hobbsville, Chowan County, North Carolina",
+  "status": "ok",
+  "lat": 36.07689,
+  "lon": -76.62964,
+  "prec": "broader",
+  "matched": "Chowan County, North Carolina",
+  "osm": "relation/1242006",
+  "display": "Chowan County, North Carolina, United States",
+  "kind": "county",
+  "at": "2026-10-30"
+ },
+ "washington township, fayette county, pennsylvania": {
+  "raw": "Washington Township, Fayette County, Pennsylvania",
+  "q": "Washington Township, Fayette County, Pennsylvania",
+  "status": "ok",
+  "lat": 40.10191,
+  "lon": -79.81323,
+  "prec": "exact",
+  "matched": "Washington Township, Fayette County, Pennsylvania",
+  "osm": "relation/8693340",
+  "display": "Washington Township, Fayette County, Pennsylvania, United States",
+  "kind": "city",
+  "at": "2026-10-30"
  },
  "welch, browns creek district, mcdowell county, west virginia": {
   "raw": "Welch, Browns Creek District, McDowell Co., West Virginia",
@@ -2000,6 +2156,19 @@
   "display": "Westmoreland County, Virginia, United States",
   "kind": "county",
   "at": "2026-10-18"
+ },
+ "wilmington, north carolina": {
+  "raw": "Wilmington, North Carolina",
+  "q": "Wilmington, North Carolina",
+  "status": "ok",
+  "lat": 34.23529,
+  "lon": -77.94873,
+  "prec": "exact",
+  "matched": "Wilmington, North Carolina",
+  "osm": "relation/179032",
+  "display": "Wilmington, New Hanover County, North Carolina, United States",
+  "kind": "city",
+  "at": "2026-10-30"
  },
  "wittens fort, virginia": {
   "raw": "Wittens Fort, VA",
