@@ -2898,6 +2898,19 @@
   "kind": "municipality",
   "at": "2026-10-18"
  },
+ "valmozzola, parma, italy": {
+  "raw": "Valmozzola, Parma, Italy",
+  "q": "Valmozzola, Parma, Italy",
+  "status": "ok",
+  "lat": 44.58551,
+  "lon": 9.86915,
+  "prec": "exact",
+  "matched": "Valmozzola, Parma, Italy",
+  "osm": "relation/43317",
+  "display": "Valmozzola, Parma, Emilia-Romagna, 43050, Italy",
+  "kind": "municipality",
+  "at": "2026-11-01"
+ },
  "vaulters church cemetery, essex county, virginia": {
   "raw": "Vaulters Church cemetery, Essex County, Virginia",
   "q": "Vaulters Church cemetery, Essex County, Virginia",
