@@ -311,6 +311,19 @@
   "kind": "village",
   "at": "2026-10-30"
  },
+ "berceto, parma, italy": {
+  "raw": "Berceto, Parma, Italy",
+  "q": "Berceto, Parma, Italy",
+  "status": "ok",
+  "lat": 44.51061,
+  "lon": 9.98965,
+  "prec": "exact",
+  "matched": "Berceto, Parma, Italy",
+  "osm": "relation/43197",
+  "display": "Berceto, Parma, Emilia-Romagna, 43042, Italy",
+  "kind": "village",
+  "at": "2026-11-02"
+ },
  "bergenfield, new jersey": {
   "raw": "Bergenfield, NJ",
   "q": "Bergenfield, New Jersey",
@@ -583,6 +596,19 @@
   "display": "Caroline County, Virginia, United States",
   "kind": "county",
   "at": "2026-10-18"
+ },
+ "casa pesci, pietramogolana, berceto, parma, italy": {
+  "raw": "Casa Pesci, Pietramogolana, Berceto, Parma, Italy",
+  "q": "Casa Pesci, Pietramogolana, Berceto, Parma, Italy",
+  "status": "ok",
+  "lat": 44.57587,
+  "lon": 9.96217,
+  "prec": "exact",
+  "matched": "Casa Pesci (near Pietramogolana, Berceto, Parma, Italy)",
+  "osm": "node/9094567368",
+  "display": "Casa Pesci, Gaietta, Pagazzano, Berceto, Parma, Emilia-Romagna, 43040, Italy",
+  "kind": "isolated_dwelling",
+  "at": "2026-11-02"
  },
  "chaffins bluff": {
   "raw": "Chaffin's Bluff",
@@ -1429,6 +1455,19 @@
   "kind": "hamlet",
   "at": "2026-10-30"
  },
+ "house at \"bondi\", valmozzola, parma, italy": {
+  "raw": "house at \"Bondi\", Valmozzola, Parma, Italy",
+  "q": "house at \"Bondi\", Valmozzola, Parma, Italy",
+  "status": "ok",
+  "lat": 44.58551,
+  "lon": 9.86915,
+  "prec": "broader",
+  "matched": "Valmozzola, Parma, Italy",
+  "osm": "relation/43317",
+  "display": "Valmozzola, Parma, Emilia-Romagna, 43050, Italy",
+  "kind": "municipality",
+  "at": "2026-11-02"
+ },
  "hustle, essex county, virginia": {
   "raw": "Hustle, Essex County, Virginia",
   "q": "Hustle, Essex County, Virginia",
@@ -2221,6 +2260,19 @@
   "display": "Philippi, Barbour County, West Virginia, 26416, United States",
   "kind": "town",
   "at": "2026-10-18"
+ },
+ "pietramogolana, berceto, parma, italy": {
+  "raw": "Pietramogolana, Berceto, Parma, Italy",
+  "q": "Pietramogolana, Berceto, Parma, Italy",
+  "status": "ok",
+  "lat": 44.59072,
+  "lon": 9.95598,
+  "prec": "exact",
+  "matched": "Pietramogolana, Berceto, Parma, Italy",
+  "osm": "node/1733028218",
+  "display": "Pietramogolana, Berceto, Parma, Emilia-Romagna, 43040, Italy",
+  "kind": "hamlet",
+  "at": "2026-11-02"
  },
  "pittsburgh, allegheny county, pa": {
   "raw": "Pittsburgh, Allegheny Co., Pa",
