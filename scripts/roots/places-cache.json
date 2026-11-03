@@ -1468,6 +1468,32 @@
   "kind": "municipality",
   "at": "2026-11-02"
  },
+ "house at branzone, valmozzola, parma, italy": {
+  "raw": "house at Branzone, Valmozzola, Parma, Italy",
+  "q": "house at Branzone, Valmozzola, Parma, Italy",
+  "status": "ok",
+  "lat": 44.58551,
+  "lon": 9.86915,
+  "prec": "broader",
+  "matched": "Valmozzola, Parma, Italy",
+  "osm": "relation/43317",
+  "display": "Valmozzola, Parma, Emilia-Romagna, 43050, Italy",
+  "kind": "municipality",
+  "at": "2026-11-03"
+ },
+ "house, pietramogolana, berceto, parma, italy": {
+  "raw": "house, Pietramogolana, Berceto, Parma, Italy",
+  "q": "house, Pietramogolana, Berceto, Parma, Italy",
+  "status": "ok",
+  "lat": 44.59072,
+  "lon": 9.95598,
+  "prec": "broader",
+  "matched": "Pietramogolana, Berceto, Parma, Italy",
+  "osm": "node/1733028218",
+  "display": "Pietramogolana, Berceto, Parma, Emilia-Romagna, 43040, Italy",
+  "kind": "hamlet",
+  "at": "2026-11-03"
+ },
  "hustle, essex county, virginia": {
   "raw": "Hustle, Essex County, Virginia",
   "q": "Hustle, Essex County, Virginia",
