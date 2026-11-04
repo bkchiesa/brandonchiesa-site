@@ -1377,6 +1377,19 @@
   "kind": "amenity",
   "at": "2026-10-30"
  },
+ "her husbands house, san siro, valmozzola, parma, italy": {
+  "raw": "her husband's house, San Siro, Valmozzola, Parma, Italy",
+  "q": "her husband's house, San Siro, Valmozzola, Parma, Italy",
+  "status": "ok",
+  "lat": 44.56472,
+  "lon": 9.87875,
+  "prec": "broader",
+  "matched": "San Siro, Valmozzola, Parma, Italy",
+  "osm": "node/2039705868",
+  "display": "San Siro Chiesa, Mormorola, Valmozzola, Parma, Emilia-Romagna, 43050, Italy",
+  "kind": "hamlet",
+  "at": "2026-11-04"
+ },
  "hibbard, madison, idaho": {
   "raw": "Hibbard, Madison, Idaho",
   "q": "Hibbard, Madison, Idaho",
@@ -1415,6 +1428,32 @@
   "display": "Hilton Village, Newport News, Virginia, 23605, United States",
   "kind": "suburb",
   "at": "2026-10-18"
+ },
+ "his fathers house, san siro, valmozzola, parma, italy": {
+  "raw": "his father's house, San Siro, Valmozzola, Parma, Italy",
+  "q": "his father's house, San Siro, Valmozzola, Parma, Italy",
+  "status": "ok",
+  "lat": 44.56472,
+  "lon": 9.87875,
+  "prec": "broader",
+  "matched": "San Siro, Valmozzola, Parma, Italy",
+  "osm": "node/2039705868",
+  "display": "San Siro Chiesa, Mormorola, Valmozzola, Parma, Emilia-Romagna, 43050, Italy",
+  "kind": "hamlet",
+  "at": "2026-11-04"
+ },
+ "his house, san siro, valmozzola, parma, italy": {
+  "raw": "his house, San Siro, Valmozzola, Parma, Italy",
+  "q": "his house, San Siro, Valmozzola, Parma, Italy",
+  "status": "ok",
+  "lat": 44.56472,
+  "lon": 9.87875,
+  "prec": "broader",
+  "matched": "San Siro, Valmozzola, Parma, Italy",
+  "osm": "node/2039705868",
+  "display": "San Siro Chiesa, Mormorola, Valmozzola, Parma, Emilia-Romagna, 43050, Italy",
+  "kind": "hamlet",
+  "at": "2026-11-04"
  },
  "home near courtland, southampton county, virginia": {
   "raw": "home near Courtland, Southampton Co., VA",
