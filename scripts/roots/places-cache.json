@@ -428,6 +428,19 @@
   "kind": "hamlet",
   "at": "2026-10-18"
  },
+ "branzone, valmozzola, parma, italy": {
+  "raw": "Branzone, Valmozzola, Parma, Italy",
+  "q": "Branzone, Valmozzola, Parma, Italy",
+  "status": "ok",
+  "lat": 44.55015,
+  "lon": 9.8631,
+  "prec": "exact",
+  "matched": "Branzone, Valmozzola, Parma, Italy",
+  "osm": "node/2039711417",
+  "display": "Branzone, Valmozzola, Parma, Emilia-Romagna, Italy",
+  "kind": "hamlet",
+  "at": "2026-11-05"
+ },
  "bridgeville, allegheny, pennsylvania": {
   "raw": "Bridgeville, Allegheny, Pennsylvania",
   "q": "Bridgeville, Allegheny, Pennsylvania",
@@ -1390,6 +1403,32 @@
   "kind": "hamlet",
   "at": "2026-11-04"
  },
+ "her own house, gusaliggio, valmozzola, parma, italy": {
+  "raw": "her own house, Gusaliggio, Valmozzola, Parma, Italy",
+  "q": "her own house, Gusaliggio, Valmozzola, Parma, Italy",
+  "status": "ok",
+  "lat": 44.58004,
+  "lon": 9.86883,
+  "prec": "broader",
+  "matched": "Gusaliggio, Valmozzola, Parma, Italy",
+  "osm": "node/2039702810",
+  "display": "Pieve di Gusaliggio, Mormorola, Valmozzola, Parma, Emilia-Romagna, 43050, Italy",
+  "kind": "hamlet",
+  "at": "2026-11-05"
+ },
+ "her own house, san siro, valmozzola, parma, italy": {
+  "raw": "her own house, San Siro, Valmozzola, Parma, Italy",
+  "q": "her own house, San Siro, Valmozzola, Parma, Italy",
+  "status": "ok",
+  "lat": 44.56603,
+  "lon": 9.87583,
+  "prec": "broader",
+  "matched": "San Siro, Valmozzola, Parma, Italy",
+  "osm": "node/2042633879",
+  "display": "San Siro Costa, Mormorola, Valmozzola, Parma, Emilia-Romagna, 43050, Italy",
+  "kind": "hamlet",
+  "at": "2026-11-05"
+ },
  "hibbard, madison, idaho": {
   "raw": "Hibbard, Madison, Idaho",
   "q": "Hibbard, Madison, Idaho",
@@ -1441,6 +1480,19 @@
   "display": "San Siro Chiesa, Mormorola, Valmozzola, Parma, Emilia-Romagna, 43050, Italy",
   "kind": "hamlet",
   "at": "2026-11-04"
+ },
+ "his house, branzone, valmozzola, parma, italy": {
+  "raw": "his house, Branzone, Valmozzola, Parma, Italy",
+  "q": "his house, Branzone, Valmozzola, Parma, Italy",
+  "status": "ok",
+  "lat": 44.55015,
+  "lon": 9.8631,
+  "prec": "broader",
+  "matched": "Branzone, Valmozzola, Parma, Italy",
+  "osm": "node/2039711417",
+  "display": "Branzone, Valmozzola, Parma, Emilia-Romagna, Italy",
+  "kind": "hamlet",
+  "at": "2026-11-05"
  },
  "his house, san siro, valmozzola, parma, italy": {
   "raw": "his house, San Siro, Valmozzola, Parma, Italy",
