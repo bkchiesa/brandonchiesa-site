@@ -1,0 +1,113 @@
+---
+// Variant B: the roots drawing that grows around the "Roots" item in the homepage nav. It sits inside the link,
+// absolutely positioned, behind the text and ignoring the pointer, so the nav layout never moves. Hover (pointer
+// devices), keyboard focus or a tap draws it (stroke-dashoffset 1 -> 0, about 0.9 s); it retracts when the pointer
+// leaves. Reduced motion (OS setting or the site's toggle): no drawing; the roots appear at once, faintly, and a tap
+// goes straight to the page.
+const main = [
+  "M130 100 C128 112 120 120 112 128 S96 142 84 150",
+  "M158 100 C159 114 156 126 160 138 S166 150 162 156",
+  "M188 100 C192 112 202 120 212 128 S230 140 244 148",
+  "M90 86 C80 90 70 96 60 106 S40 118 26 122",
+  "M226 84 C238 90 250 96 262 108 S282 120 292 118",
+];
+const branch = [
+  "M120 121 C112 124 104 124 96 130",
+  "M157 126 C150 132 146 138 140 146",
+  "M204 122 C212 120 220 122 230 120",
+  "M112 128 C110 136 108 142 110 150",
+  "M60 106 C56 114 50 120 44 132",
+  "M262 108 C266 116 272 122 276 132",
+  "M90 68 C78 64 66 66 56 60 S40 50 30 52",
+  "M226 66 C238 62 250 58 260 50 S276 42 288 44",
+];
+const tendril = [
+  "M120 56 C118 46 110 40 104 30 S98 18 100 10",
+  "M196 56 C198 44 208 38 214 28 S220 16 216 8",
+  "M74 97 C70 102 64 104 58 102",
+  "M246 96 C252 100 258 100 264 98",
+];
+---
+
+<svg class="roots-svg" viewBox="0 0 316 156" aria-hidden="true" focusable="false">
+  <g class="roots-main">{main.map((d, i) => <path d={d} pathLength="1" style={`--i:${i}`} />)}</g>
+  <g class="roots-branch">{branch.map((d, i) => <path d={d} pathLength="1" style={`--i:${i}`} />)}</g>
+  <g class="roots-tendril">{tendril.map((d, i) => <path d={d} pathLength="1" style={`--i:${i}`} />)}</g>
+</svg>
+
+<style>
+  /* the drawing's centre (158, 78) sits on the centre of the word; sized in em so it scales with the nav text */
+  .roots-svg {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 7.2em;
+    height: 3.56em;
+    transform: translate(-50%, -50%);
+    max-width: none; /* the site caps svg at 100% of its box */
+    max-height: none;
+    overflow: visible;
+    pointer-events: none;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    filter: drop-shadow(0 1px 1px rgba(20, 12, 6, 0.55));
+    z-index: -1; /* behind the nav words */
+  }
+  .roots-svg path {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    transition: stroke-dashoffset 0.45s cubic-bezier(0.4, 0, 0.6, 1);
+  }
+  .roots-main path { stroke: #c49a6c; stroke-width: 3; transition-delay: 0.12s; }
+  .roots-branch path { stroke: #a57a4c; stroke-width: 2; transition-delay: 0.04s; }
+  .roots-tendril path { stroke: #d8c49a; stroke-width: 1.6; transition-delay: 0s; }
+
+  :global(.mist-label.is-growing) .roots-svg path,
+  :global(.mist-label:focus-visible) .roots-svg path {
+    stroke-dashoffset: 0;
+    transition: stroke-dashoffset 0.6s cubic-bezier(0.25, 0.6, 0.3, 1);
+  }
+  :global(.mist-label.is-growing) .roots-main path,
+  :global(.mist-label:focus-visible) .roots-main path { transition-delay: calc(var(--i) * 0.03s); }
+  :global(.mist-label.is-growing) .roots-branch path,
+  :global(.mist-label:focus-visible) .roots-branch path { transition-delay: calc(0.22s + var(--i) * 0.02s); }
+  :global(.mist-label.is-growing) .roots-tendril path,
+  :global(.mist-label:focus-visible) .roots-tendril path { transition-delay: calc(0.3s + var(--i) * 0.03s); }
+
+  @media (hover: hover) {
+    :global(.mist-label:hover) .roots-svg path { stroke-dashoffset: 0; transition: stroke-dashoffset 0.6s cubic-bezier(0.25, 0.6, 0.3, 1); }
+    :global(.mist-label:hover) .roots-main path { transition-delay: calc(var(--i) * 0.03s); }
+    :global(.mist-label:hover) .roots-branch path { transition-delay: calc(0.22s + var(--i) * 0.02s); }
+    :global(.mist-label:hover) .roots-tendril path { transition-delay: calc(0.3s + var(--i) * 0.03s); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :global(html:not([data-reduce-motion="false"])) .roots-svg path { transition: none !important; }
+    :global(html:not([data-reduce-motion="false"])) .roots-svg { opacity: 0.6; }
+  }
+  :global(html[data-reduce-motion="true"]) .roots-svg path { transition: none !important; }
+  :global(html[data-reduce-motion="true"]) .roots-svg { opacity: 0.6; }
+</style>
+
+<script>
+  // Touch has no hover: a tap grows the roots, then follows the link once they have drawn.
+  const reduced = () =>
+    document.documentElement.dataset.reduceMotion === "true" ||
+    (document.documentElement.dataset.reduceMotion !== "false" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+  document.querySelectorAll<HTMLAnchorElement>("[data-roots-grow]").forEach((link) => {
+    let touch = false;
+    link.addEventListener("pointerdown", (e) => { touch = e.pointerType === "touch" || e.pointerType === "pen"; });
+    link.addEventListener("click", (e) => {
+      if (!touch || reduced() || e.metaKey || e.ctrlKey || e.shiftKey) return;
+      e.preventDefault();
+      link.classList.add("is-growing");
+      window.setTimeout(() => { window.location.href = link.href; }, 750);
+    });
+    link.addEventListener("pointerleave", () => { if (!touch) link.classList.remove("is-growing"); });
+  });
+  window.addEventListener("pageshow", () => {
+    document.querySelectorAll("[data-roots-grow]").forEach((l) => l.classList.remove("is-growing"));
+  });
+</script>

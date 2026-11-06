@@ -1,0 +1,348 @@
+---
+import { existsSync } from "node:fs";
+import { join } from "node:path";
+import LeatherCard from "../components/LeatherCard.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import VideoShell from "../components/VideoShell.astro";
+import Base from "../layouts/Base.astro";
+import { ART, artUrl } from "../lib/art";
+
+interface CareerRole {
+  role?: string;
+  place?: string;
+  dates?: string;
+}
+
+interface CareerEntry extends CareerRole {
+  org: string;
+  href?: string;
+  notes?: string[];
+  nested?: CareerRole[];
+}
+
+const publicDir = join(process.cwd(), "public");
+const brassRel = ART.v3.careerBrassRule;
+const plateRel = ART.v3.leatherPanel;
+const hasBrass = existsSync(join(publicDir, brassRel));
+const hasPlate = existsSync(join(publicDir, plateRel));
+const brassUrl = hasBrass ? artUrl(brassRel) : "";
+const plateUrl = hasPlate ? artUrl(plateRel) : "";
+
+const education: CareerEntry[] = [
+  {
+    org: "Warwick High School",
+    dates: "2001",
+    place: "Newport News, VA",
+  },
+  {
+    org: "Hampden-Sydney College",
+    role: "B.A., History & Political Science",
+    dates: "2001–2005",
+    notes: ["ODK Student of the Year, 2005"],
+  },
+  {
+    org: "University of Oxford",
+    role: "Virginia Program at Oxford — St. Annes College",
+    dates: "2004",
+  },
+];
+
+const work: CareerEntry[] = [
+  {
+    org: "First Citizens Bank",
+    role: "Business Banker / Vice President",
+    place:
+      "Charlottesville, Farmville, Albemarle, Fluvanna, Nelson, Louisa, Greene, Buckingham, Prince Edward, Cumberland Counties",
+    dates: "2021 - PRESENT",
+  },
+  {
+    org: "Truist (BB&T)",
+    role: "Business Banker",
+    place: "Greater Charlottesville area",
+    dates: "2014 – 2021",
+    nested: [
+      {
+        role: "Branch Manager",
+        place: "Fluvanna County, Virginia",
+        dates: "2008 - 2014",
+      },
+      {
+        role: "BB&T Leadership Development Program (LDP)",
+        place: "Winston-Salem, NC",
+        dates: "2008",
+      },
+    ],
+  },
+  {
+    org: "Commonwealth-Strategies Political Consulting",
+    role: "Founding Partner",
+    dates: "2007–2011",
+  },
+  {
+    org: "State Farm Insurance",
+    place: "Farmville, VA",
+    dates: "2005-2008",
+  },
+];
+
+const community: CareerEntry[] = [
+  {
+    org: "Dolly Parton’s Imagination Library Fluvanna",
+    href: "https://imaginationlibrary.com/usa/affiliate/VAFLUVANNA/",
+    role: "Founding Board Member",
+    dates: "2023 –PRESENT",
+  },
+  {
+    org: "Community Investment Collaborative",
+    href: "https://cicville.org",
+    role: "Loan Review Committee",
+    dates: "2020–PRESENT",
+  },
+  {
+    org: "Charlottesville Angel Network",
+    href: "https://cvilleangelnetwork.net",
+    dates: "2025 - PRESENT",
+  },
+  {
+    org: "Fluvanna Ruritan Club",
+    role: "Past President",
+  },
+  {
+    org: "Fluvanna County Broadband Area Task Force",
+    role: "Member",
+    dates: "2017–2018",
+  },
+  {
+    org: "Beautiful Gate Ministries",
+    role: "Sunday Media and Live Stream Director",
+    dates: "2014 - PRESENT",
+  },
+  {
+    org: "Fork Union Community Day",
+    role: "Founding Director",
+    dates: "2010–2014",
+  },
+];
+
+const sections = [
+  { id: "education", title: "Education", entries: education },
+  { id: "work", title: "Work", entries: work },
+  { id: "community", title: "Community", entries: community },
+];
+---
+
+<Base
+  title="Career"
+  room="career"
+  videoShell
+  description="Public bio of Brandon Chiesa: education, work, and community."
+>
+  <VideoShell />
+  <div
+    class="room-stage room-stage--deck"
+    style={plateUrl ? `--letter-plate: url('${plateUrl}')` : undefined}
+  >
+    <div class="room-veil" aria-hidden="true"></div>
+    <SiteHeader current="career" />
+    <main
+      id="main"
+      class="career-deck"
+      data-brass={hasBrass ? "true" : "false"}
+      data-wheel="true"
+      style={brassUrl ? `--career-brass-rule: url('${brassUrl}')` : undefined}
+    >
+      <h1 class="sr-only">Career</h1>
+      {
+        sections.map((section) => (
+          <LeatherCard title={section.title}>
+            <section class="career-section" id={section.id} aria-labelledby={`${section.id}-title`}>
+              <h2 class="career-heading" id={`${section.id}-title`}>
+                {section.title}
+              </h2>
+              <ul class="career-list">
+                {section.entries.map((entry) => (
+                  <li class="career-entry">
+                    <h3 class="career-org">
+                      {entry.href ? (
+                        <a
+                          class="career-link"
+                          href={entry.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {entry.org}
+                        </a>
+                      ) : (
+                        entry.org
+                      )}
+                    </h3>
+                    {entry.role && <p class="career-role">{entry.role}</p>}
+                    {entry.place && <p class="career-place">{entry.place}</p>}
+                    {entry.dates && <p class="career-meta">{entry.dates}</p>}
+                    {entry.notes && entry.notes.length > 0 && (
+                      <ul class="career-notes">
+                        {entry.notes.map((note) => (
+                          <li>{note}</li>
+                        ))}
+                      </ul>
+                    )}
+                    {entry.nested && entry.nested.length > 0 && (
+                      <ul class="career-nested">
+                        {entry.nested.map((child) => (
+                          <li>
+                            {child.role && <p class="career-role">{child.role}</p>}
+                            {child.place && <p class="career-place">{child.place}</p>}
+                            {child.dates && <p class="career-meta">{child.dates}</p>}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </section>
+          </LeatherCard>
+        ))
+      }
+    </main>
+    <SiteFooter showDisclaimer />
+  </div>
+</Base>
+
+<script>
+  const DISMISS_MS = 2000;
+
+  const reduceMotion = () =>
+    document.documentElement.dataset.reduceMotion === "true" ||
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  document.querySelectorAll<HTMLElement>(".room-stage").forEach((stage) => {
+    if (stage.dataset.dismissBound === "true") return;
+    stage.dataset.dismissBound = "true";
+
+    stage.querySelectorAll<HTMLAnchorElement>("[data-home-link]").forEach((link) => {
+      link.addEventListener("click", (event) => {
+        if (event.defaultPrevented || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
+          return;
+        }
+        if (link.target === "_blank") return;
+        if (reduceMotion()) return;
+        if (stage.classList.contains("is-dismissing")) {
+          event.preventDefault();
+          return;
+        }
+        event.preventDefault();
+        stage.classList.add("is-dismissing");
+        window.setTimeout(() => {
+          window.location.assign(link.href);
+        }, DISMISS_MS);
+      });
+    });
+  });
+
+  const deck = document.querySelector<HTMLElement>(".career-deck");
+  const stage = document.querySelector<HTMLElement>(".room-stage--deck");
+  const cards = deck
+    ? Array.from(deck.querySelectorAll<HTMLElement>(".leather-panel"))
+    : [];
+
+  if (deck && stage && cards.length > 0) {
+    const last = cards.length - 1;
+    const quiet = reduceMotion();
+    let target = 0;
+    let offset = 0;
+    let snapTimer = 0;
+    let pointerY = 0;
+    let pointerActive = false;
+    let raf = 0;
+
+    const clamp = (value: number) => Math.min(last, Math.max(0, value));
+
+    const apply = (value: number) => {
+      cards.forEach((card, index) => {
+        const delta = index - value;
+        const abs = Math.abs(delta);
+        card.style.setProperty("--wheel-y", `${delta * 30}vh`);
+        card.style.setProperty("--wheel-scale", String(1 - Math.min(abs, 1.4) * 0.1));
+        card.style.setProperty("--wheel-opacity", String(abs < 0.12 ? 1 : Math.max(0.2, 1 - abs * 0.48)));
+        card.style.setProperty("--wheel-z", String(Math.round((2 - abs) * 10)));
+        card.classList.toggle("is-focus", abs < 0.5);
+        card.classList.toggle("is-dim", abs >= 0.5);
+      });
+    };
+
+    const render = () => {
+      raf = 0;
+      if (quiet) {
+        offset = target;
+        apply(offset);
+        return;
+      }
+      offset += (target - offset) * 0.22;
+      if (Math.abs(target - offset) < 0.002) offset = target;
+      apply(offset);
+      if (offset !== target) raf = window.requestAnimationFrame(render);
+    };
+
+    const go = (next: number, snap = false) => {
+      target = clamp(next);
+      if (snap || quiet) target = Math.round(target);
+      if (!raf) raf = window.requestAnimationFrame(render);
+    };
+
+    const scheduleSnap = () => {
+      window.clearTimeout(snapTimer);
+      snapTimer = window.setTimeout(() => go(Math.round(target), true), quiet ? 0 : 140);
+    };
+
+    stage.addEventListener(
+      "wheel",
+      (event) => {
+        event.preventDefault();
+        const step = event.deltaMode === 1 ? event.deltaY * 0.55 : event.deltaY / 420;
+        go(target + step);
+        scheduleSnap();
+      },
+      { passive: false },
+    );
+
+    stage.addEventListener("pointerdown", (event) => {
+      if (event.pointerType === "mouse" && event.button !== 0) return;
+      if ((event.target as HTMLElement | null)?.closest(".leather-inset")) {
+        pointerActive = false;
+        return;
+      }
+      pointerActive = true;
+      pointerY = event.clientY;
+    });
+
+    stage.addEventListener("pointerup", (event) => {
+      if (!pointerActive) return;
+      pointerActive = false;
+      const dy = event.clientY - pointerY;
+      if (Math.abs(dy) < 48) return;
+      if ((event.target as HTMLElement | null)?.closest("a,button")) return;
+      go(Math.round(target) + (dy < 0 ? 1 : -1), true);
+    });
+
+    window.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowDown" || event.key === "PageDown") {
+        event.preventDefault();
+        go(Math.round(target) + 1, true);
+      } else if (event.key === "ArrowUp" || event.key === "PageUp") {
+        event.preventDefault();
+        go(Math.round(target) - 1, true);
+      }
+    });
+
+    cards.forEach((card, index) => {
+      card.addEventListener("click", () => {
+        if (Math.round(offset) === index) return;
+        go(index, true);
+      });
+    });
+
+    apply(0);
+  }
+</script>

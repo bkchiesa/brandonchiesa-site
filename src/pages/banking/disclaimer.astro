@@ -1,0 +1,25 @@
+---
+import BankingShell from "../../components/banking/BankingShell.astro";
+import { DISCLAIMER_PAGE_DESCRIPTION, DISCLAIMER_SECTIONS, REVIEWED_LINE } from "../../data/banking/copy";
+import { DISCLAIMER_PATH } from "../../data/banking/tools";
+import { BANKING_CRUMB, HOME_CRUMB, breadcrumbJsonLd, graphJsonLd, webPageJsonLd } from "../../lib/banking/seo";
+
+const title = "Disclaimer";
+const jsonLd = graphJsonLd([
+  webPageJsonLd({ name: title, path: DISCLAIMER_PATH, description: DISCLAIMER_PAGE_DESCRIPTION }),
+  breadcrumbJsonLd([HOME_CRUMB, BANKING_CRUMB, { name: title, path: DISCLAIMER_PATH }]),
+]);
+---
+
+<BankingShell title={title} description={DISCLAIMER_PAGE_DESCRIPTION} jsonLd={jsonLd} section="disclaimer">
+  <h1 class="room-title">{title}</h1>
+  <p class="bank-reviewed">{REVIEWED_LINE}</p>
+  {
+    DISCLAIMER_SECTIONS.map((section) => (
+      <section class="bank-block">
+        <h2 class="bank-section-title">{section.title}</h2>
+        <p>{section.body}</p>
+      </section>
+    ))
+  }
+</BankingShell>
