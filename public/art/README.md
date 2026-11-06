@@ -48,6 +48,7 @@ State-folder anim packs are canonical. Ignore `v3/anim/{door}/` mirrors.
 | `v3/coding/dojo_action_still.png` | Coding Feature 1 — Sensei Moose’s Dojo action still (Pixel PASS, 1600×900) |
 | `v3/coding/dojo_action_still_square.png` | Optional 1080² crop — on disk, unwired |
 | `v3/coding/italy_app_card.jpeg` | Coding Feature 2 — Brandon LOCK Italy Travel card mockup |
+| `v3/coding/susie_bookkeeper_card.png` | Coding Feature 3 — Susie Bookkeeper hero (1280×720, 16:9) |
 | `v3/career/brass_rule.png` | Career section underline (1200×6). Mock is ref only. |
 | `v3/leather_panel_mock.png` | Contrast mock only — do not wire |
 | `v3/leather_pad.png` `v3/leather_pad_flat.png` `v3/leather_pad_veil.png` | Rejected — do not wire |

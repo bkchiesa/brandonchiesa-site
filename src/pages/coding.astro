@@ -7,15 +7,17 @@ import SiteHeader from "../components/SiteHeader.astro";
 import VideoShell from "../components/VideoShell.astro";
 import Base from "../layouts/Base.astro";
 import { ART, artUrl } from "../lib/art";
-import { DOJO_URL, ITALY_URL } from "../lib/site";
+import { DOJO_URL, ITALY_URL, SUSIE_URL } from "../lib/site";
 
 const publicDir = join(process.cwd(), "public");
 const brassRel = ART.v3.careerBrassRule;
 const dojoRel = ART.v3.coding.dojoActionStill;
 const italyRel = ART.v3.coding.italyAppCard;
+const susieRel = ART.v3.coding.susieBookkeeperCard;
 const hasBrass = existsSync(join(publicDir, brassRel));
 const hasDojoStill = existsSync(join(publicDir, dojoRel));
 const hasItalyCard = existsSync(join(publicDir, italyRel));
+const hasSusieCard = existsSync(join(publicDir, susieRel));
 const brassUrl = hasBrass ? artUrl(brassRel) : "";
 ---
 
@@ -23,7 +25,7 @@ const brassUrl = hasBrass ? artUrl(brassRel) : "";
   title="Coding"
   room="coding"
   videoShell
-  description="Apps Brandon Chiesa builds: Sensei Moose’s Dojo, an anonymized Italy travel app, and more to come."
+  description="Apps Brandon Chiesa builds: Sensei Moose’s Dojo, an anonymized Italy travel app, and Susie Bookkeeper."
 >
   <VideoShell />
   <LeatherPad title="Coding">
@@ -116,17 +118,40 @@ const brassUrl = hasBrass ? artUrl(brassRel) : "";
         </li>
 
         <li>
-          <article class="coding-feature coding-feature--soon">
-            <div
-              class="coding-feature-media coding-feature-media--teaser"
-              aria-hidden="true"
+          <article class="coding-feature">
+            <a
+              class="coding-feature-media"
+              href={SUSIE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
             >
-              <div class="coding-teaser">
-                <span class="coding-teaser-rule"></span>
-              </div>
-            </div>
-            <h2 class="coding-feature-title">Coming soon</h2>
-            <p class="coding-feature-copy">A future app will sit on this plate.</p>
+              {
+                hasSusieCard ? (
+                  <img
+                    src={artUrl(susieRel)}
+                    alt="Susie Bookkeeper, a woman with short blonde hair holding an open ledger"
+                    width="1280"
+                    height="720"
+                  />
+                ) : (
+                  <div class="coding-media-hook" role="img" aria-label="Susie Bookkeeper card pending">
+                    <p>
+                      Art drop
+                      <code>public/art/v3/coding/susie_bookkeeper_card.png</code>
+                    </p>
+                  </div>
+                )
+              }
+            </a>
+            <h2 class="coding-feature-title">
+              <a href={SUSIE_URL} target="_blank" rel="noopener noreferrer">
+                Susie Bookkeeper
+              </a>
+            </h2>
+            <p class="coding-feature-copy">
+              Free beginner guide to set up an AI bookkeeper on Grok Bot or Meta Muse. Soft
+              launch with downloadable guides at susiebookkeeper.com.
+            </p>
           </article>
         </li>
       </ul>
