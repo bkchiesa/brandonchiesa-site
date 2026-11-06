@@ -1013,6 +1013,19 @@
   "kind": "village",
   "at": "2026-10-18"
  },
+ "fathers house / san siro, valmozzola, parma, italy": {
+  "raw": "father's house / San Siro, Valmozzola, Parma, Italy",
+  "q": "father's house / San Siro, Valmozzola, Parma, Italy",
+  "status": "ok",
+  "lat": 44.58551,
+  "lon": 9.86915,
+  "prec": "broader",
+  "matched": "Valmozzola, Parma, Italy",
+  "osm": "relation/43317",
+  "display": "Valmozzola, Parma, Emilia-Romagna, 43050, Italy",
+  "kind": "municipality",
+  "at": "2026-11-06"
+ },
  "fort davis, panama": {
   "raw": "Fort Davis, Panama",
   "q": "Fort Davis, Panama",
