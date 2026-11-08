@@ -2664,6 +2664,19 @@
   "kind": "hamlet",
   "at": "2026-10-18"
  },
+ "san martino, valmozzola, parma, italy": {
+  "raw": "San Martino, Valmozzola, Parma, Italy",
+  "q": "San Martino, Valmozzola, Parma, Italy",
+  "status": "ok",
+  "lat": 44.56548,
+  "lon": 9.8964,
+  "prec": "exact",
+  "matched": "San Martino, Valmozzola, Parma, Italy",
+  "osm": "node/1913361300",
+  "display": "San Martino di Valmozzola Frazione Case Gatti, Mormorola, Valmozzola, Parma, Emilia-Romagna, 43050, Italy",
+  "kind": "hamlet",
+  "at": "2026-11-08"
+ },
  "san siro, valmozzola": {
   "raw": "San Siro, Valmozzola",
   "q": "San Siro, Valmozzola",
