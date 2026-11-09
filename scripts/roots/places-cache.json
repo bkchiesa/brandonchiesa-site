@@ -1312,6 +1312,19 @@
   "kind": "county",
   "at": "2026-10-18"
  },
+ "gusaliggio, valmozzola, parma, italy": {
+  "raw": "Gusaliggio, Valmozzola, Parma, Italy",
+  "q": "Gusaliggio, Valmozzola, Parma, Italy",
+  "status": "ok",
+  "lat": 44.58004,
+  "lon": 9.86883,
+  "prec": "exact",
+  "matched": "Gusaliggio, Valmozzola, Parma, Italy",
+  "osm": "node/2039702810",
+  "display": "Pieve di Gusaliggio, Mormorola, Valmozzola, Parma, Emilia-Romagna, 43050, Italy",
+  "kind": "hamlet",
+  "at": "2026-11-09"
+ },
  "halifax county, north carolina": {
   "raw": "Halifax Co., NC",
   "q": "Halifax County, North Carolina",
@@ -1571,6 +1584,19 @@
   "display": "Valmozzola, Parma, Emilia-Romagna, 43050, Italy",
   "kind": "municipality",
   "at": "2026-11-02"
+ },
+ "house at bondi di gusaliggio, valmozzola, parma, italy": {
+  "raw": "house at Bondi di Gusaliggio, Valmozzola, Parma, Italy",
+  "q": "house at Bondi di Gusaliggio, Valmozzola, Parma, Italy",
+  "status": "ok",
+  "lat": 44.58551,
+  "lon": 9.86915,
+  "prec": "broader",
+  "matched": "Valmozzola, Parma, Italy",
+  "osm": "relation/43317",
+  "display": "Valmozzola, Parma, Emilia-Romagna, 43050, Italy",
+  "kind": "municipality",
+  "at": "2026-11-09"
  },
  "house at branzone, valmozzola, parma, italy": {
   "raw": "house at Branzone, Valmozzola, Parma, Italy",
