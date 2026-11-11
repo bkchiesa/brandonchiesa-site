@@ -58,6 +58,10 @@ html[data-reduce-motion="true"] .ring-intro {
   display: block;
   touch-action: none;
   cursor: grab;
+  outline: none;
+  border: 0;
+  box-shadow: none;
+  background: #000;
 }
 
 .ring-intro canvas.is-held {
