@@ -1,0 +1,48 @@
+---
+/**
+ * Homepage-only opening. Other routes are unchanged.
+ * No replay control is added to the house menu.
+ */
+import "../styles/ring-intro.css";
+---
+
+<div
+  class="ring-intro"
+  data-ring-intro
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="ring-intro-title"
+  aria-describedby="ring-intro-hint"
+>
+  <h2 id="ring-intro-title" class="sr-only">Brandon Chiesa</h2>
+  <canvas data-ring-canvas aria-hidden="true"></canvas>
+  <div class="ring-fallback" data-ring-fallback hidden>
+    <svg viewBox="0 0 400 400" role="img" aria-labelledby="ring-fallback-label">
+      <title id="ring-fallback-label">A polished gold ring engraved Brandon Chiesa</title>
+      <defs>
+        <linearGradient id="ring-gold" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#f3e0a6" />
+          <stop offset="35%" stop-color="#d7b056" />
+          <stop offset="70%" stop-color="#8a5e18" />
+          <stop offset="100%" stop-color="#e6c86a" />
+        </linearGradient>
+      </defs>
+      <circle cx="200" cy="200" r="132" fill="none" stroke="url(#ring-gold)" stroke-width="42" />
+      <circle cx="200" cy="200" r="132" fill="none" stroke="#fff6d8" stroke-width="2" opacity="0.28" />
+      <circle cx="200" cy="200" r="111" fill="none" stroke="#6a4510" stroke-width="1.5" opacity="0.45" />
+      <path id="ring-text-path" d="M200,200 m-132,0 a132,132 0 1,1 264,0 a132,132 0 1,1 -264,0" fill="none" />
+      <text fill="#6f4a12" font-family="Cormorant Garamond, Palatino Linotype, Palatino, Georgia, serif" font-size="22" font-weight="600" letter-spacing="6">
+        <textPath href="#ring-text-path" startOffset="12%">BRANDON CHIESA · BRANDON CHIESA ·</textPath>
+      </text>
+    </svg>
+  </div>
+  <div class="ring-intro-ui">
+    <p class="ring-hint" id="ring-intro-hint" data-ring-hint>Drag to turn and toss the ring</p>
+    <button type="button" class="ring-enter" data-ring-enter>Enter</button>
+  </div>
+</div>
+
+<script>
+  import { bootRingIntro } from "../scripts/ring-intro";
+  bootRingIntro();
+</script>

@@ -12,6 +12,8 @@ interface Props {
   room?: string;
   house?: boolean;
   videoShell?: boolean;
+  /** Homepage gold-ring opening. Other pages stay unchanged. */
+  ringIntro?: boolean;
   /** Extra JSON-LD graph. Person schema stays on every page. */
   jsonLd?: Record<string, unknown>;
 }
@@ -23,6 +25,7 @@ const {
   room,
   house = false,
   videoShell = false,
+  ringIntro = false,
   jsonLd,
 } = Astro.props;
 const extraJsonLd = jsonLd ? JSON.stringify(jsonLd).replace(/</g, "\\u003c") : "";
@@ -44,7 +47,37 @@ const personJson = JSON.stringify(personJsonLd()).replace(/</g, "\\u003c");
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
     <meta name="author" content={SITE_NAME} />
-    <meta name="theme-color" content={videoShell ? "#3d4a38" : "#0b1a2b"} />
+    <meta name="theme-color" content={ringIntro ? "#000000" : videoShell ? "#3d4a38" : "#0b1a2b"} />
+    {
+      ringIntro && (
+        <script is:inline>
+          (function () {
+            try {
+              if (sessionStorage.getItem("bc-ring-entered") === "1") return;
+            } catch (e) {}
+            document.documentElement.dataset.ringIntro = "active";
+            var theme = document.querySelector('meta[name="theme-color"]');
+            if (theme) theme.setAttribute("content", "#000000");
+          })();
+        </script>
+      )
+    }
+    {
+      ringIntro && (
+        <style is:inline>
+          html[data-ring-intro="active"],
+          html[data-ring-intro="leaving"] { background: #000; }
+          html[data-ring-intro="active"] body,
+          html[data-ring-intro="leaving"] body { background: #000; }
+          html[data-ring-intro="active"] .house-ui,
+          html[data-ring-intro="active"] .video-shell {
+            opacity: 0 !important;
+            visibility: hidden !important;
+            pointer-events: none !important;
+          }
+        </style>
+      )
+    }
     <link rel="canonical" href={canonical} />
     <link rel="icon" href={withBase("favicon.svg")} type="image/svg+xml" />
     <link rel="apple-touch-icon" href={withBase("favicon.svg")} />

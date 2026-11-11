@@ -122,8 +122,8 @@ import { VIDEO, artUrl } from "../lib/art";
       return;
     }
     prep(loopVideo);
-    loopVideo.classList.add("is-active");
     const ok = await playVideo(loopVideo);
+    if (ok) loopVideo.classList.add("is-active");
     hideHit();
     becomeHouse();
     if (!ok) {
@@ -172,6 +172,10 @@ import { VIDEO, artUrl } from "../lib/art";
   function boot() {
     syncReduceButtons();
     prep(loopVideo);
+    if (document.documentElement.dataset.ringIntro === "active") {
+      document.addEventListener("bc:ring-entered", () => { void startLoop(); }, { once: true });
+      return;
+    }
     void startLoop();
   }
 
