@@ -1013,6 +1013,19 @@
   "kind": "village",
   "at": "2026-10-18"
  },
+ "family house, place called cascina, san martino, valmozzola, parma, italy": {
+  "raw": "family house, place called Cascina, San Martino, Valmozzola, Parma, Italy",
+  "q": "family house, place called Cascina, San Martino, Valmozzola, Parma, Italy",
+  "status": "ok",
+  "lat": 44.56548,
+  "lon": 9.8964,
+  "prec": "broader",
+  "matched": "San Martino, Valmozzola, Parma, Italy",
+  "osm": "node/1913361300",
+  "display": "San Martino di Valmozzola Frazione Case Gatti, Mormorola, Valmozzola, Parma, Emilia-Romagna, 43050, Italy",
+  "kind": "hamlet",
+  "at": "2026-11-11"
+ },
  "fathers house / san siro, valmozzola, parma, italy": {
   "raw": "father's house / San Siro, Valmozzola, Parma, Italy",
   "q": "father's house / San Siro, Valmozzola, Parma, Italy",
