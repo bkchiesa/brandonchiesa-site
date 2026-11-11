@@ -11,7 +11,7 @@ Site: https://brandonchiesa.com/
 - [About](https://brandonchiesa.com/about/): Short bio, the counties he serves, and links to LinkedIn and X.
 - [Home / menu](https://brandonchiesa.com/): Looping valley behind cream mist labels (Career, Coding, Banking, Videography, Contact). Rooms open as leather texture panels. About is linked from the home footer, not the mist menu.
 - [Career](https://brandonchiesa.com/career/): Public bio — Education, Work, Community.
-- [Coding](https://brandonchiesa.com/coding/): Apps and builds — Sensei Moose's Dojo, an anonymized Italy travel app, and a coming-soon plate.
+- [Coding](https://brandonchiesa.com/coding/): Apps and builds — Sensei Moose's Dojo, an anonymized Italy travel app, and Susie Bookkeeper.
 - [Banking](https://brandonchiesa.com/banking/): Educational calculators, checklists, and plain-English guides. Not a lending decision.
 - [Videography](https://brandonchiesa.com/videography/): Public YouTube stills gallery from @brandonchiesa3886 and @chiesab. Plays on-site via privacy-enhanced embeds.
 - [Contact](https://brandonchiesa.com/contact/): X @bkchiesa and LinkedIn. No email.
@@ -29,6 +29,7 @@ Roots and Now are unpublished. Old `/work/` `/make/` `/go/` URLs redirect to the
 
 - Sensei Moose's Dojo: https://bkchiesa.github.io/Sensei-mooses-dojo/
 - Italy Travel (public app anonymized): https://bkchiesa.github.io/Chiesa-italy-2026/
+- Susie Bookkeeper: https://susiebookkeeper.com
 
 ## Channels
 

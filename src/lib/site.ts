@@ -11,6 +11,7 @@ export const SITE_CANONICAL = "https://brandonchiesa.com/";
 
 export const DOJO_URL = "https://bkchiesa.github.io/Sensei-mooses-dojo/";
 export const ITALY_URL = "https://bkchiesa.github.io/Chiesa-italy-2026/";
+export const SUSIE_URL = "https://susiebookkeeper.com";
 export const LINKEDIN_URL = "https://www.linkedin.com/in/bkchiesa";
 export const X_URL = "https://x.com/bkchiesa";
 export const X_HANDLE = "@bkchiesa";

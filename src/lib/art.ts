@@ -69,6 +69,8 @@ export const ART = {
       dojoActionStillSquare: "art/v3/coding/dojo_action_still_square.png",
       /** Feature 2 — Brandon LOCK mockup (not a live Pages screenshot). */
       italyAppCard: "art/v3/coding/italy_app_card.jpeg",
+      /** Feature 3 — Susie Bookkeeper hero (1280×720, already 16:9). */
+      susieBookkeeperCard: "art/v3/coding/susie_bookkeeper_card.png",
     },
     /**
      * Pixel/Ink drop folders (not served). Copy onto the public paths above.
