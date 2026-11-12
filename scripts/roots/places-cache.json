@@ -1429,6 +1429,19 @@
   "kind": "amenity",
   "at": "2026-10-30"
  },
+ "her fathers house, place called rovina, gusaliggio, valmozzola, parma, italy": {
+  "raw": "her father's house, place called Rovina, Gusaliggio, Valmozzola, Parma, Italy",
+  "q": "her father's house, place called Rovina, Gusaliggio, Valmozzola, Parma, Italy",
+  "status": "ok",
+  "lat": 44.58004,
+  "lon": 9.86883,
+  "prec": "broader",
+  "matched": "Gusaliggio, Valmozzola, Parma, Italy",
+  "osm": "node/2039702810",
+  "display": "Pieve di Gusaliggio, Mormorola, Valmozzola, Parma, Emilia-Romagna, 43050, Italy",
+  "kind": "hamlet",
+  "at": "2026-11-12"
+ },
  "her house, casa del gatto, san martino, valmozzola, parma, italy": {
   "raw": "her house, Casa del Gatto, San Martino, Valmozzola, Parma, Italy",
   "q": "her house, Casa del Gatto, San Martino, Valmozzola, Parma, Italy",
@@ -1571,6 +1584,19 @@
   "display": "San Martino di Valmozzola Frazione Case Gatti, Mormorola, Valmozzola, Parma, Emilia-Romagna, 43050, Italy",
   "kind": "hamlet",
   "at": "2026-11-10"
+ },
+ "his house, gusaliggio, valmozzola, parma, italy": {
+  "raw": "his house, Gusaliggio, Valmozzola, Parma, Italy",
+  "q": "his house, Gusaliggio, Valmozzola, Parma, Italy",
+  "status": "ok",
+  "lat": 44.58004,
+  "lon": 9.86883,
+  "prec": "broader",
+  "matched": "Gusaliggio, Valmozzola, Parma, Italy",
+  "osm": "node/2039702810",
+  "display": "Pieve di Gusaliggio, Mormorola, Valmozzola, Parma, Emilia-Romagna, 43050, Italy",
+  "kind": "hamlet",
+  "at": "2026-11-12"
  },
  "his house, san siro, valmozzola, parma, italy": {
   "raw": "his house, San Siro, Valmozzola, Parma, Italy",
@@ -2481,6 +2507,19 @@
   "display": "Pietramogolana, Berceto, Parma, Emilia-Romagna, 43040, Italy",
   "kind": "hamlet",
   "at": "2026-11-02"
+ },
+ "pieve di gusaliggio, valmozzola, parma, italy": {
+  "raw": "Pieve di Gusaliggio, Valmozzola, Parma, Italy",
+  "q": "Pieve di Gusaliggio, Valmozzola, Parma, Italy",
+  "status": "ok",
+  "lat": 44.58004,
+  "lon": 9.86883,
+  "prec": "exact",
+  "matched": "Pieve di Gusaliggio, Valmozzola, Parma, Italy",
+  "osm": "node/2039702810",
+  "display": "Pieve di Gusaliggio, Mormorola, Valmozzola, Parma, Emilia-Romagna, 43050, Italy",
+  "kind": "hamlet",
+  "at": "2026-11-12"
  },
  "pittsburgh, allegheny county, pa": {
   "raw": "Pittsburgh, Allegheny Co., Pa",
