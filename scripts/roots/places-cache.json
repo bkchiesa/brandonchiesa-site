@@ -1507,6 +1507,19 @@
   "kind": "hamlet",
   "at": "2026-11-05"
  },
+ "her parents house at the place called cascina, san martino, valmozzola": {
+  "raw": "her parents' house at the place called Cascina, San Martino, Valmozzola",
+  "q": "her parents' house at the place called Cascina, San Martino, Valmozzola",
+  "status": "ok",
+  "lat": 44.56548,
+  "lon": 9.8964,
+  "prec": "broader",
+  "matched": "San Martino, Valmozzola",
+  "osm": "node/1913361300",
+  "display": "San Martino di Valmozzola Frazione Case Gatti, Mormorola, Valmozzola, Parma, Emilia-Romagna, 43050, Italy",
+  "kind": "hamlet",
+  "at": "2026-11-14"
+ },
  "hibbard, madison, idaho": {
   "raw": "Hibbard, Madison, Idaho",
   "q": "Hibbard, Madison, Idaho",
