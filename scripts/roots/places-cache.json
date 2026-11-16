@@ -1520,6 +1520,19 @@
   "kind": "hamlet",
   "at": "2026-11-14"
  },
+ "her parents house, gusaliggio, valmozzola, parma, italy": {
+  "raw": "her parents' house, Gusaliggio, Valmozzola, Parma, Italy",
+  "q": "her parents' house, Gusaliggio, Valmozzola, Parma, Italy",
+  "status": "ok",
+  "lat": 44.58004,
+  "lon": 9.86883,
+  "prec": "broader",
+  "matched": "Gusaliggio, Valmozzola, Parma, Italy",
+  "osm": "node/2039702810",
+  "display": "Pieve di Gusaliggio, Mormorola, Valmozzola, Parma, Emilia-Romagna, 43050, Italy",
+  "kind": "hamlet",
+  "at": "2026-11-16"
+ },
  "her parents house, san martino, valmozzola, parma, italy": {
   "raw": "her parents' house, San Martino, Valmozzola, Parma, Italy",
   "q": "her parents' house, San Martino, Valmozzola, Parma, Italy",
@@ -2494,6 +2507,19 @@
   "display": "Pennsylvania, United States",
   "kind": "state",
   "at": "2026-10-30"
+ },
+ "pessola, comune of varsi, parma, italy": {
+  "raw": "Pessola, comune of Varsi, Parma, Italy",
+  "q": "Pessola, comune of Varsi, Parma, Italy",
+  "status": "ok",
+  "lat": 44.77914,
+  "lon": 10.32002,
+  "prec": "exact",
+  "matched": "Pessola (near Parma, Italy)",
+  "osm": "way/33757040",
+  "display": "Via Torrente Pessola, Cinghio, Montanara, Parma, Emilia-Romagna, 43134, Italy",
+  "kind": "unclassified",
+  "at": "2026-11-16"
  },
  "petersburg, virginia": {
   "raw": "Petersburg, VA",
