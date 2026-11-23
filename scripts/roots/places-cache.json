@@ -1312,6 +1312,19 @@
   "kind": "city",
   "at": "2026-10-18"
  },
+ "grontone, berceto, parma, italy": {
+  "raw": "Grontone, Berceto, Parma, Italy",
+  "q": "Grontone, Berceto, Parma, Italy",
+  "status": "ok",
+  "lat": 44.60221,
+  "lon": 9.97439,
+  "prec": "exact",
+  "matched": "Grontone, Berceto, Parma, Italy",
+  "osm": "node/7991675951",
+  "display": "Isola di Grontone, Berceto, Parma, Emilia-Romagna, 43040, Italy",
+  "kind": "isolated_dwelling",
+  "at": "2026-11-23"
+ },
  "grundy county, missouri": {
   "raw": "Grundy Co., MO",
   "q": "Grundy County, Missouri",
