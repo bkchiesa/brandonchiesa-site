@@ -350,6 +350,19 @@
   "kind": "town",
   "at": "2026-10-30"
  },
+ "blandford cemetery": {
+  "raw": "Blandford Cemetery",
+  "q": "Blandford Cemetery",
+  "status": "ok",
+  "lat": 37.22672,
+  "lon": -77.3835,
+  "prec": "exact",
+  "matched": "Blandford Cemetery",
+  "osm": "way/993814643",
+  "display": "Blandford Cemetery, Petersburg, Virginia, United States",
+  "kind": "cemetery",
+  "at": "2026-11-24"
+ },
  "blofield, norfolk, england": {
   "raw": "Blofield, Norfolk, England",
   "q": "Blofield, Norfolk, England",
@@ -1051,6 +1064,19 @@
   "display": "Resedencial Bazán (Fort Davis), Cristóbal, Colón, Panama",
   "kind": "hamlet",
   "at": "2026-10-18"
+ },
+ "fort delaware, new castle county, delaware": {
+  "raw": "Fort Delaware, New Castle County, Delaware",
+  "q": "Fort Delaware, New Castle County, Delaware",
+  "status": "ok",
+  "lat": 39.59098,
+  "lon": -75.57266,
+  "prec": "exact",
+  "matched": "Fort Delaware, New Castle County, Delaware",
+  "osm": "way/360210406",
+  "display": "Fort Delaware, New Castle County, Delaware, United States",
+  "kind": "protected_area",
+  "at": "2026-11-24"
  },
  "fort drewry, virginia": {
   "raw": "Fort Drewry, Virginia",
@@ -2092,6 +2118,19 @@
   "kind": "village",
   "at": "2026-10-18"
  },
+ "mary immaculate hospital, newport news, virginia": {
+  "raw": "Mary Immaculate Hospital, Newport News, Virginia",
+  "q": "Mary Immaculate Hospital, Newport News, Virginia",
+  "status": "ok",
+  "lat": 37.1446,
+  "lon": -76.511,
+  "prec": "exact",
+  "matched": "Mary Immaculate Hospital, Newport News, Virginia",
+  "osm": "way/50945901",
+  "display": "Bon Secours Mary Immaculate Hospital, 2, Bernardine Drive, Newport News, Virginia, 23602, United States",
+  "kind": "amenity",
+  "at": "2026-11-24"
+ },
  "maryland": {
   "raw": "Maryland",
   "q": "Maryland",
@@ -2611,6 +2650,12 @@
   "display": "Petersburg, Virginia, United States",
   "kind": "city",
   "at": "2026-10-18"
+ },
+ "petersburg, virginia if the 1862 memorial is his": {
+  "raw": "Petersburg, Virginia if the 1862 memorial is his",
+  "q": "Petersburg, Virginia if the 1862 memorial is his",
+  "status": "not-found",
+  "at": "2026-11-24"
  },
  "philippi, barbour county, west virginia": {
   "raw": "Philippi, Barbour Co., WV",
@@ -3327,6 +3372,19 @@
   "kind": "village",
   "at": "2026-10-18"
  },
+ "trotville, gates county, north carolina": {
+  "raw": "Trotville, Gates County, North Carolina",
+  "q": "Trotville, Gates County, North Carolina",
+  "status": "ok",
+  "lat": 36.36912,
+  "lon": -76.59742,
+  "prec": "exact",
+  "matched": "Trotville, Gates County, North Carolina",
+  "osm": "node/158589654",
+  "display": "Trotville, Gates County, North Carolina, United States",
+  "kind": "hamlet",
+  "at": "2026-11-24"
+ },
  "twin falls, idaho": {
   "raw": "Twin Falls, ID",
   "q": "Twin Falls, Idaho",
@@ -3378,6 +3436,19 @@
   "display": "Valmozzola, Parma, Emilia-Romagna, 43050, Italy",
   "kind": "municipality",
   "at": "2026-11-01"
+ },
+ "varsi, parma, italy": {
+  "raw": "Varsi, Parma, Italy",
+  "q": "Varsi, Parma, Italy",
+  "status": "ok",
+  "lat": 44.66216,
+  "lon": 9.84668,
+  "prec": "exact",
+  "matched": "Varsi, Parma, Italy",
+  "osm": "relation/43405",
+  "display": "Varsi, Parma, Emilia-Romagna, 43049, Italy",
+  "kind": "village",
+  "at": "2026-11-24"
  },
  "vaulters church cemetery, essex county, virginia": {
   "raw": "Vaulters Church cemetery, Essex County, Virginia",
