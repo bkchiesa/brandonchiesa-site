@@ -311,6 +311,19 @@
   "kind": "village",
   "at": "2026-10-30"
  },
+ "belvidere, north carolina": {
+  "raw": "Belvidere, NC",
+  "q": "Belvidere, North Carolina",
+  "status": "ok",
+  "lat": 36.26877,
+  "lon": -76.53578,
+  "prec": "exact",
+  "matched": "Belvidere, North Carolina",
+  "osm": "node/158641146",
+  "display": "Belvidere, Perquimans County, North Carolina, 27919, United States",
+  "kind": "hamlet",
+  "at": "2026-11-26"
+ },
  "berceto, parma, italy": {
   "raw": "Berceto, Parma, Italy",
   "q": "Berceto, Parma, Italy",
@@ -571,6 +584,19 @@
   "kind": "cemetery",
   "at": "2026-10-18"
  },
+ "camp lee, virginia": {
+  "raw": "Camp Lee, Virginia",
+  "q": "Camp Lee, Virginia",
+  "status": "ok",
+  "lat": 36.57149,
+  "lon": -79.8719,
+  "prec": "exact",
+  "matched": "Camp Lee, Virginia",
+  "osm": "way/451787397",
+  "display": "Lee Ford Camp Road, Henry County, Virginia, 24148, United States",
+  "kind": "residential",
+  "at": "2026-11-26"
+ },
  "camp manufacturing company, virginia": {
   "raw": "Camp Manufacturing Company, Virginia",
   "q": "Camp Manufacturing Company, Virginia",
@@ -752,6 +778,19 @@
   "display": "Corbin, Caroline County, Virginia, 22446, United States",
   "kind": "hamlet",
   "at": "2026-10-30"
+ },
+ "corinth, southampton county, virginia": {
+  "raw": "Corinth, Southampton Co., VA",
+  "q": "Corinth, Southampton County, Virginia",
+  "status": "ok",
+  "lat": 36.83126,
+  "lon": -76.94552,
+  "prec": "exact",
+  "matched": "Corinth, Southampton County, Virginia",
+  "osm": "node/157614359",
+  "display": "Corinth, Southampton County, Virginia, 23878, United States",
+  "kind": "hamlet",
+  "at": "2026-11-26"
  },
  "courtland, southampton county, virginia": {
   "raw": "Courtland, Southampton Co., VA",
@@ -1273,6 +1312,19 @@
   "kind": "cemetery",
   "at": "2026-10-18"
  },
+ "greensboro, guilford county, north carolina": {
+  "raw": "Greensboro, Guilford Co., NC",
+  "q": "Greensboro, Guilford County, North Carolina",
+  "status": "ok",
+  "lat": 36.07264,
+  "lon": -79.79198,
+  "prec": "exact",
+  "matched": "Greensboro, Guilford County, North Carolina",
+  "osm": "relation/180261",
+  "display": "Greensboro, Guilford County, North Carolina, United States",
+  "kind": "city",
+  "at": "2026-11-26"
+ },
  "greensburg, pennsylvania": {
   "raw": "Greensburg, Pennsylvania",
   "q": "Greensburg, Pennsylvania",
@@ -1728,6 +1780,19 @@
   "kind": "hamlet",
   "at": "2026-11-22"
  },
+ "home near corinth, southampton county, virginia": {
+  "raw": "home near Corinth, Southampton Co., VA",
+  "q": "home near Corinth, Southampton County, Virginia",
+  "status": "ok",
+  "lat": 36.69594,
+  "lon": -77.1586,
+  "prec": "broader",
+  "matched": "Southampton County, Virginia",
+  "osm": "relation/2534205",
+  "display": "Southampton County, Virginia, United States",
+  "kind": "county",
+  "at": "2026-11-26"
+ },
  "home near courtland, southampton county, virginia": {
   "raw": "home near Courtland, Southampton Co., VA",
   "q": "home near Courtland, Southampton County, Virginia",
@@ -1741,6 +1806,19 @@
   "kind": "county",
   "at": "2026-10-30"
  },
+ "home, corinth, southampton county, virginia": {
+  "raw": "home, Corinth, Southampton Co., VA",
+  "q": "home, Corinth, Southampton County, Virginia",
+  "status": "ok",
+  "lat": 36.83126,
+  "lon": -76.94552,
+  "prec": "broader",
+  "matched": "Corinth, Southampton County, Virginia",
+  "osm": "node/157614359",
+  "display": "Corinth, Southampton County, Virginia, 23878, United States",
+  "kind": "hamlet",
+  "at": "2026-11-26"
+ },
  "home, emporia, virginia": {
   "raw": "home, Emporia, VA",
   "q": "home, Emporia, Virginia",
@@ -1753,6 +1831,32 @@
   "display": "Halifax Manor Mobile Home Park, Emporia, Virginia, 23847, United States",
   "kind": "neighbourhood",
   "at": "2026-10-30"
+ },
+ "home, ivor, virginia": {
+  "raw": "home, Ivor, VA",
+  "q": "home, Ivor, Virginia",
+  "status": "ok",
+  "lat": 36.90404,
+  "lon": -76.89968,
+  "prec": "broader",
+  "matched": "Ivor, Virginia",
+  "osm": "relation/206920",
+  "display": "Ivor, Southampton County, Virginia, United States",
+  "kind": "village",
+  "at": "2026-11-26"
+ },
+ "home, norfolk, virginia": {
+  "raw": "home, Norfolk, VA",
+  "q": "home, Norfolk, Virginia",
+  "status": "ok",
+  "lat": 36.84937,
+  "lon": -76.28995,
+  "prec": "broader",
+  "matched": "Norfolk, Virginia",
+  "osm": "relation/206672",
+  "display": "Norfolk, Virginia, United States",
+  "kind": "city",
+  "at": "2026-11-26"
  },
  "home, sebrell, southampton county, virginia": {
   "raw": "home, Sebrell, Southampton Co., VA",
@@ -1845,6 +1949,19 @@
   "kind": "hamlet",
   "at": "2026-11-22"
  },
+ "hughesville, maryland": {
+  "raw": "Hughesville, MD",
+  "q": "Hughesville, Maryland",
+  "status": "ok",
+  "lat": 38.5329,
+  "lon": -76.78387,
+  "prec": "exact",
+  "matched": "Hughesville, Maryland",
+  "osm": "node/6072155793",
+  "display": "Hughesville, Charles County, Maryland, 20637, United States",
+  "kind": "village",
+  "at": "2026-11-26"
+ },
  "hustle, essex county, virginia": {
   "raw": "Hustle, Essex County, Virginia",
   "q": "Hustle, Essex County, Virginia",
@@ -1909,6 +2026,19 @@
   "display": "Italy",
   "kind": "country",
   "at": "2026-10-18"
+ },
+ "ivor, virginia": {
+  "raw": "Ivor, VA",
+  "q": "Ivor, Virginia",
+  "status": "ok",
+  "lat": 36.90404,
+  "lon": -76.89968,
+  "prec": "exact",
+  "matched": "Ivor, Virginia",
+  "osm": "relation/206920",
+  "display": "Ivor, Southampton County, Virginia, United States",
+  "kind": "village",
+  "at": "2026-11-26"
  },
  "james city county, virginia": {
   "raw": "James City Co., VA",
@@ -2417,6 +2547,19 @@
   "kind": "hamlet",
   "at": "2026-10-18"
  },
+ "obici memorial hospital, suffolk, virginia": {
+  "raw": "Obici Memorial Hospital, Suffolk, VA",
+  "q": "Obici Memorial Hospital, Suffolk, Virginia",
+  "status": "ok",
+  "lat": 36.72813,
+  "lon": -76.58347,
+  "prec": "broader",
+  "matched": "Suffolk, Virginia",
+  "osm": "relation/206528",
+  "display": "Suffolk, Virginia, United States",
+  "kind": "city",
+  "at": "2026-11-26"
+ },
  "orange county, california": {
   "raw": "Orange County, California",
   "q": "Orange County, California",
@@ -2799,6 +2942,19 @@
   "display": "Franklin, Virginia, 23851, United States",
   "kind": "town",
   "at": "2026-10-30"
+ },
+ "raiford memorial hospital, virginia": {
+  "raw": "Raiford Memorial Hospital, Virginia",
+  "q": "Raiford Memorial Hospital, Virginia",
+  "status": "ok",
+  "lat": 37.12322,
+  "lon": -78.49277,
+  "prec": "region",
+  "matched": "Virginia",
+  "osm": "relation/224042",
+  "display": "Virginia, United States",
+  "kind": "state",
+  "at": "2026-11-26"
  },
  "richmond county, virginia": {
   "raw": "Richmond County, Virginia",
@@ -3501,6 +3657,19 @@
   "display": "Virginia Beach, Virginia, United States",
   "kind": "city",
   "at": "2026-10-18"
+ },
+ "wakefield, virginia": {
+  "raw": "Wakefield, VA",
+  "q": "Wakefield, Virginia",
+  "status": "ok",
+  "lat": 36.96821,
+  "lon": -76.98969,
+  "prec": "exact",
+  "matched": "Wakefield, Virginia",
+  "osm": "relation/207029",
+  "display": "Wakefield, Sussex County, Virginia, United States",
+  "kind": "village",
+  "at": "2026-11-26"
  },
  "wandsworth, surrey, england": {
   "raw": "Wandsworth, Surrey, England",
