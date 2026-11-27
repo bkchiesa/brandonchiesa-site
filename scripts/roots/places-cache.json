@@ -3814,6 +3814,19 @@
   "kind": "city",
   "at": "2026-10-30"
  },
+ "winchester, virginia": {
+  "raw": "Winchester, VA",
+  "q": "Winchester, Virginia",
+  "status": "ok",
+  "lat": 39.18522,
+  "lon": -78.16524,
+  "prec": "exact",
+  "matched": "Winchester, Virginia",
+  "osm": "relation/207037",
+  "display": "Winchester, Virginia, United States",
+  "kind": "city",
+  "at": "2026-11-27"
+ },
  "wittens fort, virginia": {
   "raw": "Wittens Fort, VA",
   "q": "Wittens Fort, Virginia",
