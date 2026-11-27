@@ -1,0 +1,51 @@
+---
+import DisclaimerLine from "../../components/banking/DisclaimerLine.astro";
+import BankingShell from "../../components/banking/BankingShell.astro";
+import TemplateCard from "../../components/banking/TemplateCard.astro";
+import { BANKING_INTRO, REVIEWED_LINE } from "../../data/banking/copy";
+import { BANKING_CALCULATORS } from "../../data/banking/tools";
+import { bankingCards } from "../../lib/banking/downloads";
+import { BANKING_CRUMB, HOME_CRUMB, breadcrumbJsonLd, collectionJsonLd, graphJsonLd } from "../../lib/banking/seo";
+import { withBase } from "../../lib/site";
+
+const cards = bankingCards();
+const description = BANKING_INTRO;
+const jsonLd = graphJsonLd([
+  collectionJsonLd({
+    name: "Banking tools for business owners",
+    path: "/banking/",
+    description,
+    items: [
+      ...BANKING_CALCULATORS.map((tool) => ({ name: tool.title, path: tool.path })),
+      ...cards.map((card) => ({ name: card.title, path: card.page ?? `/banking/templates/#${card.id}` })),
+    ],
+  }),
+  breadcrumbJsonLd([HOME_CRUMB, BANKING_CRUMB]),
+]);
+---
+
+<BankingShell title="Banking tools for business owners" description={description} jsonLd={jsonLd} section="hub">
+  <h1 class="room-title">Banking tools for business owners</h1>
+  <p class="lede">{BANKING_INTRO}</p>
+
+  <h2 class="bank-group-title" id="calculators">Calculators</h2>
+  <ul class="bank-grid">
+    {
+      BANKING_CALCULATORS.map((tool) => (
+        <li>
+          <a class="bank-card" href={withBase(tool.path)}>
+            <h3 class="bank-card-title">{tool.title}</h3>
+            <p class="bank-card-copy">{tool.description}</p>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+
+  <h2 class="bank-group-title" id="templates">Templates and guides</h2>
+  <div class="bank-grid">
+    {cards.map((card) => <TemplateCard card={card} />)}
+  </div>
+  <p class="bank-reviewed">{REVIEWED_LINE}</p>
+  <DisclaimerLine />
+</BankingShell>

@@ -1,0 +1,25 @@
+---
+import { ART, artUrl } from "../lib/art";
+import type { RoomId } from "../lib/site";
+
+interface Props {
+  room: RoomId;
+  alt: string;
+}
+
+const { room, alt } = Astro.props;
+const src = ART.heroes[room];
+---
+
+{
+  src ? (
+    <figure class="room-hero">
+      <img src={artUrl(src)} alt={alt} width="1920" height="1080" />
+    </figure>
+  ) : (
+    <figure class="room-hero room-hero--stub">
+      <div class="room-hero-stub" aria-hidden="true" />
+      <figcaption class="hud-kicker">Hero plate pending — Pixel/Ink redraw</figcaption>
+    </figure>
+  )
+}

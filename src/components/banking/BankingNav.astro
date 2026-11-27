@@ -1,0 +1,25 @@
+---
+import { DISCLAIMER_PATH } from "../../data/banking/tools";
+import { withBase } from "../../lib/site";
+
+interface Props {
+  section?: "hub" | "calculators" | "templates" | "disclaimer";
+}
+
+const { section } = Astro.props;
+const items = [
+  { id: "calculators" as const, href: "/banking/#calculators", label: "Calculators" },
+  { id: "templates" as const, href: "/banking/#templates", label: "Templates and guides" },
+  { id: "disclaimer" as const, href: DISCLAIMER_PATH, label: "Disclaimer" },
+];
+---
+
+<nav class="bank-nav" aria-label="Banking section">
+  {
+    items.map((item) => (
+      <a href={withBase(item.href)} aria-current={section === item.id ? "page" : undefined}>
+        {item.label}
+      </a>
+    ))
+  }
+</nav>

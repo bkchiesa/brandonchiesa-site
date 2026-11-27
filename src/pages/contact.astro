@@ -1,0 +1,58 @@
+---
+import { existsSync } from "node:fs";
+import { join } from "node:path";
+import LeatherPad from "../components/LeatherPad.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import VideoShell from "../components/VideoShell.astro";
+import Base from "../layouts/Base.astro";
+import { ART, artUrl } from "../lib/art";
+import { LINKEDIN_URL, X_HANDLE, X_URL } from "../lib/site";
+
+const publicDir = join(process.cwd(), "public");
+const brassRel = ART.v3.careerBrassRule;
+const hasBrass = existsSync(join(publicDir, brassRel));
+const brassUrl = hasBrass ? artUrl(brassRel) : "";
+---
+
+<Base
+  title="Contact"
+  room="contact"
+  videoShell
+  description="Reach Brandon Chiesa on X (@bkchiesa) and LinkedIn. A personal site, not affiliated with any employer."
+>
+  <VideoShell />
+  <LeatherPad title="Contact">
+    <SiteHeader current="contact" showLetter={false} />
+    <main
+      id="main"
+      class="page-main contact-room"
+      data-brass={hasBrass ? "true" : "false"}
+      style={brassUrl ? `--career-brass-rule: url('${brassUrl}')` : undefined}
+    >
+      <h1 class="room-title">Contact</h1>
+
+      <ul class="contact-channels">
+        <li>
+          <article class="contact-channel">
+            <h2 class="contact-channel-title">X</h2>
+            <p class="contact-channel-copy">
+              <a href={X_URL} rel="me noopener noreferrer" target="_blank">{X_HANDLE}</a>
+            </p>
+          </article>
+        </li>
+        <li>
+          <article class="contact-channel">
+            <h2 class="contact-channel-title">LinkedIn</h2>
+            <p class="contact-channel-copy">
+              <a href={LINKEDIN_URL} rel="me noopener noreferrer" target="_blank">
+                linkedin.com/in/bkchiesa
+              </a>
+            </p>
+          </article>
+        </li>
+      </ul>
+    </main>
+    <SiteFooter showDisclaimer />
+  </LeatherPad>
+</Base>

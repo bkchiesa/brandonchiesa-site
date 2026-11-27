@@ -1,0 +1,5 @@
+/roots/*
+  X-Robots-Tag: noindex, nofollow, noarchive
+  Referrer-Policy: same-origin
+/roots/data/*
+  Cache-Control: no-cache

@@ -1,0 +1,24 @@
+---
+import { relatedCalculators } from "../../data/banking/tools";
+import { withBase } from "../../lib/site";
+
+interface Props {
+  path: string;
+}
+
+const { path } = Astro.props;
+const tools = relatedCalculators(path);
+---
+
+<section class="bank-block">
+  <h2 class="bank-section-title">Related tools</h2>
+  <ul class="bank-related">
+    {
+      tools.map((tool) => (
+        <li>
+          <a href={withBase(tool.path)}>{tool.title}</a>
+        </li>
+      ))
+    }
+  </ul>
+</section>

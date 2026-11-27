@@ -1,0 +1,116 @@
+---
+import DisclaimerLine from "../../../components/banking/DisclaimerLine.astro";
+import BankingShell from "../../../components/banking/BankingShell.astro";
+import HowTo from "../../../components/banking/HowTo.astro";
+import RelatedTools from "../../../components/banking/RelatedTools.astro";
+import TakeWithYou from "../../../components/banking/TakeWithYou.astro";
+import { REVIEWED_LINE, SBA_DESCRIPTION, SBA_FOLLOW_UP, SBA_STEPS } from "../../../data/banking/copy";
+import { SBA_CHOICES, SBA_QUESTIONS } from "../../../data/banking/sba-quick-check";
+import { SBA_PATH } from "../../../data/banking/tools";
+import { MSG, SBA_RULES_NOTE } from "../../../lib/banking/calc";
+import { BANKING_CRUMB, HOME_CRUMB, breadcrumbJsonLd, calculatorJsonLd, graphJsonLd } from "../../../lib/banking/seo";
+import { withBase } from "../../../lib/site";
+
+const title = "SBA quick-check";
+const jsonLd = graphJsonLd([
+  calculatorJsonLd({ name: title, path: SBA_PATH, description: SBA_DESCRIPTION }),
+  breadcrumbJsonLd([HOME_CRUMB, BANKING_CRUMB, { name: title, path: SBA_PATH }]),
+]);
+---
+
+<BankingShell title={title} description={SBA_DESCRIPTION} jsonLd={jsonLd} section="calculators">
+  <h1 class="room-title">{title}</h1>
+  <p class="lede">{SBA_DESCRIPTION}</p>
+  <p class="bank-reviewed">{REVIEWED_LINE}</p>
+  <p class="bank-callout">{SBA_RULES_NOTE}</p>
+  <div class="bank-tool" data-sba>
+    <p class="bank-kicker">Answered <span data-out="progress">0 of 13</span></p>
+    <div class="bank-questions">
+      {
+        SBA_QUESTIONS.map((question, index) => (
+          <fieldset class="bank-q">
+            <legend>
+              <span class="bank-q-index">Question {index + 1}</span>
+              {question.prompt}
+            </legend>
+            {question.helper ? <p class="bank-help">{question.helper}</p> : null}
+            {question.key === "small" ? (
+              <p class="bank-help">
+                <a href="https://www.sba.gov/size-standards/" target="_blank" rel="noopener noreferrer">
+                  Check with SBA's Size Standards Tool
+                </a>
+              </p>
+            ) : null}
+            {question.key === "repayment" ? (
+              <p class="bank-help">
+                <a href={withBase("/banking/calculators/dscr/")}>DSCR calculator</a>
+              </p>
+            ) : null}
+            {question.extraList ? (
+              <details class="bank-source">
+                <summary>See the list</summary>
+                <ul class="bank-reasons">
+                  {question.extraList.map((item) => (
+                    <li>{item}</li>
+                  ))}
+                </ul>
+              </details>
+            ) : null}
+            <div class="bank-choices">
+              {SBA_CHOICES.map((choice) => (
+                <label class="bank-choice">
+                  <input type="radio" name={`q-${question.key}`} value={choice.value} />
+                  {choice.label}
+                </label>
+              ))}
+            </div>
+            <details class="bank-source">
+              <summary>Source</summary>
+              <p>
+                <a href={question.sourceHref} target="_blank" rel="noopener noreferrer">
+                  {question.sourceLabel}
+                </a>
+              </p>
+            </details>
+          </fieldset>
+        ))
+      }
+    </div>
+    <div class="bank-actions">
+      <button class="bank-btn bank-btn--quiet" type="button" data-reset>Reset</button>
+      <button class="bank-btn bank-btn--quiet" type="button" data-next hidden>Next open question</button>
+    </div>
+    <p class="bank-summary" data-waiting>{MSG.sbaIncomplete}</p>
+    <div class="bank-results" data-results hidden aria-live="polite">
+      <p class="bank-summary" data-out="summary"></p>
+      <details class="bank-math">
+        <summary>Show the math</summary>
+        <p>
+          Each question has one answer that raises a possible issue. If any of those answers is selected, the result lists that issue. If none are selected and some answers are Not sure, the result asks you to confirm those items. If every answer is in the fit direction, the result is a possible fit. Unsure on every question adds a note to talk with a lender. This is a checklist of basic rules, not a score.
+        </p>
+      </details>
+      <p class="bank-note" data-out="note"></p>
+      <p class="bank-reviewed">{REVIEWED_LINE}</p>
+      <div class="bank-actions">
+        <button class="bank-btn" type="button" data-print>Print results</button>
+      </div>
+    </div>
+  </div>
+  <section class="bank-block">
+    <h2 class="bank-section-title">What to do with your results</h2>
+    <ul class="bank-questions-list">
+      {SBA_FOLLOW_UP.map((question) => <li>{question}</li>)}
+    </ul>
+  </section>
+  <HowTo steps={SBA_STEPS} />
+  <TakeWithYou ids={["sba-7a-504", "loan-package-checklist", "personal-financial-statement"]} />
+  <RelatedTools path={SBA_PATH} />
+  <DisclaimerLine />
+</BankingShell>
+
+<script>
+  import { bindSbaCheck } from "../../../scripts/banking/sba";
+  const root = document.querySelector<HTMLElement>("[data-sba]");
+  root?.querySelector("[data-print]")?.addEventListener("click", () => window.print());
+  bindSbaCheck(root);
+</script>

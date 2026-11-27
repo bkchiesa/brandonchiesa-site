@@ -1,0 +1,14 @@
+---
+interface Props {
+  steps: readonly string[];
+}
+
+const { steps } = Astro.props;
+---
+
+<section class="bank-block">
+  <h2 class="bank-section-title">How to use</h2>
+  <ol class="bank-steps">
+    {steps.map((step) => <li>{step}</li>)}
+  </ol>
+</section>
